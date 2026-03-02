@@ -1,79 +1,62 @@
-# Overwatch Terminal
+# Overwatch Terminal — Claude Code Context
 
-Autonomous AI intelligence system monitoring a high-conviction XRP investment thesis with formal falsification criteria. Built by Tim Wrenn (fire lieutenant, zero coding background) by directing AI tools.
+## What This Is
+Autonomous AI intelligence system monitoring an institutional adoption thesis. Four-layer cognitive architecture (SWEEP → CONTEXTUALIZE → INFER → RECONCILE) with epistemological guardrails, circuit breakers, and a corrections ledger. Running in production on GitHub Actions, twice daily. Built entirely by directing AI tools — the builder has zero coding background.
 
-## What's Running (Production)
+## Critical Build Rules
+- NEVER modify a file without stating: what changes, what it affects downstream, what could break
+- One change at a time. Verify before moving to next.
+- After ANY commit touching fetch-data.js, analyze-thesis.js, index.html, or dashboard-data.json: trace the change forward AND backward
+- No silent failures. Every error must surface. No empty catch blocks.
+- If restoring a file from a prior commit, validate the FULL data contract between that file and everything it connects to
+- Tim cannot read code. Provide complete file replacements, not diffs. Explain changes in plain language.
+- Do NOT recalibrate thresholds without explicit instruction.
+- Comments explain WHY, not WHAT. Reference architectural decision documents.
 
-Two-layer analysis system executing 2x daily via GitHub Actions:
-- `scripts/fetch-data.js` — Data pipeline, 12+ sources with retry/fallback chains
-- `scripts/analyze-thesis.js` — Claude API analyst (SWEEP + ASSESS), Telegram delivery
-- `scripts/x402-agent.js` — XRPL mainnet payment agent (manual trigger)
-- `scripts/x402-merchant.js` — x402 merchant server (3 endpoints)
-- `index.html` — Dashboard frontend, reads from `dashboard-data.json`
-- `dashboard-data.json` — Live data store, committed by overwatch-bot 2x daily
-- `data/360-report.json` — Latest 360 assessment
-- `data/360-history.json` — Archive of all assessments (last 60 entries)
-- `thesis-context.md` — Investment thesis context fed to Claude API analyst
+## File Map
+- scripts/fetch-data.js — Data pipeline, 7 active API sources, writes dashboard-data.json, runs data contract validation
+- scripts/analyze-thesis.js — Claude API analyst (currently 2-layer: SWEEP + ASSESS), writes 360-report.json + 360-history.json, sends Telegram briefing with pipeline health line
+- scripts/apply-analysis.js — Merges analysis results into dashboard-data.json (etf, supply, xrpl_metrics, bear_case, probability, stress fields)
+- scripts/x402-agent.js — XRPL mainnet payment agent (manual trigger only)
+- scripts/thesis-context.md — Thesis context fed to Claude API analyst. Lives in scripts/, NOT repo root.
+- scripts/pipeline-health.json — Written by fetch-data.js validation, read by analyze-thesis.js for Telegram heartbeat
+- data-contract.json — Lists every field index.html expects from dashboard-data.json. Source of truth for validation.
+- data/360-report.json — Latest analysis output
+- data/360-history.json — Archive of all assessments (last 60 entries)
+- index.html — Dashboard frontend, reads dashboard-data.json on load
 
-## What's Designed (Not Yet Built — Target March 3-7)
+## Data Flow
+fetch-data.js writes dashboard-data.json (partial: macro, rlusd, xrp, thesis_scores) → validates against data-contract.json → writes pipeline-health.json → analyze-thesis.js runs Claude API → writes 360-report.json + 360-history.json → sends Telegram with pipeline health appended → apply-analysis.js merges analysis into dashboard-data.json (etf, supply, xrpl_metrics, bear_case, probability, stress) → git commit + push
 
-### Four-Layer Architecture (replacing current two-layer)
-- **Layer 1 SWEEP:** Perception. Widest intake, no filtering.
-- **Layer 2 CONTEXTUALIZE:** Knowledge audit + contextual scoring. Replaces current ASSESS. Two phases: knowledge audit ("do I understand the thesis well enough to score this?"), then contextual scoring with verified understanding.
-- **Layer 3 INFER:** Game theory on knowledge-verified inputs. Circuit breakers: null hypothesis mandate, assumption count (3+ = SPECULATIVE), evidence-to-inference ratio. Paper trades x402 intelligence purchases.
-- **Layer 4 RECONCILE:** Judgment. Resolves contradictions, applies skeptic discount (75% weight on speculative), produces final bear pressure score + tactical recommendation.
+## GitHub Actions
+- Cron: 12:00 UTC and 00:00 UTC daily
+- Workflow: .github/workflows/analyze-thesis.yml
+- Steps: checkout → setup node → npm install → fetch-data.js → analyze-thesis.js → apply-analysis.js → git commit/push
 
-### Corrections Ledger (`data/corrections-ledger.json`)
-Structured memory of analytical mistakes. Layers 2-3 read during live analysis. Layer 4 and Sunday blind spot audit write to it. 12 root cause types. System learns from its own errors.
+## Key Field Names
+- index.html reads thesis_scores (NOT thesis). Bug fixed March 3, 2026.
+- fetch-data.js owns 18 fields. analyze-thesis.js/apply-analysis.js own 73 fields. x402-agent.js owns 23 fields. See data-contract.json for full list.
+- kill_switches in dashboard-data.json is written by fetch-data.js but NOT read by index.html. Kill switch display comes from data/360-report.json.
 
-### Rejection Log (`data/rejection-log.json`)
-Real-time record of Layer 4 overruling Layer 3. Feeds into corrections ledger.
+## What's Built and Running
+- Layer 1 SWEEP + Layer 2 ASSESS (current two-layer system)
+- Automated twice-daily analysis via GitHub Actions
+- Telegram briefing with pipeline health heartbeat
+- Data contract validation (18 fetch fields checked every run)
+- Dashboard on GitHub Pages
+- x402 agent (12 mainnet transactions, 9,000 drops lifetime spend)
 
-### X API Integration (Three-Tier Monitoring)
-- Tier 1 (~15-20 accounts): Every post ingested and scored
-- Tier 2 (~30-40 accounts): Keyword intersection scanning
-- Tier 3: Broad keyword monitoring across all of X
+## What's Being Built (March 3-7, 2026)
+- Layer 2 CONTEXTUALIZE (replaces current ASSESS — adds knowledge audit phase)
+- Layer 3 INFER (new — strategic game theory with circuit breakers)
+- Layer 4 RECONCILE (new — final judgment with burden of proof)
+- Corrections ledger (data/corrections-ledger.json + data/rejection-log.json)
+- Compound stress matrix integration into Layer 2
 
-## Architecture Design Documents (Private — Not in Repo)
-
-These live in the Claude Project, not the repo:
-- `OVERWATCH-4-LAYER-ARCHITECTURE.md` — Layer 3-4 prompts, data flow, token budgets
-- `OVERWATCH-CIRCUIT-BREAKERS.md` — Apophenia prevention, assumption limits, Layer 4 skeptic
-- `ARCHITECTURE-DECISION-CORRECTIONS-LEDGER.md` — Learning-from-mistakes system design
-- `ARCHITECTURE-DECISION-LAYER2-CONTEXTUALIZE.md` — Knowledge audit rationale and proof case
-- `SESSION-14-DECISIONS.md` — Build sequencing, X monitoring tiers, x402 paper trading
-
-## Build Principles
-
-- **Falsification-first.** The system challenges assumptions, not confirms them. "INSUFFICIENT_EVIDENCE" is high-quality output.
-- **Don't break what's running.** The production pipeline works. Build forward, don't restructure.
-- **Circuit breakers over confidence.** Value is in what the system refuses to believe.
-- **Paper trading before authority.** New capabilities prove judgment before getting operational power.
-- **Architecture follows cognition.** Every layer maps to how Tim actually thinks, not theoretical best practice.
-
-## Hard Rules
-
-- Do NOT modify `fetch-data.js` retry/fallback chains without explicit approval
-- Do NOT touch `x402-agent.js` wallet logic or signing without explicit approval
-- Do NOT commit secrets, API keys, or wallet seeds
-- Do NOT restructure the four-layer architecture — it was validated by four independent AI systems
-- Do NOT add dependencies without discussing first
-- Private architecture docs (listed above) are IP — never commit to repo
-
-## Key Context
-
-- GitHub Actions cron runs at ~06:00 and ~18:00 UTC
-- Telegram briefing chunked for 4K character limit
-- Dashboard is static HTML reading JSON — no build step, no framework
-- Claude API calls use claude-opus-4-6 for analysis
-- x402 payments are on XRPL mainnet (not testnet)
-- `thesis-context.md` is the source of truth for kill switches and probability framework
-- Data sources include: CoinGecko, Twelve Data, FRED, Stooq (JGB 10Y primary), SoSoValue, XRPL on-chain, and others
-
-## Cost Structure
-
-| Component | Monthly |
-|-----------|---------|
-| Claude API (2x daily, Opus) | ~$36 |
-| X API Basic (when live) | ~$100 |
-| Total new costs | ~$136/month |
+## Architectural Authority
+If code contradicts an architectural decision document, the document wins. The code has a bug. Architectural documents live in the Claude.ai project files, not in this repo. Key documents:
+- OVERWATCH-4-LAYER-ARCHITECTURE.md
+- OVERWATCH-CIRCUIT-BREAKERS.md
+- ARCHITECTURE-DECISION-CORRECTIONS-LEDGER.md
+- ARCHITECTURE-DECISION-LAYER2-CONTEXTUALIZE.md
+- LAYER-2-3-4-PROMPTS-DRAFT.md (PRIVATE — never commit to public repo)
