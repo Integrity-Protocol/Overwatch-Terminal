@@ -2740,12 +2740,12 @@ async function fetchDashboardData() {
     }
 
     // Thesis scorecard
-    if (d.thesis) {
-      Object.keys(d.thesis).forEach(key => {
+    if (d.thesis_scores) {
+      Object.keys(d.thesis_scores).forEach(key => {
         const el = document.getElementById('thesis-' + key);
         if (el) {
-          el.textContent = d.thesis[key].status;
-          el.className = 'signal ' + (d.thesis[key].color || 'amber');
+          el.textContent = d.thesis_scores[key].status;
+          el.className = 'signal ' + (d.thesis_scores[key].color || 'amber');
         }
       });
     }
