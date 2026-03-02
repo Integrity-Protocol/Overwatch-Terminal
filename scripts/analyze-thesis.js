@@ -533,9 +533,9 @@ IMPORTANT: Keep each threat description under 100 words. Return a maximum of 12 
   let response;
   for (let attempt = 0; attempt <= 1; attempt++) {
     try {
-      log('360-sweep', `Calling claude-opus-4-6… (attempt ${attempt + 1})`);
+      log('360-sweep', `Calling claude-sonnet-4-5-20250929… (attempt ${attempt + 1})`);
       response = await client.messages.create({
-        model:      'claude-opus-4-6',
+        model:      'claude-sonnet-4-5-20250929',
         max_tokens: 6000,
         messages:   [{ role: 'user', content: sweepPrompt }],
       });
@@ -773,7 +773,7 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary outs
     try {
       log('analysis', `Layer 2 API call (attempt ${attempt})...`);
       const response = await client.messages.create({
-        model: 'claude-opus-4-6',
+        model: 'claude-sonnet-4-5-20250929',
         max_tokens: 8000,
         messages: [{ role: 'user', content: prompt }]
       });
