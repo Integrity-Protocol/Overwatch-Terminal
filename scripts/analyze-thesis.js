@@ -167,6 +167,8 @@ function formatTelegramMessage(analysis, dashboardData) {
   const chg     = xrp?.change_24h != null ? `${xrp.change_24h >= 0 ? '+' : ''}${xrp.change_24h.toFixed(2)}%` : '--';
   const fgi     = macro?.fear_greed?.value ?? '--';
   const usdJpy  = macro?.usd_jpy != null ? `¥${macro.usd_jpy.toFixed(2)}` : '--';
+  const dxy     = macro?.dxy != null ? macro.dxy.toFixed(2) : '--';
+  const sp500   = macro?.sp500 != null ? macro.sp500.toFixed(2) : '--';
 
   // ETF flow summary
   let etfLine = '--';
@@ -223,6 +225,7 @@ function formatTelegramMessage(analysis, dashboardData) {
   return `🔭 <b>OVERWATCH ANALYSIS — ${runLabel} ${dateStr}</b>
 
 📊 <b>MARKET:</b> XRP ${price} (${chg}) | F&amp;G: ${fgi} | USD/JPY: ${usdJpy}
+📊 <b>INDICES:</b> DXY ${dxy} | S&amp;P 500 ${sp500}
 📈 <b>ETF FLOW:</b> ${etfLine}
 
 📝 <b>THESIS PULSE:</b>
@@ -304,7 +307,7 @@ Your output must be a JSON object with these fields:
 
   "etf_analysis": "1-2 sentences on ETF flow trends and what they signal",
 
-  "macro_analysis": "1-2 sentences on macro environment (yen, yields, oil, tariffs)",
+  "macro_analysis": "1-2 sentences on macro environment (yen, yields, oil, DXY, S&P 500, tariffs)",
 
   "recommended_probability_adjustment": {
     "bear": 8,
@@ -825,7 +828,7 @@ ${JSON.stringify(newsHeadlines, null, 2)}
 - Current time: ${new Date().toISOString()}
 - Run type: ${runType} (morning/evening)
 - Compare current data against kill switch thresholds
-- Assess stress indicators (USD/JPY, JGB yield, oil, Fear & Greed)
+- Assess stress indicators (USD/JPY, JGB yield, oil, DXY, S&P 500, Fear & Greed)
 - Evaluate ETF flow trends
 - Check if any scorecard items need status changes
 - Flag any alerts
@@ -934,6 +937,8 @@ IMPORTANT: Keep all text fields concise. Ensure your response is valid, complete
       usd_jpy:             dashboardData.macro?.usd_jpy          ?? null,
       jpn_10y:             dashboardData.macro?.jpn_10y          ?? null,
       brent_crude:         dashboardData.macro?.brent_crude      ?? null,
+      dxy:                 dashboardData.macro?.dxy              ?? null,
+      sp500:               dashboardData.macro?.sp500            ?? null,
       etf_daily_flow:      dashboardData.etf?.daily_net_flow     ?? null,
       dex_volume_24h:      dashboardData.xrpl_metrics?.dex_volume_24h_usd ?? null,
       rlusd_market_cap:    dashboardData.rlusd?.market_cap       ?? null,
