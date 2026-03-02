@@ -10,7 +10,7 @@ Monitoring institutional adoption metrics. This is an analytical framework, not 
 
 ### Actively Monitored by System (5)
 1. **ODL Volume**: $20-30B annualized by EOY 2026. STATUS: NEEDS DATA
-2. **RLUSD Circulation**: $5B + 3 institutional integrations by Q3 2026. Current: $1.564B. STATUS: TRACKING
+2. **RLUSD Circulation**: $5B + 3 institutional integrations by Q3 2026. Current: $1.494B (contracted ~$70M from $1.564B — first decline). STATUS: TRACKING — MONITOR CLOSELY
 3. **Permissioned DEX**: 5+ institutions by Q3 2026. STATUS: NEEDS_DATA (amendment live Feb 20, zero adoption data)
 4. **XRP ETF AUM**: $5B by EOY 2026. Current: $1.184B. STATUS: TRACKING
 5. **Clarity Act**: Meaningful advancement by Q4 2026. STATUS: PENDING
@@ -28,46 +28,61 @@ Monitoring institutional adoption metrics. This is an analytical framework, not 
 - Mid ($8-20 EOY): 38%
 - Bull ($20+ EOY): 12%
 
-## Stress Indicators — Compound Stress Matrix
+Note: These probabilities are unchanged from Feb 27. The four-layer system will produce updated probabilities on its first run. Compare Layer 4 output against these baseline numbers as the first calibration data point.
 
-### IMPORTANT: These indicators are NOT independent. They compound on each other.
-### The break point of a pre-loaded structure is lower than the break point of an unloaded structure.
-### Assess stress by convergence, not by individual readings.
+## Compound Stress Matrix
 
-### Individual Inputs (monitoring):
-- USD/JPY: current ~155.87 | elevated >157 | critical >160
-- JGB 10Y: current ~2.13% | elevated >2.3% | critical >2.5% | emergency >3.0%
-- Brent Crude: current ~$71/bbl | elevated >$85 | critical >$95 | emergency >$100
+Three macro indicators that compound through interconnected systems. The break point of a pre-loaded structure is LOWER than the break point of an unloaded structure. If one leg is already elevated, less force is needed from the others to reach critical.
+
+Derived from: Structural collapse assessment. A building with one compromised load-bearing wall needs less force on the remaining walls to fail. Same principle applied to macro stress indicators.
+
+### Stress Levels
+- **MONITORING**: Any one indicator in elevated range. Normal vigilance. One stress point, manageable.
+- **ELEVATED**: Any two of (Brent >$85, JGB 10Y >2.3%, USD/JPY >157) simultaneously. Multiple stress points active. Structure is pre-loaded. Less force needed to reach critical.
+- **CRITICAL**: Any two of (Brent >$95, JGB 10Y >2.5%, USD/JPY >160) OR any Hormuz disruption event. Cascade risk is real. The compound stress chain (oil → yen → BOJ → JGB → carry trade → global liquidity) could activate.
+- **EMERGENCY**: Hormuz closure + forced BOJ intervention + JGB 10Y >2.5%. Full cascade scenario. Operator action window measured in days, not weeks. Highest macro risk AND highest thesis validation simultaneously.
+
+### Compound Stress Indicator Thresholds
+- USD/JPY: >157 = elevated, >160 = critical
+- JGB 10Y: >2.3% = elevated, >2.5% = critical
+- Brent Crude: >$85 = elevated, >$95 = critical
+
+### Additional Stress Indicators
 - Fear & Greed: <20 = extreme fear, >80 = extreme greed
 - XRP ETF daily outflows > $50M = warning signal
+- VIX: >20 = elevated volatility
 
-### Compound Stress Levels (how the system assesses overall stress):
-- **MONITORING**: Any one indicator in elevated range
-- **ELEVATED**: Any two of (Brent >$85, JGB 10Y >2.3%, USD/JPY >157) simultaneously
-- **CRITICAL**: Any two of (Brent >$95, JGB 10Y >2.5%, USD/JPY >160) OR any Hormuz disruption event
-- **EMERGENCY**: Hormuz closure + forced BOJ intervention + JGB 10Y >2.5%
+### Thesis Paradox
+A violent unwind simultaneously threatens the position AND validates the thesis. The system must hold both sides without resolving toward bullish or bearish. Layer 4 states the paradox explicitly.
 
-### The Chain (thesis-relevant stress scenario):
-Oil supply shock → Japan energy import costs explode in yen → BOJ forced into emergency response → yen moves violently → carry positions hit stop-losses simultaneously → forced selling across global equities and bonds → liquidity dries up in traditional settlement rails → demand for instant, 24/7, non-SWIFT settlement spikes. A slow managed unwind does NOT create these conditions. A violent disorderly unwind DOES.
+## Current Stress Readings (March 3, 2026)
+- USD/JPY: 157.2 — AT elevated threshold (>157). Trajectory: deteriorating.
+- JGB 10Y: 2.24% — 6bps below elevated threshold (>2.3%). Trajectory: deteriorating.
+- Brent Crude: $79.01 — Below elevated ($85), +8.4% trend. Trajectory: deteriorating.
+- Fear & Greed: 10 — EXTREME FEAR
+- VIX: 20+
+- DXY: 97.9
+- S&P 500: ~6,800 (futures -1.1%)
+- Gold: $5,384
+- XRP: $1.35 (-8.2%)
 
-### Threshold Calibration Notes (verified Feb 27, 2026):
-- JGB 2.0-2.5% refinancing band: Morningstar projects interest servicing rises from 9% to 20-25% of expenditure (unprecedented for OECD investment-grade economy)
-- JGB >2.5%: structurally unsustainable without intervention or fiscal consolidation; Takaichi pursuing fiscal expansion (opposite direction)
-- JGB >3.0%: Capital Economics considers "normal" for 1% GDP + 2% inflation, but velocity matters — rapid move risks breaking MAD dynamic in domestic JGB holdings
-- Brent $100 threshold was set when carry trade was more stable; effective criticality may now be reached at $85-90 due to compounding with already-elevated JGB/JPY stress
-- BCA Research (Feb 10, 2026): called yen carry trade "a ticking time bomb"; Morgan Stanley estimates ~$500B outstanding carry positions
+### Compound Stress Assessment (March 3, 2026)
+- **Level: MONITORING** — One leg at elevated (USD/JPY 157.2 at the >157 threshold). No second leg breached.
+- **Pre-loaded: YES** — USD/JPY at the line. JGB 6bps from elevated. Brent trending toward $85. All three legs deteriorating simultaneously.
+- **Key risk**: Structure is pre-loaded. One catalyst (Hormuz escalation, BOJ surprise, oil shock) could push two legs past elevated simultaneously, jumping directly to ELEVATED. The distance from MONITORING to ELEVATED is smaller than the numbers suggest because all three legs are moving in the same direction.
+- **Iran/Hormuz**: Active conflict escalation (Feb 28 strikes, IRGC closure order). If Hormuz disruption event occurs, compound stress jumps directly to CRITICAL regardless of other indicators.
 
 ## Scorecard Categories
 - Regulatory Clarity: CONFIRMED (high confidence)
 - Institutional Custody: STRONG (high confidence)
 - ETF Adoption: CONFIRMED (high confidence)
 - XRPL Infrastructure: ACCELERATING (high confidence)
-- Stablecoin (RLUSD): GROWING (medium confidence)
+- Stablecoin (RLUSD): FIRST CONTRACTION — declined from $1.564B to $1.494B (~$70M). First backward movement. (medium confidence, monitor closely)
 - ODL Volume: NEEDS DATA (low confidence)
 - Japan Adoption: MONITORING (medium confidence — no new institutional data since SBI)
-- Macro Environment: STRESSED — ELEVATED (medium confidence)
+- Macro Environment: STRESSED — compound stress level MONITORING, pre-loaded, all legs deteriorating (high confidence)
 
-## Key Institutional Evidence (Feb 2026)
+## Key Institutional Evidence (Feb-March 2026)
 - SBI Ripple Asia / AWAJ: XRPL startup ecosystem (Japan)
 - Dubai Land Department Phase 2: Live RWA secondary market on XRPL
 - Societe Generale EUR CoinVertible: EUR stablecoin on XRPL
@@ -80,39 +95,25 @@ Oil supply shock → Japan energy import costs explode in yen → BOJ forced int
 - **Ripple Prime white paper (Feb 2026)**: Positions Ripple alongside UBS, JPMorgan, Citigroup as Digital Prime Broker. XRP blockchain used for on-chain credit lines enabling early settlement. Hidden Road entity registered with SEC, CFTC, FINRA, FCA. Supports infrastructure narrative but does NOT resolve on-chain activity gap — monitor for actual transaction volume.
 - **Metallicus FedNow (Feb 2026)**: Full FedNow certification (Send, Receive, RFP, Liquidity Management). XRPL-adjacent CUSO building blockchain-enabled infrastructure for credit unions. Monitor for XRPL-FedNow bridge developments.
 - **Stripe co-founders letter (Feb 2026)**: Blockchains may need 1B TPS for AI agent commerce. XRP+ILP theoretically scales to trillions of TPS, exceeding stated requirements by orders of magnitude. Validates the technical scalability narrative.
+- **XRPL February records**: Record monthly transaction/activity levels on the ledger.
+- **Arizona Digital Assets Reserve Fund**: State-level legislative movement toward digital asset reserves including XRP.
+- **Flare/Xaman partnership**: Expanding XRPL wallet/DeFi ecosystem infrastructure.
+- **SBI Ripple stake confirmed**: SBI's continued equity investment in Ripple reaffirmed.
 
-## Stress Context (updated Feb 27, 2026)
+## Stress Context
+- Strait of Hormuz: CRITICAL — ACTIVE CONFLICT (Feb 28 strikes, IRGC closure order, Iran escalation ongoing). A Hormuz disruption event triggers compound stress directly to CRITICAL.
+- Japan: Takaichi supermajority + tariff pressure + yen weakness (157.2) + rising JGB yields (2.24%) + BOJ March meeting live for hike. The BOJ is trapped — defending the yen requires tightening, but tightening accelerates JGB yield pressure. This is a feedback loop, not independent indicators.
+- US Tariffs: Section 122, 10% global, expires ~Jul 20, 2026
+- Compound stress: MONITORING. Pre-loaded. All three legs deteriorating. USD/JPY at elevated threshold. JGB 6bps from elevated. Brent trending up. One external shock could cascade to ELEVATED or CRITICAL rapidly.
 
-### Strait of Hormuz: CRITICAL — ESCALATING
-- US designated Iran as State Sponsor of Wrongful Detention (Feb 27, Rubio)
-- Trump: "not happy with the negotiation," demanding zero enrichment
-- US military assets at levels not seen since 2003 Iraq invasion
-- Two carrier strike groups deployed (Abraham Lincoln + Gerald R. Ford)
-- Feb 3: IRGC gunboats attempted to seize US tanker; F-35 shot down Iranian drone approaching carrier
-- US warning to all American-flagged ships to avoid Iranian waters in Hormuz
-- Multiple countries withdrawing diplomatic dependents from Middle East
-- Nuclear talks at impasse; technical-level Vienna talks next week
-- VLCC tanker rates ME-to-China tripled since start of 2026 (highest since 2020)
-- Iran's shadow fleet (~18% global tanker capacity) targeted by US measures
-- Analysts: diplomatic breakdown already priced $4-6/bbl risk premium; full escalation could spike Brent above $100
-
-### Japan: STRESSED — BOJ TRAPPED
-- BOJ rate: 0.75% (30-year high, hiked Dec 2025)
-- JGB 10Y: ~2.13% (was 2.33% on Jan 20; highest since 1999)
-- Board member Takata proposed 1.0% at January meeting (voted down); called for "further gear shift"
-- Governor Ueda marked March and April meetings as "live" for potential hikes
-- Takaichi appointed two reflationist academics to BOJ board (complicates hawkish path)
-- Takaichi pursuing fiscal expansion + tax cuts (works against tightening)
-- Japan inflation: ~3.0% headline, 3.0% core (above 2% target for nearly 4 years)
-- Japan imports ~100% of energy — weak yen directly amplifies oil import costs
-- BOJ trapped: can't raise fast (debt servicing explodes on JPY 1,287T debt), can't hold down (yen weakens, imports inflate)
-- Yen-based import price index rising (+0.5% YoY in January)
-- Carry trade: ~$500B outstanding positions (Morgan Stanley); BCA Research "ticking time bomb" (Feb 10)
-- January 20 JGB event: $41B value destruction on minimal volume ($170M in 30Y, $110M in 40Y)
-- MAD dynamic: domestic institutions hold most JGBs — selling destroys their own balance sheets
-- Fortune/Yardeni: "Markets pricing debt crisis risk by sending yen lower, not through yield spikes"
-
-### US Tariffs: Section 122, 10% global, expires ~Jul 20, 2026
+## Key Players (for Layer 3 game theory analysis)
+1. **Ripple** — Wants: XRP utility, institutional adoption, regulatory win. Constraints: Escrow schedule, institutional sales cycles. Key question: Why stop publishing ODL data?
+2. **BIS / Project Nexus / mBridge** — Wants: Sovereign settlement control without private tokens. Constraints: Multi-country coordination. Key question: Replace bridge currencies or coexist?
+3. **SWIFT** — Wants: Protect 11,500-bank network. Constraints: Legacy infrastructure. Key question: Is their upgrade sufficient to eliminate alternatives?
+4. **Japanese Institutions (SBI, BOJ)** — Wants: Yen stability, cross-border efficiency. Constraints: BOJ yield crisis. Key question: XRPL adoption from conviction or desperation?
+5. **Institutional Asset Managers (Franklin Templeton, Bitwise, etc)** — Wants: AUM growth, first-mover. Constraints: Due diligence, fiduciary duty. Key question: Would $1.5T managers launch without private data?
+6. **Competing Infrastructure (Circle/USDC, bank networks)** — Wants: Settlement market share. Constraints: Regulatory requirements. Key question: Parallel to XRPL or competing for same corridors?
+7. **Central Banks / Macro Actors (BOJ, Fed, ECB)** — Wants: Stability. Constraints: Trapped positions (BOJ can't move without making things worse). Key question: How do trapped positions create second-order effects for settlement infrastructure demand?
 
 ## Qualitative Output Schema (for analyze-thesis.js)
 The analysis output JSON must include these additional qualitative fields:
@@ -121,4 +122,3 @@ The analysis output JSON must include these additional qualitative fields:
 - `energy_interpretation`: 2-3 sentences on energy conditions and Japan stress feedback loop (oil, JPY, trade deficit, BOJ pressure).
 - `thesis_pulse_assessment`: 3-4 sentences distilling current thesis state for the dashboard ASSESSMENT box. Reference actual numbers. Honest about risks. Terminal voice.
 - `stress_interpretation`: 2-3 sentences explaining the composite stress environment for the dashboard stress card. Reference specific thresholds breached or held.
-- `compound_stress_level`: one of MONITORING | ELEVATED | CRITICAL | EMERGENCY based on the compound stress matrix above. Include which indicators are contributing.
