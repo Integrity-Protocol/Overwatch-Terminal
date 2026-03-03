@@ -25,5 +25,23 @@
     "corrections_ledger_action": "flag_for_review",
     "timestamp": "2026-03-03T00:06:25.528Z",
     "source": "layer4_reconcile"
+  },
+  {
+    "layer3_inference": "ETF Approval Is a Sell-the-News Liquidity Exit — Layer 3 correctly rejected this but Layer 1 scored it at 7/10 pre-audit",
+    "rejection_reason": "The GBTC comparison is structurally invalid (conversion vs. new launch). Available data ($1.4B positive cumulative inflows) directly contradicts the exit narrative. XRP positive during extreme fear is inconsistent with sell-the-news.",
+    "root_cause": "CONTRADICTED_BY_DATA",
+    "confidence_in_rejection": "high",
+    "corrections_ledger_action": "auto_commit",
+    "timestamp": "2026-03-03T01:15:21.975Z",
+    "source": "layer4_reconcile"
+  },
+  {
+    "layer3_inference": "Ripple's Locked XRP Escrow Is Permanent Overhang — Layer 3 correctly identified null hypothesis holds",
+    "rejection_reason": "8-year-old public information cannot be treated as an emerging threat. 7 ETF issuers with fiduciary obligations conducted due diligence and proceeded. This is priced-in structural reality.",
+    "root_cause": "ASSUMPTION_FAILURE",
+    "confidence_in_rejection": "high",
+    "corrections_ledger_action": "auto_commit",
+    "timestamp": "2026-03-03T01:15:21.975Z",
+    "source": "layer4_reconcile"
   }
 ]
