@@ -294,6 +294,75 @@ async function fetchFinanceFlowCurrency(label, url, fallbackValue) {
   }
 }
 
+// ─── XRPL fetcher ────────────────────────────────────────────────────────────
+
+async function fetchXRPL(fallback) {
+  const url = ENDPOINTS.xrpl.server_info;
+  const issuer = ENDPOINTS.xrpl.rlusd_issuer;
+  const fetchedAt = new Date().toISOString().slice(0, 10);
+  const result = {
+    ledger_index: null,
+    rlusd_supply: null,
+    data_date: fetchedAt,
+    source: 'xrpl',
+  };
+  // server_info — ledger index
+  try {
+    const controller1 = new AbortController();
+    const timer1 = setTimeout(() => controller1.abort(), 15000);
+    const r1 = await fetch(url, {
+      method: 'POST',
+      body: JSON.stringify({ method: 'server_info', params: [{}] }),
+      signal: controller1.signal,
+    });
+    clearTimeout(timer1);
+    const d1 = await r1.json();
+    const seq = d1?.result?.info?.validated_ledger?.seq;
+    if (seq) {
+      result.ledger_index = seq;
+      log('XRPL', `ledger_index = ${seq}`);
+    } else {
+      warn('XRPL', 'No validated_ledger in server_info response');
+    }
+  } catch (e) {
+    err('XRPL', `server_info: ${e.message}`);
+  }
+  // gateway_balances — RLUSD supply
+  try {
+    const controller2 = new AbortController();
+    const timer2 = setTimeout(() => controller2.abort(), 15000);
+    const r2 = await fetch(url, {
+      method: 'POST',
+      body: JSON.stringify({
+        method: 'gateway_balances',
+        params: [{ account: issuer, hotwallet: [], strict: true }],
+      }),
+      signal: controller2.signal,
+    });
+    clearTimeout(timer2);
+    const d2 = await r2.json();
+    const obligations = d2?.result?.obligations;
+    if (obligations) {
+      const rlusdKey = Object.keys(obligations).find(k => k.startsWith('524C555344'));
+      if (rlusdKey) {
+        result.rlusd_supply = parseFloat(obligations[rlusdKey]);
+        log('XRPL', `rlusd_supply = ${result.rlusd_supply.toLocaleString()}`);
+      } else {
+        warn('XRPL', 'RLUSD currency not found in obligations');
+      }
+    } else {
+      warn('XRPL', 'No obligations in gateway_balances response');
+    }
+  } catch (e) {
+    err('XRPL', `gateway_balances: ${e.message}`);
+  }
+  if (result.ledger_index === null && result.rlusd_supply === null) {
+    warn('XRPL', 'Both calls failed, using fallback');
+    return fallback?.xrpl_metrics ?? result;
+  }
+  return result;
+}
+
 // ─── Kill-switch helpers ──────────────────────────────────────────────────────
 
 function pct(current, target) {
@@ -392,6 +461,7 @@ async function main() {
     sp500 = await fetchTwelveData('SP500', ENDPOINTS.twelve_data.sp500, existing?.macro?.sp500);
   }
 
+  const xrplMetrics = await fetchXRPL(existing);
   const xIntelligence = await fetchXIntelligence(existing?.x_intelligence);
 
   // Preserve manually-managed fields from existing JSON (never overwrite with null)
@@ -430,6 +500,7 @@ async function main() {
       sp500:         sp500,      // { value, data_date, source }
       fear_greed:    fearGreed,  // { value, label, data_date, source }
     },
+    xrpl_metrics: xrplMetrics,
     x_intelligence: xIntelligence,
     manual,
     kill_switches:  buildKillSwitches(manual, rlusd),

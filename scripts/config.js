@@ -26,6 +26,10 @@ const ENDPOINTS = {
     brent:   'https://financeflowapi.com/api/v1/commodity-spot?name=brent',
     dxy:     'https://financeflowapi.com/api/v1/currency-spot?pair=DXY',
   },
+  xrpl: {
+    server_info:  'https://s1.ripple.com:51234',
+    rlusd_issuer: 'rMxCKbEDwqr76QuheSUMdEGf4B9xJ8m5De',
+  },
 };
 
 // Millisecond delay between CoinGecko calls to stay inside free-tier rate limits
