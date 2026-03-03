@@ -214,21 +214,21 @@ function formatTelegramMessage(analysis, dashboardData) {
   const macro  = dashboardData?.macro;
   const etf    = dashboardData?.etf;
 
-  const price   = xrp?.price != null   ? `${xrp.price.toFixed(4)}` : '--';
+  const price   = xrp?.price != null   ? `$${xrp.price.toFixed(4)}` : '--';
   const chg     = xrp?.change_24h != null ? `${xrp.change_24h >= 0 ? '+' : ''}${xrp.change_24h.toFixed(2)}%` : '--';
   const fgi     = macro?.fear_greed?.value ?? '--';
-  const usdJpy  = macro?.usd_jpy != null ? `¥${macro.usd_jpy.toFixed(2)}` : '--';
-  const dxy     = macro?.dxy != null ? macro.dxy.toFixed(2) : '--';
-  const sp500   = macro?.sp500 != null ? macro.sp500.toFixed(2) : '--';
+  const usdJpy  = macro?.usd_jpy?.value != null ? `¥${macro.usd_jpy.value.toFixed(2)}` : '--';
+  const dxy     = macro?.dxy?.value != null ? macro.dxy.value.toFixed(2) : '--';
+  const sp500   = macro?.sp500?.value != null ? macro.sp500.value.toFixed(2) : '--';
 
   // ETF flow summary
   let etfLine = '--';
   if (etf?.daily_net_inflow != null) {
     const m = etf.daily_net_inflow / 1e6;
-    etfLine = `${m >= 0 ? '+' : ''}${Math.abs(m).toFixed(2)}M daily`;
+    etfLine = `${m >= 0 ? '+' : ''}$${Math.abs(m).toFixed(2)}M daily`;
   } else if (etf?.weekly_net_inflow != null) {
     const m = etf.weekly_net_inflow / 1e6;
-    etfLine = `${m >= 0 ? '+' : ''}${Math.abs(m).toFixed(2)}M/wk`;
+    etfLine = `${m >= 0 ? '+' : ''}$${Math.abs(m).toFixed(2)}M/wk`;
   }
 
   // Alerts
@@ -533,9 +533,9 @@ IMPORTANT: Keep each threat description under 100 words. Return a maximum of 12 
   let response;
   for (let attempt = 0; attempt <= 1; attempt++) {
     try {
-      log('360-sweep', `Calling claude-sonnet-4-5-20250929… (attempt ${attempt + 1})`);
+      log('360-sweep', `Calling claude-opus-4-6… (attempt ${attempt + 1})`);
       response = await client.messages.create({
-        model:      'claude-sonnet-4-5-20250929',
+        model:      'claude-opus-4-6',
         max_tokens: 6000,
         messages:   [{ role: 'user', content: sweepPrompt }],
       });
@@ -773,7 +773,7 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary outs
     try {
       log('analysis', `Layer 2 API call (attempt ${attempt})...`);
       const response = await client.messages.create({
-        model: 'claude-sonnet-4-5-20250929',
+        model: 'claude-opus-4-6',
         max_tokens: 8000,
         messages: [{ role: 'user', content: prompt }]
       });
@@ -1383,6 +1383,7 @@ function buildDashboardCompatible(reconcileResult, contextualizeResult, inferenc
     b.final_weight === 'stripped' || b.final_weight === 'rejected' || b.final_weight === 'reduced_75' ||
     b.layer3_classification === 'NULL_HYPOTHESIS_HOLDS'
   ).length;
+  const totalBop = bullCount + bearCount || 1;
   const biasCheck = {
     bull_indicators:      bullCount,
     bear_indicators:      bearCount,
@@ -1730,11 +1731,11 @@ IMPORTANT: Keep all text fields concise. Ensure your response is valid, complete
       stress_level:        analysis.stress_assessment?.level    ?? null,
       xrp_price:           dashboardData.xrp?.price             ?? null,
       fear_greed:          dashboardData.macro?.fear_greed?.value ?? null,
-      usd_jpy:             dashboardData.macro?.usd_jpy          ?? null,
-      jpn_10y:             dashboardData.macro?.jpn_10y          ?? null,
-      brent_crude:         dashboardData.macro?.brent_crude      ?? null,
-      dxy:                 dashboardData.macro?.dxy              ?? null,
-      sp500:               dashboardData.macro?.sp500            ?? null,
+      usd_jpy:             dashboardData.macro?.usd_jpy?.value   ?? null,
+      jpn_10y:             dashboardData.macro?.jpn_10y?.value   ?? null,
+      brent_crude:         dashboardData.macro?.brent_crude?.value ?? null,
+      dxy:                 dashboardData.macro?.dxy?.value       ?? null,
+      sp500:               dashboardData.macro?.sp500?.value     ?? null,
       etf_daily_flow:      dashboardData.etf?.daily_net_flow     ?? null,
       dex_volume_24h:      dashboardData.xrpl_metrics?.dex_volume_24h_usd ?? null,
       rlusd_market_cap:    dashboardData.rlusd?.market_cap       ?? null,

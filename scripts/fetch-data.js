@@ -57,6 +57,7 @@ async function fetchJSON(url, timeoutMs = 10_000) {
 // ─── Individual fetchers ──────────────────────────────────────────────────────
 
 async function fetchXRP(fallback) {
+  const fetchedAt = new Date().toISOString().slice(0, 10);
   try {
     const data = await fetchJSON(ENDPOINTS.xrp);
     const r = data?.ripple;
@@ -66,22 +67,25 @@ async function fetchXRP(fallback) {
       change_24h: r.usd_24h_change   ?? null,
       volume_24h: r.usd_24h_vol      ?? null,
       market_cap: r.usd_market_cap   ?? null,
+      data_date:  fetchedAt,
+      source:     'coingecko',
     };
     log('XRP', `price=$${result.price}  24h=${result.change_24h?.toFixed(2)}%`);
     return result;
   } catch (e) {
     err('XRP', e.message);
-    return fallback?.xrp ?? { price: null, change_24h: null, volume_24h: null, market_cap: null };
+    return fallback?.xrp ?? { price: null, change_24h: null, volume_24h: null, market_cap: null, data_date: null, source: 'coingecko' };
   }
 }
 
 async function fetchRLUSD(fallback) {
+  const fetchedAt = new Date().toISOString().slice(0, 10);
   await sleep(COINGECKO_DELAY_MS);
   try {
     const data = await fetchJSON(ENDPOINTS.rlusd);
     const r = data?.['ripple-usd'];
     if (!r) throw new Error('Unexpected response shape — will try search');
-    const result = { market_cap: r.usd_market_cap ?? null, source: 'coingecko' };
+    const result = { market_cap: r.usd_market_cap ?? null, data_date: fetchedAt, source: 'coingecko' };
     log('RLUSD', `market_cap=$${result.market_cap?.toLocaleString()}`);
     return result;
   } catch (e) {
@@ -97,12 +101,12 @@ async function fetchRLUSD(fallback) {
         `https://api.coingecko.com/api/v3/simple/price?ids=${coin.id}&vs_currencies=usd&include_market_cap=true`
       );
       const r2 = data2?.[coin.id];
-      const result = { market_cap: r2?.usd_market_cap ?? null, source: 'coingecko' };
+      const result = { market_cap: r2?.usd_market_cap ?? null, data_date: fetchedAt, source: 'coingecko' };
       log('RLUSD', `market_cap=$${result.market_cap?.toLocaleString()} (via search id=${coin.id})`);
       return result;
     } catch (e2) {
       err('RLUSD', e2.message);
-      return fallback?.rlusd ?? { market_cap: null, source: 'manual' };
+      return fallback?.rlusd ?? { market_cap: null, data_date: null, source: 'manual' };
     }
   }
 }
@@ -112,28 +116,36 @@ async function fetchFearGreed(fallback) {
     const data = await fetchJSON(ENDPOINTS.fear_greed);
     const entry = data?.data?.[0];
     if (!entry) throw new Error('Unexpected response shape');
+    // alternative.me returns unix timestamp; convert to YYYY-MM-DD
+    const dataDate = entry.timestamp
+      ? new Date(Number(entry.timestamp) * 1000).toISOString().slice(0, 10)
+      : new Date().toISOString().slice(0, 10);
     const result = {
-      value: Number(entry.value),
-      label: entry.value_classification,
+      value:     Number(entry.value),
+      label:     entry.value_classification,
+      data_date: dataDate,
+      source:    'alternative.me',
     };
-    log('Fear&Greed', `${result.value} — ${result.label}`);
+    log('Fear&Greed', `${result.value} — ${result.label} (date: ${dataDate})`);
     return result;
   } catch (e) {
     err('Fear&Greed', e.message);
-    return fallback?.macro?.fear_greed ?? { value: null, label: null };
+    return fallback?.macro?.fear_greed ?? { value: null, label: null, data_date: null, source: 'alternative.me' };
   }
 }
 
 async function fetchUSDJPY(fallback) {
+  const fetchedAt = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
   try {
     const data = await fetchJSON(ENDPOINTS.usd_jpy);
     const rate = data?.rates?.JPY;
     if (!rate) throw new Error('Unexpected response shape');
-    log('USD/JPY', rate);
-    return rate;
+    const dataDate = data?.date || fetchedAt; // Frankfurter returns a date field
+    log('USD/JPY', `${rate} (date: ${dataDate})`);
+    return { value: rate, data_date: dataDate, source: 'frankfurter' };
   } catch (e) {
     err('USD/JPY', e.message);
-    return fallback?.macro?.usd_jpy ?? null;
+    return fallback?.macro?.usd_jpy ?? { value: null, data_date: null, source: 'frankfurter' };
   }
 }
 
@@ -144,7 +156,7 @@ async function fetchFRED(seriesLabel, url, fallbackValue) {
   const key = process.env.FRED_API_KEY;
   if (!key) {
     warn('FRED', `FRED_API_KEY not set — skipping ${seriesLabel}`);
-    return fallbackValue ?? null;
+    return fallbackValue ?? { value: null, data_date: null, source: 'fred' };
   }
   try {
     const fullUrl = `${url}&api_key=${encodeURIComponent(key)}`;
@@ -153,11 +165,12 @@ async function fetchFRED(seriesLabel, url, fallbackValue) {
     const obs = data?.observations?.find(o => o.value !== '.' && o.value !== '');
     if (!obs) throw new Error('No valid observation in response');
     const value = parseFloat(obs.value);
-    log('FRED', `${seriesLabel} = ${value} (date: ${obs.date})`);
-    return value;
+    const dataDate = obs.date || null;
+    log('FRED', `${seriesLabel} = ${value} (date: ${dataDate})`);
+    return { value, data_date: dataDate, source: 'fred' };
   } catch (e) {
     err('FRED', `${seriesLabel}: ${e.message}`);
-    return fallbackValue ?? null;
+    return fallbackValue ?? { value: null, data_date: null, source: 'fred' };
   }
 }
 
@@ -177,11 +190,12 @@ async function fetchStooq(label, url, fallbackValue) {
     // Stooq CSV columns: Symbol,Date,Time,Open,High,Low,Close,Volume
     const close = parseFloat(values[6]);
     if (isNaN(close)) throw new Error('Could not parse close price');
-    log('Stooq', `${label} = ${close} (date: ${values[1]})`);
-    return close;
+    const dataDate = values[1] || null; // YYYY-MM-DD from Stooq CSV
+    log('Stooq', `${label} = ${close} (date: ${dataDate})`);
+    return { value: close, data_date: dataDate, source: 'stooq' };
   } catch (e) {
     err('Stooq', `${label}: ${e.message}`);
-    return fallbackValue ?? null;
+    return fallbackValue ?? { value: null, data_date: null, source: 'stooq' };
   }
 }
 
@@ -191,7 +205,7 @@ async function fetchTwelveData(label, url, fallbackValue) {
   const key = process.env.TWELVE_DATA_KEY;
   if (!key) {
     warn('TwelveData', `TWELVE_DATA_KEY not set — skipping ${label}`);
-    return fallbackValue ?? null;
+    return fallbackValue ?? { value: null, data_date: null, source: 'twelve_data' };
   }
   try {
     const fullUrl = `${url}&apikey=${encodeURIComponent(key)}`;
@@ -199,12 +213,12 @@ async function fetchTwelveData(label, url, fallbackValue) {
     if (data.status === 'error') throw new Error(data.message || 'API error');
     const value = parseFloat(data?.values?.[0]?.close);
     if (isNaN(value)) throw new Error('Could not parse close value');
-    const date = data?.values?.[0]?.datetime ?? 'unknown';
-    log('TwelveData', `${label} = ${value} (date: ${date})`);
-    return value;
+    const dataDate = data?.values?.[0]?.datetime ?? null;
+    log('TwelveData', `${label} = ${value} (date: ${dataDate})`);
+    return { value, data_date: dataDate, source: 'twelve_data' };
   } catch (e) {
     err('TwelveData', `${label}: ${e.message}`);
-    return fallbackValue ?? null;
+    return fallbackValue ?? { value: null, data_date: null, source: 'twelve_data' };
   }
 }
 
@@ -316,13 +330,13 @@ async function main() {
     xrp,
     rlusd,
     macro: {
-      usd_jpy:       usdJpy,
-      jpn_10y:       jpn10y,
-      us_10y_yield:  us10y,
-      brent_crude:   brent,
-      dxy:           dxy,
-      sp500:         sp500,
-      fear_greed:    fearGreed,
+      usd_jpy:       usdJpy,     // { value, data_date, source }
+      jpn_10y:       jpn10y,     // { value, data_date, source }
+      us_10y_yield:  us10y,      // { value, data_date, source }
+      brent_crude:   brent,      // { value, data_date, source }
+      dxy:           dxy,        // { value, data_date, source }
+      sp500:         sp500,      // { value, data_date, source }
+      fear_greed:    fearGreed,  // { value, label, data_date, source }
     },
     manual,
     kill_switches:  buildKillSwitches(manual, rlusd),
@@ -336,13 +350,13 @@ async function main() {
   console.log('\n─── Summary ───────────────────────────────────');
   console.log(`XRP price:       $${xrp.price ?? 'N/A'}`);
   console.log(`RLUSD mktcap:    $${rlusd.market_cap?.toLocaleString() ?? 'N/A'} (${rlusd.source})`);
-  console.log(`USD/JPY:         ${usdJpy ?? 'N/A'}`);
-  console.log(`JPN 10Y yield:   ${jpn10y ?? 'N/A'}%`);
-  console.log(`US 10Y yield:    ${us10y ?? 'N/A'}%`);
-  console.log(`Brent crude:     $${brent ?? 'N/A'}`);
-  console.log(`DXY:             ${dxy ?? 'N/A'}`);
-  console.log(`S&P 500:         ${sp500 ?? 'N/A'}`);
-  console.log(`Fear & Greed:    ${fearGreed.value ?? 'N/A'} (${fearGreed.label ?? 'N/A'})`);
+  console.log(`USD/JPY:         ${usdJpy.value ?? 'N/A'} (${usdJpy.data_date ?? 'no date'})`);
+  console.log(`JPN 10Y yield:   ${jpn10y.value ?? 'N/A'}% (${jpn10y.data_date ?? 'no date'})`);
+  console.log(`US 10Y yield:    ${us10y.value ?? 'N/A'}% (${us10y.data_date ?? 'no date'})`);
+  console.log(`Brent crude:     $${brent.value ?? 'N/A'} (${brent.data_date ?? 'no date'})`);
+  console.log(`DXY:             ${dxy.value ?? 'N/A'} (${dxy.data_date ?? 'no date'})`);
+  console.log(`S&P 500:         ${sp500.value ?? 'N/A'} (${sp500.data_date ?? 'no date'})`);
+  console.log(`Fear & Greed:    ${fearGreed.value ?? 'N/A'} (${fearGreed.label ?? 'N/A'}) (${fearGreed.data_date ?? 'no date'})`);
   console.log('───────────────────────────────────────────────\n');
 
   await pushToGitHub();
