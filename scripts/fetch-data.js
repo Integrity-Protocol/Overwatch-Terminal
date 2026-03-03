@@ -223,6 +223,77 @@ async function fetchTwelveData(label, url, fallbackValue) {
   }
 }
 
+// ─── FinanceFlow fetcher ─────────────────────────────────────────────────────
+
+async function fetchFinanceFlowBond(label, url, fallbackValue) {
+  const key = process.env.FINANCEFLOW_API_KEY;
+  if (!key) {
+    warn('FinanceFlow', `FINANCEFLOW_API_KEY not set — skipping ${label}`);
+    return fallbackValue ?? { value: null, data_date: null, source: 'financeflow' };
+  }
+  try {
+    const fullUrl = `${url}&api_key=${encodeURIComponent(key)}`;
+    const data = await fetchJSON(fullUrl);
+    if (!data?.success || data?.code !== 200) throw new Error(data?.message || 'API error');
+    const entry = data?.data?.[0];
+    if (!entry) throw new Error('No bond data in response');
+    const value = parseFloat(entry.bond_yield);
+    if (isNaN(value)) throw new Error('Could not parse bond_yield');
+    const dataDate = entry.last_updated ? entry.last_updated.split(' ')[0] : null;
+    log('FinanceFlow', `${label} = ${value}% (date: ${dataDate})`);
+    return { value, data_date: dataDate, source: 'financeflow' };
+  } catch (e) {
+    err('FinanceFlow', `${label}: ${e.message}`);
+    return fallbackValue ?? { value: null, data_date: null, source: 'financeflow' };
+  }
+}
+
+async function fetchFinanceFlowCommodity(label, url, fallbackValue) {
+  const key = process.env.FINANCEFLOW_API_KEY;
+  if (!key) {
+    warn('FinanceFlow', `FINANCEFLOW_API_KEY not set — skipping ${label}`);
+    return fallbackValue ?? { value: null, data_date: null, source: 'financeflow' };
+  }
+  try {
+    const fullUrl = `${url}&api_key=${encodeURIComponent(key)}`;
+    const data = await fetchJSON(fullUrl);
+    if (!data?.success || data?.code !== 200) throw new Error(data?.message || 'API error');
+    const entry = data?.data;
+    if (!entry) throw new Error('No commodity data in response');
+    const value = parseFloat(entry.current_price);
+    if (isNaN(value)) throw new Error('Could not parse current_price');
+    const dataDate = entry.last_updated ? entry.last_updated.split(' ')[0] : null;
+    log('FinanceFlow', `${label} = ${value} (date: ${dataDate})`);
+    return { value, data_date: dataDate, source: 'financeflow' };
+  } catch (e) {
+    err('FinanceFlow', `${label}: ${e.message}`);
+    return fallbackValue ?? { value: null, data_date: null, source: 'financeflow' };
+  }
+}
+
+async function fetchFinanceFlowCurrency(label, url, fallbackValue) {
+  const key = process.env.FINANCEFLOW_API_KEY;
+  if (!key) {
+    warn('FinanceFlow', `FINANCEFLOW_API_KEY not set — skipping ${label}`);
+    return fallbackValue ?? { value: null, data_date: null, source: 'financeflow' };
+  }
+  try {
+    const fullUrl = `${url}&api_key=${encodeURIComponent(key)}`;
+    const data = await fetchJSON(fullUrl);
+    if (!data?.success || data?.code !== 200) throw new Error(data?.message || 'API error');
+    const entry = data?.data?.[0];
+    if (!entry) throw new Error('No currency data in response');
+    const value = parseFloat(entry.price);
+    if (isNaN(value)) throw new Error('Could not parse price');
+    const dataDate = entry.last_update ? entry.last_update.split(' ')[0] : null;
+    log('FinanceFlow', `${label} = ${value} (date: ${dataDate})`);
+    return { value, data_date: dataDate, source: 'financeflow' };
+  } catch (e) {
+    err('FinanceFlow', `${label}: ${e.message}`);
+    return fallbackValue ?? { value: null, data_date: null, source: 'financeflow' };
+  }
+}
+
 // ─── Kill-switch helpers ──────────────────────────────────────────────────────
 
 function pct(current, target) {
@@ -293,15 +364,33 @@ async function main() {
   ]);
 
   // FRED calls are sequential to avoid hammering the API
-  const brent  = await fetchFRED('BRENT',   ENDPOINTS.fred.brent,   existing?.macro?.brent_crude);
+  // Brent crude: FinanceFlowAPI primary, FRED fallback (FRED structurally days stale)
+  let brent = await fetchFinanceFlowCommodity('BRENT', ENDPOINTS.financeflow.brent, null);
+  if (brent.value === null) {
+    warn('BRENT', 'FinanceFlow failed, trying FRED fallback');
+    brent = await fetchFRED('BRENT', ENDPOINTS.fred.brent, existing?.macro?.brent_crude);
+  }
   const us10y  = await fetchFRED('US_10Y',  ENDPOINTS.fred.us_10y,  existing?.macro?.us_10y_yield);
 
-  // Stooq — daily JGB 10Y (replaces stale FRED monthly)
-  const jpn10y = await fetchStooq('JPN_10Y', ENDPOINTS.stooq.jpn_10y, existing?.macro?.jpn_10y);
+  // JPN 10Y: FinanceFlowAPI primary, Stooq fallback (Stooq returning N/D as of March 2026)
+  let jpn10y = await fetchFinanceFlowBond('JPN_10Y', ENDPOINTS.financeflow.jpn_10y, null);
+  if (jpn10y.value === null) {
+    warn('JPN_10Y', 'FinanceFlow failed, trying Stooq fallback');
+    jpn10y = await fetchStooq('JPN_10Y', ENDPOINTS.stooq.jpn_10y, existing?.macro?.jpn_10y);
+  }
 
-  // Twelve Data — DXY and S&P 500
-  const dxy   = await fetchTwelveData('DXY',   ENDPOINTS.twelve_data.dxy,   existing?.macro?.dxy);
-  const sp500 = await fetchTwelveData('SP500', ENDPOINTS.twelve_data.sp500, existing?.macro?.sp500);
+  // DXY: FinanceFlowAPI primary, Twelve Data fallback (Twelve Data returning errors as of March 2026)
+  let dxy = await fetchFinanceFlowCurrency('DXY', ENDPOINTS.financeflow.dxy, null);
+  if (dxy.value === null) {
+    warn('DXY', 'FinanceFlow failed, trying Twelve Data fallback');
+    dxy = await fetchTwelveData('DXY', ENDPOINTS.twelve_data.dxy, existing?.macro?.dxy);
+  }
+  // S&P 500: Stooq primary, Twelve Data fallback (Twelve Data returning bad values as of March 2026)
+  let sp500 = await fetchStooq('SP500', ENDPOINTS.stooq.sp500, null);
+  if (sp500.value === null) {
+    warn('SP500', 'Stooq failed, trying Twelve Data fallback');
+    sp500 = await fetchTwelveData('SP500', ENDPOINTS.twelve_data.sp500, existing?.macro?.sp500);
+  }
 
   const xIntelligence = await fetchXIntelligence(existing?.x_intelligence);
 

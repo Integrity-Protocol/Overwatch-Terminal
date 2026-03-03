@@ -15,10 +15,16 @@ const ENDPOINTS = {
   },
   stooq: {
     jpn_10y: 'https://stooq.com/q/l/?s=10jpy.b&f=sd2t2ohlcv&h&e=csv',
+    sp500:   'https://stooq.com/q/l/?s=^spx&f=sd2t2ohlcv&h&e=csv',
   },
   twelve_data: {
     dxy:   'https://api.twelvedata.com/time_series?symbol=DXY&interval=1day&outputsize=1',
     sp500: 'https://api.twelvedata.com/time_series?symbol=SPX&interval=1day&outputsize=1',
+  },
+  financeflow: {
+    jpn_10y: 'https://financeflowapi.com/api/v1/bonds-spot?country=japan&type=10y',
+    brent:   'https://financeflowapi.com/api/v1/commodity-spot?name=brent',
+    dxy:     'https://financeflowapi.com/api/v1/currency-spot?pair=DXY',
   },
 };
 

@@ -32,5 +32,6 @@ jobs:
         env:
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
           X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
+          FINANCEFLOW_API_KEY: ${{ secrets.FINANCEFLOW_API_KEY }}
         run: node fetch-data.js
         working-directory: scripts

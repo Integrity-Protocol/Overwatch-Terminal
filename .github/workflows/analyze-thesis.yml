@@ -34,6 +34,7 @@ jobs:
           ALPHA_VANTAGE_KEY: ${{ secrets.ALPHA_VANTAGE_KEY }}
           TWELVE_DATA_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
           X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
+          FINANCEFLOW_API_KEY: ${{ secrets.FINANCEFLOW_API_KEY }}
         run: node scripts/fetch-data.js
 
       - name: Run Stage 3 analysis
