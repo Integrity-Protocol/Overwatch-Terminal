@@ -1258,11 +1258,14 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary outs
       if (fs.existsSync(rejLogPath)) {
         existing = JSON.parse(fs.readFileSync(rejLogPath, 'utf8'));
       }
-      const newEntries = result.rejection_log.map(r => ({
-        ...r,
-        timestamp: new Date().toISOString(),
-        source: 'layer4_reconcile'
-      }));
+      const newEntries = result.rejection_log.map(r => {
+        r.corrections_ledger_action = r.confidence_in_rejection === 'high' ? 'auto_commit' : 'flag_for_review';
+        return {
+          ...r,
+          timestamp: new Date().toISOString(),
+          source: 'layer4_reconcile'
+        };
+      });
       existing.push(...newEntries);
       fs.writeFileSync(rejLogPath, JSON.stringify(existing, null, 2));
       log('analysis', `Rejection log updated: ${newEntries.length} new entries`);
