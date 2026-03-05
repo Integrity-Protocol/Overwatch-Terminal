@@ -894,6 +894,7 @@ CORRECTIONS LEDGER CHECK:
 - "Have my previous inferences in this domain been reliable?"
 - If the ledger shows a pattern of assumption failures in a specific area, INCREASE your evidence threshold for that inference type
 - Self-calibrate based on your own track record
+   - You MUST populate the corrections_referenced field in your output. List every correction entry you consulted, what trigger matched, and how it influenced your assessment. If no corrections matched, return an empty array. This field is required.
 
 === ANALYSIS INSTRUCTIONS ===
 
@@ -1020,7 +1021,14 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary outs
     "pre_load_assessment": "which legs are pre-loaded and what that means",
     "thesis_paradox": "the violent unwind is simultaneously highest-risk AND highest-thesis-validation — state this honestly"
   },
-  "inference_summary": "2-3 sentences. What does player behavior reveal that the data alone does not? What should Layer 4 focus on when reconciling?"
+  "inference_summary": "2-3 sentences. What does player behavior reveal that the data alone does not? What should Layer 4 focus on when reconciling?",
+  "corrections_referenced": [
+    {
+      "correction_id": "CL-XXX",
+      "trigger_matched": "what specific trigger condition matched this analysis",
+      "influence_on_assessment": "how the stored lesson changed this assessment"
+    }
+  ]
 }`;
 
   let result;
