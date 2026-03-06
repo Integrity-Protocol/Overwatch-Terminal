@@ -843,6 +843,13 @@ Your JSON output MUST include the "corrections_referenced" array. This is not op
 
 Respond with ONLY valid JSON — no markdown, no code fences, no commentary outside the JSON:
 {
+  "corrections_referenced": [
+    {
+      "correction_id": "CL-XXX",
+      "trigger_matched": "what specific trigger condition matched this analysis",
+      "influence_on_assessment": "how the stored lesson changed this assessment"
+    }
+  ],
   "knowledge_audit": [
     {
       "threat": "name from Layer 1",
@@ -896,14 +903,7 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary outs
   },
   "bear_pressure": 0,
   "bear_pressure_reasoning": "...",
-  "layer2_summary": "2-3 sentences. What does Layer 3 need to know? What was verified, what remains uncertain, what is the compound stress state?",
-  "corrections_referenced": [
-    {
-      "correction_id": "CL-XXX",
-      "trigger_matched": "what specific trigger condition matched this analysis",
-      "influence_on_assessment": "how the stored lesson changed this assessment"
-    }
-  ]
+  "layer2_summary": "2-3 sentences. What does Layer 3 need to know? What was verified, what remains uncertain, what is the compound stress state?"
 }`;
 
   let result;
@@ -1080,6 +1080,13 @@ Your JSON output MUST include the "corrections_referenced" array. This is not op
 
 Respond with ONLY valid JSON — no markdown, no code fences, no commentary outside the JSON:
 {
+  "corrections_referenced": [
+    {
+      "correction_id": "CL-XXX",
+      "trigger_matched": "what specific trigger condition matched this analysis",
+      "influence_on_assessment": "how the stored lesson changed this assessment"
+    }
+  ],
   "player_analysis": [
     {
       "player": "name",
@@ -1159,14 +1166,7 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary outs
     "pre_load_assessment": "which legs are pre-loaded and what that means",
     "thesis_paradox": "the violent unwind is simultaneously highest-risk AND highest-thesis-validation — state this honestly"
   },
-  "inference_summary": "2-3 sentences. What does player behavior reveal that the data alone does not? What should Layer 4 focus on when reconciling?",
-  "corrections_referenced": [
-    {
-      "correction_id": "CL-XXX",
-      "trigger_matched": "what specific trigger condition matched this analysis",
-      "influence_on_assessment": "how the stored lesson changed this assessment"
-    }
-  ]
+  "inference_summary": "2-3 sentences. What does player behavior reveal that the data alone does not? What should Layer 4 focus on when reconciling?"
 }`;
 
   let result;
