@@ -226,5 +226,14 @@
     "corrections_ledger_action": "flag_for_review",
     "timestamp": "2026-03-05T23:40:46.250Z",
     "source": "layer4_reconcile"
+  },
+  {
+    "layer3_inference": "ETF issuers launched without ODL data because they may have private data satisfying due diligence (option 1 in Layer 3's analysis)",
+    "rejection_reason": "Layer 3 correctly identified this as one of three options but gave it insufficient skepticism. The most parsimonious explanation (option 2/3: ETF issuers are product manufacturers responding to demand, not settlement utility analysts) is more likely. If issuers had private data showing strong ODL volumes, the leak surface would be enormous — 7 issuers conducting due diligence means dozens of analysts who would have this data. No leaks exist. The absence of leaks, combined with the marketing incentive analysis, makes private-data-driven launches less likely.",
+    "root_cause": "ASSUMPTION_FAILURE",
+    "confidence_in_rejection": "medium",
+    "corrections_ledger_action": "flag_for_review",
+    "timestamp": "2026-03-06T01:35:44.978Z",
+    "source": "layer4_reconcile"
   }
 ]
