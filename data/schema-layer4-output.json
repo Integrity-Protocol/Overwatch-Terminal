@@ -1,0 +1,447 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "schema-layer4-output.json",
+  "title": "Layer 4 RECONCILE Output Schema",
+  "description": "Defines the required structure for Layer 4 (RECONCILE) output in the Integrity Protocol four-layer pipeline. Layer 4 is the final decision-maker — it applies burden of proof to Layer 3 inferences, resolves contradictions, classifies data gaps, and produces the definitive assessment. All 17 fields are architecturally required.",
+  "type": "object",
+  "required": [
+    "burden_of_proof_applied",
+    "contradictions_resolved",
+    "data_classifications",
+    "final_threat_matrix",
+    "compound_stress_final",
+    "kill_switch_review",
+    "rejection_log",
+    "final_bear_pressure",
+    "pressure_vs_layer2",
+    "pressure_reasoning",
+    "tactical_recommendation",
+    "recommendation_reasoning",
+    "monitoring_triggers",
+    "overall_confidence",
+    "biggest_uncertainty",
+    "what_would_change_assessment",
+    "final_report"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "burden_of_proof_applied": {
+      "type": "array",
+      "description": "Judicial skepticism applied to every Layer 3 inference. Three-step process: check classification tag, check data support, check for contradiction with verified data.",
+      "items": {
+        "type": "object",
+        "required": [
+          "inference",
+          "layer3_classification",
+          "data_support",
+          "contradicts_data",
+          "final_weight",
+          "reasoning"
+        ],
+        "properties": {
+          "inference": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Name of the inference from Layer 3"
+          },
+          "layer3_classification": {
+            "type": "string",
+            "enum": ["VALID", "FLAGGED", "SPECULATIVE", "INSUFFICIENT_EVIDENCE", "NULL_HYPOTHESIS_HOLDS"],
+            "description": "Classification tag from Layer 3 circuit breakers"
+          },
+          "data_support": {
+            "type": "string",
+            "enum": ["full", "partial", "none"],
+            "description": "Whether hard data from Layer 2 supports this inference"
+          },
+          "contradicts_data": {
+            "type": "boolean",
+            "description": "Whether this inference requires believing something that contradicts verified Layer 2 data"
+          },
+          "final_weight": {
+            "type": "string",
+            "enum": ["full", "reduced_50", "reduced_75", "stripped", "rejected"],
+            "description": "Final weight assigned after burden of proof. Full (VALID + full data), reduced_50 (FLAGGED or partial data), reduced_75 (SPECULATIVE), stripped (no data support), rejected (contradicts data)."
+          },
+          "reasoning": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Why this weight was assigned"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+
+    "contradictions_resolved": {
+      "type": "array",
+      "description": "Cases where Layer 2 data and Layer 3 behavioral analysis tell different stories. Each must be resolved or held as paradox.",
+      "items": {
+        "type": "object",
+        "required": [
+          "data_says",
+          "behavior_suggests",
+          "resolution",
+          "confidence",
+          "reasoning",
+          "score_impact"
+        ],
+        "properties": {
+          "data_says": {
+            "type": "string",
+            "description": "What Layer 2 data shows"
+          },
+          "behavior_suggests": {
+            "type": "string",
+            "description": "What Layer 3 inferred from behavior"
+          },
+          "resolution": {
+            "type": "string",
+            "enum": ["data_wins", "behavior_wins", "paradox_held"],
+            "description": "How the contradiction was resolved"
+          },
+          "confidence": {
+            "type": "string",
+            "enum": ["high", "medium", "low"],
+            "description": "Confidence in the resolution"
+          },
+          "reasoning": {
+            "type": "string",
+            "description": "Why this resolution was chosen"
+          },
+          "score_impact": {
+            "type": "number",
+            "description": "Impact on bear pressure score from this resolution"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+
+    "data_classifications": {
+      "type": "array",
+      "description": "Final classification for each null or missing data point. Determines whether absence is meaningful or just a gap.",
+      "items": {
+        "type": "object",
+        "required": [
+          "data_point",
+          "layer2_classification",
+          "layer3_context",
+          "layer3_inference_valid",
+          "final_classification",
+          "reasoning"
+        ],
+        "properties": {
+          "data_point": {
+            "type": "string",
+            "description": "Name of the data point"
+          },
+          "layer2_classification": {
+            "type": "string",
+            "description": "What Layer 2 assumed about this data point"
+          },
+          "layer3_context": {
+            "type": "string",
+            "description": "What game theory revealed about this absence"
+          },
+          "layer3_inference_valid": {
+            "type": "string",
+            "description": "Whether Layer 3's inference about this data point held up"
+          },
+          "final_classification": {
+            "type": "string",
+            "enum": ["TRUE_NEGATIVE", "DATA_GAP", "SUSPICIOUS_ABSENCE", "STRATEGICALLY_EXPLAINED"],
+            "description": "Final determination of what this missing data means"
+          },
+          "reasoning": {
+            "type": "string",
+            "description": "Why this classification was chosen"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+
+    "final_threat_matrix": {
+      "type": "array",
+      "description": "Final scored threat list after burden of proof, contradiction resolution, and data classification.",
+      "items": {
+        "type": "object",
+        "required": [
+          "threat",
+          "layer2_composite",
+          "layer3_adjustment",
+          "adjustment_direction",
+          "final_composite",
+          "confidence"
+        ],
+        "properties": {
+          "threat": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Threat name"
+          },
+          "layer2_composite": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 10,
+            "description": "Layer 2 severity score"
+          },
+          "layer3_adjustment": {
+            "type": "string",
+            "description": "Description of behavioral evidence applied"
+          },
+          "adjustment_direction": {
+            "type": "string",
+            "enum": ["up", "down", "unchanged"],
+            "description": "Direction of adjustment from Layer 3 evidence"
+          },
+          "final_composite": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 10,
+            "description": "Final composite score after all layers"
+          },
+          "confidence": {
+            "type": "string",
+            "enum": ["high", "medium", "low"],
+            "description": "Confidence in the final score"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+
+    "compound_stress_final": {
+      "type": "object",
+      "description": "Definitive compound stress assessment. Confirms or overrides Layer 2's level with Layer 3 context.",
+      "required": [
+        "level",
+        "layer2_level",
+        "layer3_assessment",
+        "override",
+        "self_challenge",
+        "pre_loaded",
+        "pre_loaded_legs",
+        "cascade_proximity",
+        "delta_since_last",
+        "cycles_at_current_level",
+        "velocity_note",
+        "operator_action_window",
+        "thesis_paradox"
+      ],
+      "properties": {
+        "level": {
+          "type": "string",
+          "enum": ["MONITORING", "ELEVATED", "CRITICAL", "EMERGENCY"],
+          "description": "Final compound stress level"
+        },
+        "layer2_level": {
+          "type": "string",
+          "description": "What Layer 2 reported"
+        },
+        "layer3_assessment": {
+          "type": "string",
+          "description": "Orderly vs disorderly assessment from Layer 3"
+        },
+        "override": {
+          "type": "boolean",
+          "description": "Whether Layer 4 overrode Layer 2's level"
+        },
+        "override_reasoning": {
+          "type": "string",
+          "description": "Why the override was applied, if applicable"
+        },
+        "self_challenge": {
+          "type": "string",
+          "description": "One observation supporting this level AND one challenging it"
+        },
+        "pre_loaded": {
+          "type": "boolean",
+          "description": "Whether the stress structure is pre-loaded (one or more legs already elevated)"
+        },
+        "pre_loaded_legs": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Which legs are pre-loaded"
+        },
+        "cascade_proximity": {
+          "type": "string",
+          "enum": ["distant", "approaching", "imminent"],
+          "description": "How close current conditions are to triggering a cascade"
+        },
+        "delta_since_last": {
+          "type": "string",
+          "enum": ["stable", "escalating", "de-escalating"],
+          "description": "Direction of change since last assessment"
+        },
+        "cycles_at_current_level": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "How many consecutive runs at this stress level"
+        },
+        "velocity_note": {
+          "type": "string",
+          "description": "One sentence on rate of change"
+        },
+        "operator_action_window": {
+          "type": "string",
+          "enum": ["hours", "days", "weeks", "not_applicable"],
+          "description": "How much time the operator has to act if stress is CRITICAL or EMERGENCY"
+        },
+        "thesis_paradox": {
+          "type": "string",
+          "description": "A [event] simultaneously [risk] AND [validation] because [mechanism]"
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "kill_switch_review": {
+      "type": "array",
+      "description": "Review of all 10 falsification criteria. If any kill switch is TRIGGERED, it must be stated first.",
+      "items": {
+        "type": "object",
+        "required": [
+          "criterion",
+          "current_status",
+          "layer3_context",
+          "final_status",
+          "action",
+          "reasoning"
+        ],
+        "properties": {
+          "criterion": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Kill switch name"
+          },
+          "current_status": {
+            "type": "string",
+            "description": "Status from Layer 2"
+          },
+          "layer3_context": {
+            "type": "string",
+            "description": "Behavioral evidence if relevant"
+          },
+          "final_status": {
+            "type": "string",
+            "enum": ["GREEN", "MONITORING", "WARNING", "TRIGGERED"],
+            "description": "Final kill switch status after all evidence weighed"
+          },
+          "action": {
+            "type": "string",
+            "enum": ["maintain", "escalate", "de-escalate"],
+            "description": "Whether to change the status"
+          },
+          "reasoning": {
+            "type": "string",
+            "description": "Why this status and action"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+
+    "rejection_log": {
+      "type": "array",
+      "description": "Layer 3 inferences that Layer 4 overruled. These feed the corrections ledger pipeline via rejection-log.json.",
+      "items": {
+        "type": "object",
+        "required": [
+          "layer3_inference",
+          "rejection_reason",
+          "root_cause",
+          "confidence_in_rejection",
+          "corrections_ledger_action"
+        ],
+        "properties": {
+          "layer3_inference": {
+            "type": "string",
+            "description": "What Layer 3 believed"
+          },
+          "rejection_reason": {
+            "type": "string",
+            "description": "Why Layer 4 rejected it"
+          },
+          "root_cause": {
+            "type": "string",
+            "enum": ["ASSUMPTION_FAILURE", "APOPHENIA", "INSUFFICIENT_EVIDENCE", "CONTRADICTED_BY_DATA"],
+            "description": "Root cause category for the rejection"
+          },
+          "confidence_in_rejection": {
+            "type": "string",
+            "enum": ["high", "medium"],
+            "description": "Confidence in the rejection. High = auto_commit to corrections ledger. Medium = flag_for_review."
+          },
+          "corrections_ledger_action": {
+            "type": "string",
+            "enum": ["auto_commit", "flag_for_review"],
+            "description": "Whether this rejection should be automatically promoted to the corrections ledger or flagged for human review"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+
+    "final_bear_pressure": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "The definitive bear pressure score. 0 = no credible threat to thesis, 100 = thesis clearly failing."
+    },
+
+    "pressure_vs_layer2": {
+      "type": "number",
+      "description": "Delta from Layer 2's bear pressure score. Positive = Layer 4 scored higher, negative = lower."
+    },
+
+    "pressure_reasoning": {
+      "type": "string",
+      "minLength": 1,
+      "description": "1-2 sentences explaining the final bear pressure number"
+    },
+
+    "tactical_recommendation": {
+      "type": "string",
+      "enum": ["HOLD_POSITION", "INCREASE_MONITORING", "REDUCE_EXPOSURE", "EXIT_SIGNAL"],
+      "description": "The definitive tactical recommendation. No ambiguity."
+    },
+
+    "recommendation_reasoning": {
+      "type": "string",
+      "minLength": 1,
+      "description": "2-3 sentences explaining what drives the tactical call"
+    },
+
+    "monitoring_triggers": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Specific conditions or events to watch for before next assessment"
+    },
+
+    "overall_confidence": {
+      "type": "string",
+      "enum": ["high", "medium", "low"],
+      "description": "Overall confidence in this assessment"
+    },
+
+    "biggest_uncertainty": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The single thing that most affects confidence in this assessment"
+    },
+
+    "what_would_change_assessment": {
+      "type": "string",
+      "minLength": 1,
+      "description": "What new data or event would move the tactical recommendation"
+    },
+
+    "final_report": {
+      "type": "string",
+      "minLength": 1,
+      "description": "3-4 sentences. The 6 AM briefing. Lead with what matters most. State the call. Name the paradox if it exists. Honest about what you don't know."
+    }
+  }
+}
