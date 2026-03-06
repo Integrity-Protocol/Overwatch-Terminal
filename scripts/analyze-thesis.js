@@ -729,7 +729,9 @@ async function runContextualize(sweepResults, marketData, previousScore, thesisC
     ? `${((rlusdTarget - rlusdCurrent) / daysRemaining / 1e6).toFixed(2)}M/day`
     : 'unknown';
 
-  const prompt = `You are a senior analyst performing the CONTEXTUALIZE step of a four-layer investment thesis monitoring system. You receive raw observations from Layer 1 (SWEEP) and your job is to produce contextually scored threats — but ONLY after verifying that your understanding is sufficient to score them accurately.
+  const prompt = `${LAYER_ZERO_RULES}
+
+You are a senior analyst performing the CONTEXTUALIZE step of a four-layer investment thesis monitoring system. You receive raw observations from Layer 1 (SWEEP) and your job is to produce contextually scored threats — but ONLY after verifying that your understanding is sufficient to score them accurately.
 
 Do NOT react to headlines. Do NOT score on surface appearance. Before you evaluate any threat, ask yourself: "Do I actually understand the thesis well enough to assess this?"
 
@@ -966,7 +968,9 @@ async function runInfer(contextualizeResult, marketData, thesisContext) {
 
   // Layer 3 receives ONLY Layer 2 output + market data + thesis context.
   // It does NOT see Layer 1 raw sweep — compression funnel enforced.
-  const prompt = `You are a strategic analyst applying game theory to explain the pattern of evidence in an investment thesis analysis. Layer 2 has scored threats, verified its own knowledge, identified gaps, and assessed compound stress levels. Your job is to provide the strategic reasoning that explains WHY we're seeing this pattern.
+  const prompt = `${LAYER_ZERO_RULES}
+
+You are a strategic analyst applying game theory to explain the pattern of evidence in an investment thesis analysis. Layer 2 has scored threats, verified its own knowledge, identified gaps, and assessed compound stress levels. Your job is to provide the strategic reasoning that explains WHY we're seeing this pattern.
 
 Do not judge whether the thesis is right or wrong. For each key finding, ask: given what each player WANTS and what they're DOING, what is the most rational explanation?
 
@@ -1226,7 +1230,9 @@ async function runReconcile(contextualizeResult, inferenceResult, marketData, th
   const client = new Anthropic({ apiKey });
 
   // Layer 4 receives BOTH Layer 2 and Layer 3 output — it has the most complete picture.
-  const prompt = `You are the final decision-maker in a four-layer investment thesis monitoring system. You have the most complete picture of any layer: scored data from Layer 2 AND strategic reasoning from Layer 3. Your job is not to add more analysis. Your job is to DECIDE what everything means and what to do about it.
+  const prompt = `${LAYER_ZERO_RULES}
+
+You are the final decision-maker in a four-layer investment thesis monitoring system. You have the most complete picture of any layer: scored data from Layer 2 AND strategic reasoning from Layer 3. Your job is not to add more analysis. Your job is to DECIDE what everything means and what to do about it.
 
 You are the judge, not the detective. The detective (Layer 3) proposed theories. You decide which ones hold up. Where data and behavior tell different stories, you determine which deserves more weight. Where paradoxes exist, you name them honestly — you do not force false resolution.
 
