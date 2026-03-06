@@ -1,0 +1,65 @@
+[
+  {
+    "timestamp": "2026-03-06T23:47:09.969Z",
+    "layer": 3,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "Strategic Inference: ODL Volume Data Vacuum Masks Possible Stagnation - Classification: VALID with 1 assumption",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "Confidence marked as 'medium' while rejecting the null hypothesis based on behavioral interpretation that relies on untested assumption about Ripple's incentive structure ('Ripple's incentive to publish positive data outweighs confidentiality concerns'). The finding acknowledges this is a directional tilt rather than definitive evidence, but 'medium' confidence implies stronger evidentiary support than exists for rejecting a plausible null hypothesis based on a single behavioral pattern interpretation.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Strategic Inference: Ethereum L2s and Solana Capture Institutional Settlement - marked FLAGGED with 2 assumptions but classified with 'medium' confidence",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The finding correctly flags itself for having 2 assumptions and appropriately notes debatability of the '14 days = meaningful signal' assumption. However, it then assigns 'medium' confidence to the primary explanation. Per LZ-EPH-003, an inference with 2 unproven assumptions approaches the threshold for speculative classification (3+ = speculative). The confidence level should be 'low' or the finding should explicitly state it's at the boundary of acceptable inference chain length.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Hidden Move: Institutional Asset Managers conducting private due diligence on PermissionedDEX - Classification: FLAGGED with 2 assumptions, confidence: low",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The inference treats absence of PermissionedDEX adoption evidence as evidence of evaluation-in-progress. Per LZ-RC-003, 'absence of evidence is not evidence of absence, nor is it evidence of presence.' The finding correctly flags 2 assumptions and marks confidence as 'low', but the core reasoning pattern violates the rule by constructing a positive inference (evaluation happening) from a null observation (no adoption visible). The honest output per LZ-EPH-001 should be 'we don't know whether institutions are evaluating or ignoring PermissionedDEX.'",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Scenario Probabilities: thesis_modified at 55% probability",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "Assigning a precise 55% probability to 'thesis modified' scenario when the modification itself is a qualitative spectrum (from minor scope narrowing to fundamental pivot) and the supporting evidence includes multiple unresolved uncertainties (ODL volume unknown, PermissionedDEX evaluation status unknown, RLUSD Ethereum ratio trend unknown). The precision of '55%' implies quantitative modeling that doesn't exist in the evidence base. The confidence should be expressed as a range or qualitative assessment (e.g., 'more likely than not' or 'moderate probability') rather than a false-precision percentage.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Compound Stress Inference: 'Brent's 17.5% move in 3 days is NOT orderly — it's a shock-level velocity'",
+          "rule_violated": "LZ-RC-002",
+          "violation": "The finding treats a single 3-day price movement as establishing 'shock-level velocity' without defining what threshold constitutes shock-level or providing comparative baseline. Per LZ-RC-002, a single data point (one 3-day period) does not establish a trend or pattern. The movement is significant and worth monitoring, but classifying it as 'shock-level' rather than 'sharp move requiring continued observation' overstates what one measurement period can demonstrate.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Player Analysis - Ripple say-do gap: 'SIGNIFICANT' with confidence 'medium'",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The say-do gap analysis correctly applies LZ-EH-003 (actions outweigh statements) and provides specific evidence. However, the confidence level 'medium' is inconsistent with the declarative assessment that this is 'the single most important behavioral signal in the entire analysis.' If it's the most important signal with clear evidence (ODL cessation + marketing increase), confidence should be 'high'. If confidence is genuinely medium due to alternative explanations having merit, then it cannot simultaneously be 'the single most important signal' without qualification.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Strategic Inference: CBDC Interop Layers Bypass XRP Entirely - null_holds: false with 1 assumption, confidence: medium",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The inference rejects the null hypothesis that BIS/mBridge serves a different use case (central-bank-to-central-bank vs. commercial corridors) with only one assumption ('mBridge will reach production within 2-3 years'). The reasoning acknowledges the use case segmentation is real ('central banks want settlement sovereignty... sovereign actors have both means and motivation') but then assigns 'medium' confidence to rejecting the null. The evidence supports 'BIS is building sovereign infrastructure' (high confidence) but does NOT strongly support 'this directly competes with XRP's commercial corridor thesis' (lower confidence). The confidence level conflates the certainty of BIS's actions with the uncertainty of competitive overlap.",
+          "severity": "MODERATE"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 40,
+      "reviewer_notes": "The output demonstrates strong structural discipline with extensive correction-learning integration and generally sound null hypothesis testing. The violations cluster around confidence calibration (LZ-EPH-002) in cases where behavioral interpretation or assumption chains weaken the evidentiary base more than the assigned confidence acknowledges. The analyst correctly flags speculative inferences and applies historical corrections, but several 'medium confidence' assignments appear optimistic given the acknowledged uncertainty. The LZ-RC-003 violation on PermissionedDEX evaluation is the most conceptually significant—absence of data is being interpreted as positive signal when the honest answer is 'unknown.' No LZ-CC-001 (plausibility trap) violations detected despite complex narrative construction, which suggests good anchoring discipline. The precision of scenario probabilities (55%, 15%, 30%) may warrant Sunday audit discussion on whether percentage precision is appropriate for qualitative scenario analysis."
+    },
+    "violations_count": 7,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  }
+]
