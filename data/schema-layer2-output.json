@@ -1,0 +1,263 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Layer 2 CONTEXTUALIZE Output Schema",
+  "description": "Defines the required output structure for Layer 2 of The Integrity Protocol pipeline. Used by validators to enforce structural compliance before output passes to Layer 3.",
+  "type": "object",
+  "required": [
+    "corrections_referenced",
+    "knowledge_audit",
+    "scored_threats",
+    "unscored_threats",
+    "kill_switch_status",
+    "compound_stress",
+    "bear_pressure",
+    "bear_pressure_reasoning",
+    "layer2_summary"
+  ],
+  "properties": {
+    "corrections_referenced": {
+      "type": "array",
+      "description": "Required declaration of which Overledger entries were consulted. Empty array if none matched. Absence when ledger is non-empty is a PROMPT_COMPLIANCE_FAILURE.",
+      "items": {
+        "type": "object",
+        "required": ["correction_id", "trigger_matched", "influence_on_assessment"],
+        "properties": {
+          "correction_id": {
+            "type": "string",
+            "pattern": "^CL-[0-9]{3}$",
+            "description": "Correction ledger entry ID (e.g., CL-003)"
+          },
+          "trigger_matched": {
+            "type": "string",
+            "minLength": 1,
+            "description": "What specific trigger condition matched this analysis"
+          },
+          "influence_on_assessment": {
+            "type": "string",
+            "minLength": 1,
+            "description": "How the stored lesson changed this assessment"
+          }
+        }
+      }
+    },
+    "knowledge_audit": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Phase 1 output — knowledge verification performed before scoring each threat",
+      "items": {
+        "type": "object",
+        "required": ["threat", "knowledge_check", "gap_identified", "gap_type", "status"],
+        "properties": {
+          "threat": {
+            "type": "string",
+            "minLength": 1
+          },
+          "knowledge_check": {
+            "type": "string",
+            "minLength": 1
+          },
+          "gap_identified": {
+            "type": "string"
+          },
+          "gap_type": {
+            "type": "string",
+            "enum": ["THESIS_CAPABILITY_GAP", "THRESHOLD_CALIBRATION_GAP", "DATA_AVAILABILITY_GAP", "COMPETITIVE_KNOWLEDGE_GAP", "NONE"]
+          },
+          "pre_audit_assessment": {
+            "type": "string"
+          },
+          "post_audit_assessment": {
+            "type": "string"
+          },
+          "audit_impact": {
+            "type": "string"
+          },
+          "lesson_applied": {
+            "type": "string",
+            "description": "CL-XXX if a correction was applied, or NONE"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["SCORED", "REQUIRES_DEEPER_CONTEXT"]
+          }
+        }
+      }
+    },
+    "scored_threats": {
+      "type": "array",
+      "description": "Phase 2 output — threats scored with verified understanding",
+      "items": {
+        "type": "object",
+        "required": ["threat", "severity", "thesis_relevance", "confidence"],
+        "properties": {
+          "threat": {
+            "type": "string",
+            "minLength": 1
+          },
+          "severity": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 10
+          },
+          "source_tier": {
+            "type": "string",
+            "enum": ["1", "2", "3"]
+          },
+          "weighted_severity": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 10
+          },
+          "thesis_relevance": {
+            "type": "string",
+            "enum": ["DIRECT", "INDIRECT", "CONTEXTUAL"]
+          },
+          "confidence": {
+            "type": "string",
+            "enum": ["HIGH", "MEDIUM", "LOW", "REQUIRES_DEEPER_CONTEXT"]
+          },
+          "reasoning": {
+            "type": "string"
+          },
+          "knowledge_verified": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "unscored_threats": {
+      "type": "array",
+      "description": "Threats that could not be scored — knowledge gaps identified",
+      "items": {
+        "type": "object",
+        "required": ["threat", "reason"],
+        "properties": {
+          "threat": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "knowledge_needed": {
+            "type": "string"
+          },
+          "acquisition_type": {
+            "type": "string",
+            "enum": ["KNOWLEDGE", "INTELLIGENCE"]
+          }
+        }
+      }
+    },
+    "kill_switch_status": {
+      "type": "array",
+      "description": "Current status of all falsification criteria",
+      "items": {
+        "type": "object",
+        "required": ["criterion", "status"],
+        "properties": {
+          "criterion": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "type": "string",
+            "enum": ["TRACKING", "NEEDS_DATA", "MONITORING", "PENDING", "WARNING", "TRIGGERED"]
+          },
+          "current_value": {
+            "type": "string"
+          },
+          "target": {
+            "type": "string"
+          },
+          "movement_since_last": {
+            "type": "string",
+            "enum": ["improved", "stable", "deteriorated", "unknown"]
+          }
+        }
+      }
+    },
+    "compound_stress": {
+      "type": "object",
+      "required": ["level", "usd_jpy", "jgb_10y", "brent", "pre_loaded"],
+      "description": "Compound stress assessment across three legs",
+      "properties": {
+        "level": {
+          "type": "string",
+          "enum": ["MONITORING", "ELEVATED", "CRITICAL", "EMERGENCY"]
+        },
+        "usd_jpy": {
+          "type": "object",
+          "required": ["current", "threshold_status", "trajectory"],
+          "properties": {
+            "current": { "type": "number" },
+            "threshold_status": {
+              "type": "string",
+              "enum": ["normal", "elevated", "critical"]
+            },
+            "trajectory": {
+              "type": "string",
+              "enum": ["improving", "stable", "deteriorating"]
+            }
+          }
+        },
+        "jgb_10y": {
+          "type": "object",
+          "required": ["current", "threshold_status", "trajectory"],
+          "properties": {
+            "current": { "type": "number" },
+            "threshold_status": {
+              "type": "string",
+              "enum": ["normal", "elevated", "critical"]
+            },
+            "trajectory": {
+              "type": "string",
+              "enum": ["improving", "stable", "deteriorating"]
+            }
+          }
+        },
+        "brent": {
+          "type": "object",
+          "required": ["current", "threshold_status", "trajectory"],
+          "properties": {
+            "current": { "type": "number" },
+            "threshold_status": {
+              "type": "string",
+              "enum": ["normal", "elevated", "critical"]
+            },
+            "trajectory": {
+              "type": "string",
+              "enum": ["improving", "stable", "deteriorating"]
+            }
+          }
+        },
+        "pre_loaded": {
+          "type": "boolean"
+        },
+        "pre_loaded_detail": {
+          "type": "string"
+        },
+        "stress_chain_proximity": {
+          "type": "string"
+        }
+      }
+    },
+    "bear_pressure": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Layer 2 bear pressure score"
+    },
+    "bear_pressure_reasoning": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Explanation of bear pressure score"
+    },
+    "layer2_summary": {
+      "type": "string",
+      "minLength": 1,
+      "description": "2-3 sentences summarizing what Layer 3 needs to know"
+    }
+  }
+}
