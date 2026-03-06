@@ -1687,15 +1687,48 @@ async function main() {
     console.log('\n═══ LAYER 2: CONTEXTUALIZE ═══');
     const contextualizeResult = await runContextualize(threatsToAssess, dashboardData, previousBearScore, thesisContext);
 
+    // Tier 1 validators — Layer 2
+    let tier1Layer2 = { flags: [], hard_fails: 0, total_flags: 0, layer: 2 };
+    if (contextualizeResult) {
+      try {
+        tier1Layer2 = runTier1Checks(2, contextualizeResult, dashboardData);
+      } catch (e) {
+        warn('tier1', `Layer 2 validator failed (non-fatal): ${e.message}`);
+        tier1Layer2 = { flags: [{ rule_id: 'VALIDATOR_FAILURE', finding: 'Layer 2 Tier 1 checks', detail: e.message, severity: 'FLAG', timestamp: new Date().toISOString() }], hard_fails: 0, total_flags: 1, layer: 2 };
+      }
+    }
+
     if (contextualizeResult) {
       // ── Layer 3: INFER ──────────────────────────────────────────────────
       console.log('\n═══ LAYER 3: INFER ═══');
       const inferenceResult = await runInfer(contextualizeResult, dashboardData, thesisContext);
 
+      // Tier 1 validators — Layer 3
+      let tier1Layer3 = { flags: [], hard_fails: 0, total_flags: 0, layer: 3 };
+      if (inferenceResult) {
+        try {
+          tier1Layer3 = runTier1Checks(3, inferenceResult, dashboardData);
+        } catch (e) {
+          warn('tier1', `Layer 3 validator failed (non-fatal): ${e.message}`);
+          tier1Layer3 = { flags: [{ rule_id: 'VALIDATOR_FAILURE', finding: 'Layer 3 Tier 1 checks', detail: e.message, severity: 'FLAG', timestamp: new Date().toISOString() }], hard_fails: 0, total_flags: 1, layer: 3 };
+        }
+      }
+
       if (inferenceResult) {
         // ── Layer 4: RECONCILE ────────────────────────────────────────────
         console.log('\n═══ LAYER 4: RECONCILE ═══');
         const reconcileResult = await runReconcile(contextualizeResult, inferenceResult, dashboardData, thesisContext);
+
+        // Tier 1 validators — Layer 4
+        let tier1Layer4 = { flags: [], hard_fails: 0, total_flags: 0, layer: 4 };
+        if (reconcileResult) {
+          try {
+            tier1Layer4 = runTier1Checks(4, reconcileResult, dashboardData);
+          } catch (e) {
+            warn('tier1', `Layer 4 validator failed (non-fatal): ${e.message}`);
+            tier1Layer4 = { flags: [{ rule_id: 'VALIDATOR_FAILURE', finding: 'Layer 4 Tier 1 checks', detail: e.message, severity: 'FLAG', timestamp: new Date().toISOString() }], hard_fails: 0, total_flags: 1, layer: 4 };
+          }
+        }
 
         if (reconcileResult) {
           // ── Compatibility Bridge ──────────────────────────────────────
