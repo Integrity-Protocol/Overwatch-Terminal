@@ -5,6 +5,20 @@ Autonomous AI intelligence system monitoring an institutional adoption thesis. F
 
 The deeper IP is The Integrity Protocol — a cognitive transfer methodology for decomposing expert human judgment into layered AI systems with epistemological guardrails. Overwatch Terminal is TIP's first proof of concept. Patent Pending — filed March 5, 2026.
 
+## The Governing Mind (Architecture Decision #11)
+
+The system has two structural components: the Governing Mind and the Analytical Pipeline.
+
+The Governing Mind has two halves operating concurrently, not sequentially:
+- **Layer Zero (static half):** Immutable epistemological rules. Principles of evidence and reasoning true across all domains. Born with the system. Never changes.
+- **Overledger / Corrections Ledger (dynamic half):** Accumulated experiential wisdom earned through operational errors. Domain-specific. Grows over time. Cannot be copied or accelerated.
+
+The Analytical Pipeline (SWEEP → CONTEXTUALIZE → INFER → RECONCILE) operates within the field created by both halves simultaneously. When ${correctionsLedger} and ${thesisContext} are injected into a layer prompt, they are concurrent constraints from two halves of the same governing intelligence — not sequential inputs.
+
+Arbitration hierarchy: Layer Zero overrules everything. Verified facts overrule inferences. Overledger informs but does not overrule verified facts.
+
+One-line summary: Judgment requires both principle and experience operating concurrently.
+
 ## Critical Build Rules
 - NEVER modify a file without stating: what changes, what it affects downstream, what could break
 - One change at a time. Verify before moving to next.
