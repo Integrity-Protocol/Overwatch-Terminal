@@ -116,6 +116,61 @@ function loadCorrectionsLedger() {
   }
 }
 
+async function enforceCorrectionsReferenced(result, layerLabel, client, ledgerEntries) {
+  if (Array.isArray(result.corrections_referenced)) {
+    log(layerLabel, `corrections_referenced present: ${result.corrections_referenced.length} entries`);
+    return;
+  }
+
+  const ledgerCount = Array.isArray(ledgerEntries) ? ledgerEntries.length : 0;
+  warn(layerLabel, `corrections_referenced missing from output (ledger has ${ledgerCount} active entries)`);
+
+  if (client) {
+    try {
+      log(layerLabel, 'Firing one-shot retry for corrections_referenced...');
+      const retryResponse = await client.messages.create({
+        model: 'claude-sonnet-4-5-20250929',
+        max_tokens: 1000,
+        messages: [{
+          role: 'user',
+          content: `Your previous analysis output was missing the required corrections_referenced field. The corrections ledger had ${ledgerCount} active entries.\n\nReturn ONLY the following JSON object — nothing else:\n{\n  "corrections_referenced": [\n    {\n      "correction_id": "CL-XXX",\n      "trigger_matched": "what specific trigger condition matched",\n      "influence_on_assessment": "how it changed your assessment"\n    }\n  ],\n  "compliance_error_reason": "why this field was not included in your original output"\n}\n\nIf no corrections were relevant, return:\n{\n  "corrections_referenced": [],\n  "compliance_error_reason": "why this field was not included in your original output"\n}`
+        }]
+      });
+
+      const retryRaw = retryResponse.content[0].text;
+      const retryCleaned = retryRaw.trim().replace(/^```(?:json)?\s*/i, '').replace(/\s*```\s*$/, '').trim();
+      const retryParsed = JSON.parse(retryCleaned);
+
+      if (Array.isArray(retryParsed.corrections_referenced)) {
+        result.corrections_referenced = retryParsed.corrections_referenced;
+        result._corrections_compliance = 'RECOVERED_VIA_RETRY';
+        result._compliance_error_reason = retryParsed.compliance_error_reason || 'No reason provided';
+        log(layerLabel, `Retry succeeded: ${result.corrections_referenced.length} corrections referenced`);
+        log(layerLabel, `Compliance error reason: ${result._compliance_error_reason}`);
+        return;
+      }
+
+      warn(layerLabel, 'Retry returned invalid type for corrections_referenced — falling back');
+      result.corrections_referenced = [];
+      result._corrections_compliance = 'RETRY_INVALID_TYPE';
+      result._compliance_error_reason = retryParsed.compliance_error_reason || 'No reason provided';
+      return;
+
+    } catch (retryErr) {
+      warn(layerLabel, `Retry failed: ${retryErr.message} — falling back`);
+      result.corrections_referenced = [];
+      result._corrections_compliance = 'RETRY_FAILED';
+      result._compliance_error_reason = `Retry error: ${retryErr.message}`;
+      return;
+    }
+  }
+
+  result.corrections_referenced = [];
+  result._corrections_compliance = 'MISSING_NO_CLIENT';
+  result._compliance_error_reason = 'No API client available for retry';
+  warn(layerLabel, 'No API client — injected empty array with compliance flag');
+}
+
 /**
  * Shared helper: strip markdown fences and parse JSON from Claude response.
  * Applies truncation repair. Throws on parse failure.
