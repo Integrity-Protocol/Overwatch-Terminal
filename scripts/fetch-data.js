@@ -698,6 +698,29 @@ async function fetchX402Agent(fallback) {
   return result;
 }
 
+// ─── DefiLlama DEX volume fetcher ───────────────────────────────────────────
+
+async function fetchDefiLlamaDex(fallback) {
+  try {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 10000);
+    const res = await fetch('https://api.llama.fi/summary/dexs/xrpl-dex', { signal: controller.signal });
+    clearTimeout(timer);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    const result = {
+      total24h: data.total24h ?? null,
+      total7d: data.total7d ?? null,
+      change_1d: data.change_1d ?? null,
+    };
+    log('DefiLlama', `XRPL DEX 24h vol = ${result.total24h?.toLocaleString()} (change: ${result.change_1d?.toFixed(1)}%)`);
+    return result;
+  } catch (e) {
+    err('DefiLlama', `XRPL DEX: ${e.message}`);
+    return fallback ?? { total24h: null, total7d: null, change_1d: null };
+  }
+}
+
 // ─── Kill-switch helpers ──────────────────────────────────────────────────────
 
 function pct(current, target) {
@@ -792,6 +815,15 @@ async function main() {
   }
 
   const xrplMetrics = await fetchXRPL(existing);
+
+  const defiLlamaDex = await fetchDefiLlamaDex(existing?.xrpl_metrics);
+  if (defiLlamaDex.total24h != null) {
+    xrplMetrics.dex_volume_24h_usd = Math.round(defiLlamaDex.total24h);
+    if (xrp.price && xrp.price > 0) {
+      xrplMetrics.dex_volume_24h_xrp = Math.round(defiLlamaDex.total24h / xrp.price);
+    }
+  }
+
   const xIntelligence = await fetchXIntelligence(existing?.x_intelligence);
   const x402Agent = await fetchX402Agent(existing);
 
