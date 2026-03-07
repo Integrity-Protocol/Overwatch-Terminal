@@ -592,17 +592,14 @@ async function runSweep(marketData) {
     return [];
   }
 
-  const sweepPrompt = `You are a senior institutional analyst conducting a full counter-thesis sweep.
-Your job is NOT to evaluate a pre-defined list of risks. Your job is to find
-threats the thesis holder may be blind to.
+  const sweepPrompt = `You are a senior analyst performing the SWEEP step of a four-layer analytical monitoring system. Your job is perception — surface every material signal in the environment the thesis operates in.
+
+Positive, negative, ambiguous, contradictory. Apply equal rigor in all directions. A positive signal requires the same standard of evidence as a negative one — specific developments, named entities, verifiable actions. No direction is preferred.
+
+You are not evaluating these signals. You are not determining their impact on the thesis. You are identifying what is happening in the environment. Later layers will contextualize, reason about, and judge what you find.
 
 THESIS:
-XRP/XRPL is positioned to become primary institutional settlement infrastructure
-for cross-border payments. Convergent catalysts include: Ripple institutional
-partnerships (BIS, IMF, central banks), RLUSD stablecoin growth toward $5B
-circulation, ODL volume expansion, Permissioned Domains enabling compliant
-institutional access, XRP ETF approval and sustained inflows, and Japanese
-institutional adoption via SBI Holdings.
+XRP/XRPL is positioned to become primary institutional settlement infrastructure for cross-border payments. Convergent catalysts include: Ripple institutional partnerships (BIS, IMF, central banks), RLUSD stablecoin growth toward $5B circulation, ODL volume expansion, Permissioned Domains enabling compliant institutional access, XRP ETF approval and sustained inflows, and Japanese institutional adoption via SBI Holdings.
 
 CURRENT DATA:
 ${JSON.stringify(marketData)}
@@ -614,43 +611,49 @@ FALSIFICATION CRITERIA (existing kill switches):
 - XRP ETF: Sustained outflows beyond 30 days triggers review
 - Fear & Greed: Extended period below 20 signals structural risk
 
+SIGNAL CATEGORIES:
+Every signal must be classified into one of these universal categories:
+- regulatory: Legal, regulatory, or compliance environment changes
+- competitive: Alternative approaches, competing solutions, rival actors
+- macro: Systemic forces beyond the thesis scope
+- structure: How the operating environment is organized — access, flow, infrastructure, participant dynamics
+- technology: Technical capabilities, infrastructure changes, protocol developments
+- integration: Usage patterns, deployment evidence, participant behavior, implementation signals
+- geopolitical: Cross-border power dynamics, international relations, jurisdictional conflicts
+- assumption_decay: Core assumptions that haven't been re-verified
+- narrative: Perception shifts, framing changes, public sentiment
+- agent_capacity: Health, runway, leadership, and execution capability of the thesis actor itself
+
 INSTRUCTIONS:
 
-1. You are being paid to destroy this thesis. Find the fatal flaw.
+1. Search across all ten categories. Do not concentrate on any single category. A sweep that returns signals from only 3 categories has blind spots in the other 7.
 
-2. Do NOT limit yourself to SWIFT, Visa B2B, or JPMorgan. Search across:
-   - Emerging technologies not yet on the radar
-   - Regulatory scenarios beyond current trajectory (regime changes, enforcement shifts)
-   - Market structure changes (liquidity fragmentation, DEX evolution, L2 settlement)
-   - Macro regime shifts that invalidate the setup (structural changes, not just recession)
-   - Institutional behavior patterns — what are banks ACTUALLY building internally?
-   - Geopolitical realignments that change corridor demand
-   - Assumption decay — which core assumptions are oldest and least recently validated?
-   - Adjacent disruptions (AI-native settlement, CBDC interop layers, stablecoin rails)
-   - Narrative risk — what if "institutional adoption" is itself the trap?
+2. For each signal, observe its apparent direction:
+   - ACCELERATION: movement suggesting expansion, growth, or advancement in this area
+   - DETERIORATION: movement suggesting contraction, decline, or weakening in this area
+   - AMBIGUOUS: movement detected but direction cannot be determined from available data
+   - CONTRADICTORY: simultaneous movement in opposing directions within the same signal
 
-3. Think laterally. The biggest risks are usually NOT the ones already being tracked.
-   What would make a sophisticated institutional investor sell this position tomorrow?
+3. Be specific. Name entities, cite developments, reference timelines. Vague signals are low-value signals.
 
-4. Be specific. Name projects, cite developments, reference timelines.
-   Vague warnings are useless. Concrete threats change tactics.
+4. Think laterally. The most important signals are often the ones not already being tracked.
+
+5. Do not self-censor signals in any direction. A material positive development requires the same reporting discipline as a material negative development.
 
 Respond with ONLY a JSON array. Each element:
 {
   "threat": "Short name",
-  "description": "What specifically is the threat and why it matters",
+  "description": "What specifically is happening and why it matters",
+  "direction": "ACCELERATION | DETERIORATION | AMBIGUOUS | CONTRADICTORY",
   "severity": "critical | high | moderate | low",
   "proximity": "immediate | near-term | medium-term | long-term",
   "confidence": "high | medium | low",
   "evidence": "What specific data or development supports this",
   "blind_spot": true/false,
-  "category": "competing_infra | regulatory | macro | market_structure | narrative | technology | geopolitical | assumption_decay"
+  "category": "regulatory | competitive | macro | structure | technology | integration | geopolitical | assumption_decay | narrative | agent_capacity"
 }
 
-Find everything. No limit on count. Do not self-censor findings that
-challenge the thesis. That is the entire point.
-
-IMPORTANT: Keep each threat description under 100 words. Return a maximum of 12 threats. Ensure your response is valid, complete JSON with all brackets closed.`;
+IMPORTANT: Keep each signal description under 100 words. Return a maximum of 15 signals. Ensure your response is valid, complete JSON with all brackets closed.`;
 
   const client = new Anthropic({ apiKey });
 
