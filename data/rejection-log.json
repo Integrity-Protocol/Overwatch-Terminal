@@ -350,5 +350,25 @@
     "source": "layer4_reconcile",
     "promoted": true,
     "promoted_at": "2026-03-07T00:22:30.066Z"
+  },
+  {
+    "layer3_inference": "SWIFT exploring hidden settlement capabilities (Hidden Move)",
+    "rejection_reason": "3+ assumptions, zero data support. Per CL-021, no evidence exists for SWIFT building settlement layer capabilities. Layer 3 itself classified as SPECULATIVE with low confidence. No data point supports this inference.",
+    "root_cause": "INSUFFICIENT_EVIDENCE",
+    "confidence_in_rejection": "high",
+    "corrections_ledger_action": "auto_commit",
+    "timestamp": "2026-03-07T02:26:29.828Z",
+    "source": "layer4_reconcile",
+    "promoted": true,
+    "promoted_at": "2026-03-07T02:26:29.830Z"
+  },
+  {
+    "layer3_inference": "Institutional Asset Managers may have access to private Ripple data",
+    "rejection_reason": "Not fully rejected but weight reduced to 75% discount. Two assumptions AND only partial data support. Per [LZ-RC-003], we cannot infer the presence of favorable private data from the existence of ETF launches. The launches could equally reflect speculative demand opportunity rather than settlement thesis conviction. This does not inform bear pressure scoring.",
+    "root_cause": "ASSUMPTION_FAILURE",
+    "confidence_in_rejection": "medium",
+    "corrections_ledger_action": "flag_for_review",
+    "timestamp": "2026-03-07T02:26:29.828Z",
+    "source": "layer4_reconcile"
   }
 ]
