@@ -1022,6 +1022,13 @@ Scoring rules:
 
 If you cannot make a connection with 2 or fewer unproven assumptions, the connection does not exist. Return INSUFFICIENT_EVIDENCE and move on.
 
+ASSUMPTION COUNTING DISCIPLINE:
+Each discrete unproven claim is one assumption. Do not bundle.
+- "Entity X is acting rationally AND their motive is Y" is TWO assumptions, not one.
+- "Established economic theory applies in this specific current context" is ONE assumption. A well-documented historical relationship does not become a fact about what is happening right now. Count it.
+- "Action A will cause Effect B through Mechanism C" contains assumptions about the mechanism operating AND the effect materializing. Count each independently.
+- If you are unsure whether something is one assumption or two, count it as two. Undercounting is a structural error. Overcounting is conservative and safe.
+
 EVIDENCE REQUIREMENT:
 Every inference MUST be grounded in at least two independent, verifiable pieces of evidence from Layer 2 or from known public information.
 
