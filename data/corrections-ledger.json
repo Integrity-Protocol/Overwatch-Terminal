@@ -375,7 +375,7 @@
     "confidence_in_lesson": "HIGH",
     "times_applied": 0,
     "times_applicable_but_missed": 0,
-    "status": "ACTIVE"
+    "status": "SUPERSEDED"
   },
   {
     "id": "CL-022",
@@ -429,7 +429,7 @@
     "confidence_in_lesson": "HIGH",
     "times_applied": 0,
     "times_applicable_but_missed": 0,
-    "status": "ACTIVE"
+    "status": "SUPERSEDED"
   },
   {
     "id": "CL-025",
@@ -447,7 +447,7 @@
     "confidence_in_lesson": "HIGH",
     "times_applied": 0,
     "times_applicable_but_missed": 0,
-    "status": "ACTIVE"
+    "status": "SUPERSEDED"
   },
   {
     "id": "CL-026",
@@ -551,6 +551,24 @@
     "prevention": "Require independent institutional flow data (fund flows, custody movements, filing disclosures) before inferring institutional behavior. Retail sentiment indices are not a substitute for flow evidence regardless of how extreme the reading.",
     "lesson": "Retail sentiment indices measure public mood, not institutional behavior. Do not infer institutional activity from sentiment data without independent flow evidence.",
     "trigger": "Any inference that uses a retail sentiment index reading to conclude institutional accumulation, distribution, capitulation, or changes in institutional positioning without independent flow data.",
+    "lesson_type": "FALSE_THREAT",
+    "confidence_in_lesson": "HIGH",
+    "times_applied": 0,
+    "times_applicable_but_missed": 0,
+    "status": "ACTIVE"
+  },
+  {
+    "id": "CL-032",
+    "date_of_error": "2026-03-06",
+    "date_identified": "2026-03-08",
+    "identified_by": "sunday_audit",
+    "belief": "Competitor product naming or standards adoption indicates hidden capability development",
+    "reality": "Product names, branding choices, and standards compliance are not evidence of undisclosed strategic capabilities. Inferring hidden development from naming conventions requires multiple unproven assumptions and zero supporting data. Verified by 3 occurrences across 2 days, each correctly classified as speculative by Layer 3 circuit breakers.",
+    "root_cause": "System inferred hidden strategic capability from publicly visible product features (naming, standards adoption) without any evidence of the inferred capability actually being developed.",
+    "root_cause_type": "INSUFFICIENT_EVIDENCE",
+    "prevention": "Require direct evidence of capability development (technical documentation, deployment announcements, regulatory filings, demonstrated functionality) before inferring hidden strategic intent from product naming or standards compliance.",
+    "lesson": "Product naming and standards adoption are not evidence of undisclosed capability development. Do not infer hidden strategic intent from publicly visible product features without direct evidence of the inferred capability.",
+    "trigger": "Any inference that treats a competitor's product naming, branding, or standards compliance as evidence of undisclosed capability development without direct evidence of that capability.",
     "lesson_type": "FALSE_THREAT",
     "confidence_in_lesson": "HIGH",
     "times_applied": 0,
