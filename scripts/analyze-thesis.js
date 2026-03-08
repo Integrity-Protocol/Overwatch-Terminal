@@ -1847,6 +1847,11 @@ async function main() {
         timestamp: new Date().toISOString(),
         ...assessment360
       };
+      // Extract corrections_referenced before deleting raw layer data
+      // These small arrays enable Sunday audit to verify times_applied counters
+      // across all runs in a week, not just the latest 360-report.json
+      historyEntry._layer2_corrections_referenced = historyEntry._layer2_raw?.corrections_referenced || [];
+      historyEntry._layer3_corrections_referenced = historyEntry._layer3_raw?.corrections_referenced || [];
       // Don't store raw layer data in history — too large
       delete historyEntry._layer4_raw;
       delete historyEntry._layer3_raw;
