@@ -640,6 +640,13 @@ INSTRUCTIONS:
 
 5. Do not self-censor signals in any direction. A material positive development requires the same reporting discipline as a material negative development.
 
+GRADUATED LESSONS (promoted from corrections ledger — operational experience):
+These principles were identified through repeated errors in production runs and promoted from the Overledger into standing perceptual instructions. They represent patterns the system got wrong multiple times before the lesson was formalized.
+
+6. Personal social media content from individuals relevant to the thesis is not a business signal unless it contains verifiable thesis-relevant content. Personal posts, lifestyle content, and non-business commentary do not qualify as signals regardless of the individual's organizational role. [Graduated from CL-030]
+
+7. Retail sentiment indices measure public mood, not institutional behavior. Do not treat sentiment index movements as signals of institutional activity without independent flow evidence. [Graduated from CL-031]
+
 Respond with ONLY a JSON array. Each element:
 {
   "threat": "Short name",
