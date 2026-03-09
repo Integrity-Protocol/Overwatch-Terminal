@@ -721,6 +721,145 @@ async function fetchDefiLlamaDex(fallback) {
   }
 }
 
+// ─── CoinGlass ETF fetcher ───────────────────────────────────────────────────
+//
+// Fetches ETF flow history from CoinGlass v4 API for XRP, BTC, and ETH.
+// Returns daily flows, 5-day aggregates, 14-day aggregates, and per-fund breakdown.
+// The XRP response populates d.etf, BTC populates d.btc_etf, ETH populates d.eth_etf.
+//
+// CoinGlass returns an array of daily entries (oldest first):
+//   { timestamp, flow_usd, price_usd, etf_flows: [{ etf_ticker, flow_usd }] }
+//
+// AUM is NOT provided by the flow-history endpoint. We calculate cumulative AUM
+// from the sum of all historical daily flows. This is an approximation —
+// it does not account for NAV changes from price movement. If manual.xrp_etf_aum
+// is set, it takes precedence as the authoritative AUM value.
+
+// Known XRP ETF fund issuers — maps ticker to issuer name for dashboard display
+const XRP_ETF_ISSUERS = {
+  'XXRP':  'ProShares',
+  'XRPT':  'Teucrium',
+  'GXRP':  'Grayscale',
+  'CRXP':  '21Shares',
+  'XRPF':  'Franklin Templeton',
+  'XRPI':  'Bitwise',
+  'RXRP':  'Volatility Shares',
+  'XXRP':  'ProShares',
+};
+
+async function fetchCoinGlassETF(asset, url, fallback) {
+  const key = process.env.COINGLASS_API_KEY;
+  if (!key) {
+    warn('CoinGlass', `COINGLASS_API_KEY not set — skipping ${asset}`);
+    return fallback ?? null;
+  }
+  try {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 15000);
+    const res = await fetch(url, {
+      headers: { 'CG-API-KEY': key },
+      signal: controller.signal,
+    });
+    clearTimeout(timer);
+    if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
+    const json = await res.json();
+    if (json.code !== '0' || !Array.isArray(json.data)) {
+      throw new Error(`API error: code=${json.code}, msg=${json.msg || 'unknown'}`);
+    }
+
+    const days = json.data;
+    if (days.length === 0) {
+      warn('CoinGlass', `${asset}: No data returned`);
+      return fallback ?? null;
+    }
+
+    // Filter out days with zero flow and no per-fund data (weekends/holidays)
+    const tradingDays = days.filter(d =>
+      d.flow_usd !== 0 || (d.etf_flows && d.etf_flows.some(f => f.flow_usd != null))
+    );
+
+    // Latest trading day
+    const latest = tradingDays.length > 0 ? tradingDays[tradingDays.length - 1] : days[days.length - 1];
+    const latestDate = new Date(latest.timestamp).toISOString().slice(0, 10);
+
+    // Daily flows from latest trading day
+    const dailyNet = latest.flow_usd ?? 0;
+    const dailyInflow = (latest.etf_flows ?? [])
+      .filter(f => (f.flow_usd ?? 0) > 0)
+      .reduce((sum, f) => sum + f.flow_usd, 0);
+    const dailyOutflow = (latest.etf_flows ?? [])
+      .filter(f => (f.flow_usd ?? 0) < 0)
+      .reduce((sum, f) => sum + Math.abs(f.flow_usd), 0);
+
+    // 5-day (weekly) aggregate — last 5 trading days
+    const last5 = tradingDays.slice(-5);
+    const weeklyNet = last5.reduce((sum, d) => sum + (d.flow_usd ?? 0), 0);
+    const weeklyInflow = last5.reduce((sum, d) => {
+      return sum + (d.etf_flows ?? [])
+        .filter(f => (f.flow_usd ?? 0) > 0)
+        .reduce((s, f) => s + f.flow_usd, 0);
+    }, 0);
+    const weeklyOutflow = last5.reduce((sum, d) => {
+      return sum + (d.etf_flows ?? [])
+        .filter(f => (f.flow_usd ?? 0) < 0)
+        .reduce((s, f) => s + Math.abs(f.flow_usd), 0);
+    }, 0);
+
+    // 14-day cumulative — last 14 trading days
+    const last14 = tradingDays.slice(-14);
+    const cumNet = last14.reduce((sum, d) => sum + (d.flow_usd ?? 0), 0);
+    const cumInflow = last14.reduce((sum, d) => {
+      return sum + (d.etf_flows ?? [])
+        .filter(f => (f.flow_usd ?? 0) > 0)
+        .reduce((s, f) => s + f.flow_usd, 0);
+    }, 0);
+
+    // Cumulative AUM approximation (sum of all historical flows)
+    const cumulativeFlows = days.reduce((sum, d) => sum + (d.flow_usd ?? 0), 0);
+
+    // Per-fund breakdown from latest day (XRP only — for the funds table)
+    const funds = (latest.etf_flows ?? [])
+      .filter(f => f.etf_ticker && f.etf_ticker !== asset.toUpperCase())
+      .map(f => ({
+        ticker:     f.etf_ticker,
+        issuer:     XRP_ETF_ISSUERS[f.etf_ticker] ?? f.etf_ticker,
+        aum:        null,  // Not available from flow-history endpoint
+        xrp_locked: null,  // Not available from flow-history endpoint
+        daily_flow: f.flow_usd ?? null,
+      }));
+
+    // Count active funds (those with any non-null flow_usd in latest day)
+    const numFunds = (latest.etf_flows ?? [])
+      .filter(f => f.etf_ticker && f.etf_ticker !== asset.toUpperCase() && f.flow_usd != null)
+      .length;
+
+    log('CoinGlass', `${asset}: daily=${(dailyNet/1e6).toFixed(1)}M, 5d=${(weeklyNet/1e6).toFixed(1)}M, 14d=${(cumNet/1e6).toFixed(1)}M, funds=${numFunds}, date=${latestDate}`);
+
+    return {
+      total_aum:        cumulativeFlows > 0 ? cumulativeFlows : null,
+      daily_net_flow:   dailyNet,
+      daily_inflow:     dailyInflow,
+      daily_outflow:    dailyOutflow,
+      weekly_net_flow:  weeklyNet,
+      weekly_inflow:    weeklyInflow,
+      weekly_outflow:   weeklyOutflow,
+      cum_net_flow:     cumNet,
+      cum_inflow:       cumInflow,
+      flow_date:        latestDate,
+      as_of_date:       latestDate,
+      num_funds:        numFunds,
+      total_xrp_locked: null,  // Not available from CoinGlass flow-history
+      pct_supply:       null,  // Calculated downstream if xrp_locked is available
+      funds:            funds,
+      source:           'coinglass',
+      _cumulative_aum_note: 'Approximation from sum of historical flows — does not reflect NAV changes',
+    };
+  } catch (e) {
+    err('CoinGlass', `${asset}: ${e.message}`);
+    return fallback ?? null;
+  }
+}
+
 // ─── Kill-switch helpers ──────────────────────────────────────────────────────
 
 function pct(current, target) {
@@ -728,10 +867,11 @@ function pct(current, target) {
   return Math.round((current / target) * 100);
 }
 
-function buildKillSwitches(manual, rlusd) {
+function buildKillSwitches(manual, rlusd, etfData) {
   const odl    = manual?.odl_volume_annualized ?? null;
   const rlusdC = rlusd?.market_cap ?? manual?.rlusd_circulation ?? null;
-  const etfAum = manual?.xrp_etf_aum ?? null;
+  // Prefer manual AUM if set, then CoinGlass cumulative AUM, then null
+  const etfAum = manual?.xrp_etf_aum ?? etfData?.total_aum ?? null;
   const dex    = manual?.permissioned_dex_institutions ?? null;
   const clarity = manual?.clarity_act_status ?? 'pending';
 
@@ -836,6 +976,17 @@ async function main() {
     _last_manual_update:            existing?.manual?._last_manual_update            ?? null,
   };
 
+  // CoinGlass ETF data — XRP, BTC, ETH
+  const xrpEtf = await fetchCoinGlassETF('XRP', ENDPOINTS.coinglass.xrp_etf, existing?.etf);
+  const btcEtf = await fetchCoinGlassETF('BTC', ENDPOINTS.coinglass.btc_etf, existing?.btc_etf);
+  const ethEtf = await fetchCoinGlassETF('ETH', ENDPOINTS.coinglass.eth_etf, existing?.eth_etf);
+
+  // If manual AUM is set and CoinGlass returned data, prefer manual AUM as authoritative
+  if (xrpEtf && manual?.xrp_etf_aum != null) {
+    xrpEtf.total_aum = manual.xrp_etf_aum;
+    xrpEtf._cumulative_aum_note = 'Using manual AUM value (authoritative)';
+  }
+
   const thesis_scores = existing?.thesis_scores ?? {
     regulatory:             { status: 'CONFIRMED',     confidence: 'high'   },
     institutional_custody:  { status: 'STRONG',        confidence: 'high'   },
@@ -864,8 +1015,11 @@ async function main() {
     xrpl_metrics: xrplMetrics,
     x_intelligence: xIntelligence,
     x402_agent: x402Agent,
+    etf:      xrpEtf,
+    btc_etf:  btcEtf,
+    eth_etf:  ethEtf,
     manual,
-    kill_switches:  buildKillSwitches(manual, rlusd),
+    kill_switches:  buildKillSwitches(manual, rlusd, xrpEtf),
     thesis_scores,
   };
 
@@ -886,6 +1040,9 @@ async function main() {
   console.log(`XRPL ledger:     #${xrplMetrics.current_ledger ?? 'N/A'}, ${xrplMetrics.last_ledger_txns ?? 'N/A'} txns, fee_burn=${xrplMetrics.fee_burn_per_ledger_xrp ?? 'N/A'} XRP`);
   console.log(`XRPL book:       ${xrplMetrics.book_depth_xrp_usd ? `${xrplMetrics.book_depth_xrp_usd.bids}b/${xrplMetrics.book_depth_xrp_usd.asks}a, best_bid=${xrplMetrics.book_depth_xrp_usd.best_bid}, best_ask=${xrplMetrics.book_depth_xrp_usd.best_ask}` : 'N/A'}`);
   console.log(`x402 agent:      ${x402Agent.payments_sent ?? 0} payments, ${x402Agent.balance_xrp ?? 'N/A'} XRP balance`);
+  console.log(`XRP ETF:         daily=${xrpEtf ? (xrpEtf.daily_net_flow/1e6).toFixed(1)+'M' : 'N/A'}, 5d=${xrpEtf ? (xrpEtf.weekly_net_flow/1e6).toFixed(1)+'M' : 'N/A'} (${xrpEtf?.flow_date ?? 'no data'})`);
+  console.log(`BTC ETF:         daily=${btcEtf ? (btcEtf.daily_net_flow/1e6).toFixed(1)+'M' : 'N/A'}, 5d=${btcEtf ? (btcEtf.weekly_net_flow/1e6).toFixed(1)+'M' : 'N/A'}`);
+  console.log(`ETH ETF:         daily=${ethEtf ? (ethEtf.daily_net_flow/1e6).toFixed(1)+'M' : 'N/A'}, 5d=${ethEtf ? (ethEtf.weekly_net_flow/1e6).toFixed(1)+'M' : 'N/A'}`);
   console.log('───────────────────────────────────────────────\n');
 
   await pushToGitHub();

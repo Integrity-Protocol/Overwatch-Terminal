@@ -2,6 +2,7 @@
 
 const COINGECKO_BASE = 'https://api.coingecko.com/api/v3';
 const FRED_BASE      = 'https://api.stlouisfed.org/fred/series/observations';
+const COINGLASS_BASE = 'https://open-api-v4.coinglass.com/api/etf';
 
 const ENDPOINTS = {
   xrp: `${COINGECKO_BASE}/simple/price?ids=ripple&vs_currencies=usd&include_24hr_vol=true&include_24hr_change=true&include_market_cap=true`,
@@ -29,6 +30,11 @@ const ENDPOINTS = {
   xrpl: {
     server_info:  'https://s1.ripple.com:51234',
     rlusd_issuer: 'rMxCKbEDwqr76QuheSUMdEGf4B9xJ8m5De',
+  },
+  coinglass: {
+    xrp_etf: `${COINGLASS_BASE}/xrp/flow-history`,
+    btc_etf: `${COINGLASS_BASE}/bitcoin/flow-history`,
+    eth_etf: `${COINGLASS_BASE}/ethereum/flow-history`,
   },
 };
 
