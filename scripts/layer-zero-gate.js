@@ -146,6 +146,7 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary:
   "findings_reviewed": 0,
   "violations": [
     {
+      "signal_ids": ["signal_id or signal_ids from the finding that violated a rule"],
       "finding": "name or description of the specific finding that violated a rule",
       "rule_violated": "LZ-XX-XXX",
       "violation": "what the reasoning did wrong",
