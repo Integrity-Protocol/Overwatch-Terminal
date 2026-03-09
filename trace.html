@@ -331,11 +331,25 @@ body {
   border-radius: 4px;
   padding: 9px 13px;
   margin-bottom: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.event-item:hover {
+  background: rgba(255,255,255,0.035);
+}
+.event-item.expanded {
+  background: rgba(255,255,255,0.05);
+  padding: 16px 18px;
+  margin-bottom: 8px;
+  border-radius: 6px;
 }
 .event-head {
   display: flex;
   justify-content: space-between;
   margin-bottom: 5px;
+}
+.event-item.expanded .event-head {
+  margin-bottom: 10px;
 }
 .event-type {
   font-size: 9px;
@@ -343,15 +357,26 @@ body {
   letter-spacing: 0.1em;
   font-family: var(--mono);
 }
+.event-item.expanded .event-type {
+  font-size: 11px;
+}
 .event-layer {
   font-size: 9px;
   color: var(--text-muted);
   font-family: var(--mono);
 }
+.event-item.expanded .event-layer {
+  font-size: 10px;
+}
 .event-body {
   font-size: 11px;
   color: #bbb;
   line-height: 1.4;
+}
+.event-item.expanded .event-body {
+  font-size: 13px;
+  color: var(--text-primary);
+  line-height: 1.65;
 }
 .event-rule {
   font-family: var(--mono);
@@ -361,6 +386,9 @@ body {
 }
 .event-detail {
   color: #888;
+}
+.event-item.expanded .event-detail {
+  color: var(--text-secondary);
 }
 .clean-passage {
   font-size: 11px;
@@ -580,12 +608,13 @@ const PS = {
 const SEV_COLORS = { high:'#ff3355', medium:'#ffaa00', positive:'#00ff88', low:'#00aaff' };
 
 // ─── State ───
-let allTraces = [];      // all loaded trace files
-let currentTrace = null; // the currently displayed trace
+let allTraces = [];
+let currentTrace = null;
 let selectedSignal = null;
 let outcomeFilter = null;
 let sortBy = 'events';
 let currentView = 'signals';
+let expandedEventIdx = null;  // NEW: tracks which event is expanded
 
 // ─── Helpers ───
 function esc(s) { const d=document.createElement('div'); d.textContent=s||''; return d.innerHTML; }
@@ -652,14 +681,8 @@ const EVENT_LABELS = {
 
 // ─── Data loading ───
 async function loadTraceFiles() {
-  // Try loading the trace index first, then fall back to discovery
-  // GitHub Pages: fetch the list of trace files from data/ directory
-  // Strategy: try fetching data/trace-index.json (a simple JSON array of filenames)
-  // If that doesn't exist, try to load any known trace files
-
   const traceFiles = [];
 
-  // Approach: fetch trace-index.json which the pipeline can generate
   try {
     const resp = await fetch('data/trace-index.json');
     if (resp.ok) {
@@ -673,9 +696,7 @@ async function loadTraceFiles() {
     }
   } catch(_) {}
 
-  // Fallback: if no index, try loading the most recent trace from 360-report
   if (traceFiles.length === 0) {
-    // Try fetching 360-report.json to get the run timestamp, then construct trace filename
     try {
       const r360 = await fetch('data/360-report.json');
       if (r360.ok) {
@@ -692,7 +713,6 @@ async function loadTraceFiles() {
     } catch(_) {}
   }
 
-  // Last resort: if still nothing, try a direct known file (for local dev)
   if (traceFiles.length === 0) {
     const knownFiles = [
       'cognitive-trace-2026-03-09T04-40-39-055Z.json'
@@ -715,7 +735,6 @@ function renderRunInfo() {
   document.getElementById('runTimestamp').textContent = ts.replace('T', ' ').substring(0, 19) + ' UTC';
   document.getElementById('signalCount').textContent = currentTrace._signal_count || 0;
 
-  // Trace selector (if multiple traces)
   const wrap = document.getElementById('traceSelectWrap');
   if (allTraces.length > 1) {
     wrap.style.display = '';
@@ -814,7 +833,6 @@ function renderDetailPanel() {
   const panel = document.getElementById('detailPanel');
   if (!selectedSignal || !currentTrace) {
     panel.classList.remove('open');
-    // Restore list width
     return;
   }
 
@@ -824,6 +842,9 @@ function renderDetailPanel() {
   panel.classList.add('open');
   const o = OC[sig.outcome] || OC.SURVIVED;
   const events = getSignalEvents(sig);
+
+  // Reset expanded event when switching signals
+  expandedEventIdx = null;
 
   // Layer flow
   const layers = [
@@ -846,13 +867,14 @@ function renderDetailPanel() {
   }
   layerHtml += '</div>';
 
-  // Events
+  // Events — now with data-event-idx for click expansion
   let eventsHtml = `<div class="event-count-label">${events.length} EVENT${events.length !== 1 ? 'S' : ''}</div>`;
 
   if (events.length === 0) {
     eventsHtml += '<div class="clean-passage">Clean passage — no events</div>';
   } else {
-    for (const ev of events) {
+    for (let i = 0; i < events.length; i++) {
+      const ev = events[i];
       const ec = EVENT_COLORS[ev.type] || '#888';
       const el = EVENT_LABELS[ev.type] || ev.type;
       let body = '';
@@ -869,7 +891,7 @@ function renderDetailPanel() {
         body = `${esc(ev.finding)}<br><span class="event-detail">${(ev.signals||[]).map(sigShort).join(' + ')} → ${esc(ev.classification)}</span>`;
       }
 
-      eventsHtml += `<div class="event-item" style="border-left:3px solid ${ec};">
+      eventsHtml += `<div class="event-item" data-event-idx="${i}" style="border-left:3px solid ${ec};">
         <div class="event-head">
           <span class="event-type" style="color:${ec};">${el}</span>
           <span class="event-layer">${ev.layer}</span>
@@ -1166,7 +1188,7 @@ function detectPatterns(runs) {
           ? 'This merge recurs AND Layer 4 always reduces the weight. The model keeps making this connection but the judge keeps discounting it.'
           : 'Recurring merge — the model consistently sees a connection between these signals.',
         signals:key.split('+'), finding:data.finding, weights:[...new Set(data.weights)],
-        action:alwaysReduced ? 'Consider whether Layer 3 should stop making this connection, or whether Layer 4\'s discount is wrong' : 'Monitor whether this merge produces useful inferences or noise'
+        action:alwaysReduced ? "Consider whether Layer 3 should stop making this connection, or whether Layer 4's discount is wrong" : 'Monitor whether this merge produces useful inferences or noise'
       });
     }
   }
@@ -1301,12 +1323,36 @@ function initEvents() {
     renderDetailPanel();
   });
 
-  // Detail close
+  // Detail panel: close button + event expansion
   document.getElementById('detailPanel').addEventListener('click', e => {
+    // Close button
     if (e.target.id === 'detailClose' || e.target.closest('#detailClose')) {
       selectedSignal = null;
       renderSignalList();
       renderDetailPanel();
+      return;
+    }
+
+    // Event item expansion
+    const eventItem = e.target.closest('.event-item');
+    if (eventItem) {
+      const idx = parseInt(eventItem.dataset.eventIdx);
+      if (isNaN(idx)) return;
+
+      // Collapse previous
+      const prev = document.querySelector('.event-item.expanded');
+      if (prev && prev !== eventItem) {
+        prev.classList.remove('expanded');
+      }
+
+      // Toggle clicked
+      if (expandedEventIdx === idx) {
+        eventItem.classList.remove('expanded');
+        expandedEventIdx = null;
+      } else {
+        eventItem.classList.add('expanded');
+        expandedEventIdx = idx;
+      }
     }
   });
 
@@ -1339,7 +1385,6 @@ async function init() {
     return;
   }
 
-  // Default to most recent trace
   currentTrace = allTraces[allTraces.length - 1];
 
   renderRunInfo();
