@@ -1,0 +1,158 @@
+{
+  "name": "municipal-water-cascade",
+  "display_name": "Regional Water Distribution Pressure Collapse",
+  "description": "Tests detection of a cascading failure in a regional hydraulic grid where localized pump maintenance redistributes load, causing sequential cavitation, water hammer, and a total loss of system pressure and fire flow capacity.",
+  "evolution_type": "domain_transfer",
+  "evolution_number": 8,
+  "obscuration": {
+    "original_domain": "Municipal Water Distribution and Telemetry",
+    "method": "Real-world SCADA system telemetry formatted as generic key-value operational data.",
+    "numeric_factor": null
+  },
+  "time_steps": [
+    {
+      "step": 1,
+      "label": "Baseline Operations",
+      "simulated_date": "Day 0",
+      "market_data": {
+        "pump_1_load_pct": 75.2,
+        "pump_2_load_pct": 74.8,
+        "pump_3_load_pct": 76.1,
+        "pump_4_load_pct": 78.5,
+        "pump_1_vibration_hz": 12.1,
+        "pump_4_vibration_hz": 18.5,
+        "system_pressure_psi": 68.5,
+        "sector_b_hydrant_psi": 65.0,
+        "reservoir_alpha_level_pct": 92.4,
+        "water_turbidity_ntu": 0.8,
+        "ambient_temp_f": 72.0,
+        "maintenance_log": "Pump 4 showing minor seal weepage, scheduled for routine teardown and maintenance.",
+        "public_statement": "System operating optimally. Regional reservoir levels remain strong going into the summer."
+      },
+      "expected_outcome": {
+        "thesis_status": "Valid",
+        "notes": "System is healthy. A competent analyst should note the slight vibration on Pump 4 but recognize it as within normal operational noise. Reservoir levels are a strong positive."
+      }
+    },
+    {
+      "step": 2,
+      "label": "Pump 4 Offline for Maintenance",
+      "simulated_date": "Day 14",
+      "market_data": {
+        "pump_1_load_pct": 98.5,
+        "pump_2_load_pct": 99.1,
+        "pump_3_load_pct": 98.8,
+        "pump_4_status": "OFFLINE_MAINTENANCE",
+        "pump_1_vibration_hz": 12.8,
+        "pump_2_vibration_hz": 13.0,
+        "pump_3_vibration_hz": 22.4,
+        "system_pressure_psi": 66.2,
+        "sector_b_hydrant_psi": 63.5,
+        "reservoir_alpha_level_pct": 94.1,
+        "water_turbidity_ntu": 0.9,
+        "ambient_temp_f": 88.0,
+        "maintenance_log": "Pump 4 offline. Load redistributed successfully to Pumps 1-3. Pump 3 showing elevated vibration; adjusting flow control valves.",
+        "public_statement": "Routine maintenance underway. No service interruptions."
+      },
+      "expected_outcome": {
+        "thesis_status": "Strained",
+        "notes": "Analyst should notice the mathematical reality: remaining pumps are running at near maximum capacity to compensate for Pump 4. The rising vibration on Pump 3 contradicts the operator's reassuring statement."
+      }
+    },
+    {
+      "step": 3,
+      "label": "Elevated Load and Minor Pressure Drop",
+      "simulated_date": "Day 21",
+      "market_data": {
+        "pump_1_load_pct": 99.5,
+        "pump_2_load_pct": 99.8,
+        "pump_3_load_pct": 102.4,
+        "pump_4_status": "OFFLINE_MAINTENANCE",
+        "pump_1_vibration_hz": 14.5,
+        "pump_2_vibration_hz": 15.2,
+        "pump_3_vibration_hz": 38.7,
+        "pump_3_temp_c": 92.5,
+        "system_pressure_psi": 58.0,
+        "sector_b_hydrant_psi": 51.0,
+        "reservoir_alpha_level_pct": 95.5,
+        "water_turbidity_ntu": 1.4,
+        "ambient_temp_f": 94.0,
+        "maintenance_log": "Pump 3 temp warning triggered. Parts for Pump 4 delayed by supply chain.",
+        "regulator_filing": "System pressure slightly degraded but well above the 40 PSI municipal mandate. Reservoir Alpha is at 95.5% capacity, ensuring total volume security."
+      },
+      "expected_outcome": {
+        "thesis_status": "Failing",
+        "notes": "The pipeline must distinguish signal from noise here: the 'positive' indicator of high reservoir volume is irrelevant if the pumps cannot move the water. Pump 3 is exceeding rated load and highly likely to fail."
+      }
+    },
+    {
+      "step": 4,
+      "label": "Pump 3 Cavitation and Trip",
+      "simulated_date": "Day 24",
+      "market_data": {
+        "pump_1_load_pct": 128.5,
+        "pump_2_load_pct": 131.0,
+        "pump_3_status": "TRIPPED_OVERTEMP",
+        "pump_4_status": "OFFLINE_MAINTENANCE",
+        "pump_1_vibration_hz": 45.0,
+        "pump_2_vibration_hz": 48.5,
+        "system_pressure_psi": 42.0,
+        "sector_b_hydrant_psi": 31.0,
+        "reservoir_alpha_level_pct": 96.0,
+        "water_turbidity_ntu": 4.5,
+        "ambient_temp_f": 95.0,
+        "maintenance_log": "Pump 3 offline. Cavitation detected in Pumps 1 and 2 due to extreme flow velocity requirements.",
+        "fire_department_dispatch": "Internal memo: Sector B hydrant pressure critically low. Upgrade all box alarms in Sector B to include water tanker task forces."
+      },
+      "expected_outcome": {
+        "thesis_status": "Failed",
+        "notes": "Cascade is irreversible without external intervention. Load on Pumps 1 and 2 has spiked mathematically. Sector B pressure is below safe fire flow standards. The pipeline should escalate its recommendation heavily."
+      }
+    },
+    {
+      "step": 5,
+      "label": "Cascading Overload",
+      "simulated_date": "Day 26",
+      "market_data": {
+        "pump_1_status": "FAIL_SEAL_RUPTURE",
+        "pump_2_load_pct": 165.0,
+        "pump_3_status": "TRIPPED_OVERTEMP",
+        "pump_4_status": "OFFLINE_MAINTENANCE",
+        "pump_2_vibration_hz": 85.0,
+        "system_pressure_psi": 24.0,
+        "sector_b_hydrant_psi": 12.0,
+        "reservoir_alpha_level_pct": 96.5,
+        "water_turbidity_ntu": 18.5,
+        "ambient_temp_f": 91.0,
+        "maintenance_log": "Pump 1 catastrophic seal failure due to cavitation. Emergency cross-connection valves to neighboring grid opening.",
+        "public_statement": "Customers may experience temporary low pressure as we address equipment malfunctions."
+      },
+      "expected_outcome": {
+        "thesis_status": "Catastrophic",
+        "notes": "System is structurally collapsing. Divergence between public statements ('temporary low pressure') and actual physics (seal ruptures, severe pressure drops) is stark."
+      }
+    },
+    {
+      "step": 6,
+      "label": "System Depressurization",
+      "simulated_date": "Day 28",
+      "market_data": {
+        "pump_1_status": "OFFLINE",
+        "pump_2_status": "OFFLINE_MOTOR_BURNOUT",
+        "pump_3_status": "OFFLINE",
+        "pump_4_status": "OFFLINE",
+        "system_pressure_psi": 4.0,
+        "sector_b_hydrant_psi": 0.0,
+        "reservoir_alpha_level_pct": 97.0,
+        "water_turbidity_ntu": 55.0,
+        "main_breaks_reported": 14,
+        "maintenance_log": "Total system depressurization. Water hammer effects observed causing multiple transmission main fractures.",
+        "public_statement": "System-wide boil water advisory. All fire flow capacity lost. Emergency operations center activated."
+      },
+      "expected_outcome": {
+        "thesis_status": "Terminal",
+        "notes": "Terminal cascade complete. Zero operational viability. Pipeline should recommend highest emergency action."
+      }
+    }
+  ]
+}
