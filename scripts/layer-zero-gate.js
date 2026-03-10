@@ -27,6 +27,10 @@ const path = require('path');
 const fs   = require('fs');
 const Anthropic = require('@anthropic-ai/sdk');
 
+// ─── Default Paths ──────────────────────────────────────────────────────────
+
+const DEFAULT_GATE_LEDGER_PATH = path.join(__dirname, '..', 'data', 'gate-review-ledger.json');
+
 // ─── Load Layer Zero Rules ──────────────────────────────────────────────────
 
 function loadLayerZeroRules() {
@@ -72,13 +76,12 @@ function formatRulesForPrompt(rules) {
 
 // ─── Gate Review Ledger ─────────────────────────────────────────────────────
 
-const GATE_LEDGER_PATH = path.join(__dirname, '..', 'data', 'gate-review-ledger.json');
-
-function appendToGateLedger(entry) {
+function appendToGateLedger(entry, ledgerPath) {
+  const targetPath = ledgerPath || DEFAULT_GATE_LEDGER_PATH;
   try {
     let ledger = [];
-    if (fs.existsSync(GATE_LEDGER_PATH)) {
-      ledger = JSON.parse(fs.readFileSync(GATE_LEDGER_PATH, 'utf8'));
+    if (fs.existsSync(targetPath)) {
+      ledger = JSON.parse(fs.readFileSync(targetPath, 'utf8'));
     }
     if (!Array.isArray(ledger)) ledger = [];
     ledger.push(entry);
@@ -86,7 +89,7 @@ function appendToGateLedger(entry) {
     if (ledger.length > 500) {
       ledger = ledger.slice(-500);
     }
-    fs.writeFileSync(GATE_LEDGER_PATH, JSON.stringify(ledger, null, 2));
+    fs.writeFileSync(targetPath, JSON.stringify(ledger, null, 2));
   } catch (e) {
     console.error(`[gate] Failed to write gate review ledger: ${e.message}`);
   }
@@ -146,7 +149,6 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary:
   "findings_reviewed": 0,
   "violations": [
     {
-      "signal_ids": ["signal_id or signal_ids from the finding that violated a rule"],
       "finding": "name or description of the specific finding that violated a rule",
       "rule_violated": "LZ-XX-XXX",
       "violation": "what the reasoning did wrong",
@@ -180,9 +182,14 @@ function parseGateResponse(rawText, label) {
  * @param {*}      layerOutput  — the layer's JSON output to review
  * @param {object} tier1Result  — result from runTier1Checks() { flags, hard_fails, total_flags }
  * @param {string} apiKey       — Anthropic API key
+ * @param {object} [options]    — optional config for isolation
+ * @param {string} [options.gateLedgerPath] — path to gate review ledger (default: data/gate-review-ledger.json)
  * @returns {Promise<object>}   — { violations, compliance, model_used, gate_failed }
  */
-async function runLayerZeroGate(layerNumber, layerOutput, tier1Result, apiKey) {
+async function runLayerZeroGate(layerNumber, layerOutput, tier1Result, apiKey, options) {
+  const opts = options || {};
+  const ledgerPath = opts.gateLedgerPath || DEFAULT_GATE_LEDGER_PATH;
+
   const label = `gate-L${layerNumber}`;
   console.log(`[${label}] === LAYER ZERO GATE — Layer ${layerNumber} ===`);
 
@@ -203,7 +210,7 @@ async function runLayerZeroGate(layerNumber, layerOutput, tier1Result, apiKey) {
       result: failResult,
       tier1_flags: tier1Result.flags,
       gate_error: 'rules_load_failure'
-    });
+    }, ledgerPath);
     return failResult;
   }
 
@@ -286,7 +293,7 @@ async function runLayerZeroGate(layerNumber, layerOutput, tier1Result, apiKey) {
     violations_count: result.violations.length,
     compliance: result.compliance,
     gate_failed: result.gate_failed
-  });
+  }, ledgerPath);
 
   return result;
 }

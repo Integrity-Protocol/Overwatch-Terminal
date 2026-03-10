@@ -33,15 +33,12 @@ const Anthropic = require('@anthropic-ai/sdk');
 const promoteRejections = require('./promote-rejections');
 const { runTier1Checks } = require('./tier1-validators');
 const { runLayerZeroGate } = require('./layer-zero-gate');
-const { assembleTrace } = require('./assemble-trace');
 
 const DASHBOARD_PATH      = path.join(__dirname, '..', 'dashboard-data.json');
 const ANALYSIS_PATH       = path.join(__dirname, '..', 'analysis-output.json');
 const THESIS_CONTEXT_PATH = path.join(__dirname, 'thesis-context.md');
 const DEBUG_RESPONSE_PATH = path.join(__dirname, 'debug-claude-response.txt');
 const HISTORY_PATH        = path.join(__dirname, 'analysis-history.json');
-const DOMAIN_CONFIG_PATH  = path.join(__dirname, '..', 'config', 'domain.json');
-const DOMAIN_CONFIG       = JSON.parse(fs.readFileSync(DOMAIN_CONFIG_PATH, 'utf8'));
 
 const HISTORY_MAX_RECORDS = 180; // 90 days × 2 runs/day
 
@@ -169,9 +166,9 @@ function repairTruncatedJSON(text, label) {
  * Returns empty array if file doesn't exist or is malformed.
  * Used by Layer 2, Layer 3, and Layer 4.
  */
-function loadCorrectionsLedger() {
+function loadCorrectionsLedger(customPath) {
   try {
-    const ledgerPath = path.join(__dirname, '..', 'data', 'corrections-ledger.json');
+    const ledgerPath = customPath || path.join(__dirname, '..', 'data', 'corrections-ledger.json');
     if (fs.existsSync(ledgerPath)) {
       const data = JSON.parse(fs.readFileSync(ledgerPath, 'utf8'));
       if (Array.isArray(data)) {
@@ -582,8 +579,8 @@ function getRunType() {
 /**
  * Runs the 360 counter-thesis sweep (Layer 1 — SWEEP).
  * Widest intake, no filtering, no judgment.
- * Feeds all market data to Claude with no checklist — lets it find signals
- * on its own. Returns the array of signal objects, or [] on any failure.
+ * Feeds all market data to Claude with no checklist — lets it find threats
+ * on its own. Returns the array of threat objects, or [] on any failure.
  *
  * @param {object} marketData — current dashboard data (from dashboard-data.json)
  * @returns {Promise<Array>}
@@ -652,7 +649,7 @@ These principles were identified through repeated errors in production runs and 
 
 Respond with ONLY a JSON array. Each element:
 {
-  "signal": "Short name",
+  "threat": "Short name",
   "description": "What specifically is happening and why it matters",
   "direction": "ACCELERATION | DETERIORATION | AMBIGUOUS | CONTRADICTORY",
   "severity": "critical | high | moderate | low",
@@ -692,13 +689,13 @@ IMPORTANT: Keep each signal description under 100 words. Return a maximum of 15 
   log('360-sweep', `Response received (${raw.length} chars)`);
 
   try {
-    const signals = parseClaudeJSON(raw, '360-sweep');
-    if (!Array.isArray(signals)) {
+    const threats = parseClaudeJSON(raw, '360-sweep');
+    if (!Array.isArray(threats)) {
       err('360-sweep', 'Response is not a JSON array — returning empty');
       return [];
     }
-    log('360-sweep', `Sweep complete — ${signals.length} signals found`);
-    return signals;
+    log('360-sweep', `Sweep complete — ${threats.length} threats found`);
+    return threats;
   } catch (parseErr) {
     err('360-sweep', `JSON parse failed: ${parseErr.message}`);
     return [];
@@ -715,17 +712,18 @@ IMPORTANT: Keep each signal description under 100 words. Return a maximum of 15 
  * Design rationale: ARCHITECTURE-DECISION-LAYER2-CONTEXTUALIZE.md
  * Prompt source: LAYER-2-3-4-PROMPTS-DRAFT.md
  *
- * @param {Array}  sweepResults  — signal array returned by runSweep()
+ * @param {Array}  sweepResults  — threat array returned by runSweep()
  * @param {object} marketData    — current dashboard data
  * @param {number} previousScore — previous bear pressure score (0-100)
  * @param {string} thesisContext  — contents of thesis-context.md
  * @returns {Promise<object|null>}
  */
-async function runContextualize(sweepResults, marketData, previousScore, thesisContext) {
+async function runContextualize(sweepResults, marketData, previousScore, thesisContext, options) {
   log('analysis', '=== LAYER 2: CONTEXTUALIZE ===');
-  log('analysis', `Processing ${sweepResults.length} signals from Layer 1 SWEEP`);
+  log('analysis', `Processing ${sweepResults.length} threats from Layer 1 SWEEP`);
 
-  const correctionsLedger = loadCorrectionsLedger();
+  const opts = options || {};
+  const correctionsLedger = loadCorrectionsLedger(opts.correctionsLedgerPath);
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
@@ -813,7 +811,7 @@ For each significant signal from Layer 1, perform the following check BEFORE sco
    - THESIS_CAPABILITY_GAP: "I don't know if the thesis asset can handle this specific technical challenge"
    - THRESHOLD_CALIBRATION_GAP: "This threshold was set under different conditions and may need recalibration"
    - DATA_AVAILABILITY_GAP: "I need data that isn't in my current inputs to score this accurately"
-   - COMPETITIVE_KNOWLEDGE_GAP: "I don't understand the competing infrastructure well enough to assess this signal"
+   - COMPETITIVE_KNOWLEDGE_GAP: "I don't understand the competing infrastructure well enough to assess this threat"
 
 === PHASE 2: CONTEXTUAL SCORING ===
 
@@ -861,15 +859,13 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary outs
   "corrections_referenced": [
     {
       "correction_id": "CL-XXX",
-      "signal_ids": ["signal_id of the signal that triggered this correction"],
       "trigger_matched": "what specific trigger condition matched this analysis",
       "influence_on_assessment": "how the stored lesson changed this assessment"
     }
   ],
   "knowledge_audit": [
     {
-      "signal_ids": ["from Layer 1 input"],
-      "signal": "name from Layer 1",
+      "threat": "name from Layer 1",
       "knowledge_check": "what I verified before scoring",
       "gap_identified": "description of gap, or NONE",
       "gap_type": "THESIS_CAPABILITY_GAP | THRESHOLD_CALIBRATION_GAP | DATA_AVAILABILITY_GAP | COMPETITIVE_KNOWLEDGE_GAP | NONE",
@@ -880,10 +876,9 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary outs
       "status": "SCORED | REQUIRES_DEEPER_CONTEXT"
     }
   ],
-  "scored_signals": [
+  "scored_threats": [
     {
-      "signal_ids": ["from Layer 1 input"],
-      "signal": "name",
+      "threat": "name",
       "severity": 0,
       "source_tier": "1 | 2 | 3",
       "weighted_severity": 0,
@@ -893,10 +888,9 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary outs
       "knowledge_verified": true
     }
   ],
-  "unscored_signals": [
+  "unscored_threats": [
     {
-      "signal_ids": ["from Layer 1 input"],
-      "signal": "name",
+      "threat": "name",
       "reason": "description of why it cannot be scored",
       "knowledge_needed": "what would be needed to score this",
       "acquisition_type": "KNOWLEDGE | INTELLIGENCE"
@@ -936,14 +930,14 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary outs
       });
       const raw = response.content[0].text;
       result = parseClaudeJSON(raw, 'layer2');
-      log('analysis', `Layer 2 complete: ${result.scored_signals?.length || 0} scored, ${result.unscored_signals?.length || 0} unscored, bear pressure: ${result.bear_pressure}`);
+      log('analysis', `Layer 2 complete: ${result.scored_threats?.length || 0} scored, ${result.unscored_threats?.length || 0} unscored, bear pressure: ${result.bear_pressure}`);
       await enforceCorrectionsReferenced(result, 'layer2', client, correctionsLedger);
       break;
     } catch (e) {
       err('analysis', `Layer 2 attempt ${attempt} failed: ${e.message}`);
       if (attempt === 2) {
         err('analysis', 'Layer 2 FAILED after 2 attempts');
-        await sendTelegram('🚨 OVERWATCH: Layer 2 CONTEXTUALIZE failed after 2 attempts. Pipeline degraded.');
+        if (opts.enableTelegram !== false) await sendTelegram('🚨 OVERWATCH: Layer 2 CONTEXTUALIZE failed after 2 attempts. Pipeline degraded.');
         return null;
       }
       await sleep(5000);
@@ -957,7 +951,7 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary outs
 
 /**
  * Layer 3: INFER — Strategic Game Theory with Circuit Breakers.
- * Receives Layer 2's knowledge-verified, contextually scored signals.
+ * Receives Layer 2's knowledge-verified, contextually scored threats.
  * Explains WHY we're seeing this pattern using player behavior analysis,
  * feedback loop mapping, and strategic inference with circuit breakers.
  *
@@ -973,10 +967,11 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary outs
  * @param {string} thesisContext        — contents of thesis-context.md
  * @returns {Promise<object|null>}
  */
-async function runInfer(contextualizeResult, marketData, thesisContext) {
+async function runInfer(contextualizeResult, marketData, thesisContext, options) {
   log('analysis', '=== LAYER 3: INFER ===');
 
-  const correctionsLedger = loadCorrectionsLedger();
+  const opts = options || {};
+  const correctionsLedger = loadCorrectionsLedger(opts.correctionsLedgerPath);
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
@@ -1109,7 +1104,6 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary outs
   "corrections_referenced": [
     {
       "correction_id": "CL-XXX",
-      "signal_ids": ["signal_id of the signal that triggered this correction"],
       "trigger_matched": "what specific trigger condition matched this analysis",
       "influence_on_assessment": "how the stored lesson changed this assessment"
     }
@@ -1143,7 +1137,6 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary outs
   ],
   "strategic_inferences": [
     {
-      "signal_ids": ["signal_id(s) from Layer 2 input that produced this inference"],
       "finding_from_layer2": "signal name",
       "null_hypothesis": "simplest non-strategic explanation",
       "null_holds": true,
@@ -1162,7 +1155,6 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary outs
   ],
   "hidden_moves": [
     {
-      "signal_ids": ["signal_id(s) from Layer 2 input that support this hidden move"],
       "player": "name",
       "likely_action": "what they're probably doing privately",
       "incentive_basis": "why this would be rational",
@@ -1219,7 +1211,7 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary outs
       err('analysis', `Layer 3 attempt ${attempt} failed: ${e.message}`);
       if (attempt === 2) {
         err('analysis', 'Layer 3 FAILED after 2 attempts');
-        await sendTelegram('🚨 OVERWATCH: Layer 3 INFER failed after 2 attempts. Pipeline degraded — Layer 4 will not run.');
+        if (opts.enableTelegram !== false) await sendTelegram('🚨 OVERWATCH: Layer 3 INFER failed after 2 attempts. Pipeline degraded — Layer 4 will not run.');
         return null;
       }
       await sleep(5000);
@@ -1248,8 +1240,10 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary outs
  * @param {string} thesisContext        — contents of thesis-context.md
  * @returns {Promise<object|null>}
  */
-async function runReconcile(contextualizeResult, inferenceResult, marketData, thesisContext) {
+async function runReconcile(contextualizeResult, inferenceResult, marketData, thesisContext, options) {
   log('analysis', '=== LAYER 4: RECONCILE ===');
+
+  const opts = options || {};
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
@@ -1261,7 +1255,7 @@ async function runReconcile(contextualizeResult, inferenceResult, marketData, th
   // Layer 4 receives BOTH Layer 2 and Layer 3 output — it has the most complete picture.
   const prompt = `${LAYER_ZERO_RULES}
 
-You are the final decision-maker in a four-layer ${DOMAIN_CONFIG.system_framing}. You have the most complete picture of any layer: scored data from Layer 2 AND strategic reasoning from Layer 3. Your job is not to add more analysis. Your job is to DECIDE what everything means and what to do about it.
+You are the final decision-maker in a four-layer investment thesis monitoring system. You have the most complete picture of any layer: scored data from Layer 2 AND strategic reasoning from Layer 3. Your job is not to add more analysis. Your job is to DECIDE what everything means and what to do about it.
 
 You are the judge, not the detective. The detective (Layer 3) proposed theories. You decide which ones hold up. Where data and behavior tell different stories, you determine which deserves more weight. Where paradoxes exist, you name them honestly — you do not force false resolution.
 
@@ -1284,7 +1278,7 @@ For every inference Layer 3 produced, apply judicial skepticism:
 STEP 1: Check classification tag.
 - VALID (0-1 assumptions): Full weight. Proceed to Step 2.
 - FLAGGED (2 assumptions): 50% weight. Caution note in output.
-- SPECULATIVE (3+ assumptions): 75% weight DISCOUNT. It appears in the report as context but does NOT move the thesis status assessment or influence the action recommendation.
+- SPECULATIVE (3+ assumptions): 75% weight DISCOUNT. It appears in the report as context but does NOT move the bear pressure score or influence the tactical recommendation.
 - INSUFFICIENT_EVIDENCE: Strip entirely from scoring. Log it.
 - NULL_HYPOTHESIS_HOLDS: Accept the null. Do not override with speculation. The simplest explanation was sufficient.
 
@@ -1292,7 +1286,7 @@ STEP 2: Check data support.
 - Does hard data from Layer 2 support this inference?
   * YES with multiple data points → full weight (after Step 1)
   * PARTIALLY (one data point) → 50% weight (stacks with Step 1)
-  * NO supporting data → Strip from thesis status assessment entirely. Log for Sunday audit but do NOT let it influence the action recommendation.
+  * NO supporting data → Strip from bear pressure score entirely. Log for Sunday audit but do NOT let it influence the tactical recommendation.
 
 STEP 3: Check for contradiction with verified data.
 - Does this inference require believing something that contradicts verified data from Layer 2?
@@ -1306,7 +1300,7 @@ Layer 4 has FULL AUTHORITY to overrule Layer 3. The detective proposes. The judg
 
 2. DATA CLASSIFICATION — For each null or missing data point, make the final call: TRUE_NEGATIVE | DATA_GAP | SUSPICIOUS_ABSENCE | STRATEGICALLY_EXPLAINED.
 
-3. FINAL SIGNAL MATRIX — For each signal that passed through Layers 2 and 3: Layer 2 composite score, Layer 3 adjustment (after burden of proof), final composite score.
+3. FINAL THREAT MATRIX — For each threat that passed through Layers 2 and 3: Layer 2 composite score, Layer 3 adjustment (after burden of proof), final composite score.
 
 4. COMPOUND STRESS FINAL ASSESSMENT — Confirm or override Layer 2's level. State one observation that SUPPORTS and one that CHALLENGES your assessment. Report delta, velocity, pre-load status, cascade proximity.
    - If compound stress is CRITICAL or EMERGENCY: estimate the operator's action window — hours, days, or weeks.
@@ -1314,27 +1308,18 @@ Layer 4 has FULL AUTHORITY to overrule Layer 3. The detective proposes. The judg
 
 5. KILL SWITCH REVIEW — Review all 10 falsification criteria. If any kill switch is TRIGGERED, state this FIRST. Everything else is secondary.
 
-6. THESIS STATUS ASSESSMENT — Assess the overall direction of evidence:
-   - STRENGTHENING: Evidence increasingly supports the thesis
-   - STABLE: No meaningful movement in either direction
-   - WEAKENING: Evidence increasingly challenges the thesis
-   - CONTESTED: Evidence is pulling in both directions simultaneously — genuine tension exists
-   - INSUFFICIENT_EVIDENCE: Not enough evidence to determine direction
-   State your confidence in this assessment (high/medium/low) and explain your reasoning. CONTESTED and INSUFFICIENT_EVIDENCE are honest, high-quality outputs — not failures. Do not force resolution when the evidence does not support it.
+6. FINAL BEAR PRESSURE SCORE (0-100) — The definitive number. State how it moved from Layer 2's score and why.
 
-7. ACTION RECOMMENDATION — One of: ${DOMAIN_CONFIG.action_recommendations.map(a => a.id).join(' | ')}. No ambiguity.
+7. TACTICAL RECOMMENDATION — One of: HOLD_POSITION | INCREASE_MONITORING | REDUCE_EXPOSURE | EXIT_SIGNAL. No ambiguity.
 
-8. UNRESOLVED TENSIONS — If any signals are genuinely pulling in opposing directions and cannot be resolved with current evidence, document them. For each tension, state what you are watching for that would resolve it. Tensions that persist across runs are data for the pattern engine. An empty array is valid if all signals resolved cleanly.
+8. REJECTION LOG — If Layer 4 overruled any Layer 3 inference, document it with root cause and corrections ledger trigger.
 
-9. REJECTION LOG — If Layer 4 overruled any Layer 3 inference, document it with root cause and corrections ledger trigger.
-
-10. FINAL REPORT — 3-4 sentences. The 6 AM briefing. Lead with what matters most. State the call. Name the paradox if it exists. Honest about what you don't know.
+9. FINAL REPORT — 3-4 sentences. The 6 AM briefing. Lead with what matters most. State the call. Name the paradox if it exists. Honest about what you don't know.
 
 Respond with ONLY valid JSON — no markdown, no code fences, no commentary outside the JSON:
 {
   "burden_of_proof_applied": [
     {
-      "signal_ids": ["signal_id(s) from the Layer 3 inference being reviewed"],
       "inference": "name from Layer 3",
       "layer3_classification": "VALID | FLAGGED | SPECULATIVE | INSUFFICIENT_EVIDENCE | NULL_HYPOTHESIS_HOLDS",
       "data_support": "full | partial | none",
@@ -1363,10 +1348,9 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary outs
       "reasoning": "why this classification"
     }
   ],
-  "final_signal_matrix": [
+  "final_threat_matrix": [
     {
-      "signal_ids": ["from Layer 2 input"],
-      "signal": "name",
+      "threat": "name",
       "layer2_composite": 0,
       "layer3_adjustment": "description of behavioral evidence applied",
       "adjustment_direction": "up | down | unchanged",
@@ -1402,7 +1386,6 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary outs
   ],
   "rejection_log": [
     {
-      "signal_ids": ["signal_id(s) from the rejected inference"],
       "layer3_inference": "what Layer 3 believed",
       "rejection_reason": "why Layer 4 rejected it",
       "root_cause": "ASSUMPTION_FAILURE | APOPHENIA | INSUFFICIENT_EVIDENCE | CONTRADICTED_BY_DATA",
@@ -1410,21 +1393,11 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary outs
       "corrections_ledger_action": "auto_commit | flag_for_review"
     }
   ],
-  "thesis_status": "STRENGTHENING | STABLE | WEAKENING | CONTESTED | INSUFFICIENT_EVIDENCE",
-  "thesis_status_reasoning": "2-3 sentences. What evidence drives this assessment. Address both supporting and challenging signals.",
-  "confidence_in_status": "high | medium | low",
-  "action_recommendation": "${DOMAIN_CONFIG.action_recommendations.map(a => a.id).join(' | ')}",
-  "action_reasoning": "2-3 sentences. What drives the call.",
-  "unresolved_tensions": [
-    {
-      "tension": "what is pulling in opposing directions",
-      "positive_force": "evidence or reasoning supporting the thesis",
-      "negative_force": "evidence or reasoning challenging the thesis",
-      "why_unresolved": "why this cannot be resolved with current evidence",
-      "watch_for": "specific observable event or data point that would resolve this",
-      "expected_resolution_window": "hours | days | weeks | months"
-    }
-  ],
+  "final_bear_pressure": 0,
+  "pressure_vs_layer2": 0,
+  "pressure_reasoning": "1-2 sentences explaining the final number",
+  "tactical_recommendation": "HOLD_POSITION | INCREASE_MONITORING | REDUCE_EXPOSURE | EXIT_SIGNAL",
+  "recommendation_reasoning": "2-3 sentences. What drives the call.",
   "monitoring_triggers": [],
   "overall_confidence": "high | medium | low",
   "biggest_uncertainty": "the single thing that most affects confidence",
@@ -1443,13 +1416,13 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary outs
       });
       const raw = response.content[0].text;
       result = parseClaudeJSON(raw, 'layer4');
-      log('analysis', `Layer 4 complete: status=${result.thesis_status} (${result.confidence_in_status}), recommendation: ${result.action_recommendation}, rejections: ${result.rejection_log?.length || 0}`);
+      log('analysis', `Layer 4 complete: bear pressure ${result.final_bear_pressure}, recommendation: ${result.tactical_recommendation}, rejections: ${result.rejection_log?.length || 0}`);
       break;
     } catch (e) {
       err('analysis', `Layer 4 attempt ${attempt} failed: ${e.message}`);
       if (attempt === 2) {
         err('analysis', 'Layer 4 FAILED after 2 attempts');
-        await sendTelegram('🚨 OVERWATCH: Layer 4 RECONCILE failed after 2 attempts. Using Layer 2 output as fallback.');
+        if (opts.enableTelegram !== false) await sendTelegram('🚨 OVERWATCH: Layer 4 RECONCILE failed after 2 attempts. Using Layer 2 output as fallback.');
         return null;
       }
       await sleep(5000);
@@ -1460,7 +1433,7 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary outs
   // These feed the corrections ledger pipeline.
   if (result.rejection_log && result.rejection_log.length > 0) {
     try {
-      const rejLogPath = path.join(__dirname, '..', 'data', 'rejection-log.json');
+      const rejLogPath = opts.rejectionLogPath || path.join(__dirname, '..', 'data', 'rejection-log.json');
       let existing = [];
       if (fs.existsSync(rejLogPath)) {
         existing = JSON.parse(fs.readFileSync(rejLogPath, 'utf8'));
@@ -1482,11 +1455,13 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary outs
   }
 
   // Promote auto_commit rejections to corrections ledger
-  try {
-    const promoted = promoteRejections();
-    if (promoted > 0) log('analysis', `Corrections ledger: ${promoted} new entries from rejection log`);
-  } catch (e) {
-    err('analysis', `Corrections ledger promotion failed (non-fatal): ${e.message}`);
+  if (opts.enablePromoteRejections !== false) {
+    try {
+      const promoted = promoteRejections();
+      if (promoted > 0) log('analysis', `Corrections ledger: ${promoted} new entries from rejection log`);
+    } catch (e) {
+      err('analysis', `Corrections ledger promotion failed (non-fatal): ${e.message}`);
+    }
   }
 
   return result;
@@ -1521,13 +1496,13 @@ function buildDashboardCompatible(reconcileResult, contextualizeResult, inferenc
   //   final_composite, confidence
   // Fields without natural mapping (impact, probability, time_weight, is_new) → null
   // The dashboard renders ?? '—' for nulls.
-  const threatMatrix = (reconcileResult.final_signal_matrix || []).map(t => {
-    // Try to find the original sweep signal data via Layer 2's scored_signals
-    const l2Match = (contextualizeResult.scored_signals || []).find(
-      s => s.signal === t.signal
+  const threatMatrix = (reconcileResult.final_threat_matrix || []).map(t => {
+    // Try to find the original sweep threat data via Layer 2's scored_threats
+    const l2Match = (contextualizeResult.scored_threats || []).find(
+      s => s.threat === t.threat
     );
     return {
-      threat:      t.signal,
+      threat:      t.threat,
       description: t.layer3_adjustment || '',
       impact:      null, // no natural mapping — dashboard handles null
       probability: null, // no natural mapping
@@ -1569,11 +1544,11 @@ function buildDashboardCompatible(reconcileResult, contextualizeResult, inferenc
       });
     });
 
-  // 3. blind_spots[] — derive from Layer 2's unscored_signals + Layer 3's x402_paper_trades
+  // 3. blind_spots[] — derive from Layer 2's unscored_threats + Layer 3's x402_paper_trades
   const blindSpots = [];
-  (contextualizeResult.unscored_signals || []).forEach(ut => {
+  (contextualizeResult.unscored_threats || []).forEach(ut => {
     blindSpots.push({
-      threat:                       ut.signal,
+      threat:                       ut.threat,
       importance:                   'high',
       suggested_source:             ut.knowledge_needed || 'Unknown',
       x402_opportunity:             ut.acquisition_type === 'INTELLIGENCE',
@@ -1607,7 +1582,7 @@ function buildDashboardCompatible(reconcileResult, contextualizeResult, inferenc
     bull_indicators:      bullCount,
     bear_indicators:      bearCount,
     ratio:                `${bullCount}:${bearCount}`,
-    assessment:           reconcileResult.thesis_status_reasoning || '',
+    assessment:           reconcileResult.pressure_reasoning || '',
     recommended_additions: null
   };
 
@@ -1627,10 +1602,7 @@ function buildDashboardCompatible(reconcileResult, contextualizeResult, inferenc
   });
 
   // 6. Top-level scalar fields
-  // Map thesis_status to synthetic score for backward-compatible dashboard rendering
-  // Dashboard will be updated to render thesis_status directly in a later step
-  const statusScoreMap = { STRENGTHENING: 15, STABLE: 30, CONTESTED: 50, INSUFFICIENT_EVIDENCE: 50, WEAKENING: 60 };
-  const bearPressure = statusScoreMap[reconcileResult.thesis_status] ?? 50;
+  const bearPressure = reconcileResult.final_bear_pressure ?? 0;
   const scoreDelta = bearPressure - (previousScore || 0);
 
   const dashCompat = {
@@ -1638,9 +1610,9 @@ function buildDashboardCompatible(reconcileResult, contextualizeResult, inferenc
     commander_summary:          reconcileResult.final_report || '',
     bear_pressure_score:        bearPressure,
     score_delta:                scoreDelta,
-    score_reasoning:            reconcileResult.thesis_status_reasoning || '',
-    tactical_recommendation:    reconcileResult.action_recommendation || 'INCREASE_MONITORING',
-    recommendation_reasoning:   reconcileResult.action_reasoning || '',
+    score_reasoning:            reconcileResult.pressure_reasoning || '',
+    tactical_recommendation:    reconcileResult.tactical_recommendation || 'INCREASE_MONITORING',
+    recommendation_reasoning:   reconcileResult.recommendation_reasoning || '',
     threat_matrix:              threatMatrix,
     compounding_risks:          compoundingRisks,
     blind_spots:                blindSpots,
@@ -1657,7 +1629,7 @@ function buildDashboardCompatible(reconcileResult, contextualizeResult, inferenc
     _generated_at: new Date().toISOString()
   };
 
-  log('bridge', `Bridge complete: status=${reconcileResult.thesis_status}, rec=${dashCompat.tactical_recommendation}, signals=${threatMatrix.length}`);
+  log('bridge', `Bridge complete: score=${bearPressure}, delta=${scoreDelta}, rec=${dashCompat.tactical_recommendation}, threats=${threatMatrix.length}`);
   return dashCompat;
 }
 
@@ -1702,28 +1674,11 @@ async function main() {
   // ═══════════════════════════════════════════════════════════════════════════
 
   let assessment360 = null;
-  let prunedSignals = [];
   const previousBearScore = dashboardData.bear_case?.counter_thesis_score ?? 50;
 
   // ── Layer 1: SWEEP ──────────────────────────────────────────────────────
   console.log('\n═══ LAYER 1: SWEEP ═══');
   const sweepResults = await runSweep(dashboardData);
-
-  // ── Signal ID Assignment ──────────────────────────────────────────────
-  // Deterministic, code-assigned identifiers for Cognitive Trace.
-  // Stamped before validators, gates, and pruning so every signal
-  // carries its ID through the entire pipeline. The LLM never generates
-  // or reasons about these IDs — they are pure metadata.
-  // Format: YYYYMMDD-HHMM-SIG-NNN (e.g., 20260308-1145-SIG-007)
-  const runTs = new Date().toISOString().replace(/[-:]/g, '').slice(0, 13).replace('T', '-');
-  if (Array.isArray(sweepResults)) {
-    for (let i = 0; i < sweepResults.length; i++) {
-      sweepResults[i].signal_ids = [`${runTs}-SIG-${String(i + 1).padStart(3, '0')}`];
-    }
-    if (sweepResults.length > 0) {
-      log('pipeline', `Signal IDs assigned: ${sweepResults.length} signals (${runTs}-SIG-001 through ${runTs}-SIG-${String(sweepResults.length).padStart(3, '0')})`);
-    }
-  }
 
   // Tier 1 validators — Layer 1
   let tier1Layer1 = { flags: [], hard_fails: 0, total_flags: 0, layer: 1 };
@@ -1750,35 +1705,22 @@ async function main() {
   }
 
   if (sweepResults.length > 0) {
-    // Prune to top 15 signals: critical → high → moderate → low
-    // Pruned signals are recorded for Cognitive Trace — the pruning step
-    // is a perceptual filter and its behavior must be auditable.
+    // Prune to top 15 threats: critical → high → moderate → low
     const SEVERITY_RANK = { critical: 0, high: 1, moderate: 2, low: 3 };
-    let signalsToAssess = sweepResults;
+    let threatsToAssess = sweepResults;
     if (sweepResults.length > 15) {
-      const sorted = sweepResults
+      threatsToAssess = sweepResults
         .map((t, i) => ({ t, i }))
-        .sort((a, b) => (SEVERITY_RANK[a.t.severity] ?? 9) - (SEVERITY_RANK[b.t.severity] ?? 9) || a.i - b.i);
-      signalsToAssess = sorted
+        .sort((a, b) => (SEVERITY_RANK[a.t.severity] ?? 9) - (SEVERITY_RANK[b.t.severity] ?? 9) || a.i - b.i)
         .slice(0, 15)
         .sort((a, b) => a.i - b.i)
         .map(({ t }) => t);
-      prunedSignals = sorted
-        .slice(15)
-        .map(({ t }) => ({
-          signal_ids:     t.signal_ids,
-          signal:         t.signal,
-          severity:       t.severity,
-          direction:      t.direction,
-          category:       t.category,
-          pruning_reason: 'severity_rank_cutoff'
-        }));
-      log('pipeline', `Pruned sweep from ${sweepResults.length} to 15 signals — ${prunedSignals.length} pruned: ${prunedSignals.map(p => p.signal_ids[0]).join(', ')}`);
+      log('pipeline', `Pruned sweep from ${sweepResults.length} to 15 threats`);
     }
 
     // ── Layer 2: CONTEXTUALIZE ────────────────────────────────────────────
     console.log('\n═══ LAYER 2: CONTEXTUALIZE ═══');
-    const contextualizeResult = await runContextualize(signalsToAssess, dashboardData, previousBearScore, thesisContext);
+    const contextualizeResult = await runContextualize(threatsToAssess, dashboardData, previousBearScore, thesisContext);
 
     // Tier 1 validators — Layer 2
     let tier1Layer2 = { flags: [], hard_fails: 0, total_flags: 0, layer: 2 };
@@ -1912,26 +1854,12 @@ async function main() {
     if (sweepResults && sweepResults.length > 0) {
       assessment360._layer1_raw = sweepResults;
     }
-    // Persist pruning record — which signals were dropped by the severity-rank filter.
-    // Enables Cognitive Trace to detect systematic pruning bias across runs
-    // (e.g., consistently dropping acceleration signals or specific categories).
-    // Kept in history (not deleted) because pruning patterns require cross-run analysis.
-    if (prunedSignals.length > 0) {
-      assessment360._pruned_signals = prunedSignals;
-    }
     try {
       const reportPath = path.join(__dirname, '..', 'data', '360-report.json');
       fs.writeFileSync(reportPath, JSON.stringify(assessment360, null, 2));
       log('io', '360-report.json updated');
     } catch (e) {
       err('io', `Failed to write 360-report.json: ${e.message}`);
-    }
-
-    // Cognitive Trace — assemble after 360-report.json is written
-    try {
-      assembleTrace();
-    } catch (e) {
-      warn('trace', `Cognitive Trace assembly failed (non-fatal): ${e.message}`);
     }
 
     try {
@@ -2189,7 +2117,33 @@ IMPORTANT: Keep all text fields concise. Ensure your response is valid, complete
   console.log(`Done: ${new Date().toISOString()}`);
 }
 
-main().catch(e => {
-  console.error('\nFATAL:', e);
-  process.exit(1);
-});
+// ─── Entry Point ─────────────────────────────────────────────────────────────
+// Only execute main() when this file is run directly (node analyze-thesis.js).
+// When require()'d by another script (e.g., run-evolution.js), only exports are available.
+
+if (require.main === module) {
+  main().catch(e => {
+    console.error('\nFATAL:', e);
+    process.exit(1);
+  });
+}
+
+// ─── Exports for Evolution Library ──────────────────────────────────────────
+// Layer functions accept an optional `options` object as their last parameter:
+//   correctionsLedgerPath — path to corrections ledger (Layers 2, 3)
+//   rejectionLogPath      — path to rejection log (Layer 4)
+//   enableTelegram        — send Telegram on failure (default: true)
+//   enablePromoteRejections — promote rejections to corrections ledger (default: true)
+// When called without options, all defaults match production behavior.
+
+module.exports = {
+  runSweep,
+  runContextualize,
+  runInfer,
+  runReconcile,
+  buildDashboardCompatible,
+  parseClaudeJSON,
+  loadCorrectionsLedger,
+  enforceCorrectionsReferenced,
+  LAYER_ZERO_RULES,
+};
