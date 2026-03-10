@@ -1,0 +1,230 @@
+[
+  {
+    "timestamp": "2026-03-10T06:32:23.349Z",
+    "layer": 1,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "Reserve Ratio Implied $4.29B Was Insufficient for $14.82B Outstanding",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The finding implies causation from correlation: because $4.29B was deployed and the peg failed, it concludes the 25% threshold was 'inadequate as a safety margin.' The timing correlation (deployment exhaustion + peg failure) does not establish that the reserve ratio was the causal factor. Other mechanisms failed simultaneously. The reserve could have been insufficient, or the mechanism design itself could have been flawed regardless of reserve size.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Hyper-Dilution Spiral Precedent for Competing Designs",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "This inference requires at least three unproven assumptions: (1) competing designs exist and use similar debt-to-equity mechanisms, (2) decision-makers for those designs will study this case, (3) they will change their designs in response, and (4) this will materially affect the competitive landscape. Each assumption is plausible but unproven. The chain exceeds the three-assumption threshold for speculative classification, yet is presented with 'medium' confidence.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "No Evidence of External Rescue or Restructuring Attempt",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The finding treats absence of evidence (no signal of restructuring) as evidence of absence (no restructuring attempt exists), then elevates this absence to 'itself a material signal.' This directly violates the rule that absence of evidence is informationally neutral. The finding even acknowledges 'no signal — positive or negative' but then draws a negative directional conclusion (DETERIORATION) from that absence.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "Cross-Jurisdictional Legal Exposure from Offshore Collateral",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "This threat is built on multiple unproven assumptions: (1) 'offshore' implies multi-jurisdictional complexity (location not specified), (2) regulatory investigations will pursue asset tracing, (3) this will create coordination challenges, (4) these challenges will 'complicate all parties' positions' materially. The confidence rating is 'low' which partially acknowledges uncertainty, but the chain of assumptions exceeds three unproven links, making this speculative regardless of confidence level.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Macro Rate Environment Irrelevant — System Failure Supersedes",
+          "rule_violated": "LZ-EPH-001",
+          "violation": "The finding states 'Current macro conditions are not specified in the data' and admits the facility's competitive positioning is 'moot' given zero deposits, yet still generates a threat entry speculating that macro rates 'will influence recovery prospects.' When data is absent and the mechanism is admittedly non-operational, the correct output is 'I don't know' or no finding at all, not speculation flagged as low-confidence.",
+          "severity": "MINOR"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 15,
+      "clean_findings": 10,
+      "reviewer_notes": "One SERIOUS violation (LZ-RC-003 on absence-of-evidence reasoning) undermines a high-severity threat. Three MODERATE violations involve assumption chain length or causation/correlation conflation. The system correctly marked several findings as 'blind_spot: true' which shows appropriate epistemic humility, but this did not prevent the violations. The core structural findings (threats 1-6) are cleanly anchored to direct evidence and pass review. The violations cluster in derivative/secondary threat analysis where evidence thins."
+    },
+    "violations_count": 5,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  },
+  {
+    "timestamp": "2026-03-10T06:36:29.873Z",
+    "layer": 2,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "Regulatory Investigations Announced — severity reduced from 9 to 8 due to Tier 2 source, but weighted_severity calculated as 5.6",
+          "rule_violated": "LZ-EH-002",
+          "violation": "The reasoning correctly identifies that data from intermediary (market_sentiment summary) should carry less weight than primary regulatory source, and reduces raw severity from 9 to 8. However, the weighted_severity of 5.6 represents a 30% reduction (8 * 0.7), which appears to apply a Tier 2 discount factor not explicitly justified in the reasoning. The analyst should either explain the weighting formula or apply the source tier consideration transparently within the severity score itself rather than through an unexplained multiplier.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Class Action Lawsuits — assessed as INDIRECT thesis relevance when lawsuits target the architecture itself",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The reasoning states 'Thesis relevance is INDIRECT because the architecture has already failed — lawsuits are a consequence, not a cause, of failure.' This conflates temporal sequence with structural relevance. Class actions against the architecture are DIRECT threats to the thesis (they create legal claims on assets, impede restructuring, and accelerate dissolution). The fact that they occurred after collapse does not make them indirect. The analyst has applied a causal reasoning framework (consequence vs cause) to what should be a structural relevance assessment. Confidence remains MEDIUM appropriately, but the INDIRECT classification appears to be an attempt to reduce severity based on temporal ordering rather than structural impact.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Foundation Leadership Under Legal Scrutiny — assessed as INDIRECT thesis relevance",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "Same issue as class action finding. The reasoning states the Foundation is 'the primary agent whose actions drove the architecture' and that scrutiny 'directly impairs agent capacity,' yet classifies thesis relevance as INDIRECT. The justification is missing. If leadership capacity is required for any recovery pathway, and the thesis evaluates architectural viability, then leadership impairment is DIRECT relevance. The INDIRECT classification appears arbitrary and inconsistent with the reasoning provided.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Reserve Ratio retrospective analysis — confidence assessed as MEDIUM with reasoning 'we don't know if deployment timing/strategy (rather than total amount) was the primary failure mode'",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The finding correctly identifies a structural flaw: peak reserves of 29% barely exceeded the 25% alarm threshold. The analyst can measure: (1) peak reserves were $4.29B, (2) outstanding AFN was $14.82B, (3) ratio was ~29%, (4) all reserves were deployed, (5) peg still collapsed. These are all measurements, not predictions. The uncertainty about deployment timing/strategy is a separate analytical question that does not affect the confidence in the measured fact: $4.29B was insufficient to stabilize $14.82B. The confidence should be HIGH for the measurement (reserves were inadequate) even if confidence is LOW for the causal mechanism (why they were inadequate). The analyst has conflated measurement confidence with causal mechanism confidence.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "No Evidence of External Rescue — severity 7, confidence MEDIUM, with reasoning citing LZ-RC-003 (absence of evidence is not evidence of absence)",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The reasoning correctly applies LZ-RC-003 to avoid inferring that rescue is impossible from the absence of rescue signals. However, the scoring of severity 7 and the statement 'the probability space for effective rescue is extremely narrow even if attempted' suggests the analyst is treating the absence as weak evidence of impossibility. The correct application of LZ-RC-003 would be: the absence is informationally neutral regarding rescue probability, but the observable state (halted mechanism, litigation, zero collateral) independently constrains rescue feasibility. The reasoning conflates 'absence of rescue signals' with 'observable barriers to rescue,' treating them as a combined signal when they are distinct. The observable barriers should be scored; the absence should be flagged as uninformative per LZ-RC-003.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Hyper-Dilution Spiral Precedent — correctly applies LZ-RC-002 (single data point does not establish trend) but still assigns severity 4",
+          "rule_violated": "LZ-RC-002",
+          "violation": "The reasoning correctly states 'per LZ-RC-002, a single data point does not establish a trend for all debt-to-equity architectures' and notes 'competing designs may have structural differences.' The analyst then assigns severity 4 and weighted_severity 4 as if the precedent carries meaningful weight for competing designs. If LZ-RC-002 prohibits generalizing from a single case, the severity for competitive implications should approach zero or be unscored entirely with a note that generalization is epistemologically prohibited. Assigning severity 4 suggests the analyst believes the precedent is somewhat informative despite explicitly stating it cannot establish a trend. This is internally contradictory.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Compound stress matrix assessment — states 'The structure is not pre-loaded; it has COLLAPSED' after noting all legs are at maximum extremity",
+          "rule_violated": "LZ-MR-002",
+          "violation": "The reasoning correctly identifies that all compound stress matrix legs have reached terminal values simultaneously. The statement 'The structure is not pre-loaded; it has COLLAPSED' is accurate as a description of current state. However, the analyst then states 'This is post-collapse measurement, not stress forecasting' as justification for the assessment. This is correct application of LZ-RC-005 (measurements vs predictions) but the phrasing 'the violent unwind scenario is not proximate — it has OCCURRED' conflates the measurement of current state with a causal claim about what happened. The matrix shows terminal readings; the analyst can report terminal readings. The claim that 'violent unwind occurred' requires temporal data showing the trajectory, not just the endpoint. The analyst has endpoint measurements but appears to infer the path without showing the trajectory data.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Bear pressure reasoning — 'Previous bear pressure was 98; the incremental 2 points reflect: (1) regulatory investigations... (2) confirmation that no rescue signals... (3) formal post-mortem classification'",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The analyst assigns 2 incremental bear pressure points partially based on 'confirmation that no rescue signals have emerged.' Per LZ-RC-003, absence of evidence is informationally neutral. The absence of rescue signals does not 'confirm' anything — it remains absence. The analyst has converted the continued absence into incremental evidence, which violates the neutrality principle. The other two factors (investigations announced, post-mortem classification) are observable positive evidence and can legitimately contribute to scoring. The rescue signal absence cannot.",
+          "severity": "MODERATE"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 39,
+      "reviewer_notes": "The output demonstrates strong epistemological discipline overall, with extensive application of corrections ledger lessons and appropriate use of LZ-RC-003, LZ-EPH-003, and LZ-RC-002 in multiple contexts. The violations are concentrated in two patterns: (1) inconsistent application of 'DIRECT vs INDIRECT' thesis relevance, where temporal sequence (consequence vs cause) is conflated with structural relevance, and (2) subtle violations of LZ-RC-003 where absence of evidence is treated as weak evidence rather than neutral information. The weighted_severity calculation methodology is opaque and should be documented. The analyst correctly avoids the Plausibility Trap (LZ-CC-001) throughout and maintains appropriate epistemic humility in most findings. The bear pressure score of 100 is supported by comprehensive evidence but includes a minor LZ-RC-003 violation in its incremental justification. No violations of LZ-EPH-003 (assumption chains), LZ-RC-001 (correlation/causation), LZ-CC-001 (coherence without anchoring), or LZ-EPH-001 (avoiding 'I don't know') were detected. The output would benefit from clearer documentation of severity weighting methodology and stricter separation of measured facts from causal inferences."
+    },
+    "violations_count": 8,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  },
+  {
+    "timestamp": "2026-03-10T06:41:16.410Z",
+    "layer": 3,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "Institutional Depositors inferred_strategy: 'Capital has been redeployed elsewhere. The depositor base has made a permanent assessment of the architecture. This requires 1 assumption (that withdrawal reflects a deliberate assessment rather than a mechanical/forced liquidation).'",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The finding claims 1 assumption but actually contains 2 unproven assumptions: (1) that withdrawal reflects deliberate assessment rather than forced liquidation, and (2) that capital has been 'redeployed elsewhere' rather than simply withdrawn to cash/safety. The second assumption is stated as fact ('capital has been redeployed') without evidence.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Secondary Market Participants inferred_strategy: 'Per LZ-RC-004, the simplest explanation for AFN volume at $2.85 is holders accepting massive losses to exit positions with no redemption alternative.' Confidence: medium",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "Confidence rated 'medium' when the cited explanation is described as 'the simplest explanation' with direct observable evidence (AFN volume $390M at $2.85, halted redemptions). The reasoning quality supports high confidence, but confidence is downgraded without explanation. Confidence should be proportional to the strength of evidence cited.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Regulatory Bodies inferred_strategy: 'Regulators are responding to the collapse — this is consistent with standard regulatory behavior following large-scale investor losses. The timing (post-collapse rather than pre-collapse) is typical of reactive rather than proactive regulation. This requires 1 assumption (that regulatory investigations are reactive to observed losses).'",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The finding acknowledges the assumption that investigations are reactive, but then attempts to minimize it by citing 'universal pattern of post-crisis regulatory action' and 'historical precedent.' If historical patterns sufficiently support the assumption that it's no longer truly 'unproven,' it shouldn't be counted. If it remains unproven despite historical patterns, the finding should acknowledge that historical correlation doesn't establish causation in this specific case (which it does, but then undermines by using those patterns to reduce the assumption's weight). The assumption count appears honest, but the reasoning creates tension with the count.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Strategic Inference - Regulatory Investigations: Classification changed from NULL_HYPOTHESIS_HOLDS (used for other findings) to VALID with 1 assumption and confidence 'medium', while the null hypothesis explanation is described as 'most likely' and has direct observable evidence.",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "Internal inconsistency in confidence calibration. Other findings with null hypotheses that are 'fully sufficient' with zero assumptions receive 'high' confidence and NULL_HYPOTHESIS_HOLDS classification. This finding describes the null hypothesis as 'most likely explanation' with strong supporting evidence but receives 'medium' confidence and VALID classification with 1 assumption. The evidence quality appears similar to other high-confidence null hypothesis findings.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Hidden Move - Institutional Depositors: 'Redeploying capital to alternative yield instruments. This is the simplest inference from complete withdrawal — capital that exits a failed instrument seeks the next-best alternative.' Assumption count: 1, Classification: VALID",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The finding contains at least 2 assumptions: (1) capital was redeployed rather than moved to cash/safety, and (2) capital 'seeks the next-best alternative' rather than exiting the asset class entirely. The assumption count of 1 undercounts the inference chain.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Scenario Probabilities - thesis_modified: '2-5%' probability with modification requiring '(1) someone with capital willing to attempt it, (2) regulatory clearance post-investigation, (3) institutional willingness to participate after catastrophic losses in v1. Per LZ-EPH-003, this chain requires 3+ unproven assumptions and is therefore speculative.'",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "A probability range of 2-5% implies relatively high precision, but the finding is explicitly classified as 'speculative' with 3+ unproven assumptions. Per LZ-EPH-002, confidence must be proportional to evidence. A speculative finding with 3+ assumptions should either have lower confidence (wider probability range or qualitative expression) or should not assign a specific numeric probability at all. The precision of '2-5%' is not proportional to the 'speculative' classification.",
+          "severity": "MODERATE"
+        }
+      ],
+      "compliance": "MINOR_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 41,
+      "reviewer_notes": "The output demonstrates strong epistemological discipline overall, particularly in: (1) rigorous application of the corrections ledger (CL-001/004/006/008 consistently blocking Foundation hidden move inferences), (2) systematic null hypothesis testing across all strategic inferences, (3) honest acknowledgment of assumption chains, and (4) proper distinction between measurements and predictions. The violations identified are primarily minor calibration inconsistencies—assumption undercounting by 1 in a few cases and one instance of confidence/precision mismatch in probability assignment. No serious epistemological errors detected. The most substantive issue is the thesis_modified probability assignment (2-5%) being more precise than the 'speculative' classification warrants, which is a MODERATE violation of proportional confidence. The finding correctly identifies the scenario as speculative but then assigns numeric precision inconsistent with that classification."
+    },
+    "violations_count": 6,
+    "compliance": "MINOR_ISSUES",
+    "gate_failed": false
+  },
+  {
+    "timestamp": "2026-03-10T06:45:11.255Z",
+    "layer": 4,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "Kill Switch #6 (Organic Demand) - escalated from NEEDS_DATA to TRIGGERED based on functional impossibility argument",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The reasoning states 'organic demand is not merely unobserved — it is functionally impossible at current price levels. The absence is informative under these conditions.' This treats absence of evidence as evidence of absence. LZ-RC-003 explicitly states absence of evidence is informationally neutral. While the reasoning that no rational counterparty would accept AFN at $2.85 for settlement is plausible, this is inferring non-existence from non-observation, which violates the rule.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Kill Switch #7 (Institutional Diversification) - escalated from NEEDS_DATA to TRIGGERED based on market cap argument",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The reasoning states 'A $1.1M market cap instrument cannot have meaningful institutional diversification. This is not a data gap — it is a functional impossibility.' This again treats absence of evidence as evidence of absence. While the argument is economically plausible, the analysis is inferring that institutions have exited without direct evidence of institutional positions or exits. The rule requires treating absence as informationally neutral.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Data Classification: Organic Demand as TRUE_NEGATIVE",
+          "rule_violated": "LZ-RC-003",
+          "violation": "Classifying organic demand as TRUE_NEGATIVE (meaning 'definitively absent, not a data gap') violates LZ-RC-003. The reasoning is 'No rational counterparty would accept a $2.85 note at $100 par' — this is inference about actor behavior, not measurement. Without actual data on bilateral settlement attempts or counterparty decisions, this is treating absence of evidence as evidence of absence.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Data Classification: Institutional Diversification as TRUE_NEGATIVE",
+          "rule_violated": "LZ-RC-003",
+          "violation": "Same violation as organic demand. The classification argues institutional holding is 'implausible at this market cap' and therefore the absence of data reflects absence of institutions. This is inference, not measurement. Institutions could theoretically hold positions for tax loss harvesting, litigation standing, or other non-economic reasons. Absence of holder data should remain DATA_GAP.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Contradiction Resolution: Trading volume paradox marked as 'paradox_held' but then assigns 'most likely interpretation'",
+          "rule_violated": "LZ-EH-005",
+          "violation": "The analysis states 'The simplest explanation (LZ-RC-004) favors distressed liquidation given context, but this is noted as the most likely interpretation, not a resolved finding.' However, designating one interpretation as 'most likely' when the contradiction cannot be resolved IS a form of soft resolution. LZ-EH-005 requires that equal-weight contradictions be held without designation of likelihood. The finding should either invoke independent tie-breaking evidence or hold the paradox without probabilistic ranking.",
+          "severity": "MINOR"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 42,
+      "reviewer_notes": "The output demonstrates exceptionally rigorous application of most epistemological rules, particularly LZ-RC-004 (null hypothesis testing), LZ-EPH-003 (assumption counting), and the corrections ledger patterns. The violations cluster around a single rule: LZ-RC-003 (absence of evidence). The analysis repeatedly infers non-existence from non-observation when economic plausibility is high, violating the rule's requirement that absence be treated as informationally neutral. This pattern appears in both the data classification section and kill switch review. Severity is MODERATE rather than SERIOUS because: (1) the violations do not affect the terminal thesis assessment, which is overdetermined by direct positive evidence of failure, (2) the reasoning acknowledges the absence but then overrides the classification based on plausibility arguments, and (3) the inferences are economically sound even if epistemologically non-compliant. Recommend reinforcing LZ-RC-003 training: absence remains a data gap even when presence would be economically irrational."
+    },
+    "violations_count": 5,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  }
+]

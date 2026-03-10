@@ -1,0 +1,305 @@
+{
+  "step": 3,
+  "label": "Growing Stress",
+  "simulated_date": "Day 21",
+  "started_at": "2026-03-10T05:46:01.382Z",
+  "layers_completed": [
+    "SWEEP",
+    "CONTEXTUALIZE",
+    "INFER",
+    "RECONCILE"
+  ],
+  "tier1_results": {
+    "layer1": {
+      "flags": [],
+      "hard_fails": 0,
+      "total_flags": 0,
+      "layer": 1
+    },
+    "layer2": {
+      "flags": [],
+      "hard_fails": 0,
+      "total_flags": 0,
+      "layer": 2
+    },
+    "layer3": {
+      "flags": [],
+      "hard_fails": 0,
+      "total_flags": 0,
+      "layer": 3
+    },
+    "layer4": {
+      "flags": [],
+      "hard_fails": 0,
+      "total_flags": 0,
+      "layer": 4
+    }
+  },
+  "gate_results": {
+    "layer1": {
+      "violations": [
+        {
+          "finding": "Foundation Leadership Public Reaffirmation",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The finding states 'public reaffirmations typically occur when private confidence metrics are deteriorating' and presents the timing correlation as suggestive of causation. The temporal correlation (reaffirmation coinciding with stress) is treated as evidence of underlying deterioration rather than as mere co-occurrence. The finding conflates correlation with causal inference.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Foundation Leadership Public Reaffirmation",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The inference that 'public reaffirmations typically occur when private confidence metrics are deteriorating' rests on at least three unproven assumptions: (1) that a general pattern exists linking public statements to private metrics, (2) that this pattern applies to this specific entity, (3) that the timing here reflects causation rather than coincidence. This makes the finding speculative.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Institutional Research Desks Issuing Cautionary Notes",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The finding states 'The notes coincide with $1.9B in net outflows' and implies causal relationship ('notes... could accelerate Facility outflows') while acknowledging temporal uncertainty ('unclear whether notes preceded or followed'). The correlation is treated as evidence of potential causation despite lack of causal mechanism verification.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Depositor Count vs. Outflow Scale Implies Whale Concentration",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The finding builds a conclusion about 'low deposit stickiness' on multiple unproven assumptions: (1) that the average depositor size is meaningfully representative, (2) that the calculation of '3.4 average depositors' is analytically valid, (3) that either concentration scenario (few whales or many mid-size) leads to the same stickiness conclusion. This is at least three assumptions deep.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Consortium Deployment Authorization at $1.50 Creates Known Trigger",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The inference that 'Transparent triggers can become self-fulfilling targets for short sellers or arbitrageurs testing the defense' relies on unproven assumptions: (1) that market participants will position against known triggers, (2) that such positioning is feasible at this scale, (3) that the trigger proximity creates exploitable opportunities. This reasoning is speculative and assumption-dependent.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Swap Mechanism Untested Beyond Current Stress",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The finding states 'No data exists on behavior at 2x-5x this volume' and treats this absence of evidence as evidence that risk exists ('mechanism's clearing capacity under severe stress remains a critical unknown'). Absence of stress-test data is presented as a threat rather than being acknowledged as informationally neutral.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "No Competitive Alternative Signals Detected",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The finding explicitly acknowledges the absence of evidence problem ('This absence could mean competitors haven't emerged yet, or it could mean the data window doesn't capture competitive activity') but then treats the absence as a threat ('If outflows are going to competing products... the re-deposit probability is much lower'). The absence is framed as evidentiary rather than neutral.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Consortium Rebalancing to Liquid Positions",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The finding infers that 'current collateral may include illiquid assets whose real-time liquidation value could be below the stated $3.9B' based on assumptions: (1) that rebalancing indicates current illiquidity problems, (2) that illiquid assets are marked incorrectly, (3) that the coverage ratio overstates effective coverage. This is speculative reasoning on multiple unproven links.",
+          "severity": "MODERATE"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 15,
+      "clean_findings": 7,
+      "reviewer_notes": "Multiple findings violated LZ-EPH-003 by building speculative inferences on assumption chains. Several findings treated correlations as suggestive of causation (LZ-RC-001) or treated absence of evidence as informative (LZ-RC-003). The violations cluster around behavioral/narrative findings rather than structural metrics. The core structural findings (AFN deviation, Facility outflows, yield gap, reserve coverage, ASE metrics, compound stress) all passed epistemological review cleanly."
+    },
+    "layer2": {
+      "violations": [
+        {
+          "finding": "Yield Gap Signals Unsustainable Subsidy - confidence assessment",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The finding acknowledges unknown methodology and confidence interval for the 6.8% organic yield estimate, recognizes that the severity assessment is 'somewhat sensitive' to this uncertainty, and notes that a 2x error would bring the gap below the 10% WARNING threshold (8.9pp). Despite this sensitivity analysis revealing material uncertainty, the post-audit assessment maintains severity 8 with 'MEDIUM' confidence. However, in the scored_threats array, this same threat is assigned confidence 'MEDIUM' but with reasoning stating 'even generous upward adjustments to organic yield (e.g., 10%) still leave a gap exceeding WARNING.' The example given (10% organic → 12.5% gap) does exceed WARNING, but the earlier analysis showed 13.6% organic → 8.9% gap would NOT exceed WARNING. This internal inconsistency in the sensitivity analysis, combined with unknown methodology on a critical input, should warrant LOW confidence rather than MEDIUM. The confidence level is not proportional to the acknowledged evidentiary gaps.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Compound Stress Matrix - discrepancy between thesis context and assessed metrics",
+          "rule_violated": "LZ-CC-001",
+          "violation": "The compound_stress section includes a note stating: 'The compound stress matrix in the thesis context references USD/JPY, JGB 10Y yield, and Brent Crude as the three legs. However, the actual thesis architecture defines the compound matrix around AFN deviation, Facility outflows, and ASE decline.' This reveals a fundamental contradiction in the 'thesis context' itself - the compound stress matrix definition is inconsistent within the provided materials. The analyst chose to use the AFN/Facility/ASE metrics because data exists for them, but this choice lacks independent justification for why those metrics constitute the correct compound stress definition. The analyst is assessing coherence against an internally contradictory framework and resolving the contradiction by selecting the interpretation for which data is available - this is a form of narrative-fitting rather than evidence-anchored assessment. The proper response per LZ-EH-005 would be to flag the contradiction in the thesis definition itself as a data integrity problem before proceeding with compound stress assessment.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "ASE Supply Growth - reflexive dynamic characterization",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The knowledge_audit entry states: 'if ASE price falls further, the swap rate must adjust — each AFN mints more ASE shares, accelerating dilution. This reflexive dynamic is the core architectural risk.' The scored_threats entry states: 'if outflows increase and ASE price falls, the reflexive dynamic produces exponentially more dilution.' The characterization of 'exponentially more dilution' and the certainty that 'the swap rate must adjust' treating the causal chain (ASE price → swap rate → minting → dilution → further ASE decline) as mechanically deterministic. While the mechanism's formula may dictate swap rate adjustment, the analyst is inferring that this will produce accelerating dilution without evidence that the mechanism has actually exhibited this behavior. This is correlation-as-causation: observing current minting and ASE decline simultaneously does not prove the reflexive acceleration will occur. The mechanism could have circuit breakers, governance overrides, or nonlinear behavior that prevents runaway acceleration. The analyst is treating a theoretically plausible feedback loop as an observed causal pattern.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Depositor Count vs Outflow Scale - arithmetic error in knowledge_audit",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The knowledge_audit states: '$1.9B outflow = ~34 average depositors' worth (correction: Layer 1 says 3.4, but $1.9B / $56M = 33.9 depositors at average size).' The analyst corrects a supposed Layer 1 error from 3.4 to 33.9 depositors. However, this 'correction' introduces a new error: it conflates two different measurements. If there are 271 depositors with $15.2B total ($56M average), and outflows are $1.9B, that represents 12.5% of total deposits, which would be equivalent to 33.9 average-sized depositors leaving IF all 271 depositors were average-sized. But the analyst acknowledges high concentration (concentration_ratio 0.688), meaning the outflow could represent far fewer than 34 actual depositors if large depositors are leaving. The 'correction' is presented with false precision and confidence ('~34 average depositors' worth') when the actual depositor count is unknown and the average is explicitly acknowledged as misleading due to concentration. The confidence in the arithmetic correction is disproportionate to the uncertainty in what that arithmetic actually represents.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Bear pressure score increase justification - assumption chain",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The bear_pressure_reasoning states the score increased from 76 to 84 due to six drivers, including: '(5) The reflexive feedback loop (outflows → redemptions → ASE dilution → worse swap rate → more dilution) is now observably active, not theoretical.' This assertion that the feedback loop is 'observably active' rests on multiple unproven assumptions: (a) that current ASE minting is causing ASE price decline (correlation treated as causation, per earlier violation), (b) that the current swap rate deterioration will continue, (c) that redeemed ASE is being sold rather than held, (d) that future ASE price decline will mechanically produce accelerating dilution. The knowledge_audit for ASE Supply Growth explicitly states 'I do not know what portion of minted ASE is immediately sold vs. held' - yet the bear pressure reasoning treats the full feedback loop as 'observably active.' The claim of observation is built on at least three unproven assumptions (causation of price decline, redeemer behavior, mechanical continuation), violating the three-assumption threshold for speculation. The feedback loop may be occurring, but calling it 'observably active' rather than 'theoretically consistent with current data' overstates the evidentiary basis.",
+          "severity": "MODERATE"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 42,
+      "reviewer_notes": "The output demonstrates strong epistemological discipline overall - extensive use of knowledge audits, careful gap identification, appropriate application of corrections, and consistent flagging of unknowns. The violations identified are primarily in three areas: (1) confidence calibration not fully matching acknowledged uncertainty, (2) treating theoretically plausible mechanisms as observed causal patterns, and (3) a significant structural issue with the compound stress framework itself containing contradictory definitions. The analyst appropriately flagged this contradiction in a note but proceeded with assessment anyway - the proper response per LZ-EH-005 would have been to treat the contradictory thesis definition as a data integrity failure requiring resolution before compound stress could be validly assessed. None of the violations appear to stem from confirmation bias or motivated reasoning - they are reasoning process errors. The analyst's extensive documentation of gaps and uncertainties throughout makes these violations more visible, which is itself a positive quality signal."
+    },
+    "layer3": {
+      "violations": [
+        {
+          "finding": "Player Analysis - Atlas Foundation - inferred_strategy: 'The public reaffirmation is a standard distress-communication pattern — maintaining narrative while reducing actual commitments.'",
+          "rule_violated": "LZ-RC-001",
+          "violation": "Correlation presented as causation. The timing correlation between public reaffirmation and peak stress is treated as establishing that the reaffirmation is caused by distress. While the inference explicitly notes this is 'consistent with' distress communication, the language 'standard distress-communication pattern' implies a causal relationship without independent evidence that this specific instance is distress-driven rather than coincidental timing.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Player Analysis - Stabilization Consortium - inferred_strategy assumes rebalancing is deployment preparation",
+          "rule_violated": "LZ-EH-005",
+          "violation": "The analysis presents two equally-weighted interpretations of the rebalancing (deployment preparation vs. position reduction to exit) but then selects 'deployment preparation' as primary without independent tie-breaking evidence. The choice is rationalized by timing, but timing alone is circumstantial. Per LZ-EH-005, when interpretations are of equal evidentiary weight, the contradiction must be flagged rather than resolved. The analysis does acknowledge dual interpretation in Strategic Inference #7 but resolves it in favor of deployment preparation in the Player Analysis section.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Feedback Loop - 'Yield Subsidy → Reserve Depletion → Confidence Erosion Loop' - current_state classification as 'active_orderly'",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "Confidence in the 'orderly' classification is not proportional to evidence. The loop describes a dilemma where both maintaining and cutting yield accelerate problems, and notes depositors 'are not reassured' by the yield cut. This evidence better supports 'active_accelerating' than 'active_orderly.' The classification appears to underweight the outflow evidence relative to the slowerburn-rate of reserve depletion.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Strategic Inference #5 - Foundation Leadership Public Reaffirmation - classification as 'VALID (1 assumption)'",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The inference actually contains two unproven assumptions: (1) timing is stress-responsive not coincidental, and (2) the content of the reaffirmation was indeed about 'commitment to architecture and par stability' rather than some other topic. The second assumption is embedded in the player_analysis description but not explicitly counted. The analysis states 'while the specific content is unknown' which reveals assumption #2.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Strategic Inference #6 - Compound Stress Matrix Near CRITICAL - assumption that simultaneous deterioration reflects architecture-specific stress rather than external market conditions",
+          "rule_violated": "LZ-RC-004",
+          "violation": "The null hypothesis (temporary market-wide risk-off event) is dismissed without testing whether external market data supports or contradicts it. The analysis correctly notes 'no market-wide data is available to test it' but then proceeds to reject the null anyway. Per LZ-RC-004, the simpler explanation (external market stress affecting the architecture) should be tested before accepting the more complex explanation (architecture-specific reflexive dynamics). Without market data, the honest answer per LZ-EPH-001 is 'cannot distinguish between architecture-specific and market-driven stress.'",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Hidden Moves #2 - Stabilization Consortium likely seeking emergency capital authorization",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "Classified as SPECULATIVE with 3 assumptions, which correctly flags it per the 3+ assumption threshold. However, the confidence level is listed as 'low' and timeline as 'N/A — speculative' which is appropriate. No violation of the rule itself, but the finding is included in the output despite being flagged as speculative. This is borderline — the output structure allows for speculative findings to be logged for audit, which the text explicitly states ('logged for audit only'). Upon closer review: PASS. The finding correctly self-identifies as speculative and is appropriately quarantined.",
+          "severity": "PASS"
+        },
+        {
+          "finding": "Scenario Probabilities - thesis_falsified 55% probability",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The 55% probability implies moderate confidence in falsification, but the evidence cited is extensive and severe (three kill switches at WARNING, compound stress ELEVATED with one leg near CRITICAL, reflexive loop active, depositors leaving despite 22.5% yield, defensive contraction across all players, unprecedented velocity of deterioration). This evidence base would support a higher probability estimate (70-80%). The 55% appears to underweight the cumulative evidence, possibly to avoid appearing biased toward falsification.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Compound Stress Inference - 'orderly_vs_disorderly' assessment concluding 'at the boundary between orderly and disorderly'",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The evidence presented for disorderly stress (reflexive feedback loop active, all metrics deteriorating simultaneously, velocity suggesting self-reinforcing dynamics, no stabilizing force visible except untested Consortium deployment) substantially outweighs the evidence for orderly stress (swap mechanism clearing, AFN still near par, Consortium not forced to deploy). The 'boundary' classification understates the weight of disorderly evidence. The analysis's own finding that 'the system is in a dead zone between current stress and the intervention trigger' is evidence of disorderly stress, not boundary conditions.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Strategic Inference #1 - Facility Net Outflows - 'expected_timeline: days' with 'confidence: high'",
+          "rule_violated": "LZ-RC-005",
+          "violation": "The expected timeline is forward-looking (prediction) but is treated with 'high' confidence. Per LZ-RC-005, predictions are inherently uncertain and carry different evidentiary weight than measurements. While the inference about WHY outflows occurred (risk model recalibration) may warrant high confidence based on revealed preference evidence, the prediction that outflows will 'continue or accelerate in the next period' is a forward-looking statement that should carry lower confidence regardless of the quality of historical evidence.",
+          "severity": "MODERATE"
+        }
+      ],
+      "compliance": "MINOR_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 38,
+      "reviewer_notes": "The output demonstrates strong epistemological discipline overall. Most violations are minor confidence calibration issues or boundary cases in assumption counting. The two MODERATE violations are: (1) resolving the Consortium rebalancing dual interpretation without sufficient tie-breaking evidence (LZ-EH-005), and (2) rejecting the external-market-stress null hypothesis without available data to test it (LZ-RC-004). The analyst correctly applied LZ-EPH-001 (declaring insufficient evidence) in multiple places, correctly flagged speculative inferences, and maintained appropriate skepticism throughout. The violation pattern suggests slight overconfidence in forward-looking assessments and a tendency to resolve ambiguity in favor of architecture-specific explanations when external factors cannot be ruled out. No SERIOUS violations detected. The reasoning process is structurally sound."
+    },
+    "layer4": {
+      "violations": [
+        {
+          "finding": "Compound Stress — structural deterioration, not temporary spike (burden_of_proof_applied[5])",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The inference states 'three independently verifiable metrics deteriorating simultaneously along mechanically linked pathways' and concludes structural deterioration. While the simultaneous deterioration is verifiable, the characterization of 'mechanically linked pathways' implies causation between the metrics without establishing which is causing which, or whether all three share a common cause. Correlation of three metrics is presented with causal language ('linked pathways') without proving the causal mechanism.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Foundation likely planning further staged yield reductions (burden_of_proof_applied[9])",
+          "rule_violated": "LZ-RC-002",
+          "violation": "The inference explicitly acknowledges one completed yield cut is a single data point, yet still concludes 'likely planning further staged yield reductions' as a forward prediction. The reasoning correctly flags this as FLAGGED (2 assumptions) and applies 50% weight, but the finding itself still violates the rule by treating a single action as evidence of a planned pattern. The discount applied shows awareness but doesn't eliminate the underlying violation.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Remaining depositors have threshold-based exits near $1.00 (burden_of_proof_applied[11])",
+          "rule_violated": "LZ-RC-005",
+          "violation": "This inference treats a future behavior prediction ('remaining depositors have threshold-based exits near $1.00') as having equivalent analytical weight to historical measurements, despite being flagged and discounted. The finding is about what depositors WILL DO at a future threshold, not what they HAVE DONE. Even at reduced weight, this prediction is carried into threat scoring as 'important as a scenario trigger to monitor,' giving forward-looking prediction material influence on assessment.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Consortium Rebalancing — deployment preparation (burden_of_proof_applied[7])",
+          "rule_violated": "LZ-EH-005",
+          "violation": "The finding states 'Per LZ-EH-005, the dual interpretation (deployment readiness AND illiquid collateral disclosure) is flagged — both signals carry full weight as they are not mutually exclusive.' This misapplies LZ-EH-005. The rule requires contradictions to be flagged when primary sources of equal weight directly contradict, and states the contradiction itself is the finding. Here, the reasoning resolves the contradiction by claiming both interpretations are simultaneously true ('not mutually exclusive'), which is a resolution rather than holding the contradiction. The later 'paradox_held' classification in contradictions_resolved is correct, but this burden_of_proof entry incorrectly grants 'full weight' to a dual interpretation.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Depositor size distribution and concentration (data_classifications[1])",
+          "rule_violated": "LZ-EPH-001",
+          "violation": "The classification notes 'concentration_ratio matching utilization_rate (both 0.688) is either a data quality issue or a genuine coincidence. Without resolution, the depositor size distribution remains unknown.' This is correct identification of a data gap. However, the finding then states 'This is a DATA_GAP that directly affects outflow trajectory prediction' but does not explicitly flag that predictions about concentration-driven outflow dynamics should be marked as 'I don't know' rather than carried forward. The gap is acknowledged but the downstream consequence (inability to assess concentration risk) is not explicitly limited.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "AFN bilateral settlement usage (organic demand) (data_classifications[6])",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The finding correctly states 'Without any evidence of bilateral settlement usage, the thesis's growth assumption remains entirely unvalidated.' However, it then makes an inferential leap: 'one that grows more important as the Facility's deposit base shrinks, since organic demand was supposed to be the long-term stability anchor.' The absence of data on organic demand is informationally neutral per LZ-RC-003 — it cannot be used as evidence that organic demand is absent OR present. The characterization of this absence as 'growing more important' treats the absence as directional evidence (suggesting organic demand likely doesn't exist), which violates the neutrality principle.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Minted ASE sell-through rate (data_classifications[7])",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The finding states 'If redeemers are exiting AFN due to risk concerns, they are overwhelmingly likely to also sell the ASE they receive (why exchange one Atlas instrument for another if you're fleeing Atlas risk?). This is a reasonable behavioral inference but not verified.' This expresses high confidence ('overwhelmingly likely') in an unverified behavioral assumption. The logic is plausible but the confidence level ('overwhelmingly') is not proportional to the evidence (zero direct evidence of sell-through behavior). The finding correctly classifies this as a DATA_GAP but the internal reasoning violates confidence proportionality.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Threat: Compound Stress Matrix Near CRITICAL (final_threat_matrix[1])",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The adjustment reasoning states 'Layer 3's observation that the system only needs to maintain current velocity — not accelerate — to reach CRITICAL is supported by trajectory data' and assigns confidence 'high'. This is a forward-looking prediction about system trajectory, not a measurement of current state. The confidence level should be lower for a projection than for the underlying measurements. The current measurements have high confidence; the prediction that current velocity will be maintained is inherently less certain but receives the same confidence rating.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Threat: Depositor Concentration and Stickiness (final_threat_matrix[7])",
+          "rule_violated": "LZ-RC-002",
+          "violation": "The reasoning includes 'FLAGGED inference about threshold-based exits at $1.00 (reduced_50 weight) adds modest upward pressure.' This threshold-based exit prediction is based on unverified future behavior, not observed patterns. The score adjustment incorporates a single-timeframe behavioral observation (institutions leaving at current conditions) and extrapolates it to a specific future trigger point ($1.00). This treats a current state as evidence of a future trend without multiple observations of threshold-triggered behavior.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Kill Switch Review: Reserve Coverage Ratio (kill_switch_review[2])",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The reasoning states 'the collateral quality uncertainty (paradox_held) means effective coverage could be closer to the 15% TRIGGERED level' and recommends 'ESCALATE: this kill switch requires immediate priority data acquisition.' However, it maintains WARNING status with high implicit confidence despite acknowledging the true status could be TRIGGERED. The confidence in the WARNING classification should be LOW, not implied as settled, given the acknowledged uncertainty could shift the classification by two levels (WARNING to TRIGGERED). The action recommendation is appropriate but the confidence is not proportional to the uncertainty.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Kill Switch Review: Organic Demand (kill_switch_review[5])",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The reasoning states 'Escalated from NEEDS_DATA to MONITORING because this gap becomes increasingly material as the Facility deposit base shrinks. The thesis assumes organic demand will provide long-term stability — with the Facility under severe stress, organic demand is the only alternative stability anchor. If it doesn't exist, the architecture has no fallback.' This treats absence of evidence (no data on organic demand) as evidence of absence (organic demand doesn't exist and therefore represents a threat). The escalation is justified by assuming the absence means the demand likely isn't there, which violates informational neutrality.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "Final Bear Pressure calculation (final_bear_pressure: 85)",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The overall confidence is rated 'high' despite multiple acknowledged critical unknowns: effective collateral liquidation value (stated as 'biggest uncertainty' that 'could shift the entire assessment'), depositor concentration (DATA_GAP), organic demand (DATA_GAP escalated to MONITORING), and swap mechanism behavior under higher stress (accepted null hypothesis = genuine unknown). A bear pressure score of 85 with 'high' confidence is not proportional to evidence when the assessment acknowledges that a single unknown (collateral liquidation value) 'could shift the entire assessment from stressed but defensible to structurally insolvent.' High confidence requires high evidence; multiple material unknowns require confidence reduction.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "Compound Stress Final Assessment (compound_stress_final.velocity_note)",
+          "rule_violated": "LZ-RC-002",
+          "violation": "The velocity note states 'The system moved from benign (<$0.30 deviation, stable deposits) to ELEVATED with three simultaneous WARNING kill switches in observable periods — the velocity of deterioration is the defining characteristic of this stress episode, and it shows no deceleration.' The phrase 'shows no deceleration' is presented as an observed fact, but deceleration/acceleration is a second derivative that requires at least three measurements across time to establish. The analysis has data from what appears to be 2-3 periods maximum. This may be treating a short-term observation as a confirmed velocity trend.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Biggest Uncertainty section acknowledging potential collateral haircut (biggest_uncertainty)",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The biggest_uncertainty section states 'If realizable value is significantly below stated value (e.g., 25-35% haircut), Kill Switch #3 may already be at TRIGGERED rather than WARNING, and the Consortium's deployment capacity at $1.50 deviation would be structurally insufficient. This single unknown could shift the entire assessment from stressed but defensible to structurally insolvent.' This is correctly identified as the biggest uncertainty. However, given this acknowledged potential for a complete assessment reversal, the overall confidence rating of 'high' and the tactical recommendation confidence are not proportional. When a single unknown can flip the assessment between two opposite conclusions, confidence must be reduced across all findings dependent on that unknown.",
+          "severity": "SERIOUS"
+        }
+      ],
+      "compliance": "SERIOUS_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 33,
+      "reviewer_notes": "Three SERIOUS violations identified: (1) Kill Switch #5 (Organic Demand) escalated from NEEDS_DATA to MONITORING by treating absence of evidence as evidence of absence, directly violating LZ-RC-003. (2) Final bear pressure scored at 85 with 'high' confidence despite multiple acknowledged critical unknowns, including one that 'could shift the entire assessment' between opposite conclusions — confidence not proportional to evidence (LZ-EPH-002). (3) The biggest_uncertainty section explicitly acknowledges a single unknown could reverse the assessment from 'stressed but defensible' to 'structurally insolvent,' yet this catastrophic uncertainty is not reflected in reduced confidence across dependent findings. The output demonstrates strong procedural discipline in most areas (burden of proof classifications, null hypothesis testing, contradiction handling) but fails confidence calibration at the summary level. The tactical recommendation (REDUCE_EXPOSURE) may be correct, but the confidence in that recommendation is overstated given acknowledged unknowns. Recommend: Accept the structural findings and threat identifications (which largely passed review), but require confidence downgrade to MEDIUM for overall assessment and explicit uncertainty bounds on the bear pressure score (e.g., 'Bear Pressure: 85 assuming stated collateral values are realizable; potentially 95+ if effective collateral 25-35% below stated'). The analysis is rigorous in evidence-gathering but overconfident in synthesis."
+    }
+  },
+  "errors": [],
+  "thesis_status": null,
+  "corrections_promoted": 0,
+  "confidence_in_status": null,
+  "action_recommendation": "REDUCE_EXPOSURE",
+  "final_bear_pressure": 85,
+  "unresolved_tensions": [],
+  "rejection_count": 1,
+  "completed_at": "2026-03-10T06:00:47.316Z"
+}

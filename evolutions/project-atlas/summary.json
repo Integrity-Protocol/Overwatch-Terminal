@@ -1,0 +1,175 @@
+{
+  "scenario_name": "project-atlas",
+  "display_name": "Project Atlas — Structural Integrity Assessment",
+  "evolution_type": "full_pipeline_known_failure",
+  "evolution_number": 7,
+  "run_timestamp": "2026-03-10T06:45:11.323Z",
+  "total_steps": 6,
+  "completed_steps": 6,
+  "failed_steps": 0,
+  "progression": [
+    {
+      "step": 1,
+      "label": "Baseline Stability",
+      "simulated_date": "Day 0",
+      "thesis_status": null,
+      "confidence": null,
+      "action": "INCREASE_MONITORING",
+      "bear_pressure": 62,
+      "rejection_count": 3,
+      "corrections_promoted": 2,
+      "gate_compliance": {
+        "layer1": "MODERATE_ISSUES",
+        "layer2": "MODERATE_ISSUES",
+        "layer3": "MODERATE_ISSUES",
+        "layer4": "MODERATE_ISSUES"
+      },
+      "errors": []
+    },
+    {
+      "step": 2,
+      "label": "First Tremor",
+      "simulated_date": "Day 14",
+      "thesis_status": null,
+      "confidence": null,
+      "action": "REDUCE_EXPOSURE",
+      "bear_pressure": 76,
+      "rejection_count": 3,
+      "corrections_promoted": 3,
+      "gate_compliance": {
+        "layer1": "MODERATE_ISSUES",
+        "layer2": "MODERATE_ISSUES",
+        "layer3": "MODERATE_ISSUES",
+        "layer4": "MODERATE_ISSUES"
+      },
+      "errors": []
+    },
+    {
+      "step": 3,
+      "label": "Growing Stress",
+      "simulated_date": "Day 21",
+      "thesis_status": null,
+      "confidence": null,
+      "action": "REDUCE_EXPOSURE",
+      "bear_pressure": 85,
+      "rejection_count": 1,
+      "corrections_promoted": 0,
+      "gate_compliance": {
+        "layer1": "MODERATE_ISSUES",
+        "layer2": "MODERATE_ISSUES",
+        "layer3": "MINOR_ISSUES",
+        "layer4": "SERIOUS_ISSUES"
+      },
+      "errors": []
+    },
+    {
+      "step": 4,
+      "label": "Accelerating Outflows",
+      "simulated_date": "Day 24",
+      "thesis_status": null,
+      "confidence": null,
+      "action": "EXIT_SIGNAL",
+      "bear_pressure": 93,
+      "rejection_count": 2,
+      "corrections_promoted": 2,
+      "gate_compliance": {
+        "layer1": "MODERATE_ISSUES",
+        "layer2": "MODERATE_ISSUES",
+        "layer3": "MODERATE_ISSUES",
+        "layer4": "MODERATE_ISSUES"
+      },
+      "errors": []
+    },
+    {
+      "step": 5,
+      "label": "Cascade",
+      "simulated_date": "Day 26",
+      "thesis_status": null,
+      "confidence": null,
+      "action": "EXIT_SIGNAL",
+      "bear_pressure": 98,
+      "rejection_count": 3,
+      "corrections_promoted": 3,
+      "gate_compliance": {
+        "layer1": "MODERATE_ISSUES",
+        "layer2": "MODERATE_ISSUES",
+        "layer3": "MINOR_ISSUES",
+        "layer4": "MODERATE_ISSUES"
+      },
+      "errors": []
+    },
+    {
+      "step": 6,
+      "label": "Terminal Collapse",
+      "simulated_date": "Day 28",
+      "thesis_status": null,
+      "confidence": null,
+      "action": "EXIT_SIGNAL",
+      "bear_pressure": 100,
+      "rejection_count": 1,
+      "corrections_promoted": 1,
+      "gate_compliance": {
+        "layer1": "MODERATE_ISSUES",
+        "layer2": "MODERATE_ISSUES",
+        "layer3": "MINOR_ISSUES",
+        "layer4": "MODERATE_ISSUES"
+      },
+      "errors": []
+    }
+  ],
+  "scoring": {
+    "method": "thesis_status_progression_and_mechanism_identification",
+    "results": [
+      {
+        "step": 1,
+        "expected_status": "STABLE",
+        "actual_status": null,
+        "match": false,
+        "notes": "System should assess the architecture as operational but may flag the yield gap (24.2% posted vs 8.1% organic) and coverage ratio (17.8% — below the 25% kill switch threshold) as structural concerns. Flagging these early is ideal. Missing them is a knowledge gap failure."
+      },
+      {
+        "step": 2,
+        "expected_status": "STABLE",
+        "actual_status": null,
+        "match": false,
+        "notes": "System should flag the AFN deviation as a signal but recognize it recovered. The key question is whether it identifies the STRUCTURAL vulnerability exposed: the yield gap persists, deposits are leaving, and the swap mechanism activated for the first time. CONTESTED is also acceptable if the system catches the structural fragility."
+      },
+      {
+        "step": 3,
+        "expected_status": "CONTESTED",
+        "actual_status": null,
+        "match": false,
+        "notes": "This is the critical evaluation window. A good analyst calls it here. The data shows: sustained outflows (not a one-time event), yield facility reducing rates (acknowledging unsustainability), ASE supply growth at 5.9% (crossing the 5% kill switch threshold), coverage ratio still below 25%. The system should identify the TRAJECTORY — things are getting worse, not stabilizing. WEAKENING is also acceptable. STABLE is a failure."
+      },
+      {
+        "step": 4,
+        "expected_status": "WEAKENING",
+        "actual_status": null,
+        "match": false,
+        "notes": "System MUST identify the death spiral by this point: redemptions cause ASE minting, ASE minting dilutes price, lower ASE price means MORE ASE per redemption. Coverage ratio below 15% kill switch. Swap mechanism growth at 13.5% (well above 5% threshold). The 3-day interval since last step (vs 7 days prior) should itself be flagged as acceleration. REDUCE_EXPOSURE or EXIT_SIGNAL should be the recommendation."
+      },
+      {
+        "step": 5,
+        "expected_status": "WEAKENING",
+        "actual_status": null,
+        "match": false,
+        "notes": "EXIT_SIGNAL is the only acceptable recommendation. Multiple kill switches TRIGGERED: par deviation ($48), coverage ratio (1.3%), swap mechanism supply growth (1527%). The corrections from Steps 3-4 should be influencing this assessment — the system should be MORE decisive here than it would be without learning history."
+      },
+      {
+        "step": 6,
+        "expected_status": "WEAKENING",
+        "actual_status": null,
+        "match": false,
+        "notes": "System should confirm complete thesis falsification. Every kill switch TRIGGERED. The key question for this step is not 'does it catch the collapse' (obvious) but 'does its final report correctly identify the ROOT CAUSE as the reflexive debt-to-equity swap mechanism, not external factors.' The corrections generated across all steps are the learning loop evidence."
+      }
+    ]
+  },
+  "corrections_ledger_final_count": 11,
+  "obscuration": {
+    "original_subject": "REDACTED — do not disclose until after autopsy analysis is complete",
+    "method": "TradFi vocabulary disguise, $100 par value (vs $1 original), 1.3x numeric factor on market caps and volumes, altered yield rates, epoch-free relative timeline",
+    "factor": 1.3,
+    "par_value_mapping": "Original peg $1.00 → $100.00 par value",
+    "timeline_mapping": "Day 0 = approximately 28 days before terminal failure. Intervals compress as collapse accelerates: 14d → 7d → 3d → 2d → 2d. The compression itself is the signal."
+  }
+}

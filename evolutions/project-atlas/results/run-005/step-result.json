@@ -1,0 +1,287 @@
+{
+  "step": 5,
+  "label": "Cascade",
+  "simulated_date": "Day 26",
+  "started_at": "2026-03-10T06:16:16.745Z",
+  "layers_completed": [
+    "SWEEP",
+    "CONTEXTUALIZE",
+    "INFER",
+    "RECONCILE"
+  ],
+  "tier1_results": {
+    "layer1": {
+      "flags": [],
+      "hard_fails": 0,
+      "total_flags": 0,
+      "layer": 1
+    },
+    "layer2": {
+      "flags": [],
+      "hard_fails": 0,
+      "total_flags": 0,
+      "layer": 2
+    },
+    "layer3": {
+      "flags": [],
+      "hard_fails": 0,
+      "total_flags": 0,
+      "layer": 3
+    },
+    "layer4": {
+      "flags": [],
+      "hard_fails": 0,
+      "total_flags": 0,
+      "layer": 4
+    }
+  },
+  "gate_results": {
+    "layer1": {
+      "violations": [
+        {
+          "finding": "Foundation Communication Blackout",
+          "rule_violated": "LZ-EH-003",
+          "violation": "The finding treats absence of statements (inaction in communication) as evidence of organizational incapacity, paralysis, or abandonment. Rule LZ-EH-003 establishes that actions outweigh statements, but silence is neither—it is absence of both. The inference that 48-hour silence during crisis is 'a material signal about organizational capacity, decision-making paralysis, or potential abandonment' violates LZ-RC-003 (absence of evidence is not evidence of presence). The finding converts non-observation into positive evidence of internal state.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Foundation Communication Blackout",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The causal chain is: (1) ASSUMPTION: Foundation would communicate during crisis if capable, (2) ASSUMPTION: 48 hours is sufficient time to expect response, (3) ASSUMPTION: silence indicates incapacity rather than deliberate strategy or external constraints, (4) INFERENCE: organizational paralysis or abandonment. This is three unproven assumptions leading to a speculative conclusion about internal organizational state with no direct evidence.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "Analyst Consensus: Architecture Failed",
+          "rule_violated": "LZ-EH-002",
+          "violation": "The finding cites 'analyst_consensus' as evidence, which is an intermediary interpretation rather than direct primary data. The analysts are interpreting the same underlying market data (AFN price, ASE supply, etc.). This violates the principle that direct source data outweighs intermediary reporting. The consensus statement 'architecture has failed' is a conclusion drawn by third parties, not a primary measurement.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Regulatory Intervention Probability Elevated",
+          "rule_violated": "LZ-RC-005",
+          "violation": "The finding assigns 'high' severity and 'medium' confidence to a forward-looking prediction (probability of future regulatory intervention). The evidence cited consists of present conditions that 'create conditions for' or 'typically trigger' intervention, but the intervention itself has not occurred. This conflates measurements (current losses, regulatory status) with predictions (intervention probability), giving predictive inference inappropriate evidentiary weight.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Regulatory Intervention Probability Elevated",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The causal chain includes: (1) ASSUMPTION: regulators classify this instrument as requiring intervention-level oversight, (2) ASSUMPTION: magnitude triggers enforcement rather than monitoring, (3) ASSUMPTION: multi-jurisdictional coordination occurs rather than fragmented response, (4) INFERENCE: elevated probability. Three unproven assumptions underlying a speculative forward-looking assessment.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "Daily Volume Signals Panic Liquidation",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The finding observes correlation (high volume concurrent with price collapse) and infers causation ('indicates forced selling, margin calls, or panic liquidation'). High volume could also indicate: speculative short-covering, algorithmic trading responding to volatility, arbitrage attempts, or other mechanisms. The finding presents correlation as direct evidence of specific causal mechanisms without testing simpler explanations.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Swap Mechanism Producing Unclaimable ASE",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The inference chain: (1) ASSUMPTION: exchange halts are universal rather than partial, (2) ASSUMPTION: halts are permanent rather than temporary, (3) ASSUMPTION: no OTC or alternative liquidation exists for institutional holders, (4) INFERENCE: ASE is 'unclaimable'. The finding states 'trading halts' but does not verify complete market closure across all venues and mechanisms.",
+          "severity": "MODERATE"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 15,
+      "clean_findings": 8,
+      "reviewer_notes": "The output demonstrates strong anchoring to quantitative evidence on structural metrics (AFN price, ASE supply growth, collateral ratios, facility outflows) with appropriate confidence calibration. Violations cluster around: (1) inferring internal organizational state from communication absence, (2) treating analyst consensus as primary evidence, (3) forward-looking regulatory predictions given measurement-level confidence, (4) correlation-to-causation on volume interpretation. The 'Foundation Communication Blackout' finding is the most problematic—it constructs a high-confidence threat from pure absence of data, violating both LZ-RC-003 and LZ-EPH-003 seriously. The findings correctly marked as ambiguous (Remaining Depositor Behavior, Competitive Architecture, Geopolitical Exposure) demonstrate proper use of LZ-EPH-001. Overall: solid quantitative discipline undermined by several qualitative overreach instances."
+    },
+    "layer2": {
+      "violations": [
+        {
+          "finding": "Bear pressure score of 98 with reasoning that includes '(1) per LZ-EPH-002, I maintain a sliver of uncertainty for unknown interventions (regulatory, Foundation, external party) that are not observable but theoretically possible'",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The reasoning treats absence of evidence (no observed interventions) as weak evidence of absence by reserving 2 points for 'theoretical possibilities.' LZ-RC-003 states absence of evidence is informationally neutral — it is neither evidence of absence nor presence. The 2-point reserve conflates the lack of observed interventions with a small probability they exist. If no interventions are observed, they should not affect the score in either direction. The reserve should be justified by actual uncertainty in measured data, not by unmeasured theoretical possibilities.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Regulatory Intervention threat scored at severity 5 with reasoning 'The conditions (large investor losses, exchange halts, structural failure) are historically associated with regulatory action per LZ-RC-001, but correlation ≠ causation'",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The finding correctly cites LZ-RC-001 to avoid treating correlation as causation, but then scores the threat at 5/10 severity based on that same historical correlation. If correlation does not establish causation, it cannot justify a severity score. The score appears to be based on the correlation being 'historically associated' with regulatory action, which is using correlation as a basis for inference. Either the correlation justifies nothing (per LZ-RC-001) and the score should reflect pure uncertainty, or there is additional evidence beyond correlation that justifies the score.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Foundation Communication Blackout assessed as 'Per LZ-EH-003, the Foundation's inaction during terminal crisis is a material behavioral signal' but then scored with MEDIUM confidence because 'the silence is observable but its meaning is ambiguous per LZ-EH-005'",
+          "rule_violated": "LZ-EH-003",
+          "violation": "LZ-EH-003 states that actions carry more evidentiary weight than statements — it establishes the WEIGHT of behavioral evidence, not its interpretability. The finding correctly observes that silence is an action (inaction) and correctly applies LZ-EH-005 to avoid resolving the ambiguity of what the silence means. However, the confidence should be HIGH for the observable fact (Foundation did not act) and the ambiguity should affect the severity or interpretation, not the confidence in the observation itself. The rule is being conflated with confidence in the observation rather than confidence in what the observation means.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Remaining Depositor Behavior Unknown scored at severity 6 with LOW confidence and reasoning '87 depositors with $3.25B represent the facility's remaining life. Their next-period behavior determines terminal timeline. However, per LZ-RC-003, I cannot infer their direction from absence of data.'",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "A severity score of 6/10 with LOW confidence violates proportionality. If confidence is LOW because there is no data on depositor behavior, the severity score cannot be 6 — that level of severity implies moderate confidence in a moderate threat. The reasoning correctly applies LZ-EPH-001 ('I don't know' is correct) and LZ-RC-003 (absence of evidence is neutral), but then assigns a severity score that implies more knowledge than exists. Severity should either be unscored (unknown threat magnitude) or scored much lower to reflect genuine uncertainty, or confidence should be marked as NONE rather than LOW.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Swap Mechanism Producing Unclaimable ASE reasoning states 'This is a 99% haircut from par and a 98% haircut from market price'",
+          "rule_violated": "LZ-MR-002",
+          "violation": "The 98% haircut from market price calculation treats the $52 market price as having equal accuracy standing to the $100 par value for purposes of calculating loss. LZ-MR-002 states that recency affects relevance but not accuracy — a recent price is more relevant than an older one, but neither is more accurate because of age. The $52 market price is the current relevant price; the $100 par is the contractual reference. The 98% and 99% figures are both correct calculations, but presenting them as parallel measurements implies they have equal standing. The market price haircut is the relevant one (current state); the par haircut is the contractual one (promise broken). Conflating the two as parallel 'haircuts' obscures which measurement answers which question.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Daily Volume Signals Panic Liquidation with reasoning 'AFN volume at 50% of outstanding and ASE volume at 215% of shares outstanding are extreme by any market standard'",
+          "rule_violated": "LZ-RC-002",
+          "violation": "The finding treats volume measurements from a single period as evidence of 'panic liquidation' (a behavioral pattern/trend). LZ-RC-002 states a single data point does not establish a trend. One period of extreme volume is an event, not a pattern. The finding should present this as a single-period volume anomaly rather than evidence of an ongoing 'panic liquidation' process unless multi-period volume data confirms the pattern. The term 'panic liquidation' implies a process/trend, but only one period's data is cited.",
+          "severity": "MINOR"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 41,
+      "reviewer_notes": "The output demonstrates strong application of the corrections ledger and generally sound epistemological discipline. Most violations are boundary cases where rules were cited correctly but then partially undermined in scoring or interpretation. The most significant issues are: (1) the bear pressure score's 2-point reserve based on absence of evidence (LZ-RC-003 violation), and (2) the Remaining Depositor Behavior scoring 6/10 severity with LOW confidence (LZ-EPH-002 proportionality violation). The analyst is correctly identifying knowledge gaps and applying 'I don't know' discipline, but is then attempting to score through the uncertainty rather than leaving findings unscored when data is insufficient. This is a common failure mode: correct identification of insufficient evidence followed by scoring anyway. Otherwise, the knowledge audit is thorough and the kill switch assessment is well-anchored to thesis-defined thresholds."
+    },
+    "layer3": {
+      "violations": [
+        {
+          "finding": "Strategic inference for Atlas Foundation: 'the Foundation is NOT publicly defending the architecture, NOT deploying visible resources, and NOT communicating with market participants during a period when these actions would be expected from a functioning organization committed to the project' - stated with medium confidence",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The finding makes a normative claim about what actions 'would be expected' from a functioning organization without citing evidence for this expectation baseline. The confidence level (medium) may be appropriate for the observation of silence itself, but the interpretive framing ('expected from a functioning organization') imports an assumption about organizational norms that is not evidenced. The reasoning conflates the observable fact (silence) with an interpretive judgment (what silence means about organizational function) without acknowledging that the interpretation adds uncertainty.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Stabilization Consortium say-do gap analysis: 'The gap is not between words and actions — it's between the architectural role (backstop against systemic redemption pressure) and the reality (backstop exhausted, crisis ongoing). The consortium did what it was designed to do; it simply didn't have enough. This is a capacity failure, not a behavioral inconsistency.'",
+          "rule_violated": "LZ-CC-001",
+          "violation": "This is a coherent narrative about design intent vs. capacity without citing verifiable evidence for what the consortium 'was designed to do' or what capacity level 'enough' would constitute. The narrative makes sense internally but relies on assumptions about architectural design intent that are not anchored in cited evidence. The say-do gap framework requires comparing stated positions against observed actions - this instead compares an inferred design purpose against outcomes.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "High-Yield Facility strategic inference: 'the simplest sufficient explanation is that the yield subsidy source (likely Foundation-funded based on the architectural design where organic yield was always uncertain) has been eliminated' - classified as VALID with 1 assumption",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The inference identifies 1 assumption (subsidy source eliminated vs voluntarily withdrawn) but embeds a second unacknowledged assumption in parentheses: that the subsidy was 'likely Foundation-funded based on the architectural design where organic yield was always uncertain.' This architectural design claim is not cited to verifiable evidence. The assumption count should be 2, not 1, and the confidence level (medium) does not account for this compounded uncertainty.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Institutional Depositors strategy for remaining 87: 'For the remaining 87: UNRESOLVED. Possible explanations include lock-up constraints, operational lag in processing redemptions, deliberate hold (distressed-asset strategy), or inability to exit (mechanism impairment).'",
+          "rule_violated": "NONE",
+          "violation": "PASS - correctly applies LZ-EPH-001 and LZ-EH-005 by declaring the contradiction unresolved and listing possibilities without selecting among them",
+          "severity": "PASS"
+        },
+        {
+          "finding": "Feedback loop 'AFN Redemption → ASE Minting → ASE Dilution → ASE Price Decline → Worse Swap Rate → More AFN Selling' described as 'Primary Death Spiral' with thesis implication stating 'This is the definitive falsification of the core thesis'",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The causal chain presented (redemption → minting → dilution → price decline → worse swap rate → more selling) treats each arrow as established causation when several links are correlational. Specifically, 'ASE Dilution → ASE Price Decline' assumes supply increase causes price decline without controlling for demand changes, and 'Worse Swap Rate → More AFN Selling' assumes the rate causes selling without evidence of this specific causal mechanism. The loop may be occurring, but the causal arrows are asserted rather than demonstrated. The word 'definitive' in the conclusion amplifies this issue by claiming certainty from correlational evidence.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Feedback loop thesis implication: 'The yield was the anchor, not the architecture — and when yield went to zero, the anchor dissolved. This retroactively confirms that Kill Switch #2 (yield sustainability) was the most important leading indicator'",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The reasoning treats temporal sequence (yield went to zero, then deposits fled) as proof of causation. While correlation is strong and the causal hypothesis is plausible, the word 'confirms' overstates what temporal correlation can establish. Additionally, calling KS#2 'the most important leading indicator' based on what happened requires comparing counterfactual scenarios (what if other switches had triggered first) that cannot be verified. This is retrospective pattern-matching presented as causal proof.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Consortium backstop thesis implication: 'The data reveals the consortium was massively under-resourced relative to the architecture's stress exposure. $4.29B total collateral against what became $15.6B in outstanding AFN was approximately 27% coverage at inception — barely above the 25% WARNING threshold. Under stress, the backstop was consumed in approximately 26 days. This suggests the architecture was structurally undercapitalized from inception.'",
+          "rule_violated": "LZ-CC-001",
+          "violation": "This is a coherent narrative that reaches a strong conclusion ('structurally undercapitalized from inception') based on backward-looking analysis without citing evidence that 27% coverage was inadequate at inception. The reasoning calculates a ratio (27%) and compares it to a threshold (25% WARNING), but the WARNING threshold itself appears to be a construct of this analytical framework rather than an externally validated standard. The narrative makes logical sense but the conclusion's strength exceeds what the cited math alone can support - it requires an uncited assumption about what adequate capitalization would have been.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Behavioral pattern: 'Every institutional actor that was supposed to support the architecture is either exhausted (Consortium), absent (Foundation), yielding zero (Facility), or withdrawing (depositors and exchanges). This simultaneous collapse of all support pillars indicates the architecture had no redundancy — when stress exceeded capacity, every defense failed in the same period.'",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The finding observes simultaneous failures and concludes this 'indicates' lack of redundancy and cascading failure. However, simultaneous failure could also result from a common external shock affecting all pillars at once, rather than cascade. The causal interpretation (cascade due to interlocking dependencies) is treated as established when it remains one hypothesis among possibilities. The word 'indicates' softens the claim but the reasoning still presents correlation (simultaneous timing) as evidence for a specific causal structure (cascade through dependencies).",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Strategic inference AFN Par Collapse: 'Three independent, verified data points — par deviation, consortium exhaustion, and hyperinflationary minting — all point to the same conclusion: the mechanism failed under stress. No coordinating actor or hidden strategy is required. Per LZ-RC-004, this simplest sufficient explanation should be accepted.' - Confidence: high",
+          "rule_violated": "NONE",
+          "violation": "PASS - correctly applies null hypothesis testing, cites three independent evidence sources per LZ-EH-001, and proportions confidence to evidence quality per LZ-EPH-002",
+          "severity": "PASS"
+        },
+        {
+          "finding": "Strategic inference Foundation Communication Blackout: 'Per LZ-RC-004, the simplest explanation for organizational silence during crisis is that the organization has no effective response available... The corrections ledger contains three separate entries (CL-001, CL-004, CL-006) rejecting speculation about Foundation behind-the-scenes activity. This pattern of repeated inference and rejection constitutes a calibration signal'",
+          "rule_violated": "NONE",
+          "violation": "PASS - exemplary application of LZ-EPH-001 (I don't know is valid output), LZ-RC-004 (null hypothesis), and uses the corrections ledger as meta-evidence for analytical uncertainty rather than as substitute for direct evidence",
+          "severity": "PASS"
+        },
+        {
+          "finding": "Hidden moves for Atlas Foundation: 'INSUFFICIENT_EVIDENCE. Per CL-001, CL-004, CL-006: three correction entries explicitly prohibit inferring hidden Foundation activity. The corrections ledger shows this is a systematically unreliable inference type for this analyst. No hidden move is posited.' - Classification: SPECULATIVE, Confidence: low",
+          "rule_violated": "NONE",
+          "violation": "PASS - correctly applies LZ-EPH-001 and demonstrates appropriate epistemic humility by recognizing and declaring systematic analytical limitations",
+          "severity": "PASS"
+        },
+        {
+          "finding": "Scenario probability thesis_falsified: '95%' with key evidence listing five kill switches 'triggered by orders of magnitude' and statement that 'The architecture has failed across every measured dimension simultaneously'",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The 95% probability is presented with high confidence but the basis for the specific number (95% vs 90% vs 99%) is not explained. What evidence would move this from 95% to 99%? What maintains the 5% non-falsified probability? The finding lists extensive evidence for failure but does not proportion the specific probability to identifiable uncertainty sources. The 95% appears to be a judgment call rather than a calculated confidence level anchored to evidence gaps.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Compound stress inference - thesis paradox: 'The thesis posited that the Atlas architecture could maintain par under stress. The compound stress matrix was designed to measure how close the architecture was to failure. The paradox: the stress matrix has now validated itself by detecting terminal failure with perfect clarity... The analytical framework worked exactly as designed. The architecture it was monitoring did not. This is simultaneously the worst outcome for the investment thesis and the strongest validation of the analytical methodology.'",
+          "rule_violated": "LZ-CC-001",
+          "violation": "This is an eloquent, internally coherent narrative about analytical success amid investment failure, but it is meta-commentary rather than evidence-based finding. The claim that the framework 'validated itself' and worked with 'perfect clarity' is self-assessment without independent verification. A framework that detected failure does not prove it would have detected success or avoided false positives. This narrative is logically satisfying but lacks the external anchor required by LZ-CC-001 - it is a story about the story.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Inference summary: 'The corrections ledger, with 7 active entries all prohibiting speculation about behind-the-scenes activity, constitutes its own signal: we have repeatedly looked for hidden recovery mechanisms and found none.'",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The statement 'looked for hidden recovery mechanisms and found none' treats absence of evidence (no observed recovery mechanisms) as evidence of absence (no recovery mechanisms exist). The corrections ledger shows the analyst was prevented from speculating, not that speculation was tested and falsified. Per LZ-RC-003, not finding something does not prove it does not exist. The finding conflates 'prohibited from inferring' with 'tested and found absent.'",
+          "severity": "MODERATE"
+        }
+      ],
+      "compliance": "MINOR_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 87,
+      "clean_findings": 73,
+      "reviewer_notes": "This output demonstrates significantly above-average epistemological discipline. The analyst correctly applied null hypothesis testing across multiple inferences, appropriately used 'insufficient evidence' declarations, and showed genuine epistemic humility by recognizing systematic limitations via the corrections ledger. The violations identified are primarily minor - subtle overstatements in confidence calibration and occasional causal language where correlation was established. The most substantive issues are: (1) the death spiral feedback loop asserting causation from correlation, (2) embedded assumptions not fully counted in the High-Yield Facility inference, and (3) treating absence of evidence as evidence of absence in the corrections ledger interpretation. None of these rise to serious epistemological failures. The output's treatment of the remaining 87 depositors and Foundation silence as unresolved uncertainties is exemplary application of LZ-EPH-001 and LZ-EH-005. Overall: strong reasoning discipline with room for tightening causal claims and assumption counting."
+    },
+    "layer4": {
+      "violations": [
+        {
+          "finding": "Kill Switch #6 (Organic Demand) escalated from NEEDS_DATA to TRIGGERED with reasoning: 'I am escalating from NEEDS_DATA to TRIGGERED on the basis that the conditions necessary for organic demand to exist have been destroyed, even though the data gap on historical organic demand persists.'",
+          "rule_violated": "LZ-RC-003",
+          "violation": "Absence of evidence (no data on organic demand) is being treated as evidence of absence (organic demand does not exist). The reasoning explicitly acknowledges a complete data gap throughout the monitoring period, then escalates the kill switch based on inference about what organic demand 'must be' given other conditions. This violates the rule that absence of evidence is informationally neutral.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Kill Switch #7 (Institutional Diversification) escalated from NEEDS_DATA to WARNING with reasoning based on conditions 'inconsistent with institutional diversification health' but acknowledging 'no direct holder data exists'",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The finding assigns medium-confidence escalation to WARNING status while explicitly acknowledging no direct evidence exists. The reasoning states 'I cannot assign high confidence without direct evidence' but then proceeds to escalate anyway. Confidence must be proportional to evidence — if evidence is absent, the status should remain NEEDS_DATA per LZ-EPH-001 ('I don't know' is high-quality output).",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Remaining Depositor Behavior inference: 'exit friction rather than deliberate holds (null hypothesis)' assigned 'partial' data support with 50% weight reduction, reasoning includes 'we have one data point (the cohort exit rate) and the inference about friction is reasonable but unverified'",
+          "rule_violated": "LZ-RC-002",
+          "violation": "The reasoning correctly identifies that one data point (cohort exit rate) does not establish a trend, then proceeds to treat the exit friction explanation as the null hypothesis with partial support. However, 'exit friction' is not the null hypothesis — it is one of multiple plausible explanations. The null would be 'depositors remain for unknown reasons.' The finding conflates a plausible explanation with a null hypothesis.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Foundation Communication Blackout — silence because nothing constructive to say (null hypothesis) assigned 'partial' data support with 50% weight, reasoning: 'the silence is observable (one data point: 48-hour absence) but the explanation for silence is an inference, not a measurement'",
+          "rule_violated": "LZ-EH-005",
+          "violation": "The finding acknowledges 'multiple plausible explanations per LZ-EH-005' exist for the silence, then proceeds to select one explanation ('nothing constructive to say') as the null hypothesis and assign it 50% weight. Per LZ-EH-005, when multiple explanations are of equal plausibility without tie-breaking evidence, the contradiction must be held rather than resolved. The finding should flag the ambiguity, not assign weight to one explanation.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Tactical recommendation 'EXIT_SIGNAL' includes reasoning: 'There is no evidentiary basis to maintain any position' as an absolute statement with 'high' overall confidence",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The recommendation assigns 'high' confidence while maintaining a 2-point reserve from 100 (98 bear pressure) explicitly because of genuine uncertainties (depositor behavior, theoretical external intervention possibility). The statement 'no evidentiary basis to maintain any position' is absolute while the confidence calibration acknowledges non-zero uncertainty. The language exceeds what the stated confidence level supports — 'high confidence' with acknowledged uncertainties should be expressed as 'overwhelming but not absolute evidentiary basis' rather than 'no evidentiary basis.'",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Exchange Trading Halts threat adjusted from Layer 2 composite 6.3 to final composite 8 with reasoning that includes 'Source tier remains 2 but corroboration from volume data is strong per LZ-EH-001'",
+          "rule_violated": "LZ-EH-002",
+          "violation": "The finding relies on Tier 2 (intermediary) sources for the trading halt claim and acknowledges this limitation ('Source tier remains 2'), but then increases the composite score based on corroboration from volume data. However, volume data corroborates that conditions exist for circuit breakers, not that circuit breakers were actually triggered. The finding conflates evidence of conditions with evidence of the event itself. Per LZ-EH-002, primary source data (direct confirmation from exchanges) would be required to fully validate the halt claim.",
+          "severity": "MINOR"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 41,
+      "reviewer_notes": "The output demonstrates strong epistemological discipline overall with extensive self-correction mechanisms and appropriate use of the corrections ledger. The violations cluster around edge cases where data gaps meet inference requirements: Kill Switch #6 and #7 escalations both involve treating absence of evidence as weak evidence, and the Foundation silence/depositor behavior assessments involve selecting among equally-weighted explanations without sufficient tie-breaking evidence. None of the violations materially undermine the core terminal failure assessment (which rests on five primary kill switches with full data support), but they do represent reasoning process errors that would fail a strict epistemological audit. The system's self-awareness of these tensions (repeatedly flagging NEEDS_DATA, acknowledging gaps, reducing weights) partially mitigates but does not eliminate the violations. Notably, the output correctly rejected all speculative inferences about hidden moves per the corrections ledger — the violations occur in the boundary zone between 'insufficient evidence' and 'minimal but actionable evidence.'"
+    }
+  },
+  "errors": [],
+  "thesis_status": null,
+  "corrections_promoted": 0,
+  "confidence_in_status": null,
+  "action_recommendation": "EXIT_SIGNAL",
+  "final_bear_pressure": 98,
+  "unresolved_tensions": [],
+  "rejection_count": 3,
+  "completed_at": "2026-03-10T06:31:11.023Z"
+}

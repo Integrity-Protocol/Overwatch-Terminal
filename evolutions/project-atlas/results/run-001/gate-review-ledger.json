@@ -1,0 +1,320 @@
+[
+  {
+    "timestamp": "2026-03-10T05:18:30.629Z",
+    "layer": 1,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "Compound Stress Pre-Loading Pattern",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The finding presents correlation between multiple warning indicators as evidence of a 'pre-loading pattern' that will lower the break point, implying causal relationship between the presence of multiple warnings and reduced system resilience. The evidence cited shows co-occurrence of warnings but does not establish that multiple simultaneous warnings causally reduce failure thresholds versus simply indicating multiple independent risks.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Compound Stress Pre-Loading Pattern",
+          "rule_violated": "LZ-CC-001",
+          "violation": "The 'Compound Stress Matrix logic' and the concept that 'the break point of a pre-loaded structure is lower than an unloaded one' is referenced as if it is an established principle, but no verifiable real-world anchor is provided for this specific claim. The finding presents a logically coherent narrative about stress accumulation without evidence that this particular system behaves according to this model.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "Subsidy Burn Rate Estimation",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The inference chain includes at minimum: (1) assumption that the yield gap must be funded by subsidy, (2) assumption that Tier-1 collateral is the funding source, (3) assumption that no other revenue sources exist, (4) assumption that current burn rate would continue linearly. This exceeds three unproven assumptions, making the 17-month runway estimate speculative.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Subsidy Burn Rate Estimation",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "Confidence is rated 'medium' for a calculation that depends on multiple unverified assumptions about funding sources and sustainability mechanisms. The mathematical calculation itself is precise, but the underlying model's validity is unverified, warranting 'low' confidence.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Favorable Narrative Environment",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The finding states that positive narrative 'suppresses redemption pressure and supports deposit inflows' as if the causal relationship is established. While correlation between positive sentiment and deposit behavior is cited, causation is not proven—positive sentiment and deposit inflows could both be caused by a third factor (e.g., actual system performance).",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Depositor Count Concentration Risk",
+          "rule_violated": "LZ-CC-001",
+          "violation": "The claim that 'institutional yield-seeking behavior pattern' 'historically correlates with rapid exit behavior' is presented without specific verifiable anchoring. What historical data? Which institutions? Which comparable events? This is a plausible narrative without real-world verification.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Swap Mechanism Untested at Scale",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The scenario modeling (5% and 20% redemption waves causing specific ASE supply growth and price impact) involves: (1) assumption that redemptions would trigger proportional ASE minting, (2) assumption about market absorption capacity, (3) assumption that supply growth percentages would crash price, (4) assumption of reflexive acceleration mechanism. This exceeds three unproven assumptions.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Competitive Landscape Data Absent",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The finding states 'Absence of competitive intelligence is itself a monitoring gap' but then treats this absence as having evidentiary weight regarding threat assessment. Absence of evidence of competitors is not evidence that competitors are absent, nor evidence that they are present. The absence should be flagged as a data gap without inferential weight.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Stabilization Consortium Inactivity During Pre-Load",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The finding offers three potential explanations for inactivity: 'capital constraints, strategic patience, or a governance gap.' These are speculative interpretations. The evidence shows inactivity and deteriorating coverage, but the causal explanation involves multiple unproven assumptions about why inactivity is occurring.",
+          "severity": "MINOR"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 15,
+      "clean_findings": 6,
+      "reviewer_notes": "The output demonstrates strong data anchoring for structural measurements and threshold comparisons. Primary violations cluster around: (1) causal claims from correlational data, (2) the 'Compound Stress Pre-Loading Pattern' finding which invokes an unanchored theoretical framework as if it were established fact (serious LZ-CC-001 violation—this is the Plausibility Trap), (3) forward-looking scenario modeling that compounds assumptions beyond the three-assumption threshold. Six findings (Yield Gap, Deposit Concentration, Reserve Coverage, AFN Par Stability, Net Deposit Inflows, ASE Price Appreciation) passed cleanly with appropriate confidence calibration and evidence citation. Recommend Sunday audit focus on whether 'Compound Stress Matrix logic' has empirical grounding or is purely theoretical construct."
+    },
+    "violations_count": 9,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  },
+  {
+    "timestamp": "2026-03-10T05:22:19.708Z",
+    "layer": 2,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "Yield Gap Exceeds Falsification Threshold - Severity 9 assessment",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The finding acknowledges that 'the organic yield estimate of 8.1% is presented as a fact but its calculation methodology is not documented' and that 'If the estimate is wrong, the gap calculation is wrong.' Despite this acknowledged uncertainty in a foundational input, the confidence is rated HIGH. The reasoning states 'the magnitude is so large that even significant error in the organic yield estimate would still leave it far beyond any reasonable threshold interpretation' - but this assumes the direction of the error. If the organic yield methodology is flawed in a way that systematically underestimates organic yield (e.g., if it's actually 18-20%), the entire finding reverses. High confidence requires verified inputs; acknowledged uncertainty in the denominator of the core calculation should reduce confidence to MEDIUM.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Reserve Coverage Ratio Below Warning Level - gap_identified statement",
+          "rule_violated": "LZ-EPH-001",
+          "violation": "The gap_identified states: 'I don't know whether the Stabilization Consortium has access to additional capital beyond the $4.29B Tier-1 collateral visible in the data.' This is correctly identified as unknown. However, the reasoning then proceeds to score severity 7 with HIGH confidence while simultaneously acknowledging this could materially change the assessment. The post_audit_assessment acknowledges 'the gap between WARNING and TRIGGERED' provides buffer, but the unknown capital availability is a data integrity issue that should prevent HIGH confidence. The correct stance per LZ-EPH-001 is to flag insufficient evidence for high confidence scoring.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Compound Stress Pre-Loading Pattern - confidence rating",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The finding correctly identifies that 'the actual compound break dynamics are theoretical' and appropriately reduces confidence from HIGH to MEDIUM. However, the severity remains at 8 while acknowledging 'I am less confident about the exact proximity to failure.' Severity 8 implies 'critical, near-term threat' which requires higher confidence in proximity assessment. The reasoning correctly applies LZ-EPH-002 to confidence but fails to apply the same principle to severity scoring. If proximity to failure is uncertain, severity should reflect that uncertainty.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Subsidy Burn Rate Estimation - assumption chain",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The finding correctly identifies three unproven assumptions and correctly invokes LZ-EPH-003 to classify the burn rate calculation as speculative. However, it then scores severity 6 with MEDIUM confidence, stating 'the EXISTENCE of a subsidy gap is highly likely given the magnitude of the yield differential.' This conflates two findings: (1) a yield differential exists [verifiable], and (2) this differential represents a subsidy funded from visible collateral [speculative]. The finding should separate these: the yield gap can be scored with high confidence; the subsidy mechanism and burn rate cannot. The current scoring bundles them, diluting the epistemic rigor of the LZ-EPH-003 application.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "ASE Price Appreciation and Volume - severity increase from 3 to 4",
+          "rule_violated": "LZ-RC-002",
+          "violation": "The post_audit_assessment increases severity from 3 to 4, stating 'Per LZ-RC-002, a single period of price appreciation does not establish a trend.' This is correct application of LZ-RC-002. However, the reasoning then scores this as severity 4 (moderate concern) when the rule application should lead to discounting the signal's weight, not increasing severity. The inability to establish a trend means the positive signal should be weighted less, which would reduce severity (toward neutral), not increase it. The direction of the scoring adjustment is backwards relative to the rule application.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Favorable Narrative Environment - severity increase from 3 to 5",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The reasoning states: 'The risk is the TRANSITION from positive to negative narrative, not the current state.' This is a causal prediction: positive narrative masking deteriorating fundamentals will cause rapid sentiment reversal. This causal chain (masked deterioration → narrative reversal → redemption wave) is unverified. Per LZ-RC-001, the correlation between positive narrative and current deposit inflows does not establish that narrative shift will cause redemption waves. The severity increase from 3 to 5 is based on predicted causation, not measured correlation.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Depositor Count Concentration Risk - behavioral inference",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The reasoning states: 'Behavioral inference about rapid exit patterns is analogical, not verified for these specific depositors per LZ-RC-001.' This correctly identifies the violation. However, the finding then proceeds to score severity 6 stating 'The structural concentration is concerning regardless of behavioral assumptions.' But concentration alone is not a threat - it only becomes a threat if concentrated depositors exit rapidly. The severity score implicitly relies on the behavioral assumption while claiming not to. Either the behavioral assumption is required (making LZ-RC-001 a blocking issue) or concentration without behavioral prediction cannot be scored as a directional threat.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Swap Mechanism Untested at Scale - stress scenario treatment",
+          "rule_violated": "LZ-RC-005",
+          "violation": "The finding correctly states 'Per LZ-RC-005, the stress scenarios are predictions, not measurements' and appropriately adjusts reasoning. However, the scored_threats entry includes this in severity 6 scoring, stating 'The concern is about epistemic uncertainty in the mechanism's behavior, not observed failure.' Epistemic uncertainty (not knowing how it will behave) is not the same as evidenced concern (knowing it behaves poorly). Per LZ-RC-005, predictions and measurements have different evidentiary weight - the absence of stress test data is a knowledge gap, not evidence of fragility. The scoring treats unknown behavior as moderately negative rather than truly unknown.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Bear Pressure score jump from 0 to 7",
+          "rule_violated": "LZ-RC-002",
+          "violation": "The reasoning states: 'Per LZ-RC-002, this is the first period I am assessing, so I cannot determine if these threshold breaches represent a trend vs. a single snapshot — but the absolute levels are concerning regardless of trajectory.' This correctly identifies LZ-RC-002 as relevant. However, the bear_pressure score of 7 represents a dramatic assessment when the temporal context is a single snapshot. The reasoning acknowledges it cannot distinguish snapshot from trend, then scores as if deterioration is established. A single period showing three kill switches breached could be: (1) new deterioration, (2) persistent condition, or (3) measurement artifact. Without temporal context, confidence in the 7 score should be lower, or the score itself should reflect single-period uncertainty.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Compound Stress pre-loaded detail - causal inference",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The compound_stress.pre_loaded_detail states: 'The causes are deteriorating while the symptoms remain dormant' and 'the structure's break point is lower than an unloaded structure would have.' This asserts a causal relationship: deteriorating kill switches (causes) will produce compound stress symptoms (effects) at a lower threshold than normal. This causal chain is theoretical, drawn from the thesis framework, but presented as verified. The thesis provides a logical model; the output treats the model as empirically validated. Per LZ-RC-001, correlation between kill switch breaches and the thesis prediction does not establish the causal mechanism. Per LZ-CC-001, a logically coherent narrative (thesis compound stress model) without empirical validation of the causal links is not evidence.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "Layer2_summary - catalyst force assertion",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The summary states: 'the structural pre-load from three breached kill switches means less catalyst force is needed to trigger surface stress indicators.' This is a causal prediction presented as fact. The reasoning assumes: (1) kill switch breaches create mechanical pre-load, (2) pre-load reduces the energy required for system state change, (3) therefore catalyst threshold is lowered. Steps 1-3 are theoretically coherent but empirically unverified for this specific system. This is the compound stress model being treated as validated mechanism rather than theoretical framework. Per LZ-RC-001, the model's internal logic does not establish causation without empirical verification.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "Threshold ambiguity resolution - 10% gap interpretation",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The knowledge_audit for yield gap states: 'the 10% threshold is ambiguous — is it a 10 percentage point gap or a 10% relative gap? The thesis says 'Gap between posted yield and organic yield > 10% = WARNING' which most naturally reads as a relative percentage gap, making the 198% figure the correct comparator.' The finding resolves an ambiguous threshold definition by choosing the interpretation that supports the thesis (198% gap vs 10% threshold is more dramatic than 16.1pp gap vs 10pp threshold). Per LZ-EPH-002, confidence must be proportional to evidence - resolving definitional ambiguity via 'most natural reading' without independent clarification is not sufficient basis for HIGH confidence severity 9 scoring. The ambiguity should either be flagged for clarification or both interpretations should be presented.",
+          "severity": "MODERATE"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 35,
+      "reviewer_notes": "Two SERIOUS violations both relate to the compound stress framework: the output treats the thesis's theoretical compound stress model as an empirically validated causal mechanism rather than a logical framework requiring verification. The model may be correct, but presenting theoretical causation as measured fact violates LZ-RC-001 and LZ-CC-001. The core factual findings (three kill switches breached, surface indicators stable) are clean. The interpretive layer (what this means for system fragility) relies heavily on unverified causal assumptions from the thesis framework. The output demonstrates strong epistemological awareness in many areas (correct application of LZ-EPH-003 on burn rate, LZ-RC-003 on absent data, LZ-EH-005 on contradictory signals) but inconsistently applies that rigor to causal inference chains. Multiple findings correctly identify limitations then proceed to score with confidence/severity levels that don't fully reflect those limitations."
+    },
+    "violations_count": 12,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  },
+  {
+    "timestamp": "2026-03-10T05:27:05.999Z",
+    "layer": 3,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "Strategic Inference: Yield Gap Exceeds Falsification Threshold - expected_timeline 'months'",
+          "rule_violated": "LZ-RC-005",
+          "violation": "The expected_timeline of 'months' for observing yield reduction or collateral addition is a forward-looking prediction being presented with similar evidentiary weight to the historical measurements (yield gap, organic yield). The timeline is inherently uncertain and should be flagged as predictive rather than verifiable.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Strategic Inference: Reserve Coverage Ratio Below WARNING - assumption_count stated as 1, but reasoning contains implicit second assumption",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The stated assumption is 'The Consortium's collateral base ($4.29B) has not been augmented in ways not visible in the data.' However, the reasoning also assumes that the absence of visible replenishment mechanism means no mechanism exists (rather than it being unobservable). The finding builds on at least 2 unproven assumptions but counts only 1.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Hidden Move: Atlas Foundation seeking additional capital injection - classified as FLAGGED with confidence 'low' despite assumption_count of 2",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The finding is built on 2 unproven assumptions ('Consortium inactivity indicates capital preservation' and 'Foundation sees value in growing deposit base implies belief in subsidy sustainability') but assigned 'low' confidence. Per LZ-EPH-003, an inference built on 2+ unproven assumptions approaches the speculative threshold and the confidence level should reflect this more explicitly as speculative rather than merely 'low confidence.'",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Hidden Move: Institutional Depositors running risk analysis and preparing exit strategies - assumption_count 2 but evidence_hints includes ASE turnover interpretation",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The finding suggests high ASE turnover (7.2%) 'could reflect institutional hedging activity' as supporting evidence. This presents correlation (high turnover coinciding with large deposits) as potential causation (turnover caused by hedging against AFN exposure) without establishing the causal link. The finding correctly flags low confidence, but the reasoning still contains a correlation-causation slide.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Feedback Loop: Yield Subsidy → Deposit Growth → Concentration → Subsidy Burden Amplification - thesis_implication states 'Each new deposit SIMULTANEOUSLY makes the system look healthier on surface metrics while making it structurally more fragile'",
+          "rule_violated": "LZ-RC-002",
+          "violation": "The finding describes a pattern ('Each new deposit') based on a single observation period (+$585M this period). The characterization of 'each deposit' having this dual effect treats a single data point as if it establishes a pattern. The mechanism may be sound, but the language implies repeated observation when only one period is measured.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Behavioral Pattern: 'Across all observable players, behavior is optimized for CURRENT conditions rather than STRUCTURAL resilience' - characterized as 'pattern' with high significance",
+          "rule_violated": "LZ-RC-002",
+          "violation": "This is labeled a 'behavioral pattern' but represents observations from a single time period. A pattern requires multiple observations across time per LZ-RC-002. The behaviors described (Foundation subsidizing, Consortium inactive, Facility accepting deposits) are single-period observations, not confirmed patterns. Should be characterized as 'behavioral observation' or 'current behavior' rather than 'pattern.'",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Scenario Probabilities: thesis_confirmed 15%, thesis_modified 45%, thesis_falsified 40% with specific probability percentages",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The precision of the probability estimates (15%, 45%, 40%) implies a quantitative foundation that does not exist in the evidence base. The evidence cited is qualitative and the probabilities are subjective judgment. High precision (single-digit percentages) with low quantitative basis violates proportionality between confidence and evidence. Ranges (10-20%, 40-50%, 35-45%) would better reflect the actual evidence quality.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Compound Stress Inference: 'the system's stability depends on structural data NOT becoming widely visible — making the system's health contingent on information suppression rather than structural soundness'",
+          "rule_violated": "LZ-CC-001",
+          "violation": "This statement constructs a logically coherent narrative (stability depends on information asymmetry) but lacks verifiable real-world anchoring. There is no direct evidence that the Foundation is actively suppressing structural data or that depositors would exit if structural data became visible. The narrative is internally consistent but speculative. The finding should flag this as inference rather than observed behavior.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "Strategic Inference: Compound Stress Surface MONITORING vs Structural Pre-Load - characterized with 'medium' confidence but reasoning includes assumption about threshold calibration",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The reasoning states 'The kill switch thresholds (10% yield gap, 20% coverage, 75% concentration) are meaningfully calibrated to actual risk boundaries' as the single assumption (assumption_count: 1). However, the conclusion also assumes that (a) the structural indicators are the 'causes' while surface indicators are 'symptoms,' and (b) the divergence pattern is characteristic of pre-loading rather than normal operating variance during growth. These are additional unproven assumptions bringing the count to at least 3, crossing the LZ-EPH-003 threshold for speculative classification.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "X402 Paper Trade #1: 'If funded from Tier-1 collateral, the subsidy directly depletes the backstop (making KS-3 deterioration a CAUSE of the subsidy, not a coincidence)'",
+          "rule_violated": "LZ-RC-001",
+          "violation": "This statement presents a causal relationship (subsidy causes backstop depletion) that has not been established. The correlation between subsidy existence and low coverage is observed, but the causal direction is not verified. The subsidy could be funded from Tier-1 collateral (causing depletion), or both could be independent results of Foundation capital constraints. The 'CAUSE' language asserts causation from correlation.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Thesis Paradox section: 'If the pre-loaded structure breaks... it would confirm that the kill switch framework correctly identified structural fragility. But if the structure continues to hold... the kill switch warnings will appear to have been false alarms'",
+          "rule_violated": "LZ-RC-005",
+          "violation": "This section conflates forward-looking predictions (what will happen if the structure breaks) with the current analytical finding (that structural indicators are in WARNING). The paradox is real, but the framing gives equal epistemological weight to 'future vindication if break occurs' and 'future invalidation if break does not occur' as if both are verifiable now. Only the current measurements are verifiable; future outcomes are predictions with fundamentally different evidentiary weight per LZ-RC-005.",
+          "severity": "MODERATE"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 36,
+      "reviewer_notes": "The analysis demonstrates strong epistemological discipline in most areas, particularly in null hypothesis testing and honest uncertainty flagging. However, three SERIOUS violations warrant attention: (1) The compound stress 'pre-load' finding undercounts assumptions, crossing into speculative territory despite being central to the thesis; (2) The information suppression narrative (compound_stress_inference final paragraph) constructs a coherent story without verifiable anchoring (classic LZ-CC-001 plausibility trap); (3) Multiple findings treat single-period observations as 'patterns' requiring temporal confirmation per LZ-RC-002. The scenario probability precision (15%/45%/40%) also overstates the quantitative basis. Recommend: (a) recount assumptions in the pre-load finding and reclassify if >3; (b) reframe the information asymmetry statement as inference rather than finding; (c) change 'behavioral patterns' language to 'behavioral observations pending temporal confirmation.' The violations are process errors, not analytical errors — the substantive conclusions may be sound, but the reasoning pathway needs tightening in these specific areas."
+    },
+    "violations_count": 11,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  },
+  {
+    "timestamp": "2026-03-10T05:31:02.439Z",
+    "layer": 4,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "Compound Stress Final Assessment - velocity_note claims 'absolute levels of structural pre-load are concerning enough as a single snapshot' to warrant concern despite acknowledging trend cannot be established",
+          "rule_violated": "LZ-RC-002",
+          "violation": "The assessment acknowledges that trend cannot be established per LZ-RC-002 ('First observation period so trend cannot be established'), but then immediately proceeds to draw significance from the single snapshot ('the absolute levels of structural pre-load are concerning enough as a single snapshot'). This is internally contradictory. Either the single data point limitation matters or it doesn't. The reasoning attempts to have it both ways by citing the rule while violating its constraint.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Subsidy Burn Rate Estimation threat adjustment - upgrades from 4.2 to 5.0 based on 'opacity risk' from SUSPICIOUS_ABSENCE classification",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "Layer 2 correctly scored this as 4.2 with explicit acknowledgment of speculation (three assumptions per LZ-EPH-003). The upgrade to 5.0 is justified by 'opacity risk' from the funding source absence, but opacity (lack of information) does not constitute evidence that increases threat weight. Per LZ-RC-003, absence of evidence is informationally neutral. The adjustment treats the absence as if it were evidence of threat, which inflates confidence beyond what the evidence supports.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Final bear pressure score of 62 with reasoning that 'probability of thesis modification or falsification (85% combined) substantially exceeds probability of confirmation (15%)'",
+          "rule_violated": "LZ-RC-005",
+          "violation": "The 85%/15% probability distribution cited is from Layer 3's forward-looking prediction about thesis outcomes. These are predictions, not measurements. The final bear pressure score (62) is presented as grounded in this probability distribution, but per LZ-RC-005, predictions carry fundamentally different evidentiary weight than measurements. The score conflates the two by anchoring a present-state assessment in a future-state prediction.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Favorable Narrative Environment threat adjustment - upgrades from 3.5 to 4.5 based on 'narrative fragility risk' from information asymmetry",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The reasoning correctly identifies correlation (analysts have favorable views AND lack access to structural data), but the upgrade to 4.5 treats this correlation as if it establishes that the narrative will fail when information changes. The fragility is a prediction about what would happen if the information asymmetry closes, not a measurement of current threat. The correlation between current narrative positivity and current information asymmetry does not establish causation for future narrative collapse.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Depositor Count Concentration Risk threat adjustment - upgrades from 4.2 to 5.5 based on null hypothesis finding that deposits are 'mercenary'",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The upgrade from 4.2 to 5.5 is justified by the behavioral characterization that yield-driven depositors 'have no structural loyalty' creating 'binary exit risk'. This is a prediction about depositor behavior under stress conditions that have not occurred. The null hypothesis correctly explains current behavior (depositors rationally pursuing yield), but extending this to 'binary exit risk' is a forward-looking inference that increases confidence in the threat beyond what the current behavioral evidence supports.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "KS-2 Yield Sustainability final status reasoning - states '198% gap is not a marginal exceedance — it is nearly 20x the threshold' and 'Even under the most generous assumptions... the gap remains at 61%, still 6x the threshold'",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "While the magnitude observations are factually correct, the reasoning uses emphatic framing ('nearly 20x', 'most alarming finding in the entire assessment', 'demands escalated monitoring') to create urgency that exceeds what the WARNING classification structurally means within the thesis framework. The thesis defined WARNING thresholds; exceeding them by any amount is WARNING. The magnitude beyond the threshold is already captured in the classification. The additional emphasis inflates the perceived confidence/urgency beyond the evidence structure.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Data Classification of Yield Subsidy Funding Source as SUSPICIOUS_ABSENCE with reasoning that Foundation 'has incentive to obscure the funding source if it depletes reserves'",
+          "rule_violated": "LZ-RC-004",
+          "violation": "The classification as SUSPICIOUS_ABSENCE is justified partly by the incentive logic ('Foundation has incentive to obscure if problematic'). This is a complex explanation (strategic concealment) that has not been tested against the simpler explanation: the funding source may not be disclosed because it is not typically disclosed for such facilities, or because the data feed does not capture financial disclosures of this type. The simpler null (standard non-disclosure) must be tested before jumping to strategic concealment.",
+          "severity": "MODERATE"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 40,
+      "reviewer_notes": "The output demonstrates generally strong epistemological discipline with explicit rule citations and careful burden-of-proof application. The violations cluster around two patterns: (1) treating forward-looking predictions (narrative fragility, depositor exit risk, thesis probability distributions) as if they carry equivalent evidentiary weight to current measurements, and (2) allowing emphasis, framing, and opacity to inflate threat scores beyond what the underlying evidence strictly supports. The most significant structural issue is the LZ-RC-002 violation in the velocity note, where the analyst explicitly acknowledges the single-data-point limitation while simultaneously arguing it doesn't apply due to magnitude — this is internally contradictory reasoning. The SUSPICIOUS_ABSENCE classification for the yield subsidy funding source is the most marginal call; there is legitimate basis for suspicion given materiality, but the simpler null was not explicitly tested. Overall: disciplined analytical work with moderate issues around prediction/measurement conflation and confidence calibration at the margins."
+    },
+    "violations_count": 7,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  }
+]
