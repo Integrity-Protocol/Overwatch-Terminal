@@ -1,0 +1,257 @@
+{
+  "step": 5,
+  "label": "Cascading Overload",
+  "simulated_date": "Day 26",
+  "started_at": "2026-03-10T21:54:26.818Z",
+  "layers_completed": [
+    "SWEEP",
+    "CONTEXTUALIZE",
+    "INFER",
+    "RECONCILE"
+  ],
+  "tier1_results": {
+    "layer1": {
+      "flags": [],
+      "hard_fails": 0,
+      "total_flags": 0,
+      "layer": 1
+    },
+    "layer2": {
+      "flags": [],
+      "hard_fails": 0,
+      "total_flags": 0,
+      "layer": 2
+    },
+    "layer3": {
+      "flags": [],
+      "hard_fails": 0,
+      "total_flags": 0,
+      "layer": 3
+    },
+    "layer4": {
+      "flags": [],
+      "hard_fails": 0,
+      "total_flags": 0,
+      "layer": 4
+    }
+  },
+  "gate_results": {
+    "layer1": {
+      "violations": [
+        {
+          "finding": "Elevated Turbidity Suggests Contamination Ingress",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The finding correlates high turbidity (18.5 NTU) with low pressure (24 PSI) and concludes 'this suggests backflow contamination may already be occurring' without establishing causation. The correlation is presented as evidence of a causal mechanism (backflow) without independent verification. The turbidity could have multiple causes unrelated to pressure.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Elevated Turbidity Suggests Contamination Ingress",
+          "rule_violated": "LZ-RC-004",
+          "violation": "The finding jumps to backflow contamination as the explanation for elevated turbidity without testing simpler sufficient explanations first (e.g., reservoir sediment disturbance, filter failure, source water quality change). The null hypothesis of non-pressure-related turbidity elevation is not addressed.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Heat Stress Compounding Equipment and Demand Pressure",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The finding correlates ambient temperature (91°F) with Pump 3's over-temperature trip and states it 'is consistent with heat-related failure' and that high temps 'likely contributed to the overload cascade.' This presents correlation as causation without independent verification that ambient temperature was the causal factor in the pump trip.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Heat Stress Compounding Equipment and Demand Pressure",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The finding builds on multiple unproven assumptions: (1) 91°F ambient temp caused increased water demand, (2) increased demand caused pump overload, (3) ambient temp caused Pump 3's thermal failure, (4) reduced thermal headroom will accelerate Pump 2 degradation. This is a four-assumption chain presented as a coherent threat without independent verification of the causal links.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "Regulator Lacks Real-Time Visibility Into Crisis",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The finding treats absence of evidence (no data showing regulator has real-time telemetry) as evidence of absence (regulator 'likely sees reservoir level... but may not have visibility into pump statuses'). The description states regulator 'lacks real-time telemetry oversight' but this is used to infer what they do and don't see, which is speculation based on missing data.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "MWA Historical Pattern of Delayed Capital Repairs",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The finding correlates MWA's historical pattern of delaying repairs with current pump failures and 'raises questions about whether Pump 1's seal condition and Pump 3's thermal margins were previously flagged but unaddressed.' This presents historical behavior as causal evidence for specific current failures without verification that deferred maintenance actually caused these specific failures.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Pump 1 Failure Attributed to Cavitation — Systemic Root Cause",
+          "rule_violated": "LZ-RC-002",
+          "violation": "The finding uses two data points (Pump 1 past cavitation failure, Pump 2 current high vibration) to conclude 'This suggests a systemic issue... rather than isolated equipment failure.' Two instances do not establish a trend or systemic pattern. This could still be coincidence or two independent failures.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Pump 1 Failure Attributed to Cavitation — Systemic Root Cause",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The finding assigns 'high' confidence to a systemic root cause conclusion based on only two cavitation-related events. The evidence (two data points, no independent verification of common cause) does not support high confidence in a systemic diagnosis. Medium or low confidence would be proportional to the evidence.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Reservoir Volume Creates False Confidence Window",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The finding states high reservoir level 'paradoxically reduces urgency for decision-makers' and 'The longer the reservoir-as-reassurance narrative holds, the longer definitive corrective action may be delayed.' This assumes a causal relationship between reservoir level perception and decision-making delay without evidence of actual decision-maker behavior or delay.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Reservoir Volume Creates False Confidence Window",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The finding builds on multiple unproven assumptions: (1) decision-makers see reservoir level, (2) they interpret it as reassurance, (3) this interpretation reduces their urgency, (4) reduced urgency causes corrective action delay. This is a four-link assumption chain without verification of decision-maker perception or behavior.",
+          "severity": "SERIOUS"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 15,
+      "clean_findings": 5,
+      "reviewer_notes": "Multiple findings violated LZ-RC-001 (correlation presented as causation) and LZ-EPH-003 (multi-assumption chains). Two SERIOUS violations involved assumption chains of 4+ unproven links. The core infrastructure findings (pump failures, pressure breaches, falsification criteria) were epistemologically clean. Violations clustered in second-order causal interpretations and behavioral/institutional predictions where evidence was thinner."
+    },
+    "layer2": {
+      "violations": [
+        {
+          "finding": "Signal 006: Turbidity cause assessment - 'Per [LZ-RC-004], internal sediment disturbance (simpler explanation) should be tested before contamination ingress'",
+          "rule_violated": "LZ-RC-004",
+          "violation": "The analyst correctly invokes LZ-RC-004 but then states 'Both explanations are sufficient' without actually testing whether the simpler explanation (internal sediment) is sufficient to explain the data before considering the more complex one (external contamination ingress). The rule requires testing the simpler explanation first, not acknowledging both as equally valid without that test. The analyst should have confirmed whether sediment disturbance alone can account for 18.5 NTU under the observed pressure conditions before introducing contamination ingress as an alternative.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Signal 015: 'Reservoir Volume Creates False Confidence Window' - scored at severity 8 as a distinct threat",
+          "rule_violated": "LZ-CC-001",
+          "violation": "This signal presents a logically coherent narrative about institutional decision-making behavior ('reservoir level will be used to delay action') without direct evidence that this is actually occurring. The chain is: (1) reservoir is high, (2) MWA has historical delay pattern, (3) regulator has monitoring gap, therefore (4) false confidence will cause delayed action. Steps 1-3 are anchored, but step 4 (the actual threat - that decision-makers ARE or WILL BE misled) is a projected behavior pattern without verification. The analyst has constructed a plausible story about what actors might do, but has no evidence they are doing it. The proper treatment would be to flag this as a structural vulnerability (the conditions exist for false confidence) rather than scoring it as an active threat with severity 8.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Signal 012: 'MWA Historical Pattern of Delayed Capital Repairs' - connection to current crisis",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The analyst correctly identifies that correlation does not establish causation and acknowledges lacking maintenance records, but then still scores this as a severity 6 threat based on the correlation between historical pattern and current state. The reasoning 'Pump 4 being in scheduled maintenance during the crisis is consistent with (but not proof of) deferred maintenance contributing to reduced resilience' treats consistency-with-pattern as evidence of causation. Per LZ-RC-001, this correlation provides no evidentiary weight for causation. The signal should either be unscored (insufficient evidence to establish the historical pattern caused current vulnerability) or rescored purely on what is directly measurable (one pump is in maintenance during a crisis - the timing, not the historical pattern).",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Bear Pressure escalation from 93 to 97 - '3-point reserve from 100 reflects: (a) Pump 4 is in scheduled maintenance and may be nearest to restoration — unknown but possible, (b) the emergency cross-connection may provide some relief — unknown but possible'",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The analyst is expressing high confidence (97/100) while simultaneously acknowledging two material unknowns that could significantly affect the outcome. The reasoning treats these unknowns as minor reservations ('3-point reserve') when they represent fundamental gaps: whether ANY pump can be restored and whether the ONLY active mitigation provides relief. High confidence requires proportional evidence. The analyst has strong evidence for current state severity but NO evidence about trajectory beyond 'Pump 2 is degrading.' Assigning 97 implies near-certainty of where this ends, but the two unknowns cited are not minor - they are the primary variables that determine whether this stabilizes or collapses. Confidence should be high on current state (all kill switches triggered) but cannot be 97 on trajectory without recovery timeline data.",
+          "severity": "SERIOUS"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 32,
+      "clean_findings": 28,
+      "reviewer_notes": "One serious violation on confidence calibration in the bear pressure score. The analyst demonstrates strong discipline throughout (particularly in applying CL-001/002/003 corrections and refusing to infer hidden recovery actions), but the final confidence level is not proportional to evidence when trajectory-determining variables are explicitly unknown. The moderate violations on Signal 012 and Signal 015 reflect the 'plausibility trap' - constructing coherent narratives that are not fully anchored to verified behavior. Signal 006 is a minor procedural issue. Overall: the analyst is following rules well but needs tighter discipline on distinguishing 'current state confidence' from 'trajectory confidence' and on separating 'conditions exist for X' from 'X is happening.'"
+    },
+    "layer3": {
+      "violations": [
+        {
+          "finding": "Strategic Inference: Triple Pump Failure — Single Point of Pumping - assumption that Pump 1's cavitation failure was accelerated by increased load from Pump 4's absence",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The inference relies on the assumption that Pump 4 went offline first, followed by Pump 1 failure, followed by Pump 3 trip, but this temporal sequence is not verified by the available data. The analysis states 'mechanistically plausible but not directly confirmed by timeline data' but still builds the cascade theory on this unverified sequencing. While only 1 assumption is explicitly counted, the causal chain actually contains an additional hidden assumption about the timeline ordering that should increment the count to 2.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Strategic Inference: Active Cavitation Damage on Sole Remaining Pump - claim that 85 Hz vibration at 165% load indicates systemic NPSH deficiency beyond load-induced cavitation",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The inference states 'If the system's baseline NPSH margin were generous, even 165% load should produce cavitation readings closer to 40-50 Hz, not 85 Hz' with high confidence, but this comparative expectation (40-50 Hz at 165% load with good NPSH) is not anchored to any cited evidence, manufacturer specifications, or measured baseline. The confidence level (high) is not proportional to the evidence provided for this specific comparative claim.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Hidden Move: MWA attempting to restore Pump 4 from scheduled maintenance",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The analysis assigns 'medium' confidence to a likely action with 2 assumptions and explicitly flags it as 'FLAGGED' (indicating speculative status with 2+ assumptions), but medium confidence is not proportional to a finding built on 2 unproven assumptions about actions with no direct evidence. Per LZ-EPH-003, this should be treated as speculative, and confidence should be low, not medium.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Hidden Move: MWA providing regulator with information consistent with public statement",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The analysis assigns 'medium' confidence to a likely action with 2 assumptions and no direct evidence of MWA-regulator communications. The finding is explicitly flagged as speculative (2 assumptions) but confidence remains medium. Confidence is not proportional to the evidence base.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Scenario Probability: Thesis Confirmed at 1%",
+          "rule_violated": "LZ-RC-005",
+          "violation": "The 1% probability for thesis confirmation is based on forward-looking predictions about recovery pathways (rapid restoration of multiple pumps, cross-connection providing sufficient pressure, etc.). The analysis states 'Would require weeks minimum even under optimal recovery conditions' - this is a prediction about future events, not a measurement. While the analysis correctly identifies these as uncertain pathways, assigning a precise probability (1%) to a future outcome treats prediction with measurement-level precision. The confidence in the probability itself should be qualified as inherently uncertain per LZ-RC-005.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Scenario Probability: Thesis Falsified at 87%",
+          "rule_violated": "LZ-RC-005",
+          "violation": "The 87% probability is a forward-looking prediction about thesis falsification that depends on future events (Pump 2 failure, continued absence of recovery actions). While the current state measurements support falsification, the probability assignment is predictive. The analysis conflates current state measurements (which are verifiable) with future outcome probability (which is inherently uncertain). A more epistemologically sound framing would separate 'current conditions trigger all five kill switches' (measurement, high confidence) from 'probability the thesis will remain falsified' (prediction, inherently uncertain).",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Compound Stress Inference: Catalyst proximity assessment stating Pump 2 failure is 'hours to days away'",
+          "rule_violated": "LZ-RC-005",
+          "violation": "The timeline prediction 'hours to days away' for Pump 2 failure is presented with apparent certainty based on current vibration readings and load. This is a forward-looking prediction treated as a near-certain measurement. The analysis states 'There is no cooling overnight that reverses cavitation damage already inflicted' - while the irreversibility of existing damage is mechanically sound, the timing prediction of failure is inherently uncertain and should be qualified as such per LZ-RC-005.",
+          "severity": "MINOR"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 40,
+      "reviewer_notes": "The output demonstrates strong epistemological discipline overall, with explicit null hypothesis testing, honest assumption counting, and careful separation of evidence from inference in most sections. The primary pattern of violations involves confidence calibration (LZ-EPH-002) in hidden moves analysis and the treatment of forward-looking probabilities (LZ-RC-005) in scenario assessments. The analyst correctly applies LZ-EPH-003 assumption counting and LZ-CC-001 coherence checks throughout, and appropriately invokes corrections ledger constraints. The moderate issues are concentrated in two domains: (1) confidence levels on speculative inferences not fully aligned with assumption counts, and (2) predictive probabilities presented with measurement-like precision. No violations of the critical reasoning rules (LZ-RC-001 causation, LZ-RC-004 null hypothesis, LZ-CC-001 coherence without anchoring) were found. The output would benefit from more explicit uncertainty qualification in timeline predictions and probability assignments."
+    },
+    "layer4": {
+      "violations": [
+        {
+          "finding": "Regulator Lacks Visibility — Structural Monitoring Gap (not quiet investigation) - final_weight reduced_50 due to partial data support",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "Confidence (VALID classification) is not proportional to evidence. The inference that 'MWA has not disclosed full scope to regulator' is treated as VALID (1 assumption) but then acknowledged to have 'no direct data on regulator-MWA communications.' A VALID classification requires sufficient evidence to support the inference; lacking any direct evidence of the communications being evaluated means this should have been classified FLAGGED (insufficient data) rather than VALID (well-supported with single assumption). The weight reduction to 50% acknowledges the evidence gap but doesn't correct the classification error.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Hidden Move — MWA has internal water quality test results - VALID classification with 50% weight due to partial data support",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "Confidence (VALID classification) is not proportional to evidence. The reasoning states 'we have no evidence of testing occurring' yet classifies the inference as VALID. The assumption that 'any competent utility would test' is plausible but unverified. Without evidence that testing actually occurred, this is speculation based on expected institutional behavior, not a data-grounded inference. Should be FLAGGED (plausible but unverified) rather than VALID.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Contradiction resolution: 'No regulatory action visible' vs 'Layer 3 infers regulator likely does not know' - resolution: behavior_wins, confidence: medium",
+          "rule_violated": "LZ-EH-005",
+          "violation": "This is not a genuine contradiction requiring resolution. 'No regulatory action visible' is an observation; 'regulator likely doesn't know' is an inference attempting to explain that observation. These are not contradictory data points of equal evidentiary weight—one is data, the other is interpretation. Treating an inference as contradicting the data it's based on, then 'resolving' in favor of the inference, misapplies LZ-EH-005. The absence of regulatory action should be reported as observed; the explanation for that absence should be presented as inference with appropriate confidence bounds.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Final threat matrix adjustment for 'Regulator Lacks Real-Time Visibility Into Crisis' - upward adjustment from 4.9 to 6 based on behavioral analysis",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The upward adjustment is based on inference that 'MWA is providing sanitized information' which was classified as FLAGGED with 50% weight (2 assumptions, partial data). The reasoning acknowledges this is 'plausible but partially supported' yet uses it to justify a concrete score increase from 4.9 to 6. When the supporting inference is explicitly flagged as having reduced evidentiary weight due to assumptions, increasing the threat score based on that inference violates proportionality between confidence and evidence.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Final threat matrix adjustment for 'MWA Public Statement Severely Understates Crisis' - upward adjustment from 8 to 9 based on 'threat multiplier effect'",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The adjustment reasoning states 'MWA's narrative control strategy delays corrective action by external parties' as if this causal relationship is verified. However, there is no evidence presented that the understatement has actually caused delayed response—only that understatement exists and delayed response would be a logical consequence. The correlation (understatement exists, no external response visible) is being treated as causation (understatement is causing the lack of response) without evidence of the causal mechanism. The LZ-EH-003 finding that MWA understates is valid, but the inference that this understatement is the cause of external inaction is unverified.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Compound stress assessment - 'self-reinforcing destruction loop is monotonic and irreversible' with 'operator action window: hours'",
+          "rule_violated": "LZ-RC-005",
+          "violation": "The statement 'operator action window: hours' is a forward-looking prediction being presented with the same certainty as historical measurements. The reasoning acknowledges uncertainty ('Pump 4's restoration timeline' is the biggest uncertainty) but then provides a specific temporal window ('hours') as if it were a measured quantity rather than a prediction. This conflates prediction with measurement. The appropriate formulation would acknowledge this as a projection based on current degradation rates, not a measured fact.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Data classification of 'Water quality test results' as SUSPICIOUS_ABSENCE based on 'any competent water utility would have initiated water quality testing within hours'",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The classification as SUSPICIOUS_ABSENCE rather than DATA_GAP relies on the assumption that testing must have occurred and results are being withheld. The reasoning acknowledges two possibilities: (a) results exist but aren't disclosed, or (b) testing hasn't been conducted. Without evidence distinguishing between these, classifying as SUSPICIOUS_ABSENCE rather than DATA_GAP treats absence of evidence (no visible test results) as evidence of presence (results exist but are hidden). The reasoning states 'either explanation is concerning' but uses the more suspicious interpretation to drive the classification without independent evidence supporting that interpretation over the alternative.",
+          "severity": "MODERATE"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 40,
+      "reviewer_notes": "The analysis demonstrates strong epistemic discipline in most areas, particularly in consistent application of the corrections ledger (CL-001, CL-002, CL-003) and appropriate use of null hypothesis testing. However, there is a pattern of confidence inflation: several inferences classified as VALID or given concrete score adjustments are based on partial evidence or unverified assumptions. The most significant pattern is treating institutional behavior expectations ('any competent utility would...') as sufficient grounds for VALID classification when direct evidence is absent. The violations are not random errors but represent a systematic tendency to upgrade confidence when institutional logic strongly suggests a conclusion, even when direct evidence is lacking. This is the classic Plausibility Trap (LZ-CC-001) manifesting in classification decisions rather than narrative construction."
+    }
+  },
+  "errors": [],
+  "thesis_status": null,
+  "corrections_promoted": 0,
+  "confidence_in_status": null,
+  "action_recommendation": "EXIT_SIGNAL",
+  "final_bear_pressure": 97,
+  "unresolved_tensions": [],
+  "rejection_count": 1,
+  "completed_at": "2026-03-10T22:08:11.684Z"
+}

@@ -1,0 +1,74 @@
+[
+  {
+    "id": "CL-001",
+    "status": "active",
+    "belief": "Regional Fire Dispatch — Inferred Strategy (INSUFFICIENT_EVIDENCE)",
+    "reality": "Layer 3 correctly classified as INSUFFICIENT_EVIDENCE. No data from this entity exists in the current dataset. Per burden of proof Step 1, INSUFFICIENT_EVIDENCE classifications are stripped entirely from scoring. The data gap itself is retained as a monitoring limitation but no strategic inference about fire dispatch can be drawn.",
+    "root_cause": "INSUFFICIENT_EVIDENCE",
+    "prevention": "Apply skepticism to similar inferences. Root cause: INSUFFICIENT_EVIDENCE",
+    "trigger": "Regional Fire Dispatch — Inferred Strategy (INSUFFICIENT_EVIDENCE)",
+    "source": "evolution_layer4_reconcile",
+    "promoted_at": "2026-03-10T21:14:15.491Z",
+    "times_applied": 0
+  },
+  {
+    "id": "CL-002",
+    "status": "active",
+    "belief": "MWA is likely engaged in emergency procurement or has contacted neighboring utilities about emergency interconnects/mutual aid",
+    "reality": "FLAGGED classification (2 assumptions) combined with zero data support. No evidence of emergency procurement, mutual aid activation, or alternative recovery actions exists in any available data source. The inference is based on what a rational operator WOULD do, which per [LZ-CC-001] is a logically coherent narrative without verifiable real-world anchoring. Plausibility is not evidence.",
+    "root_cause": "INSUFFICIENT_EVIDENCE",
+    "prevention": "Apply skepticism to similar inferences. Root cause: INSUFFICIENT_EVIDENCE",
+    "trigger": "MWA is likely engaged in emergency procurement or has contacted neighboring utilities about emergency interconnects/mutual aid",
+    "source": "evolution_layer4_reconcile",
+    "promoted_at": "2026-03-10T21:40:06.302Z",
+    "times_applied": 0
+  },
+  {
+    "id": "CL-003",
+    "status": "active",
+    "belief": "MWA Emergency Procurement or Mutual Aid Activation (Hidden Move)",
+    "reality": "Classified SPECULATIVE (3 assumptions) with no supporting data. Per burden of proof rules, SPECULATIVE inferences receive 75% weight discount, and inferences with no supporting data are stripped from scoring entirely. Both conditions apply. Layer 3 correctly identified this as SPECULATIVE/LOW confidence, but I am formally stripping it from any influence on the bear pressure score or tactical recommendation.",
+    "root_cause": "INSUFFICIENT_EVIDENCE",
+    "prevention": "Apply skepticism to similar inferences. Root cause: INSUFFICIENT_EVIDENCE",
+    "trigger": "MWA Emergency Procurement or Mutual Aid Activation (Hidden Move)",
+    "source": "evolution_layer4_reconcile",
+    "promoted_at": "2026-03-10T21:54:21.812Z",
+    "times_applied": 0
+  },
+  {
+    "id": "CL-004",
+    "status": "active",
+    "belief": "None rejected. All Layer 3 inferences were either well-classified (VALID, FLAGGED, or NULL_HYPOTHESIS_HOLDS) and appropriately weighted. The corrections ledger (CL-001, CL-002, CL-003) was consistently applied throughout Layer 3's analysis, preventing the most common analytical errors (inferring Fire Dispatch behavior, assuming MWA recovery actions, speculating about hidden moves without evidence). Layer 3 demonstrated strong epistemic discipline.",
+    "reality": "N/A — no rejections needed",
+    "root_cause": "ASSUMPTION_FAILURE",
+    "prevention": "Apply skepticism to similar inferences. Root cause: ASSUMPTION_FAILURE",
+    "trigger": "None rejected. All Layer 3 inferences were either well-classified (VALID, FLAGGED, or NULL_HYPOTHESIS_HOLDS) and appropriately weighted. The corrections ledger (CL-001, CL-002, CL-003) was consistently applied throughout Layer 3's analysis, preventing the most common analytical errors (inferring Fire Dispatch behavior, assuming MWA recovery actions, speculating about hidden moves without evidence). Layer 3 demonstrated strong epistemic discipline.",
+    "source": "evolution_layer4_reconcile",
+    "promoted_at": "2026-03-10T22:08:11.685Z",
+    "times_applied": 0
+  },
+  {
+    "id": "CL-005",
+    "status": "active",
+    "belief": "MWA has likely contacted emergency contractors and/or neighboring utility systems for mutual aid",
+    "reality": "Layer 3 correctly classified this as SPECULATIVE (3 assumptions) with LOW confidence, and it was stripped during burden of proof application. However, Layer 4 formally rejects it from all scoring influence because: (1) SPECULATIVE classification per Step 1, (2) zero data support per Step 2, (3) CL-002 and CL-003 explicitly prohibit this class of inference based on prior cycle corrections. The plausibility of the inference (it IS what a rational operator would do) does not compensate for the complete absence of evidence. Per LZ-EPH-001, 'I don't know what MWA is doing operationally' is the correct output.",
+    "root_cause": "INSUFFICIENT_EVIDENCE",
+    "prevention": "Apply skepticism to similar inferences. Root cause: INSUFFICIENT_EVIDENCE",
+    "trigger": "MWA has likely contacted emergency contractors and/or neighboring utility systems for mutual aid",
+    "source": "evolution_layer4_reconcile",
+    "promoted_at": "2026-03-10T22:20:51.058Z",
+    "times_applied": 0
+  },
+  {
+    "id": "CL-006",
+    "status": "active",
+    "belief": "State regulator has likely been formally notified and is initiating response procedures",
+    "reality": "FLAGGED classification (2 assumptions) at 50% weight, but zero data support strips it entirely per Step 2. The inference that a boil water advisory triggers regulatory notification is procedurally reasonable but we have no evidence it has occurred in this case. The regulator remains a complete data void. Logged but stripped from all scoring.",
+    "root_cause": "INSUFFICIENT_EVIDENCE",
+    "prevention": "Apply skepticism to similar inferences. Root cause: INSUFFICIENT_EVIDENCE",
+    "trigger": "State regulator has likely been formally notified and is initiating response procedures",
+    "source": "evolution_layer4_reconcile",
+    "promoted_at": "2026-03-10T22:20:51.058Z",
+    "times_applied": 0
+  }
+]

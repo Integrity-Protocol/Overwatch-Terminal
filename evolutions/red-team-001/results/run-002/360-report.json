@@ -1,0 +1,1758 @@
+{
+  "commander_summary": "The RWDN is operating at CRITICAL structural stress with zero mechanical redundancy: three pumps at 99% load, Pump 3 showing unit-specific vibration anomalies confirmed by operator intervention, and no timeline for Pump 4 restoration — the single most important unknown driving the entire assessment. The paradox: the system appears fully healthy by every output metric (pressure 65% above threshold, water quality nominal, fire flow at 3x minimum in Sector B) while the structural foundation supporting those outputs has been entirely consumed. Recommendation is INCREASE_MONITORING with priority intelligence collection on Pump 4 timeline, post-adjustment Pump 3 vibration, and multi-sector pressure data. The system will look fine until the instant it isn't — and that transition would be a step-function, not a gradient.",
+  "bear_pressure_score": 70,
+  "score_delta": 38,
+  "score_reasoning": "Layer 2 assessed 68. I adjust to 70 based on two factors: (1) the contradiction resolution on Pump 3 vibration (behavior_wins: operator intervention confirms abnormality, +1 to that threat) and (2) the compound stress assessment confirming all three stress legs are simultaneously loaded with step-function cascade risk. The upward adjustment is modest because Layer 2's analysis was thorough and the positive signals (pressure margin, water quality, Pumps 1-2 health) are real and substantial. The system is performing while structurally brittle.",
+  "tactical_recommendation": "INCREASE_MONITORING",
+  "recommendation_reasoning": "The system is in a CRITICAL compound stress state with zero redundancy but all output metrics remain healthy with large margins. No kill switch is triggered. The appropriate action is not EXIT_SIGNAL (outputs are healthy, thesis not falsified) nor HOLD_POSITION (the structural fragility demands heightened vigilance). INCREASE_MONITORING with three priority intelligence targets: (1) Pump 4 restoration timeline — this single data point would shift the entire assessment by ±15-20 bear pressure points, (2) post-valve-adjustment Pump 3 vibration reading to confirm whether intervention succeeded, and (3) multi-sector hydrant pressure data to resolve kill switch #3 visibility gap.",
+  "threat_matrix": [
+    {
+      "threat": "Zero pump headroom for additional contingency",
+      "description": "Layer 3 confirmed via strategic analysis: MWA has bet entirely on Pump 4 returning before further degradation. Null hypothesis (routine N-1 operations) rejected — 99% load on all units is not routine. VALID classification, full weight.",
+      "impact": null,
+      "probability": null,
+      "time_weight": null,
+      "composite": 9,
+      "severity": "critical",
+      "proximity": null,
+      "blind_spot": false,
+      "is_new": null,
+      "category": null
+    },
+    {
+      "threat": "Three-pump aggregate load near critical threshold",
+      "description": "Layer 3 did not materially adjust. Threshold definitional ambiguity persists. The operational danger is clear regardless. No behavioral evidence changes the measurement.",
+      "impact": null,
+      "probability": null,
+      "time_weight": null,
+      "composite": 7,
+      "severity": "high",
+      "proximity": null,
+      "blind_spot": false,
+      "is_new": null,
+      "category": null
+    },
+    {
+      "threat": "Pump 3 vibration approaching cavitation concern zone",
+      "description": "Contradiction resolved in favor of behavior: operator intervention (valve adjustment) confirms reading is abnormal for this unit. Layer 3 VALID inference that this is unit-specific, not load-induced, is well-supported by comparative data across three pumps at similar loads. +1 for behavioral corroboration of abnormality.",
+      "impact": null,
+      "probability": null,
+      "time_weight": null,
+      "composite": 8,
+      "severity": "high",
+      "proximity": null,
+      "blind_spot": false,
+      "is_new": null,
+      "category": null
+    },
+    {
+      "threat": "Pump 4 maintenance timeline unknown",
+      "description": "Layer 3 null holds: likely an intelligence gap not an MWA operational gap. However, the DATA GAP itself is the threat — its significance is undiminished by the explanation. 50% weight on the strategic inference but full weight on the data gap severity.",
+      "impact": null,
+      "probability": null,
+      "time_weight": null,
+      "composite": 7,
+      "severity": "high",
+      "proximity": null,
+      "blind_spot": false,
+      "is_new": null,
+      "category": null
+    },
+    {
+      "threat": "MWA public statement minimizes operational stress",
+      "description": "Null holds: standard institutional communication. The say-do gap is real but the explanation is normal behavior, not strategic obfuscation. Slight downward adjustment because the null removes adversarial interpretation.",
+      "impact": null,
+      "probability": null,
+      "time_weight": null,
+      "composite": 5,
+      "severity": "critical",
+      "proximity": null,
+      "blind_spot": false,
+      "is_new": null,
+      "category": null
+    },
+    {
+      "threat": "Regulator lacks real-time visibility into pump stress",
+      "description": "Null holds: structural design feature. Layer 3's information asymmetry loop is a valid contextual observation. No adjustment — the monitoring gap is what it is.",
+      "impact": null,
+      "probability": null,
+      "time_weight": null,
+      "composite": 5,
+      "severity": "critical",
+      "proximity": null,
+      "blind_spot": false,
+      "is_new": null,
+      "category": null
+    },
+    {
+      "threat": "Pump 3 valve adjustment may mask or delay failure",
+      "description": "Layer 3's Valve Adjustment Redistribution Loop correctly identifies the binary outcome. No post-adjustment data exists. Per LZ-RC-005, the predicted outcomes carry less weight than measurements. No change.",
+      "impact": null,
+      "probability": null,
+      "time_weight": null,
+      "composite": 5,
+      "severity": "moderate",
+      "proximity": null,
+      "blind_spot": false,
+      "is_new": null,
+      "category": null
+    },
+    {
+      "threat": "Single-sector pressure visibility limits assessment",
+      "description": "Not addressed by Layer 3. No behavioral evidence changes this monitoring limitation.",
+      "impact": null,
+      "probability": null,
+      "time_weight": null,
+      "composite": 5,
+      "severity": "high",
+      "proximity": null,
+      "blind_spot": false,
+      "is_new": null,
+      "category": null
+    },
+    {
+      "threat": "Elevated ambient temperature increasing demand risk",
+      "description": "Null holds: no demand data, 88°F may be normal. Contextual only. No change.",
+      "impact": null,
+      "probability": null,
+      "time_weight": null,
+      "composite": 2.8,
+      "severity": "moderate",
+      "proximity": null,
+      "blind_spot": false,
+      "is_new": null,
+      "category": null
+    },
+    {
+      "threat": "No alternative supply or competitive infrastructure signals",
+      "description": "Pure data gap, no strategic inference possible. No change.",
+      "impact": null,
+      "probability": null,
+      "time_weight": null,
+      "composite": 2.8,
+      "severity": "moderate",
+      "proximity": null,
+      "blind_spot": false,
+      "is_new": null,
+      "category": null
+    },
+    {
+      "threat": "System pressure holding above regulatory floor (positive)",
+      "description": "No behavioral evidence contradicts this direct measurement. Strong positive with large margin.",
+      "impact": null,
+      "probability": null,
+      "time_weight": null,
+      "composite": 3,
+      "severity": "critical",
+      "proximity": null,
+      "blind_spot": false,
+      "is_new": null,
+      "category": null
+    },
+    {
+      "threat": "Reservoir level high with stable pressure (positive)",
+      "description": "No change. Baseline pressure unknown limits kill switch #5 assessment but qualitative positive holds.",
+      "impact": null,
+      "probability": null,
+      "time_weight": null,
+      "composite": 3,
+      "severity": "high",
+      "proximity": null,
+      "blind_spot": false,
+      "is_new": null,
+      "category": null
+    },
+    {
+      "threat": "Water quality remains nominal (positive)",
+      "description": "No change. Direct measurement, strong positive.",
+      "impact": null,
+      "probability": null,
+      "time_weight": null,
+      "composite": 1,
+      "severity": "critical",
+      "proximity": null,
+      "blind_spot": false,
+      "is_new": null,
+      "category": null
+    },
+    {
+      "threat": "Pumps 1-2 vibration normal despite extreme load (mixed positive)",
+      "description": "Layer 3's comparative analysis confirms Pump 3 issue is unit-specific. This strengthens the positive reading for Pumps 1-2. Slight downward adjustment (more positive) on overall system health concern.",
+      "impact": null,
+      "probability": null,
+      "time_weight": null,
+      "composite": 2.5,
+      "severity": "critical",
+      "proximity": null,
+      "blind_spot": false,
+      "is_new": null,
+      "category": null
+    }
+  ],
+  "compounding_risks": [
+    {
+      "chain": [
+        "PUMP CAPACITY: All active pumps at 98.5-99.1% — fully pre-loaded, zero headroom (CONFIRMED by direct telemetry)",
+        "PUMP HEALTH: Pump 3 vibration at 22.4 Hz with active operator intervention — partially pre-loaded, 2.6 Hz from concern threshold (CONFIRMED by telemetry + maintenance log)",
+        "EXPOSURE DURATION: Unknown Pump 4 timeline means the pre-loaded condition persists for an indeterminate period (UNRESOLVED — critical intelligence gap)"
+      ],
+      "outcome": "The Pump 4 outage simultaneously VALIDATES the thesis (the system IS maintaining positive pressure, fire flow, and water quality with only three pumps, proving the infrastructure can absorb a single pump loss) AND THREATENS the thesis (the redundancy that makes this possible has been entirely consumed, leaving zero buffer against a second failure that could cascade instantly into system collapse). The system will appear fully functional to all external monitors until the exact moment it catastrophically fails.",
+      "severity": "critical"
+    },
+    {
+      "chain": [
+        "Data",
+        "Behavior",
+        "Paradox"
+      ],
+      "outcome": "This is a genuine paradox, not a resolvable contradiction. Both are simultaneously true: the system IS delivering healthy outputs AND the structural foundation supporting those outputs is severely compromised. The outputs are lagging indicators — they will remain healthy until the moment they catastrophically fail. The operator behavior is a leading indicator — it reveals the stress that output metrics cannot yet see. Neither data story is wrong. The paradox is the finding. Forcing resolution in either direction would violate the evidence: declaring the system 'fine' because outputs are healthy ignores operator emergency behavior and zero redundancy; declaring the system 'failing' because of pump stress ignores that all service metrics are comfortably above thresholds. The system exists in a state where it appears fine to anyone watching outputs and appears critical to anyone watching inputs.",
+      "severity": "high"
+    }
+  ],
+  "blind_spots": [
+    {
+      "threat": "What is Pump 4's maintenance scope and estimated restoration timeline?",
+      "importance": "high",
+      "suggested_source": "MWA internal maintenance work orders, parts requisition logs, or direct inquiry to MWA operations",
+      "x402_opportunity": true,
+      "recommend_permanent_monitoring": false
+    },
+    {
+      "threat": "What is Pump 3's vibration history over the past 30 days?",
+      "importance": "high",
+      "suggested_source": "MWA SCADA historian or pump monitoring system logs",
+      "x402_opportunity": true,
+      "recommend_permanent_monitoring": false
+    },
+    {
+      "threat": "What is the system baseline pressure under normal four-pump operations?",
+      "importance": "high",
+      "suggested_source": "MWA operational records or regulatory compliance filings",
+      "x402_opportunity": true,
+      "recommend_permanent_monitoring": false
+    },
+    {
+      "threat": "What are hydrant pressures in sectors other than Sector B, particularly high-elevation or end-of-line sectors?",
+      "importance": "moderate",
+      "suggested_source": "Fire department hydrant flow test data or MWA sector pressure monitoring",
+      "x402_opportunity": true,
+      "recommend_permanent_monitoring": false
+    },
+    {
+      "threat": "What is the kill switch #1 threshold definition — does '115% of rated capacity' refer to the four-pump design configuration or the active-pump configuration?",
+      "importance": "high",
+      "suggested_source": "Thesis author or engineering specifications for the system",
+      "x402_opportunity": true,
+      "recommend_permanent_monitoring": false
+    }
+  ],
+  "bias_check": {
+    "bull_indicators": 8,
+    "bear_indicators": 5,
+    "ratio": "8:5",
+    "assessment": "Layer 2 assessed 68. I adjust to 70 based on two factors: (1) the contradiction resolution on Pump 3 vibration (behavior_wins: operator intervention confirms abnormality, +1 to that threat) and (2) the compound stress assessment confirming all three stress legs are simultaneously loaded with step-function cascade risk. The upward adjustment is modest because Layer 2's analysis was thorough and the positive signals (pressure margin, water quality, Pumps 1-2 health) are real and substantial. The system is performing while structurally brittle.",
+    "recommended_additions": null
+  },
+  "kill_switches": [
+    {
+      "name": "1. Redundant Load Threshold (>115% aggregate rated capacity for >48 hours)",
+      "status": "danger",
+      "detail": "WARNING confirmed. Under the active-pump interpretation, pumps are at ~99% of rated capacity — not yet 115% but approaching if demand increases or valve adjustment redistributes load. Under the four-pump interpretation, the system is at ~74% — far from threshold. The definitional ambiguity prevents definitive assessment per LZ-EH-005: the two interpretations produce contradictory proximity assessments with no tie-breaking evidence. The WARNING status is appropriate because we cannot rule out near-trigger status. The 48-hour clock is running but we don't know when it started (no Pump 4 outage timestamp). ESCALATE: need threshold definition and outage start time."
+    },
+    {
+      "name": "2. Cavitation Threshold (sustained vibration >35 Hz while load >95%)",
+      "status": "danger",
+      "detail": "WARNING confirmed. One of two trigger conditions is already met (load >95%). Vibration is 64% of the way to the 35 Hz kill switch trigger. The rate of approach is unknown (single snapshot per LZ-RC-002) but operator behavior confirms the reading is abnormal and concerning enough to warrant intervention. ESCALATE: need post-valve-adjustment vibration reading and historical trend data."
+    },
+    {
+      "name": "3. Fire Flow Collapse (Sector Hydrant Pressure <20 PSI)",
+      "status": "warning",
+      "detail": "Upgrading from NEEDS_DATA to MONITORING because Sector B data (63.5 PSI, 3.175x above threshold) provides one verified positive anchor. However, per LZ-RC-002, one sector does not establish a system-wide assessment. ESCALATE: need hydrant pressure data from additional sectors, especially high-elevation and end-of-line positions."
+    },
+    {
+      "name": "4. Regulatory Pressure Breach (System Pressure <40 PSI)",
+      "status": "warning",
+      "detail": "System pressure at 66.2 PSI provides 65% buffer above the 40 PSI threshold. This is the kill switch with the largest margin. Current pump stress has not degraded system pressure. Upgrading slightly from TRACKING to MONITORING given the zero-redundancy context — a Pump 3 failure could drive a rapid pressure decline, but current margin is substantial."
+    },
+    {
+      "name": "5. Divergent Inventory Paradox (Reservoir >90% AND Pressure drop >20% from baseline)",
+      "status": "warning",
+      "detail": "MONITORING confirmed. One of two conditions is met. The second is unverifiable due to unknown baseline pressure. Current qualitative assessment (reservoir full, pressure healthy, pumps converting supply to pressure) suggests no supply-distribution decoupling. However, the baseline gap prevents quantitative confirmation. Maintaining MONITORING until baseline data obtained."
+    }
+  ],
+  "new_kill_switches_recommended": [],
+  "_layer4_raw": {
+    "burden_of_proof_applied": [
+      {
+        "inference": "Zero pump headroom — thesis redundancy claim currently falsified as operational reality",
+        "signal_ids": [
+          "20260310-2115-SIG-006"
+        ],
+        "layer3_classification": "VALID",
+        "data_support": "full",
+        "contradicts_data": false,
+        "final_weight": "full",
+        "reasoning": "Classification VALID (1 assumption). Data support is full: three independent pump load readings (98.5%, 99.1%, 98.8%) plus Pump 4 confirmed offline by maintenance log. No contradictions with verified data. Arithmetic is unambiguous — zero redundancy exists. Full weight applied."
+      },
+      {
+        "inference": "MWA public statement minimizes operational stress — null hypothesis holds (standard institutional communication)",
+        "signal_ids": [
+          "20260310-2115-SIG-005"
+        ],
+        "layer3_classification": "NULL_HYPOTHESIS_HOLDS",
+        "data_support": "full",
+        "contradicts_data": false,
+        "final_weight": "full",
+        "reasoning": "Layer 3 correctly determined the null holds: organizations routinely issue bland reassurance during maintenance events. Per Step 1, I accept the null. The say-do gap is real and verified by data (telemetry vs. statement) but the EXPLANATION is normal institutional behavior, not strategic obfuscation. The gap remains informative per LZ-EH-003 for behavioral pattern analysis but does not receive an adversarial interpretation. Full weight as a contextual behavioral data point, not as evidence of deliberate concealment."
+      },
+      {
+        "inference": "Pump 3 vibration is unit-specific abnormality, not load-induced systemic effect",
+        "signal_ids": [
+          "20260310-2115-SIG-002"
+        ],
+        "layer3_classification": "VALID",
+        "data_support": "full",
+        "contradicts_data": false,
+        "final_weight": "full",
+        "reasoning": "Classification VALID (1 assumption). Supported by multiple independent data points: Pump 3 at 22.4 Hz vs. Pumps 1-2 at 12.8-13.0 Hz at comparable loads (~99%), PLUS maintenance log independently corroborating elevated vibration and active intervention. The differential diagnosis (unit-specific vs. systemic) is well-supported by comparative data across three pumps at similar loads. Full weight."
+      },
+      {
+        "inference": "Regulator monitoring gap is structural design feature, not failure — null hypothesis holds",
+        "signal_ids": [
+          "20260310-2115-SIG-009"
+        ],
+        "layer3_classification": "NULL_HYPOTHESIS_HOLDS",
+        "data_support": "full",
+        "contradicts_data": false,
+        "final_weight": "full",
+        "reasoning": "Null accepted. The monitoring architecture is explicitly described in the thesis context. The strategic implication (information asymmetry shaping MWA behavior) is a valid contextual observation but the monitoring gap itself is a design feature, not an anomaly. Full weight as contextual condition."
+      },
+      {
+        "inference": "Pump 4 timeline unknown — null hypothesis holds (intelligence gap, not MWA operational gap)",
+        "signal_ids": [
+          "20260310-2115-SIG-008"
+        ],
+        "layer3_classification": "NULL_HYPOTHESIS_HOLDS",
+        "data_support": "partial",
+        "contradicts_data": false,
+        "final_weight": "reduced_50",
+        "reasoning": "Null accepted: the most likely explanation is that MWA has an internal timeline not in our dataset. However, data support is only partial — we have confirmation Pump 4 is offline but zero data on timeline, scope, or complications. The 50% weight applies because the null is plausible but unverifiable. The DATA GAP itself remains the highest-priority intelligence need regardless of the strategic explanation."
+      },
+      {
+        "inference": "Elevated temperature increasing demand risk — null hypothesis holds (88°F may be normal, no demand data)",
+        "signal_ids": [
+          "20260310-2115-SIG-007"
+        ],
+        "layer3_classification": "NULL_HYPOTHESIS_HOLDS",
+        "data_support": "partial",
+        "contradicts_data": false,
+        "final_weight": "reduced_50",
+        "reasoning": "Null accepted. Single temperature reading without regional norms or demand data. Per LZ-RC-001, temperature-demand correlation does not establish that demand HAS increased. The contextual amplification concern (any demand increase on a zero-headroom system) is valid but contingent on an unverified premise. 50% weight: one data point (temperature), no demand data."
+      },
+      {
+        "inference": "MWA likely working on accelerated Pump 4 restoration (hidden move #1)",
+        "signal_ids": [
+          "20260310-2115-SIG-008",
+          "20260310-2115-SIG-005",
+          "20260310-2115-SIG-011"
+        ],
+        "layer3_classification": "VALID",
+        "data_support": "partial",
+        "contradicts_data": false,
+        "final_weight": "reduced_50",
+        "reasoning": "Classification VALID (1 assumption). The inference that operators internally recognize severity is supported by the maintenance log showing active valve adjustment — operators treating this as non-routine despite public messaging. However, the specific claim of 'accelerated' restoration is an assumption about internal tempo without direct evidence. Partial data support (maintenance log confirms active management; no evidence of accelerated vs. normal pace). 50% weight."
+      },
+      {
+        "inference": "MWA may be preparing contingency plans for Pump 3 degradation (hidden move #2)",
+        "signal_ids": [
+          "20260310-2115-SIG-002",
+          "20260310-2115-SIG-011",
+          "20260310-2115-SIG-006"
+        ],
+        "layer3_classification": "FLAGGED",
+        "data_support": "partial",
+        "contradicts_data": false,
+        "final_weight": "reduced_50",
+        "reasoning": "Classification FLAGGED (2 assumptions). Layer 3 correctly flagged this at reduced confidence. The reasoning is plausible (competent utility operators would contingency plan) but we have zero direct evidence of contingency activation — only the valve adjustment. Step 1 applies 50% weight for FLAGGED, Step 2 would apply another 50% for partial support, but I'll apply the higher reduction (50% total) since the Step 1 flag already accounts for the assumption load. This inference is logged as context but does NOT move bear pressure."
+      },
+      {
+        "inference": "Regional Fire Dispatch strategy",
+        "signal_ids": [
+          "20260310-2115-SIG-010"
+        ],
+        "layer3_classification": "INSUFFICIENT_EVIDENCE",
+        "data_support": "none",
+        "contradicts_data": false,
+        "final_weight": "stripped",
+        "reasoning": "Per CL-001 and Layer 3's correct application: no data exists from this entity. Stripped entirely from scoring. Logged."
+      }
+    ],
+    "contradictions_resolved": [
+      {
+        "data_says": "All downstream outputs are healthy: system pressure 66.2 PSI (65% above kill threshold), water quality 0.9 NTU, reservoir 94.1%, Sector B hydrant 63.5 PSI. The system IS delivering on its service promise.",
+        "behavior_suggests": "MWA operators are actively managing an emergency condition: valve adjustments on Pump 3, all pumps at ~99%, maintenance log acknowledges elevated vibration. Operator actions indicate recognized severity inconsistent with 'routine' framing.",
+        "resolution": "paradox_held",
+        "confidence": "high",
+        "reasoning": "This is a genuine paradox, not a resolvable contradiction. Both are simultaneously true: the system IS delivering healthy outputs AND the structural foundation supporting those outputs is severely compromised. The outputs are lagging indicators — they will remain healthy until the moment they catastrophically fail. The operator behavior is a leading indicator — it reveals the stress that output metrics cannot yet see. Neither data story is wrong. The paradox is the finding. Forcing resolution in either direction would violate the evidence: declaring the system 'fine' because outputs are healthy ignores operator emergency behavior and zero redundancy; declaring the system 'failing' because of pump stress ignores that all service metrics are comfortably above thresholds. The system exists in a state where it appears fine to anyone watching outputs and appears critical to anyone watching inputs.",
+        "score_impact": 0
+      },
+      {
+        "data_says": "Pump 3 vibration at 22.4 Hz is a single snapshot. Per LZ-RC-002, we cannot confirm trend direction.",
+        "behavior_suggests": "Maintenance crew is actively adjusting valves in response to vibration, implying they perceive the reading as abnormally high and potentially worsening.",
+        "resolution": "behavior_wins",
+        "confidence": "medium",
+        "reasoning": "Per LZ-EH-003, the operator's action (intervening on Pump 3) carries more evidentiary weight than the ambiguity of a single data point. The operators have access to the full time-series data we lack. Their decision to intervene is an implicit measurement report: they see something concerning enough to act on. This does not confirm the specific trend direction, but it confirms the reading is abnormal relative to Pump 3's expected baseline. The behavior resolves the 'is this normal for Pump 3?' question — the operators' actions say no.",
+        "score_impact": 1
+      }
+    ],
+    "data_classifications": [
+      {
+        "data_point": "Pump 4 restoration timeline",
+        "layer2_classification": "DATA_AVAILABILITY_GAP",
+        "layer3_context": "Layer 3 null hypothesis holds: MWA likely has an internal timeline not in our dataset. Maintenance log uses 'successfully' suggesting planned action.",
+        "layer3_inference_valid": "true",
+        "final_classification": "DATA_GAP",
+        "reasoning": "The most parsimonious explanation (LZ-RC-004) is that our data feed doesn't include maintenance work orders or internal scheduling. The absence is an intelligence collection gap, not a suspicious omission. MWA has no obligation to publish internal maintenance timelines. However, this DATA_GAP is the single most consequential unknown in the entire assessment — it determines exposure duration, kill switch proximity, and scenario probabilities."
+      },
+      {
+        "data_point": "Regional Fire Dispatch data",
+        "layer2_classification": "DATA_AVAILABILITY_GAP per CL-001",
+        "layer3_context": "Correctly excluded from all analysis per CL-001",
+        "layer3_inference_valid": "n/a",
+        "final_classification": "DATA_GAP",
+        "reasoning": "Per CL-001, no data from this entity exists. Not a true negative (we don't know there's no fire dispatch activity), not suspicious (we simply don't have this data source). Pure data gap. No inference permitted per LZ-RC-003."
+      },
+      {
+        "data_point": "Hydrant pressure in sectors other than Sector B",
+        "layer2_classification": "DATA_AVAILABILITY_GAP",
+        "layer3_context": "Not addressed by Layer 3 — this is a monitoring limitation",
+        "layer3_inference_valid": "n/a",
+        "final_classification": "DATA_GAP",
+        "reasoning": "We have one sector's data. Per LZ-RC-003, we cannot infer other sectors are adequate or inadequate. This gap directly limits assessment of kill switch #3 (Fire Flow Collapse). The single sector showing 63.5 PSI is strong locally but not generalizable."
+      },
+      {
+        "data_point": "System baseline pressure for kill switch #5 assessment",
+        "layer2_classification": "THRESHOLD_CALIBRATION_GAP",
+        "layer3_context": "Not addressed — a technical parameter gap",
+        "layer3_inference_valid": "n/a",
+        "final_classification": "DATA_GAP",
+        "reasoning": "Cannot calculate the percentage drop for kill switch #5 without knowing baseline. The gap is definitional/technical, not behavioral or strategic. Current pressure (66.2 PSI) is far above the 40 PSI floor, but the relative drop calculation is blocked."
+      },
+      {
+        "data_point": "Kill switch #1 threshold definition (rated capacity basis)",
+        "layer2_classification": "THRESHOLD_CALIBRATION_GAP",
+        "layer3_context": "Not addressed — a definitional gap in the thesis itself",
+        "layer3_inference_valid": "n/a",
+        "final_classification": "DATA_GAP",
+        "reasoning": "The thesis defines the kill switch but the definition is ambiguous. 'Aggregate load on active pumps exceeds 115% of rated capacity' — rated capacity of what? The four-pump design or the active three-pump configuration? This is a gap in the thesis specification, not in the operational data. It affects whether we score the system at ~74% or ~99% of rated capacity. The operational danger is identical either way."
+      },
+      {
+        "data_point": "Alternative supply / mutual aid infrastructure",
+        "layer2_classification": "COMPETITIVE_KNOWLEDGE_GAP",
+        "layer3_context": "Not addressed — no data to analyze",
+        "layer3_inference_valid": "n/a",
+        "final_classification": "DATA_GAP",
+        "reasoning": "Per LZ-RC-003, we cannot infer these don't exist. Most municipal water systems have some form of mutual aid or interconnection, but we have zero data. This gap affects our understanding of system resilience under further degradation scenarios but does not affect current-state assessment."
+      },
+      {
+        "data_point": "Demand data / consumption levels",
+        "layer2_classification": "DATA_AVAILABILITY_GAP (implied)",
+        "layer3_context": "Noted in temperature analysis — no demand data available to confirm temperature-demand effect",
+        "layer3_inference_valid": "n/a",
+        "final_classification": "DATA_GAP",
+        "reasoning": "We know pump loads (~99%) but not whether this represents normal demand or elevated demand. Without demand data, we cannot assess whether the system is stressed because demand is unusually high or because three pumps are insufficient for normal demand. Both scenarios have different risk trajectories."
+      }
+    ],
+    "final_threat_matrix": [
+      {
+        "threat": "Zero pump headroom for additional contingency",
+        "signal_ids": [
+          "20260310-2115-SIG-006"
+        ],
+        "layer2_composite": 9,
+        "layer3_adjustment": "Layer 3 confirmed via strategic analysis: MWA has bet entirely on Pump 4 returning before further degradation. Null hypothesis (routine N-1 operations) rejected — 99% load on all units is not routine. VALID classification, full weight.",
+        "adjustment_direction": "unchanged",
+        "final_composite": 9,
+        "confidence": "high"
+      },
+      {
+        "threat": "Three-pump aggregate load near critical threshold",
+        "signal_ids": [
+          "20260310-2115-SIG-001"
+        ],
+        "layer2_composite": 7,
+        "layer3_adjustment": "Layer 3 did not materially adjust. Threshold definitional ambiguity persists. The operational danger is clear regardless. No behavioral evidence changes the measurement.",
+        "adjustment_direction": "unchanged",
+        "final_composite": 7,
+        "confidence": "medium"
+      },
+      {
+        "threat": "Pump 3 vibration approaching cavitation concern zone",
+        "signal_ids": [
+          "20260310-2115-SIG-002"
+        ],
+        "layer2_composite": 7,
+        "layer3_adjustment": "Contradiction resolved in favor of behavior: operator intervention (valve adjustment) confirms reading is abnormal for this unit. Layer 3 VALID inference that this is unit-specific, not load-induced, is well-supported by comparative data across three pumps at similar loads. +1 for behavioral corroboration of abnormality.",
+        "adjustment_direction": "up",
+        "final_composite": 8,
+        "confidence": "medium"
+      },
+      {
+        "threat": "Pump 4 maintenance timeline unknown",
+        "signal_ids": [
+          "20260310-2115-SIG-008"
+        ],
+        "layer2_composite": 7,
+        "layer3_adjustment": "Layer 3 null holds: likely an intelligence gap not an MWA operational gap. However, the DATA GAP itself is the threat — its significance is undiminished by the explanation. 50% weight on the strategic inference but full weight on the data gap severity.",
+        "adjustment_direction": "unchanged",
+        "final_composite": 7,
+        "confidence": "medium"
+      },
+      {
+        "threat": "MWA public statement minimizes operational stress",
+        "signal_ids": [
+          "20260310-2115-SIG-005"
+        ],
+        "layer2_composite": 6,
+        "layer3_adjustment": "Null holds: standard institutional communication. The say-do gap is real but the explanation is normal behavior, not strategic obfuscation. Slight downward adjustment because the null removes adversarial interpretation.",
+        "adjustment_direction": "down",
+        "final_composite": 5,
+        "confidence": "high"
+      },
+      {
+        "threat": "Regulator lacks real-time visibility into pump stress",
+        "signal_ids": [
+          "20260310-2115-SIG-009"
+        ],
+        "layer2_composite": 5,
+        "layer3_adjustment": "Null holds: structural design feature. Layer 3's information asymmetry loop is a valid contextual observation. No adjustment — the monitoring gap is what it is.",
+        "adjustment_direction": "unchanged",
+        "final_composite": 5,
+        "confidence": "high"
+      },
+      {
+        "threat": "Pump 3 valve adjustment may mask or delay failure",
+        "signal_ids": [
+          "20260310-2115-SIG-011"
+        ],
+        "layer2_composite": 5,
+        "layer3_adjustment": "Layer 3's Valve Adjustment Redistribution Loop correctly identifies the binary outcome. No post-adjustment data exists. Per LZ-RC-005, the predicted outcomes carry less weight than measurements. No change.",
+        "adjustment_direction": "unchanged",
+        "final_composite": 5,
+        "confidence": "low"
+      },
+      {
+        "threat": "Single-sector pressure visibility limits assessment",
+        "signal_ids": [
+          "20260310-2115-SIG-014"
+        ],
+        "layer2_composite": 5,
+        "layer3_adjustment": "Not addressed by Layer 3. No behavioral evidence changes this monitoring limitation.",
+        "adjustment_direction": "unchanged",
+        "final_composite": 5,
+        "confidence": "medium"
+      },
+      {
+        "threat": "Elevated ambient temperature increasing demand risk",
+        "signal_ids": [
+          "20260310-2115-SIG-007"
+        ],
+        "layer2_composite": 2.8,
+        "layer3_adjustment": "Null holds: no demand data, 88°F may be normal. Contextual only. No change.",
+        "adjustment_direction": "unchanged",
+        "final_composite": 2.8,
+        "confidence": "low"
+      },
+      {
+        "threat": "No alternative supply or competitive infrastructure signals",
+        "signal_ids": [
+          "20260310-2115-SIG-015"
+        ],
+        "layer2_composite": 2.8,
+        "layer3_adjustment": "Pure data gap, no strategic inference possible. No change.",
+        "adjustment_direction": "unchanged",
+        "final_composite": 2.8,
+        "confidence": "low"
+      },
+      {
+        "threat": "System pressure holding above regulatory floor (positive)",
+        "signal_ids": [
+          "20260310-2115-SIG-003"
+        ],
+        "layer2_composite": 3,
+        "layer3_adjustment": "No behavioral evidence contradicts this direct measurement. Strong positive with large margin.",
+        "adjustment_direction": "unchanged",
+        "final_composite": 3,
+        "confidence": "high"
+      },
+      {
+        "threat": "Reservoir level high with stable pressure (positive)",
+        "signal_ids": [
+          "20260310-2115-SIG-004"
+        ],
+        "layer2_composite": 3,
+        "layer3_adjustment": "No change. Baseline pressure unknown limits kill switch #5 assessment but qualitative positive holds.",
+        "adjustment_direction": "unchanged",
+        "final_composite": 3,
+        "confidence": "medium"
+      },
+      {
+        "threat": "Water quality remains nominal (positive)",
+        "signal_ids": [
+          "20260310-2115-SIG-012"
+        ],
+        "layer2_composite": 1,
+        "layer3_adjustment": "No change. Direct measurement, strong positive.",
+        "adjustment_direction": "unchanged",
+        "final_composite": 1,
+        "confidence": "high"
+      },
+      {
+        "threat": "Pumps 1-2 vibration normal despite extreme load (mixed positive)",
+        "signal_ids": [
+          "20260310-2115-SIG-013"
+        ],
+        "layer2_composite": 3,
+        "layer3_adjustment": "Layer 3's comparative analysis confirms Pump 3 issue is unit-specific. This strengthens the positive reading for Pumps 1-2. Slight downward adjustment (more positive) on overall system health concern.",
+        "adjustment_direction": "down",
+        "final_composite": 2.5,
+        "confidence": "high"
+      }
+    ],
+    "compound_stress_final": {
+      "level": "CRITICAL",
+      "layer2_level": "N/A — Layer 2 noted the financial compound stress framework does not apply but identified domain-equivalent pre-loading across load, health, and environment dimensions",
+      "layer3_assessment": "Currently orderly but approaching critical. Step-function transition risk: no gradient between orderly and disorderly. Layer 3 assessed 'approaching_critical'.",
+      "override": false,
+      "override_reasoning": "Layer 3's assessment of approaching_critical is accurate. I elevate to CRITICAL because: (1) all three stress legs are simultaneously loaded — pump capacity at 99%, Pump 3 health degrading, unknown maintenance timeline extending exposure; (2) the transition from current state to cascading failure is a step-function, not a gradient — there is no 'ELEVATED' waypoint between here and system failure; (3) the system has consumed ALL buffer. In the financial analog, this would be all three stress indicators at extreme levels with a single catalyst needed to trigger the cascade. The system is not yet in EMERGENCY because outputs remain healthy and no kill switch is triggered, but the structural position is CRITICAL.",
+      "self_challenge": "SUPPORTS CRITICAL: Zero mechanical redundancy with a degrading pump (22.4 Hz vibration, operator intervention underway) means one additional failure of any kind triggers immediate cascading pressure loss — the system has no absorption capacity left. CHALLENGES CRITICAL: All downstream outputs are robustly healthy — system pressure at 66.2 PSI (65% above kill threshold), water quality nominal, Sector B fire flow at 3.175x minimum, reservoir nearly full. Pumps 1-2 show excellent mechanical health despite extreme load. The system is currently PERFORMING, not just surviving.",
+      "pre_loaded": true,
+      "pre_loaded_legs": [
+        "PUMP CAPACITY: All active pumps at 98.5-99.1% — fully pre-loaded, zero headroom (CONFIRMED by direct telemetry)",
+        "PUMP HEALTH: Pump 3 vibration at 22.4 Hz with active operator intervention — partially pre-loaded, 2.6 Hz from concern threshold (CONFIRMED by telemetry + maintenance log)",
+        "EXPOSURE DURATION: Unknown Pump 4 timeline means the pre-loaded condition persists for an indeterminate period (UNRESOLVED — critical intelligence gap)"
+      ],
+      "cascade_proximity": "approaching",
+      "delta_since_last": "escalating",
+      "cycles_at_current_level": 1,
+      "velocity_note": "Bear pressure jumped from 32 to current assessment in a single cycle, driven by Pump 4 going offline and revealing that the system has zero tolerance for N-1 operations at current demand levels — the escalation was abrupt, not gradual.",
+      "operator_action_window": "hours",
+      "thesis_paradox": "The Pump 4 outage simultaneously VALIDATES the thesis (the system IS maintaining positive pressure, fire flow, and water quality with only three pumps, proving the infrastructure can absorb a single pump loss) AND THREATENS the thesis (the redundancy that makes this possible has been entirely consumed, leaving zero buffer against a second failure that could cascade instantly into system collapse). The system will appear fully functional to all external monitors until the exact moment it catastrophically fails."
+    },
+    "kill_switch_review": [
+      {
+        "criterion": "1. Redundant Load Threshold (>115% aggregate rated capacity for >48 hours)",
+        "current_status": "WARNING",
+        "layer3_context": "Layer 3 notes this is a race condition: Pump 4 restoration vs. 48-hour clock. The threshold definition ambiguity (four-pump vs. active-pump rated capacity) determines proximity. Layer 3 correctly identifies that the operational danger is real regardless of threshold semantics.",
+        "final_status": "WARNING",
+        "action": "escalate",
+        "reasoning": "WARNING confirmed. Under the active-pump interpretation, pumps are at ~99% of rated capacity — not yet 115% but approaching if demand increases or valve adjustment redistributes load. Under the four-pump interpretation, the system is at ~74% — far from threshold. The definitional ambiguity prevents definitive assessment per LZ-EH-005: the two interpretations produce contradictory proximity assessments with no tie-breaking evidence. The WARNING status is appropriate because we cannot rule out near-trigger status. The 48-hour clock is running but we don't know when it started (no Pump 4 outage timestamp). ESCALATE: need threshold definition and outage start time."
+      },
+      {
+        "criterion": "2. Cavitation Threshold (sustained vibration >35 Hz while load >95%)",
+        "current_status": "WARNING",
+        "layer3_context": "Load condition (>95%) already met for Pump 3 at 98.8%. Vibration at 22.4 Hz, 12.6 Hz below trigger. Operator intervention (valve adjustment) in progress — outcome unknown. Layer 3 VALID inference that this is a unit-specific issue supported by behavioral evidence.",
+        "final_status": "WARNING",
+        "action": "escalate",
+        "reasoning": "WARNING confirmed. One of two trigger conditions is already met (load >95%). Vibration is 64% of the way to the 35 Hz kill switch trigger. The rate of approach is unknown (single snapshot per LZ-RC-002) but operator behavior confirms the reading is abnormal and concerning enough to warrant intervention. ESCALATE: need post-valve-adjustment vibration reading and historical trend data."
+      },
+      {
+        "criterion": "3. Fire Flow Collapse (Sector Hydrant Pressure <20 PSI)",
+        "current_status": "NEEDS_DATA",
+        "layer3_context": "Layer 3 did not address multi-sector pressure. No behavioral evidence about other sectors.",
+        "final_status": "MONITORING",
+        "action": "escalate",
+        "reasoning": "Upgrading from NEEDS_DATA to MONITORING because Sector B data (63.5 PSI, 3.175x above threshold) provides one verified positive anchor. However, per LZ-RC-002, one sector does not establish a system-wide assessment. ESCALATE: need hydrant pressure data from additional sectors, especially high-elevation and end-of-line positions."
+      },
+      {
+        "criterion": "4. Regulatory Pressure Breach (System Pressure <40 PSI)",
+        "current_status": "TRACKING",
+        "layer3_context": "Layer 3 notes this is the threshold at which the regulator's macro monitoring would detect the problem — but only after the crisis has already manifested.",
+        "final_status": "MONITORING",
+        "action": "maintain",
+        "reasoning": "System pressure at 66.2 PSI provides 65% buffer above the 40 PSI threshold. This is the kill switch with the largest margin. Current pump stress has not degraded system pressure. Upgrading slightly from TRACKING to MONITORING given the zero-redundancy context — a Pump 3 failure could drive a rapid pressure decline, but current margin is substantial."
+      },
+      {
+        "criterion": "5. Divergent Inventory Paradox (Reservoir >90% AND Pressure drop >20% from baseline)",
+        "current_status": "MONITORING",
+        "layer3_context": "Not specifically addressed by Layer 3. The first condition (reservoir >90%) is met at 94.1%. The second condition is unassessable without baseline pressure.",
+        "final_status": "MONITORING",
+        "action": "maintain",
+        "reasoning": "MONITORING confirmed. One of two conditions is met. The second is unverifiable due to unknown baseline pressure. Current qualitative assessment (reservoir full, pressure healthy, pumps converting supply to pressure) suggests no supply-distribution decoupling. However, the baseline gap prevents quantitative confirmation. Maintaining MONITORING until baseline data obtained."
+      }
+    ],
+    "rejection_log": [
+      {
+        "layer3_inference": "MWA may be preparing contingency plans for Pump 3 degradation (hidden move #2) — including portable pumps, mutual aid, demand reduction",
+        "signal_ids": [
+          "20260310-2115-SIG-002",
+          "20260310-2115-SIG-011",
+          "20260310-2115-SIG-006"
+        ],
+        "rejection_reason": "Not fully rejected but excluded from scoring. FLAGGED classification (2 assumptions) with only partial data support. The inference is plausible (competent operators would contingency plan) but entirely speculative in its specifics (portable pumps, mutual aid, demand reduction). Zero direct evidence of any of these specific actions. The valve adjustment is evidence of active management of Pump 3, not evidence of broader contingency activation. Per burden of proof Step 1 (FLAGGED = 50% weight) and Step 2 (partial support = additional reduction), this inference provides contextual framing only and does NOT influence bear pressure or tactical recommendation.",
+        "root_cause": "INSUFFICIENT_EVIDENCE",
+        "confidence_in_rejection": "medium",
+        "corrections_ledger_action": "flag_for_review"
+      }
+    ],
+    "final_bear_pressure": 70,
+    "pressure_vs_layer2": 2,
+    "pressure_reasoning": "Layer 2 assessed 68. I adjust to 70 based on two factors: (1) the contradiction resolution on Pump 3 vibration (behavior_wins: operator intervention confirms abnormality, +1 to that threat) and (2) the compound stress assessment confirming all three stress legs are simultaneously loaded with step-function cascade risk. The upward adjustment is modest because Layer 2's analysis was thorough and the positive signals (pressure margin, water quality, Pumps 1-2 health) are real and substantial. The system is performing while structurally brittle.",
+    "tactical_recommendation": "INCREASE_MONITORING",
+    "recommendation_reasoning": "The system is in a CRITICAL compound stress state with zero redundancy but all output metrics remain healthy with large margins. No kill switch is triggered. The appropriate action is not EXIT_SIGNAL (outputs are healthy, thesis not falsified) nor HOLD_POSITION (the structural fragility demands heightened vigilance). INCREASE_MONITORING with three priority intelligence targets: (1) Pump 4 restoration timeline — this single data point would shift the entire assessment by ±15-20 bear pressure points, (2) post-valve-adjustment Pump 3 vibration reading to confirm whether intervention succeeded, and (3) multi-sector hydrant pressure data to resolve kill switch #3 visibility gap.",
+    "monitoring_triggers": [
+      "Pump 3 vibration exceeding 25 Hz → ESCALATE to REDUCE_EXPOSURE assessment",
+      "Pump 4 still offline at estimated 48-hour mark → ESCALATE to REDUCE_EXPOSURE assessment and reassess kill switch #1",
+      "System pressure dropping below 55 PSI → ESCALATE to REDUCE_EXPOSURE assessment (leading indicator of kill switch #4)",
+      "Any second pump load exceeding 100% rated capacity → ESCALATE to EXIT_SIGNAL assessment",
+      "Pump 3 taken offline or derated by operators → IMMEDIATE reassessment (two-pump operation is thesis-critical)",
+      "MWA issuing conservation advisory or demand management request → behavioral confirmation that system is more stressed than current public messaging indicates",
+      "Pump 4 returns to service and loads normalize to 70-85% → DE-ESCALATE bear pressure by 25-30 points"
+    ],
+    "overall_confidence": "medium",
+    "biggest_uncertainty": "Pump 4 restoration timeline. This single unknown determines whether the current critical-but-stable state resolves in hours (favorable — bear pressure drops to ~45) or persists for days (unfavorable — cumulative stress increases Pump 3 failure probability and approaches kill switch #1's 48-hour threshold). Every other assessment in this report is contingent on how long the three-pump configuration persists.",
+    "what_would_change_assessment": "Pump 4 returning to service within 12 hours would change recommendation to HOLD_POSITION and drop bear pressure to ~40-45. Conversely, Pump 3 vibration exceeding 25 Hz in the next telemetry reading would change recommendation to REDUCE_EXPOSURE and raise bear pressure to ~80-85. Both are plausible near-term outcomes and we cannot forecast which will occur first.",
+    "final_report": "The RWDN is operating at CRITICAL structural stress with zero mechanical redundancy: three pumps at 99% load, Pump 3 showing unit-specific vibration anomalies confirmed by operator intervention, and no timeline for Pump 4 restoration — the single most important unknown driving the entire assessment. The paradox: the system appears fully healthy by every output metric (pressure 65% above threshold, water quality nominal, fire flow at 3x minimum in Sector B) while the structural foundation supporting those outputs has been entirely consumed. Recommendation is INCREASE_MONITORING with priority intelligence collection on Pump 4 timeline, post-adjustment Pump 3 vibration, and multi-sector pressure data. The system will look fine until the instant it isn't — and that transition would be a step-function, not a gradient."
+  },
+  "_layer3_raw": {
+    "corrections_referenced": [
+      {
+        "correction_id": "CL-001",
+        "signal_ids": [
+          "20260310-2115-SIG-010"
+        ],
+        "trigger_matched": "Regional Fire Dispatch — Inferred Strategy (INSUFFICIENT_EVIDENCE)",
+        "influence_on_assessment": "CL-001 prevents any strategic inference about Regional Fire Dispatch behavior, including hidden moves or behavioral pattern analysis involving fire dispatch. No data from this entity exists. I have excluded fire dispatch from player analysis, feedback loops, and hidden moves. The data gap is retained as a monitoring limitation in x402 paper trades."
+      }
+    ],
+    "player_analysis": [
+      {
+        "player": "Municipal Water Authority (MWA)",
+        "stated_position": "Routine maintenance underway. No service interruptions.",
+        "observed_actions": "All three active pumps operating at 98.5-99.1% load — far outside the 70-85% normal range. Pump 3 showing elevated vibration at 22.4 Hz (nearly 2x the vibration of Pumps 1-2). Maintenance crew actively adjusting flow control valves on Pump 3. Pump 4 offline with no publicly stated restoration timeline.",
+        "say_do_gap": "The word 'routine' is doing enormous work in the public statement. Running three pumps at ~99% load with one showing vibration anomalies while a fourth is offline is not routine by any operational definition — it is emergency-level load redistribution. The statement 'no service interruptions' may be technically true (pressure is maintained, water is flowing) but omits that the system is operating at zero redundancy with a degrading pump. The gap is not between truth and falsehood — it is between the severity communicated and the severity observed. Per [LZ-EH-003], the telemetry (actions) takes precedence over the statement.",
+        "inferred_strategy": "MWA is prioritizing continuity of public confidence and service output while attempting to resolve the Pump 3 vibration issue through the least disruptive intervention (valve adjustment rather than pump shutdown). This is consistent with the thesis context describing MWA as 'historically prone to delaying capital-intensive emergency repairs' and 'focused on continuity of service and public reassurance.' The rational behavior for an entity with this profile is: (1) keep all available pumps running as long as downstream metrics (pressure, quality) remain compliant, (2) attempt in-situ fixes before taking more pumps offline, (3) minimize public alarm to avoid political/regulatory pressure. The valve adjustment on Pump 3 suggests they are trying to extend Pump 3's operational life until Pump 4 returns — because taking Pump 3 offline with Pump 4 already down would create an immediate crisis (two pumps cannot serve the system).",
+        "confidence": "high"
+      },
+      {
+        "player": "State Public Utility Commission (Regulators)",
+        "stated_position": "No public statement in current dataset.",
+        "observed_actions": "No observable regulatory action. Per thesis context, the Commission 'monitors macro-level compliance but lacks real-time telemetry oversight.' The metrics visible to the regulator — reservoir at 94.1% and system pressure at 66.2 PSI — are both comfortably within compliance thresholds.",
+        "say_do_gap": "There is no say-do gap because there is no 'say.' The regulator's inaction is entirely consistent with their information set: from their vantage point, nothing is wrong. This is not negligence; it is a structural monitoring limitation. The regulator is rationally dormant because its monitoring inputs show green.",
+        "inferred_strategy": "No active strategy to infer. The regulator is operating exactly as its monitoring framework dictates. The relevant finding is not what the regulator IS doing but what it CANNOT do — it cannot detect pump-level stress, vibration anomalies, or the loss of redundancy. This creates a governance gap where the only entity with real-time visibility into the true system state (MWA) is also the entity with incentives to minimize and delay.",
+        "confidence": "high"
+      },
+      {
+        "player": "Regional Fire Dispatch",
+        "stated_position": "No statement in current dataset.",
+        "observed_actions": "No data from this entity exists in the current dataset. Per CL-001, no inference about fire dispatch behavior, strategy, or operational adjustments can be drawn.",
+        "say_do_gap": "INSUFFICIENT_EVIDENCE — cannot assess.",
+        "inferred_strategy": "INSUFFICIENT_EVIDENCE per CL-001. No data exists from which to infer strategy. This is a data gap, not a finding.",
+        "confidence": "low"
+      }
+    ],
+    "feedback_loops": [
+      {
+        "loop": "Pump Failure Cascade Loop: Pump 4 offline → remaining pumps at max load → accelerated wear on Pump 3 → Pump 3 failure → catastrophic two-pump operation → system pressure collapse",
+        "components": [
+          "Pump 4 outage duration",
+          "Pump 3 vibration (22.4 Hz, rising?)",
+          "Pump 1-2 load absorption capacity",
+          "System pressure (66.2 PSI)"
+        ],
+        "current_state": "active_orderly",
+        "trigger_to_next_state": "Pump 3 vibration crossing 25 Hz (concern threshold) or an operator decision to reduce Pump 3 output to protect it. Either pathway forces remaining load onto Pumps 1-2, which are already at ~99%. The transition from orderly to accelerating would occur if Pump 3 must be derated or taken offline before Pump 4 returns. The transition from accelerating to critical would be near-instantaneous — two pumps cannot sustain system pressure at current demand levels.",
+        "thesis_implication": "This is the primary threat loop to the thesis. The thesis claims 'sufficient mechanical redundancy.' That redundancy is currently consumed, and this loop represents the pathway from current fragile-but-functional to thesis falsification. The loop is self-reinforcing: higher load → faster degradation → further load concentration → faster degradation. The only circuit breaker is Pump 4 returning to service."
+      },
+      {
+        "loop": "Information Asymmetry Loop: MWA telemetry shows stress → MWA public statement minimizes → Regulator sees nominal macro metrics → No external intervention → MWA continues current approach → Stress continues or worsens",
+        "components": [
+          "MWA internal telemetry",
+          "MWA public communications",
+          "Regulator monitoring capability",
+          "External intervention threshold"
+        ],
+        "current_state": "active_orderly",
+        "trigger_to_next_state": "This loop escalates if downstream metrics (pressure, quality) begin to degrade. At that point, the regulator's macro-level monitoring would detect the problem — but only AFTER it has already manifested as a service impact. The loop's danger is that it prevents early intervention. The trigger to 'active_accelerating' would be system pressure dropping below ~55 PSI (still above regulatory floor but indicating meaningful degradation) without regulator awareness. The trigger to 'critical' would be pressure falling below 40 PSI — at which point the regulator would detect it simultaneously with the public.",
+        "thesis_implication": "This loop does not directly falsify the thesis but it extends the duration of exposure to the Pump Failure Cascade Loop by removing external pressure for MWA to escalate its response. As long as macro metrics look fine, no one pushes MWA to act faster."
+      },
+      {
+        "loop": "Temperature-Demand Amplification Loop: Elevated temperature → Increased residential demand → Higher pump throughput required → Further loading on already-maxed pumps → Reduced pressure margin → Potential further demand increase if residents perceive low pressure",
+        "components": [
+          "Ambient temperature (88°F)",
+          "Residential water demand",
+          "Pump load levels",
+          "System pressure"
+        ],
+        "current_state": "dormant",
+        "trigger_to_next_state": "This loop activates if temperature persists or rises and demand increases measurably. We have no demand data to confirm activation. The loop's significance is that it removes the system's only remaining buffer mechanism — it could push pumps beyond 100% rated capacity if demand exceeds current throughput. The transition to 'active_orderly' would require evidence of actual demand increase. Currently, 88°F may be normal for this region/season and demand may already be at seasonal baseline.",
+        "thesis_implication": "An external demand driver on a system with zero internal headroom. Even a modest demand increase (e.g., 3-5%) could push individual pumps beyond rated capacity, potentially triggering kill switch #1's aggregate load threshold. However, this remains hypothetical without demand data."
+      },
+      {
+        "loop": "Valve Adjustment Redistribution Loop: Pump 3 valve adjustment → Reduced Pump 3 output → Load redistribution to Pumps 1-2 → Pumps 1-2 potentially exceed rated capacity → New stress concentration",
+        "components": [
+          "Pump 3 flow control valve position",
+          "Pump 3 vibration/load",
+          "Pump 1 load",
+          "Pump 2 load"
+        ],
+        "current_state": "active_orderly",
+        "trigger_to_next_state": "This loop has already been initiated (valve adjustment is 'underway' per maintenance log) but we have no post-adjustment telemetry. The outcome is binary: either the adjustment reduces Pump 3 vibration WITHOUT significantly reducing output (ideal), or it reduces output and redistributes load to Pumps 1-2 (dangerous). If Pumps 1-2 receive additional load, they could cross 100% rated capacity — and we don't know if they have the same vibration resilience at higher loads (currently 12.8-13.0 Hz at ~99% — healthy but not tested above this).",
+        "thesis_implication": "The valve adjustment is MWA's attempt to manage the Pump Failure Cascade Loop without shutting down Pump 3. If it succeeds, it buys time for Pump 4 restoration. If it fails or redistributes load, it could accelerate the cascade. The outcome of this intervention is the most immediate unknown."
+      }
+    ],
+    "behavioral_patterns": [
+      {
+        "pattern": "Institutional Minimize-and-Delay under Zero-Redundancy Stress",
+        "players_involved": [
+          "Municipal Water Authority",
+          "State Public Utility Commission"
+        ],
+        "thesis_implication": "challenges",
+        "significance": "high"
+      },
+      {
+        "pattern": "Monitoring Architecture Misalignment: The entity with the most granular visibility (MWA) has the least incentive to escalate; the entity with escalation authority (Regulator) has the least visibility. This is a structural governance failure, not an actor-specific failure.",
+        "players_involved": [
+          "Municipal Water Authority",
+          "State Public Utility Commission"
+        ],
+        "thesis_implication": "challenges",
+        "significance": "high"
+      }
+    ],
+    "strategic_inferences": [
+      {
+        "finding_from_layer2": "Zero pump headroom for additional contingency (SIG-006, severity 9)",
+        "signal_ids": [
+          "20260310-2115-SIG-006"
+        ],
+        "null_hypothesis": "This is a temporary maintenance condition that will resolve when Pump 4 returns. Systems routinely operate at reduced capacity during planned maintenance. The elevated load is expected and the system is performing as designed for N-1 operations.",
+        "null_holds": false,
+        "rational_explanation": "The null hypothesis partially holds — systems DO operate at N-1 during planned maintenance. However, the data shows this is NOT within design parameters: the 70-85% normal range implies the system is designed for four-pump operations, and ~99% per pump is well outside even an expected N-1 load distribution (which would be ~93-113% of normal, i.e., up to ~96% load if the normal 70-85% is distributed across 3 pumps instead of 4). The critical finding is that the system HAS NO REMAINING TOLERANCE for any deviation — not demand increase, not a second pump issue, not even normal variance. The null is rejected because 'routine N-1 maintenance' does not typically involve 99% load on all remaining units with one showing vibration anomalies.",
+        "alternative_explanation": "The system was already under-capacity (needing 4 pumps at ~75% each to meet baseline demand) and the Pump 4 outage has revealed a pre-existing sizing deficiency rather than creating an acute crisis.",
+        "which_is_more_likely": "primary",
+        "assumptions": [
+          "The four-pump design was adequate for normal demand at 70-85% load per pump (supported by thesis context defining this as 'normal range')"
+        ],
+        "assumption_count": 1,
+        "classification": "VALID",
+        "evidence_citations": [
+          "Pump 1-3 loads at 98.5%, 99.1%, 98.8% per direct telemetry",
+          "Thesis context defines normal load as 70-85%, confirming design intent for four-pump operation",
+          "Pump 3 vibration at 22.4 Hz vs. 12.8-13.0 Hz for Pumps 1-2, confirmed by telemetry and maintenance log"
+        ],
+        "expected_timeline": "days",
+        "materialization_signal": "Pump 4 returns to service and load on Pumps 1-3 drops to 70-85% range, confirming the system requires all four pumps for normal operation. Alternatively, Pump 3 vibration exceeds 25 Hz or Pump 3 is derated, confirming the cascade pathway.",
+        "reasoning": "The zero-headroom condition is not a prediction or inference — it is arithmetic from direct measurements. Three pumps at ~99% with a fourth offline and no reserve capacity. The strategic implication is that MWA has bet entirely on Pump 4 returning before any further degradation occurs. This is a rational bet IF Pump 4 restoration is imminent (hours). It becomes increasingly irrational as the timeline extends (days). We don't know which it is.",
+        "confidence": "high"
+      },
+      {
+        "finding_from_layer2": "MWA public statement minimizes operational stress (SIG-005, severity 6)",
+        "signal_ids": [
+          "20260310-2115-SIG-005"
+        ],
+        "null_hypothesis": "The public statement is standard operational communication. Organizations don't publish detailed pump telemetry in public statements. 'Routine maintenance, no service interruptions' is accurate (maintenance IS underway, service IS continuing) and the framing is normal institutional behavior, not strategic obfuscation.",
+        "null_holds": true,
+        "rational_explanation": "Even accepting the null, the framing choice is informative under [LZ-EH-003]. The statement does not mention elevated pump loads, vibration concerns, or reduced redundancy. While omitting technical details is normal, the use of 'routine' to describe a condition where all active pumps are at 99% load is a deliberate framing choice. This is consistent with the thesis context's characterization of MWA as 'focused on public reassurance' and 'historically prone to delaying capital-intensive emergency repairs.' The minimize-and-reassure pattern reduces external pressure for escalation.",
+        "alternative_explanation": "MWA genuinely considers this routine because their maintenance plan includes a near-term Pump 4 restoration that they have not communicated publicly. The statement reflects internal confidence, not obfuscation.",
+        "which_is_more_likely": "null",
+        "assumptions": [],
+        "assumption_count": 0,
+        "classification": "NULL_HYPOTHESIS_HOLDS",
+        "evidence_citations": [
+          "MWA public statement: 'Routine maintenance underway. No service interruptions.'",
+          "Telemetry showing all active pumps at 98.5-99.1% load",
+          "Thesis context: MWA 'historically prone to delaying capital-intensive emergency repairs' and 'focused on public reassurance'"
+        ],
+        "expected_timeline": "days",
+        "materialization_signal": "If MWA's minimization is hiding a longer-than-expected Pump 4 outage, we would see: (1) continued 'routine' messaging as pump loads persist at critical levels, (2) no updated timeline for Pump 4, (3) additional palliative measures (more valve adjustments, demand management requests) rather than capital investment announcements.",
+        "reasoning": "The null holds because organizations routinely issue bland reassurance during maintenance events. However, the gap between stated and observed conditions IS the relevant data point per [LZ-EH-003] — it tells us about MWA's communication and escalation tendencies, which feed into the Information Asymmetry Loop. The null hypothesis being correct about the statement does not make the behavioral pattern irrelevant.",
+        "confidence": "medium"
+      },
+      {
+        "finding_from_layer2": "Pump 3 vibration trending toward cavitation zone (SIG-002, severity 7)",
+        "signal_ids": [
+          "20260310-2115-SIG-002"
+        ],
+        "null_hypothesis": "The 22.4 Hz reading is Pump 3's normal elevated baseline due to age, installation characteristics, or minor bearing wear. Pump 3 has always run higher than Pumps 1-2. The reading is stable, not trending upward. The valve adjustment is a precautionary measure, not an emergency response.",
+        "null_holds": false,
+        "rational_explanation": "The null is weakened by the maintenance log's explicit acknowledgment of 'elevated vibration' and active intervention (valve adjustment). If 22.4 Hz were Pump 3's normal baseline, operators would not flag it or intervene. The maintenance team's ACTIONS — adjusting flow control valves specifically in response to vibration — provide independent corroboration that this reading is abnormal for this unit. Per [LZ-EH-003], the maintenance response (action) carries more weight than what the null hypothesis would suggest about baseline readings.",
+        "alternative_explanation": "The elevated vibration is load-induced (not a pre-existing condition) and would resolve immediately if load dropped to normal levels — meaning it's a symptom of the N-1 configuration, not an independent pump health problem.",
+        "which_is_more_likely": "primary",
+        "assumptions": [
+          "The maintenance log's characterization of 'elevated vibration' implies the reading is abnormal relative to Pump 3's own historical baseline"
+        ],
+        "assumption_count": 1,
+        "classification": "VALID",
+        "evidence_citations": [
+          "Pump 3 vibration at 22.4 Hz vs. Pumps 1-2 at 12.8-13.0 Hz (direct telemetry)",
+          "Maintenance log: 'Pump 3 showing elevated vibration; adjusting flow control valves' (operator action confirms abnormality per LZ-EH-003)"
+        ],
+        "expected_timeline": "days",
+        "materialization_signal": "Post-valve-adjustment telemetry showing either: (a) vibration decreased below 20 Hz (intervention succeeded), (b) vibration stable or increasing above 22.4 Hz (intervention failed or insufficient), (c) Pump 3 load decreased with corresponding increase on Pumps 1-2 (load was redistributed, not resolved).",
+        "reasoning": "The differential between Pump 3 (22.4 Hz) and Pumps 1-2 (12.8-13.0 Hz) at similar load levels is the strongest evidence of a unit-specific issue. All three pumps are at ~99% load, but only Pump 3 shows elevated vibration. This rules out load-induced systemic vibration. Combined with operator intervention, the inference that Pump 3 has a unit-specific mechanical issue exacerbated by extreme load is well-supported by two independent evidence sources. However, per [LZ-RC-002], we cannot confirm the vibration is TRENDING upward — we have one snapshot.",
+        "confidence": "medium"
+      },
+      {
+        "finding_from_layer2": "Regulator lacks real-time visibility into pump stress (SIG-009, severity 5)",
+        "signal_ids": [
+          "20260310-2115-SIG-009"
+        ],
+        "null_hypothesis": "The regulatory monitoring architecture is designed for its intended purpose — macro-level compliance — and is working correctly. The regulator is not supposed to be a real-time pump monitoring system. This is normal regulatory design, not a failure.",
+        "null_holds": true,
+        "rational_explanation": "The null holds for the regulatory design question. However, the STRATEGIC implication is that this monitoring gap creates an asymmetry that shapes MWA's behavior. When MWA knows the regulator cannot see pump-level stress, MWA's rational strategy is to continue operating and self-managing until either (a) the problem resolves or (b) macro metrics degrade enough for the regulator to notice. This is not a conspiracy — it's rational behavior given information asymmetry.",
+        "alternative_explanation": "N/A — the null holds.",
+        "which_is_more_likely": "null",
+        "assumptions": [],
+        "assumption_count": 0,
+        "classification": "NULL_HYPOTHESIS_HOLDS",
+        "evidence_citations": [
+          "Thesis context: 'State Public Utility Commission monitors macro-level compliance but lacks real-time telemetry oversight'",
+          "Current reservoir (94.1%) and pressure (66.2 PSI) both within compliance ranges visible to regulator"
+        ],
+        "expected_timeline": "days",
+        "materialization_signal": "If the monitoring gap matters: system pressure drops below 55 PSI without any regulatory inquiry or intervention, confirming the regulator is blind until metrics breach compliance thresholds.",
+        "reasoning": "The monitoring gap is a structural feature, not a strategic move by any player. Its significance is as a CONDITION that shapes the strategic environment — it defines the information available to each player and therefore shapes their rational behavior. The finding is contextual rather than strategic.",
+        "confidence": "high"
+      },
+      {
+        "finding_from_layer2": "Pump 4 maintenance timeline unknown (SIG-008, severity 7)",
+        "signal_ids": [
+          "20260310-2115-SIG-008"
+        ],
+        "null_hypothesis": "The maintenance timeline simply isn't in our dataset. MWA likely has an internal timeline that wasn't included in available data. The absence of timeline information in our dataset does not mean MWA lacks a plan — it means we lack the data.",
+        "null_holds": true,
+        "rational_explanation": "The null holds. The maintenance log confirms Pump 4 is offline and load has been 'redistributed successfully' — the word 'successfully' implies this was a planned action with expected outcomes. Organizations performing planned maintenance typically have restoration timelines. Our intelligence gap is not MWA's operational gap.",
+        "alternative_explanation": "The maintenance encountered unexpected complications (e.g., parts unavailability, more severe damage than expected) and the timeline has slipped, which MWA has not communicated. This would be consistent with the minimize-and-reassure behavioral pattern.",
+        "which_is_more_likely": "null",
+        "assumptions": [],
+        "assumption_count": 0,
+        "classification": "NULL_HYPOTHESIS_HOLDS",
+        "evidence_citations": [
+          "Maintenance log: 'Pump 4 offline. Load redistributed successfully to Pumps 1-3.'",
+          "MWA public statement: 'Routine maintenance underway.'"
+        ],
+        "expected_timeline": "days",
+        "materialization_signal": "Pump 4 returns to service within 24-48 hours (confirming planned, routine maintenance) OR Pump 4 remains offline >72 hours with no updated communications (suggesting complications or extended outage).",
+        "reasoning": "The critical analytical distinction: the Pump 4 timeline is the most important UNKNOWN in this assessment, but the most likely EXPLANATION for why we don't have it is simply that it wasn't in our data feed, not that it doesn't exist. However, the duration of the three-pump configuration directly determines whether kill switch #1's 48-hour threshold is approached. This is a critical intelligence need regardless of the strategic explanation for the gap.",
+        "confidence": "medium"
+      },
+      {
+        "finding_from_layer2": "Elevated ambient temperature increasing demand risk (SIG-007, severity 4)",
+        "signal_ids": [
+          "20260310-2115-SIG-007"
+        ],
+        "null_hypothesis": "88°F may be normal for this region and season. We have no evidence that demand has actually increased. The temperature is a contextual data point, not evidence of a stress event.",
+        "null_holds": true,
+        "rational_explanation": "N/A — null holds. Without regional climate norms or actual demand data, the temperature reading is contextual information only.",
+        "alternative_explanation": "N/A",
+        "which_is_more_likely": "null",
+        "assumptions": [],
+        "assumption_count": 0,
+        "classification": "NULL_HYPOTHESIS_HOLDS",
+        "evidence_citations": [
+          "Ambient temperature 88°F (direct measurement)",
+          "No demand data available for comparison"
+        ],
+        "expected_timeline": "days",
+        "materialization_signal": "Actual demand data showing increase above seasonal baseline, or pump loads exceeding 100% of rated capacity.",
+        "reasoning": "The temperature-demand correlation is well-established in water utility literature, but applying it to THIS system at THIS temperature requires assumptions about regional norms and demand elasticity that we cannot verify. Per [LZ-RC-001], the correlation does not establish that demand HAS increased in this specific instance. The key concern — that any demand increase hits a zero-headroom system — is real but contingent on demand actually increasing, which is unverified.",
+        "confidence": "low"
+      }
+    ],
+    "hidden_moves": [
+      {
+        "player": "Municipal Water Authority",
+        "signal_ids": [
+          "20260310-2115-SIG-008",
+          "20260310-2115-SIG-005",
+          "20260310-2115-SIG-011"
+        ],
+        "likely_action": "MWA maintenance teams are likely working on an accelerated Pump 4 restoration given the stress on the remaining system, even if external communications don't reflect urgency. Internal operational tempo may be significantly higher than public posture suggests.",
+        "incentive_basis": "MWA operators see the same telemetry we see. Running three pumps at ~99% with vibration on one is a recognized emergency condition by any pump operator. Regardless of public messaging, the operational staff's professional incentive is to restore Pump 4 as fast as possible to protect the remaining equipment and their own liability. The gap between public 'routine' messaging and internal urgency is a standard institutional pattern — comms and ops often operate on different timescales.",
+        "evidence_hints": "The maintenance log's acknowledgment of 'elevated vibration' and active valve adjustment demonstrates hands-on, real-time operational awareness. Operators who are actively adjusting valves are not treating this as routine — they are managing an active anomaly. The log entry itself is more revealing than the public statement.",
+        "assumption_count": 1,
+        "classification": "VALID",
+        "expected_timeline": "days",
+        "materialization_signal": "Pump 4 returns to service within 24-48 hours, restoring four-pump operation and confirming accelerated maintenance execution despite calm public messaging.",
+        "confidence": "medium"
+      },
+      {
+        "player": "Municipal Water Authority",
+        "signal_ids": [
+          "20260310-2115-SIG-002",
+          "20260310-2115-SIG-011",
+          "20260310-2115-SIG-006"
+        ],
+        "likely_action": "MWA may be preparing contingency plans for Pump 3 degradation, including: pre-positioning portable pump equipment, activating mutual aid agreements with neighboring utilities, or preparing demand reduction measures (conservation advisories, pressure zone adjustments). These actions would not appear in public statements or standard telemetry.",
+        "incentive_basis": "Any competent utility operator seeing Pump 3's vibration profile at 22.4 Hz while at 98.8% load with zero redundancy would be contingency planning. The professional and legal liability of not planning for a reasonably foreseeable second pump failure would be severe. Standard utility emergency response protocols typically require contingency activation when redundancy falls below N-1.",
+        "evidence_hints": "The valve adjustment on Pump 3 suggests active, hands-on management — this is inconsistent with operators who are not concerned. However, we have no direct evidence of contingency activation.",
+        "assumption_count": 2,
+        "classification": "FLAGGED",
+        "expected_timeline": "days",
+        "materialization_signal": "Observable signs would include: portable pump equipment appearing near the pump station, conservation advisories issued, neighboring utility interconnection valves opened, or demand management protocols activated.",
+        "confidence": "low"
+      }
+    ],
+    "scenario_probabilities": {
+      "thesis_confirmed": {
+        "probability": "25%",
+        "key_evidence": "System pressure at 66.2 PSI (65% above kill threshold), water quality at 0.9 NTU, reservoir at 94.1%, Sector B hydrant at 63.5 PSI. All OUTPUT metrics confirm the thesis right now. Pumps 1-2 show normal vibration despite extreme load. The thesis is confirmed IF Pump 4 returns promptly, loads normalize to 70-85%, and Pump 3 vibration resolves. This scenario requires: Pump 4 returns within ~24 hours, Pump 3 vibration is load-induced (not mechanical degradation), and no demand surge occurs during the interim.",
+        "timeline": "24-72 hours"
+      },
+      "thesis_modified": {
+        "probability": "50%",
+        "modification": "The thesis claim of 'sufficient mechanical redundancy' must be qualified: the system maintains service during single-pump outages but operates at critically elevated stress levels with zero reserve margin. The thesis should be modified to state that redundancy exists at the N-1 level for SHORT DURATIONS ONLY, and the system lacks capacity for extended N-1 operations or any N-2 scenario. The modifier is duration-dependent — the longer Pump 4 remains offline, the more the thesis weakens. Additionally, Pump 3's vibration profile may indicate deferred maintenance that reduces effective redundancy even during normal four-pump operations.",
+        "key_evidence": "All three active pumps at 98.5-99.1% (far outside 70-85% normal), Pump 3 vibration at 22.4 Hz (unit-specific anomaly), zero headroom for any additional failure, MWA narrative minimization consistent with institutional delay behavior. The system works but the safety margins claimed by the thesis are consumed."
+      },
+      "thesis_falsified": {
+        "probability": "25%",
+        "key_evidence": "Falsification requires breaching at least one kill switch. Currently none are breached, but kill switches #1 and #2 are on WARNING. The falsification pathway is: Pump 4 remains offline >48 hours AND (aggregate load exceeds 115% of rated capacity, depending on threshold definition) OR Pump 3 vibration escalates past 35 Hz while load >95% (load condition already met). The system is structurally positioned for falsification to occur rapidly if any additional stressor materializes.",
+        "confirming_signal": "Pump 3 vibration exceeding 25 Hz in next telemetry reading, OR Pump 4 still offline at 48-hour mark with no restoration timeline, OR system pressure dropping below 55 PSI, OR any second pump showing degradation."
+      }
+    },
+    "x402_paper_trades": [
+      {
+        "question": "What is Pump 4's maintenance scope and estimated restoration timeline?",
+        "data_source": "MWA internal maintenance work orders, parts requisition logs, or direct inquiry to MWA operations",
+        "impact_on_analysis": "This is the single highest-value data point. It determines: (1) total duration of zero-redundancy exposure, (2) proximity to kill switch #1's 48-hour threshold, (3) whether MWA's 'routine' characterization is accurate or minimizing, (4) the probability of Pump 3 degrading before Pump 4 returns. A restoration timeline of <12 hours would dramatically reduce risk assessment; >72 hours would dramatically increase it.",
+        "confidence_data_exists": "high",
+        "estimated_value": "Resolving this single question would shift bear pressure by ±15-20 points and change scenario probabilities significantly."
+      },
+      {
+        "question": "What is Pump 3's vibration history over the past 30 days?",
+        "data_source": "MWA SCADA historian or pump monitoring system logs",
+        "impact_on_analysis": "Would resolve the trend direction question per [LZ-RC-002]. If Pump 3 vibration has been climbing from 15 Hz → 18 Hz → 22.4 Hz, this confirms progressive degradation and raises severity. If it jumped from 13 Hz to 22.4 Hz coincident with Pump 4 going offline, it's load-induced and likely reversible. If it's been stable at ~22 Hz for weeks, it's a chronic condition MWA has been managing.",
+        "confidence_data_exists": "high",
+        "estimated_value": "Would change Pump 3 severity assessment by ±2 points and clarify whether the vibration is an acute crisis or a known condition."
+      },
+      {
+        "question": "What is the system baseline pressure under normal four-pump operations?",
+        "data_source": "MWA operational records or regulatory compliance filings",
+        "impact_on_analysis": "Would enable accurate assessment of kill switch #5 (Divergent Inventory Paradox). If baseline is 80 PSI, current 66.2 PSI represents a 17.25% drop — close to the 20% threshold with one kill switch condition already met (reservoir >90%). If baseline is 70 PSI, the 5.4% drop is non-threatening.",
+        "confidence_data_exists": "high",
+        "estimated_value": "Would resolve kill switch #5 assessment from MONITORING to either TRACKING or WARNING."
+      },
+      {
+        "question": "What are hydrant pressures in sectors other than Sector B, particularly high-elevation or end-of-line sectors?",
+        "data_source": "Fire department hydrant flow test data or MWA sector pressure monitoring",
+        "impact_on_analysis": "Would resolve the single-sector visibility limitation (SIG-014). Sector B at 63.5 PSI may be the best-served sector. End-of-line sectors could be materially lower and potentially approaching the 20 PSI fire flow threshold. This data would either confirm system-wide adequacy or reveal localized degradation invisible in our current dataset.",
+        "confidence_data_exists": "medium",
+        "estimated_value": "Could reveal hidden degradation not visible in current data. Would change kill switch #3 assessment from NEEDS_DATA to a definitive status."
+      },
+      {
+        "question": "What is the kill switch #1 threshold definition — does '115% of rated capacity' refer to the four-pump design configuration or the active-pump configuration?",
+        "data_source": "Thesis author or engineering specifications for the system",
+        "impact_on_analysis": "This definitional question determines whether the system is at ~74% of rated capacity (four-pump basis, far from threshold) or ~99% (active-pump basis, approaching threshold). The operational danger is identical either way, but the proximity to a defined kill switch trigger changes dramatically based on the answer.",
+        "confidence_data_exists": "high",
+        "estimated_value": "Would change kill switch #1 severity from 7 to either 4 (far from threshold) or 9 (near threshold)."
+      }
+    ],
+    "compound_stress_inference": {
+      "current_chain_state": "approaching_critical",
+      "orderly_vs_disorderly": "Currently orderly — all downstream outputs (pressure, quality, reservoir) remain healthy. The system is successfully converting supply to service despite extreme pump stress. However, the orderly state is maintained by zero margin. There is no remaining buffer between orderly and disorderly. The transition would not be gradual — it would be a step-function: Pump 3 failure or derating would instantly transition from orderly to disorderly because two pumps cannot sustain system demand at current levels.",
+      "catalyst_proximity": "The most probable near-term catalyst is Pump 3 vibration exceeding the 25 Hz concern threshold, triggering an operator decision to derate or offline Pump 3. This decision point is approximately 2.6 Hz away (22.4 → 25.0). We cannot estimate time-to-reach without trend data. Secondary catalyst: a demand surge from temperature or fire event that pushes throughput requirements beyond three-pump capacity. Tertiary catalyst: Pump 4 restoration delay extending exposure beyond 48 hours.",
+      "pre_load_assessment": "The system is maximally pre-loaded across all three stress dimensions: (1) LOAD: All pumps at ~99%, zero headroom — this leg is fully pre-loaded. (2) HEALTH: Pump 3 vibration at 22.4 Hz is elevated and under active management — this leg is partially pre-loaded. (3) ENVIRONMENT: 88°F temperature provides potential demand amplification — this leg's pre-loading is unconfirmed. The combination means any single additional stressor — of ANY kind — hits a system with no absorption capacity. The pre-loaded condition is analogous to a financial system where all major stress indicators are at elevated levels simultaneously.",
+      "thesis_paradox": "The thesis presents a genuine paradox in its current state: the system IS delivering on its core promise (positive pressure, adequate fire flow in measured sectors, clean water) but the structural foundations supporting that delivery (mechanical redundancy, operational headroom) have been consumed. The thesis is simultaneously TRUE in its output claims and FALSE in its mechanism claims. If Pump 4 returns quickly, this paradox resolves favorably and the thesis is confirmed with a modification about N-1 duration limits. If Pump 3 degrades before Pump 4 returns, the mechanism failure cascades into output failure and the thesis is falsified. The paradox is that the most dangerous moment — maximum pre-loading with zero buffer — is also the moment when all observable outputs look acceptable to external monitors. The system will appear fine until the instant it is not."
+    },
+    "inference_summary": "Player behavior reveals a system in a structurally fragile state that is invisible to external monitors. MWA's minimize-and-reassure communications pattern, combined with the regulator's macro-only visibility, creates an information asymmetry where the true risk is visible only to the entity least incentivized to escalate. The most important behavioral signal is NOT the public statement but the maintenance log: operators actively adjusting valves on Pump 3 demonstrates they recognize the severity that the public statement obscures. Layer 4 should focus on resolving the Pump 4 restoration timeline as the single highest-leverage intelligence need — this one data point would shift the entire assessment. The system's current state is a race condition: Pump 4 restoration versus Pump 3 degradation, and we cannot forecast either timeline with current data."
+  },
+  "_layer2_raw": {
+    "corrections_referenced": [
+      {
+        "correction_id": "CL-001",
+        "signal_ids": [
+          "20260310-2115-SIG-010"
+        ],
+        "trigger_matched": "Regional Fire Dispatch — Inferred Strategy (INSUFFICIENT_EVIDENCE)",
+        "influence_on_assessment": "CL-001 requires that absence of fire dispatch data be treated as a data gap, not a positive signal. Signal SIG-010 reports 'no fire dispatch anomaly signals detected' and frames this as a positive indicator. Per CL-001, no data from fire dispatch exists in the current dataset. The absence of anomaly reports is NOT evidence of adequate system capability — it is absence of evidence [LZ-RC-003]. I downgrade this from a positive acceleration signal to a data gap. The fire dispatch data point is stripped from scoring per the correction's prevention rule."
+      }
+    ],
+    "knowledge_audit": [
+      {
+        "signal_ids": [
+          "20260310-2115-SIG-001"
+        ],
+        "threat": "Three-pump aggregate load near critical threshold",
+        "knowledge_check": "Verified: Thesis defines normal pump load as 70-85%. Kill switch #1 (Redundant Load Threshold) triggers at aggregate load >115% of rated capacity for >48 hours. Current data shows three pumps at 98.5%, 99.1%, 98.8%. I need to understand how 'aggregate load exceeding 115% of rated capacity' is defined. If rated capacity is based on a four-pump configuration, then three pumps at ~99% each = ~296% of single-pump rating vs. a rated total of 400% = 74% of total rated capacity. If rated capacity means the active pumps' combined rated capacity (3 x 100% = 300%), then 296.4/300 = 98.8% of active rated capacity. The thesis says 'aggregate load on active pumps exceeds 115% of rated capacity' — this likely means total output demand relative to the design capacity of those active units. At ~99% per pump, they have not exceeded 115% of their individual rated capacity. The Layer 1 observation itself notes ambiguity in how this threshold is defined.",
+        "gap_identified": "The falsification criterion says 'aggregate load on active pumps exceeds 115% of rated capacity' but does not specify whether 'rated capacity' refers to the four-pump design configuration or the active-pump configuration. This definitional ambiguity affects whether the kill switch is currently near-trigger or far from trigger.",
+        "gap_type": "THRESHOLD_CALIBRATION_GAP",
+        "pre_audit_assessment": "Would have scored 9/10 severity assuming the threshold was nearly breached",
+        "post_audit_assessment": "Score 7/10 — the situation is unambiguously dangerous (zero redundancy, extreme individual loads) but whether the specific kill switch is near-triggered depends on threshold definition. The operational risk is real regardless of threshold semantics.",
+        "audit_impact": "Reduced severity slightly due to threshold definitional uncertainty, but the core danger (all pumps near maximum, zero headroom) remains independently severe.",
+        "lesson_applied": "NONE",
+        "status": "SCORED"
+      },
+      {
+        "signal_ids": [
+          "20260310-2115-SIG-002"
+        ],
+        "threat": "Pump 3 vibration trending toward cavitation zone",
+        "knowledge_check": "Verified: Thesis states vibration >25 Hz indicates potential cavitation/bearing wear. Kill switch #2 triggers at sustained >35 Hz while load >95%. Current reading is 22.4 Hz at 98.8% load. This is 89.6% of the concern threshold (25 Hz) and 64% of the kill switch threshold (35 Hz). Load condition (>95%) is already met. The word 'trending' in Layer 1's assessment implies direction — but we have only a single snapshot, not a time series. Per [LZ-RC-002], a single data point does not establish a trend.",
+        "gap_identified": "We have no historical vibration data for Pump 3 to confirm a trend direction. We have one data point (22.4 Hz) and cannot confirm it is rising, stable, or even declining from a higher value. The maintenance log acknowledging 'elevated vibration' and 'adjusting flow control valves' suggests operators see it as abnormal, which is indirect corroboration that the value is elevated relative to Pump 3's normal baseline.",
+        "gap_type": "DATA_AVAILABILITY_GAP",
+        "pre_audit_assessment": "Would have scored 8/10 assuming the trend is upward",
+        "post_audit_assessment": "Score 7/10 — the current value is genuinely elevated (22.4 vs. 12.8-13.0 for other pumps) and the load condition for the kill switch is already met, but I cannot confirm trend direction from a single snapshot [LZ-RC-002]. The maintenance log's acknowledgment provides partial corroboration [LZ-EH-001].",
+        "audit_impact": "Slightly reduced severity because trend direction is assumed, not verified. The absolute value and differential from other pumps remain concerning.",
+        "lesson_applied": "NONE",
+        "status": "SCORED"
+      },
+      {
+        "signal_ids": [
+          "20260310-2115-SIG-003"
+        ],
+        "threat": "System pressure holding above regulatory floor",
+        "knowledge_check": "Verified: Kill switch #4 triggers at system pressure <40 PSI. Current reading is 66.2 PSI, which is 65.5% above the threshold. This is a straightforward measurement against a clearly defined threshold. The positive margin is large.",
+        "gap_identified": "NONE",
+        "gap_type": "NONE",
+        "pre_audit_assessment": "Positive signal, moderate severity",
+        "post_audit_assessment": "Positive signal, moderate severity — no change after audit",
+        "audit_impact": "None — assessment confirmed by audit",
+        "lesson_applied": "NONE",
+        "status": "SCORED"
+      },
+      {
+        "signal_ids": [
+          "20260310-2115-SIG-004"
+        ],
+        "threat": "Reservoir level high with stable pressure — no divergent inventory paradox",
+        "knowledge_check": "Verified: Kill switch #5 triggers when reservoir >90% AND system pressure drops >20% from baseline. Reservoir is at 94.1% (>90% condition met) but system pressure at 66.2 PSI shows no drop indication. However, we do not know what the baseline pressure is. If baseline is, say, 80 PSI, then 66.2 PSI would represent a 17.25% drop — not yet 20% but closer than it appears. If baseline is 70 PSI, the drop is only 5.4%.",
+        "gap_identified": "We do not know the baseline system pressure. Without this, we cannot calculate whether a >20% drop has occurred or how close we are to this threshold.",
+        "gap_type": "THRESHOLD_CALIBRATION_GAP",
+        "pre_audit_assessment": "Would have scored as clearly safe — reservoir high, pressure fine",
+        "post_audit_assessment": "Score adjusted to note that without baseline pressure data, we cannot fully evaluate kill switch #5. The pressure appears healthy in absolute terms (well above 40 PSI floor) but the divergent inventory paradox threshold is relative, not absolute.",
+        "audit_impact": "Identified a meaningful gap: baseline pressure is unknown. The positive assessment holds but with reduced confidence on kill switch #5 proximity.",
+        "lesson_applied": "NONE",
+        "status": "SCORED"
+      },
+      {
+        "signal_ids": [
+          "20260310-2115-SIG-005"
+        ],
+        "threat": "MWA public statement minimizes operational stress",
+        "knowledge_check": "Verified: Per [LZ-EH-003], an entity's actions carry more evidentiary weight than its public statements. The telemetry data (actions/measurements) shows pumps at ~99% load with Pump 3 vibration elevated. The public statement says 'routine maintenance, no service interruptions.' Per thesis context, MWA is 'historically prone to delaying capital-intensive emergency repairs' and focused on 'public reassurance.' The gap between telemetry and narrative is real and verifiable. However, the statement 'no service interruptions' may be technically accurate — pressure IS being maintained, water IS flowing. The minimization is in calling ~99% load across all active pumps 'routine.'",
+        "gap_identified": "NONE — the gap between telemetry and public narrative is directly observable in the data",
+        "gap_type": "NONE",
+        "pre_audit_assessment": "High severity narrative concern",
+        "post_audit_assessment": "Moderate-high severity — the narrative gap is real but the statement may be technically accurate regarding service continuity. The concern is about what the narrative framing implies for MWA's willingness to escalate or invest in repairs, per thesis context about delayed capital-intensive repairs.",
+        "audit_impact": "Slight nuancing — the statement isn't technically false, but the framing gap signals institutional behavior consistent with thesis risk profile.",
+        "lesson_applied": "NONE",
+        "status": "SCORED"
+      },
+      {
+        "signal_ids": [
+          "20260310-2115-SIG-006"
+        ],
+        "threat": "Zero pump headroom for additional contingency",
+        "knowledge_check": "Verified: This is a structural observation, not a measurement against a threshold. With 4 pumps designed for redundancy and only 3 active at ~99% each, the core thesis claim of 'sufficient mechanical redundancy' is functionally suspended. This is a direct challenge to the thesis premise. No knowledge gap here — this is arithmetic.",
+        "gap_identified": "NONE",
+        "gap_type": "NONE",
+        "pre_audit_assessment": "Critical severity",
+        "post_audit_assessment": "Critical severity — confirmed. The thesis explicitly claims 'sufficient mechanical redundancy.' That claim is currently false as an operational reality.",
+        "audit_impact": "None — assessment confirmed",
+        "lesson_applied": "NONE",
+        "status": "SCORED"
+      },
+      {
+        "signal_ids": [
+          "20260310-2115-SIG-007"
+        ],
+        "threat": "Elevated ambient temperature increasing demand risk",
+        "knowledge_check": "The claim that 88°F increases residential water demand is a general correlation, not specific to this system. I don't know the local climate norms — 88°F could be typical or unusual. The claim about pipe friction with warmer water is a real physics effect but typically minor compared to demand-side effects. The correlation between temperature and demand is well-established in water utility literature but the specific magnitude for this system is unknown.",
+        "gap_identified": "No data on whether 88°F is normal or abnormal for this region/season. No data on actual demand levels vs. historical patterns. The demand risk is plausible but unquantified.",
+        "gap_type": "DATA_AVAILABILITY_GAP",
+        "pre_audit_assessment": "Moderate severity based on general knowledge",
+        "post_audit_assessment": "Moderate severity maintained — the physics and demand correlations are real, but the specific impact on this system at this temperature is unquantified. The key concern is that ANY demand increase on a system with zero headroom is amplified.",
+        "audit_impact": "Assessment unchanged but confidence reduced due to inability to quantify specific demand impact",
+        "lesson_applied": "NONE",
+        "status": "SCORED"
+      },
+      {
+        "signal_ids": [
+          "20260310-2115-SIG-008"
+        ],
+        "threat": "Pump 4 maintenance timeline unknown",
+        "knowledge_check": "This is a pure data gap. The maintenance log confirms Pump 4 is offline but provides no restoration timeline. The duration of the degraded state directly determines exposure to the 48-hour aggregate load threshold in kill switch #1. Without this data, we cannot forecast when the system exits the danger zone.",
+        "gap_identified": "No ETA for Pump 4 return to service. No scope of maintenance work described. This is the single most important unknown in the current assessment — it determines exposure duration.",
+        "gap_type": "DATA_AVAILABILITY_GAP",
+        "pre_audit_assessment": "High severity data gap",
+        "post_audit_assessment": "High severity data gap confirmed — this is a critical intelligence need, not a knowledge gap",
+        "audit_impact": "None — correctly identified as a critical data gap",
+        "lesson_applied": "NONE",
+        "status": "SCORED"
+      },
+      {
+        "signal_ids": [
+          "20260310-2115-SIG-009"
+        ],
+        "threat": "Regulator lacks real-time visibility into pump stress",
+        "knowledge_check": "Verified from thesis context: 'State Public Utility Commission monitors macro-level compliance but lacks real-time telemetry oversight.' Current reservoir (94.1%) and pressure (66.2 PSI) both appear nominal. Regulators would see no problem. This is directly stated in the thesis context, not inferred.",
+        "gap_identified": "NONE — this is explicitly stated in the thesis context",
+        "gap_type": "NONE",
+        "pre_audit_assessment": "Moderate severity",
+        "post_audit_assessment": "Moderate severity confirmed — regulatory blind spot is real and documented",
+        "audit_impact": "None",
+        "lesson_applied": "NONE",
+        "status": "SCORED"
+      },
+      {
+        "signal_ids": [
+          "20260310-2115-SIG-010"
+        ],
+        "threat": "No fire dispatch anomaly signals detected",
+        "knowledge_check": "Per CL-001, no actual data from Regional Fire Dispatch exists in the current dataset. The absence of anomaly reports is not evidence of adequate capability [LZ-RC-003]. Layer 1 frames this as a positive signal, but CL-001 explicitly prevents scoring inferences from fire dispatch absence. The hydrant pressure data (63.5 PSI) is a separate, direct measurement that does support adequate fire flow in Sector B specifically.",
+        "gap_identified": "No fire dispatch data exists. Cannot infer dispatch status from silence.",
+        "gap_type": "DATA_AVAILABILITY_GAP",
+        "pre_audit_assessment": "Would have scored as moderate positive signal",
+        "post_audit_assessment": "Stripped from scoring per CL-001. The hydrant pressure in Sector B (63.5 PSI) stands on its own merit as direct measurement but the fire dispatch inference is dropped.",
+        "audit_impact": "CL-001 prevented a repeat error of inferring fire dispatch status from absence of data",
+        "lesson_applied": "CL-001",
+        "status": "SCORED"
+      },
+      {
+        "signal_ids": [
+          "20260310-2115-SIG-011"
+        ],
+        "threat": "Pump 3 valve adjustment may mask or delay failure",
+        "knowledge_check": "The maintenance log confirms valve adjustment is underway. The potential outcomes (load redistribution to Pumps 1-2, or reduced total output) are both plausible but unobserved. We have pre-adjustment data only. The net effect is unknown.",
+        "gap_identified": "No post-adjustment telemetry available. Cannot assess whether the valve adjustment helped, hurt, or redistributed the problem.",
+        "gap_type": "DATA_AVAILABILITY_GAP",
+        "pre_audit_assessment": "High ambiguity, moderate severity",
+        "post_audit_assessment": "Confirmed ambiguous — this is a forward-looking concern with multiple plausible outcomes, none yet observable. Per [LZ-RC-005], predictions carry less weight than measurements.",
+        "audit_impact": "Confirmed that this is appropriately flagged as ambiguous rather than scored as definitively negative",
+        "lesson_applied": "NONE",
+        "status": "SCORED"
+      },
+      {
+        "signal_ids": [
+          "20260310-2115-SIG-012"
+        ],
+        "threat": "Water quality remains nominal",
+        "knowledge_check": "Verified: Turbidity at 0.9 NTU is well within EPA standards. System pressure at 66.2 PSI maintains positive pressure (preventing backflow). This is a straightforward positive measurement.",
+        "gap_identified": "NONE",
+        "gap_type": "NONE",
+        "pre_audit_assessment": "Low severity positive signal",
+        "post_audit_assessment": "Low severity positive signal confirmed",
+        "audit_impact": "None",
+        "lesson_applied": "NONE",
+        "status": "SCORED"
+      },
+      {
+        "signal_ids": [
+          "20260310-2115-SIG-013"
+        ],
+        "threat": "Pumps 1-2 vibration normal despite extreme load",
+        "knowledge_check": "Verified: Pumps 1-2 at 12.8-13.0 Hz are well below the 25 Hz concern threshold despite ~99% load. This confirms good mechanical health for these two units. Pump 3 at 22.4 Hz is unit-specific, not systemic. This is both a positive signal (2 of 3 active pumps healthy) and a diagnostic signal (Pump 3 problem is isolated).",
+        "gap_identified": "NONE — direct measurements compared against defined thresholds",
+        "gap_type": "NONE",
+        "pre_audit_assessment": "Mixed signal — positive for Pumps 1-2, isolates Pump 3 issue",
+        "post_audit_assessment": "Confirmed mixed — unit-specific Pump 3 issue is actually MORE actionable than a systemic problem. The risk is concentrated in one unit.",
+        "audit_impact": "None",
+        "lesson_applied": "NONE",
+        "status": "SCORED"
+      },
+      {
+        "signal_ids": [
+          "20260310-2115-SIG-014"
+        ],
+        "threat": "Single-sector pressure visibility limits assessment",
+        "knowledge_check": "We only have Sector B hydrant pressure. Kill switch #3 (Fire Flow Collapse) requires monitoring localized sector pressure, and we have data from only one sector. We cannot confirm or deny adequate pressure in other sectors.",
+        "gap_identified": "No telemetry from sectors other than Sector B. Fire flow collapse could be occurring in unreported sectors. Per [LZ-RC-003], absence of data from other sectors is not evidence that they are fine.",
+        "gap_type": "DATA_AVAILABILITY_GAP",
+        "pre_audit_assessment": "Moderate severity data gap",
+        "post_audit_assessment": "Moderate severity confirmed — this is a genuine monitoring blind spot that limits our ability to assess kill switch #3 system-wide",
+        "audit_impact": "None",
+        "lesson_applied": "NONE",
+        "status": "SCORED"
+      },
+      {
+        "signal_ids": [
+          "20260310-2115-SIG-015"
+        ],
+        "threat": "No alternative supply or competitive infrastructure signals",
+        "knowledge_check": "No data on mutual aid, interconnections, or alternative supply. This is a data gap that affects our understanding of recovery options if further degradation occurs. However, per [LZ-RC-003], we cannot infer that no alternatives exist just because we have no data about them.",
+        "gap_identified": "No data on emergency supply pathways or mutual aid agreements. Cannot assess recovery capacity if additional failures occur.",
+        "gap_type": "COMPETITIVE_KNOWLEDGE_GAP",
+        "pre_audit_assessment": "Moderate contextual concern",
+        "post_audit_assessment": "Moderate contextual concern confirmed — framed as data gap rather than negative finding per [LZ-RC-003]",
+        "audit_impact": "Correctly restrained from inferring absence of backup systems from absence of data about them",
+        "lesson_applied": "NONE",
+        "status": "SCORED"
+      }
+    ],
+    "scored_threats": [
+      {
+        "signal_ids": [
+          "20260310-2115-SIG-001"
+        ],
+        "threat": "Three-pump aggregate load near critical threshold",
+        "severity": 7,
+        "source_tier": "1",
+        "weighted_severity": 7,
+        "thesis_relevance": "DIRECT",
+        "confidence": "MEDIUM",
+        "reasoning": "All three active pumps at 98.5-99.1% load is unambiguously dangerous and far outside the 70-85% normal range. However, the kill switch #1 threshold (>115% aggregate rated capacity for >48 hours) has a definitional ambiguity: if rated capacity means the active pumps' own capacity, they're at ~99% not 115%. If it means the full four-pump design capacity, the system is at ~74%. The operational danger is real regardless of threshold semantics — zero headroom exists and any demand spike or unit degradation has no buffer. Scored 7 rather than 9 because the specific kill switch may not be as close to triggering as initial appearance suggests, pending threshold clarification. The danger is in the operational reality more than the threshold proximity.",
+        "knowledge_verified": true
+      },
+      {
+        "signal_ids": [
+          "20260310-2115-SIG-002"
+        ],
+        "threat": "Pump 3 vibration trending toward cavitation zone",
+        "severity": 7,
+        "source_tier": "1",
+        "weighted_severity": 7,
+        "thesis_relevance": "DIRECT",
+        "confidence": "MEDIUM",
+        "reasoning": "Pump 3 vibration at 22.4 Hz is significantly elevated vs. Pumps 1-2 (12.8-13.0 Hz) and approaching the 25 Hz concern threshold. The load condition for kill switch #2 (>95%) is already met at 98.8%. Distance to kill switch trigger is 12.6 Hz (from 22.4 to 35 Hz), which appears substantial, but the single-snapshot limitation means we cannot confirm trend direction [LZ-RC-002]. The maintenance log's acknowledgment of 'elevated vibration' provides independent corroboration that this reading is abnormal. However, valve adjustment is in progress, whose effect is unknown. Scored 7 for the combination of elevated reading, load condition already met, and unit-specific anomaly.",
+        "knowledge_verified": true
+      },
+      {
+        "signal_ids": [
+          "20260310-2115-SIG-003"
+        ],
+        "threat": "System pressure holding above regulatory floor",
+        "severity": 3,
+        "source_tier": "1",
+        "weighted_severity": 3,
+        "thesis_relevance": "DIRECT",
+        "confidence": "HIGH",
+        "reasoning": "System pressure at 66.2 PSI is 65% above the 40 PSI kill switch #4 threshold. This is a strong positive signal for current structural integrity. The large margin provides buffer even if pressure degrades significantly. Scored low severity (positive direction) because this measurement directly confirms one kill switch is far from triggering. Sector B hydrant at 63.5 PSI is 3x above the 20 PSI fire flow minimum, also a strong positive for kill switch #3 in that sector.",
+        "knowledge_verified": true
+      },
+      {
+        "signal_ids": [
+          "20260310-2115-SIG-004"
+        ],
+        "threat": "Reservoir level high with stable pressure — no divergent inventory paradox",
+        "severity": 3,
+        "source_tier": "1",
+        "weighted_severity": 3,
+        "thesis_relevance": "DIRECT",
+        "confidence": "MEDIUM",
+        "reasoning": "Reservoir at 94.1% with system pressure at 66.2 PSI shows no supply-distribution decoupling. Kill switch #5 requires reservoir >90% AND pressure drop >20% from baseline. The reservoir condition is met (94.1% > 90%) but the pressure condition appears not met — though we lack baseline pressure data to calculate the exact percentage drop. Scored as a net positive but with reduced confidence due to unknown baseline. The qualitative observation that pumps are successfully converting supply to pressure is valid.",
+        "knowledge_verified": true
+      },
+      {
+        "signal_ids": [
+          "20260310-2115-SIG-005"
+        ],
+        "threat": "MWA public statement minimizes operational stress",
+        "severity": 6,
+        "source_tier": "1",
+        "weighted_severity": 6,
+        "thesis_relevance": "INDIRECT",
+        "confidence": "HIGH",
+        "reasoning": "Per [LZ-EH-003], actions (telemetry) outweigh statements. Telemetry shows all active pumps at ~99% with one showing elevated vibration. Public statement says 'routine maintenance, no service interruptions.' The statement may be technically accurate (service is maintained) but minimizes the operational stress. Per thesis context, MWA is 'historically prone to delaying capital-intensive emergency repairs' — this narrative framing is consistent with that behavioral pattern. The concern is not that the statement is false but that it signals institutional reluctance to escalate, which could delay necessary intervention. Scored 6 as an indirect threat — the narrative gap itself doesn't cause harm but may delay corrective action.",
+        "knowledge_verified": true
+      },
+      {
+        "signal_ids": [
+          "20260310-2115-SIG-006"
+        ],
+        "threat": "Zero pump headroom for additional contingency",
+        "severity": 9,
+        "source_tier": "1",
+        "weighted_severity": 9,
+        "thesis_relevance": "DIRECT",
+        "confidence": "HIGH",
+        "reasoning": "This is the highest-severity signal in the dataset. The core thesis claims 'sufficient mechanical redundancy to maintain positive system pressure even during periods of localized equipment maintenance.' This claim is currently falsified as an operational reality. With Pump 4 offline and Pumps 1-3 at ~99%, there is ZERO redundancy. Any second pump failure (especially Pump 3 with elevated vibration) would cause immediate and catastrophic pressure loss. This is not a threshold approach — this is a thesis premise that is currently NOT TRUE. The thesis has not been fully falsified because pressure is maintained, but the redundancy claim — the safety margin — does not exist right now. Scored 9 because the system is one failure away from cascading degradation, and the elevated vibration on Pump 3 means that single-failure scenario is more plausible than baseline.",
+        "knowledge_verified": true
+      },
+      {
+        "signal_ids": [
+          "20260310-2115-SIG-007"
+        ],
+        "threat": "Elevated ambient temperature increasing demand risk",
+        "severity": 4,
+        "source_tier": "2",
+        "weighted_severity": 2.8,
+        "thesis_relevance": "INDIRECT",
+        "confidence": "MEDIUM",
+        "reasoning": "88°F increases demand risk via well-established temperature-demand correlation in municipal water systems. The specific magnitude for this system/region is unknown, and we don't know if 88°F is normal or abnormal locally. The critical context is that this system has ZERO headroom — any demand increase, even small, could push already-maxed pumps beyond rated capacity. The amplification effect of temperature stress on a pre-loaded system is the real concern. Weighted at 0.7x as a Tier 2 domain-level correlation rather than Tier 1 direct measurement.",
+        "knowledge_verified": true
+      },
+      {
+        "signal_ids": [
+          "20260310-2115-SIG-008"
+        ],
+        "threat": "Pump 4 maintenance timeline unknown",
+        "severity": 7,
+        "source_tier": "1",
+        "weighted_severity": 7,
+        "thesis_relevance": "DIRECT",
+        "confidence": "MEDIUM",
+        "reasoning": "This is the single most consequential unknown in the assessment. The duration of the degraded three-pump configuration determines: (1) total exposure to critical load levels, (2) proximity to the 48-hour aggregate load threshold in kill switch #1, (3) cumulative stress on Pump 3's vibration trajectory, and (4) probability of a second pump failure. Without this data, we cannot forecast when the system exits the danger zone. Scored 7 as a data gap with direct kill-switch implications. The uncertainty itself is the threat — not knowing if this resolves in hours or days.",
+        "knowledge_verified": true
+      },
+      {
+        "signal_ids": [
+          "20260310-2115-SIG-009"
+        ],
+        "threat": "Regulator lacks real-time visibility into pump stress",
+        "severity": 5,
+        "source_tier": "1",
+        "weighted_severity": 5,
+        "thesis_relevance": "INDIRECT",
+        "confidence": "HIGH",
+        "reasoning": "Directly confirmed by thesis context. Regulators see reservoir levels and basic PSI — both currently nominal (94.1%, 66.2 PSI). They would not detect the pump-level stress that is the actual risk. This means external intervention (regulatory orders, forced emergency repairs) will not be triggered by current conditions. Combined with MWA's tendency to minimize and delay, this creates a scenario where the only entity with visibility into the real stress (MWA) is also the entity least likely to escalate. Scored 5 as an enabler of continued degradation rather than a direct threat.",
+        "knowledge_verified": true
+      },
+      {
+        "signal_ids": [
+          "20260310-2115-SIG-010"
+        ],
+        "threat": "No fire dispatch anomaly signals detected",
+        "severity": 0,
+        "source_tier": "3",
+        "weighted_severity": 0,
+        "thesis_relevance": "CONTEXTUAL",
+        "confidence": "LOW",
+        "reasoning": "Per CL-001, no data from Regional Fire Dispatch exists in the current dataset. Absence of anomaly reports cannot be scored as a positive signal [LZ-RC-003]. The Sector B hydrant pressure (63.5 PSI) provides direct evidence of adequate fire flow in that specific sector, but this is already captured in SIG-003. The fire dispatch inference is stripped from scoring. Severity set to 0 — this signal carries no scoreable weight.",
+        "knowledge_verified": true
+      },
+      {
+        "signal_ids": [
+          "20260310-2115-SIG-011"
+        ],
+        "threat": "Pump 3 valve adjustment may mask or delay failure",
+        "severity": 5,
+        "source_tier": "1",
+        "weighted_severity": 5,
+        "thesis_relevance": "DIRECT",
+        "confidence": "LOW",
+        "reasoning": "The valve adjustment is confirmed by maintenance log but its effects are not yet visible in telemetry. Multiple plausible outcomes exist: vibration reduction (positive), load redistribution to Pumps 1-2 (negative — they're already at ~99%), reduced total output (negative — pressure could drop), or mixed effects. Per [LZ-RC-005], these are predictions, not measurements, and carry lower evidentiary weight. Scored 5 as a genuine uncertainty with direct implications — the ambiguity itself represents risk because we cannot predict which outcome will materialize.",
+        "knowledge_verified": true
+      },
+      {
+        "signal_ids": [
+          "20260310-2115-SIG-012"
+        ],
+        "threat": "Water quality remains nominal",
+        "severity": 1,
+        "source_tier": "1",
+        "weighted_severity": 1,
+        "thesis_relevance": "DIRECT",
+        "confidence": "HIGH",
+        "reasoning": "Turbidity at 0.9 NTU well within standards. Positive system pressure prevents backflow contamination. This confirms sanitary integrity is maintained. Low severity because this is a positive finding with high confidence. The condition that would drive quality degradation (low pressure causing backflow) is far from occurring at 66.2 PSI.",
+        "knowledge_verified": true
+      },
+      {
+        "signal_ids": [
+          "20260310-2115-SIG-013"
+        ],
+        "threat": "Pumps 1-2 vibration normal despite extreme load",
+        "severity": 3,
+        "source_tier": "1",
+        "weighted_severity": 3,
+        "thesis_relevance": "DIRECT",
+        "confidence": "HIGH",
+        "reasoning": "This is a mixed signal. Positive: Pumps 1-2 are mechanically healthy despite extreme load, meaning 2 of 3 active units have significant headroom before vibration-related kill switches engage. Negative: The contrast with Pump 3 (22.4 Hz vs. 12.8-13.0 Hz) confirms Pump 3's issue is unit-specific, meaning it may be a pre-existing condition exacerbated by load rather than a load-induced systemic effect. Net assessment: moderately positive — the concentrated risk in one unit is actually more manageable than systemic degradation, IF that unit can be managed or taken offline. But taking Pump 3 offline is currently impossible without Pump 4.",
+        "knowledge_verified": true
+      },
+      {
+        "signal_ids": [
+          "20260310-2115-SIG-014"
+        ],
+        "threat": "Single-sector pressure visibility limits assessment",
+        "severity": 5,
+        "source_tier": "1",
+        "weighted_severity": 5,
+        "thesis_relevance": "DIRECT",
+        "confidence": "MEDIUM",
+        "reasoning": "Kill switch #3 (Fire Flow Collapse) requires sector-level hydrant pressure monitoring. We have data from only Sector B (63.5 PSI, well above 20 PSI minimum). Other sectors — especially those at higher elevation, greater distance from the pumping station, or end-of-line positions — could have materially different pressures. Per [LZ-RC-003], absence of data from other sectors is not evidence they are fine. This data gap directly limits our ability to confirm or deny kill switch #3 system-wide. Scored 5 as a monitoring limitation with direct kill switch implications.",
+        "knowledge_verified": true
+      },
+      {
+        "signal_ids": [
+          "20260310-2115-SIG-015"
+        ],
+        "threat": "No alternative supply or competitive infrastructure signals",
+        "severity": 4,
+        "source_tier": "2",
+        "weighted_severity": 2.8,
+        "thesis_relevance": "CONTEXTUAL",
+        "confidence": "LOW",
+        "reasoning": "No data on mutual aid, interconnections, or emergency supply pathways. Per [LZ-RC-003], we cannot infer these don't exist. However, their absence from the available data means we cannot factor recovery options into our assessment. If further degradation occurs, our model assumes recovery depends entirely on MWA internal resources and Pump 4 restoration. This may overstate or understate actual resilience. Scored 4 as contextual uncertainty, weighted at 0.7x as Tier 2. Low confidence due to fundamental data absence.",
+        "knowledge_verified": true
+      }
+    ],
+    "unscored_threats": [],
+    "kill_switch_status": [
+      {
+        "criterion": "1. Redundant Load Threshold (>115% aggregate rated capacity for >48 hours)",
+        "status": "WARNING",
+        "current_value": "Three pumps at 98.5%, 99.1%, 98.8% load; aggregate ~296% of single-pump rating. However, definition of 'rated capacity' for active-pump configuration is ambiguous.",
+        "target": "Below 115% of rated capacity OR sustained <48 hours",
+        "movement_since_last": "deteriorated"
+      },
+      {
+        "criterion": "2. Cavitation Threshold (sustained vibration >35 Hz while load >95%)",
+        "status": "WARNING",
+        "current_value": "Pump 3 vibration at 22.4 Hz (64% of 35 Hz threshold), load at 98.8% (load condition MET). Pumps 1-2 at 12.8-13.0 Hz (well below threshold).",
+        "target": "Below 35 Hz vibration on all pumps while load >95%",
+        "movement_since_last": "deteriorated"
+      },
+      {
+        "criterion": "3. Fire Flow Collapse (Sector Hydrant Pressure <20 PSI)",
+        "status": "NEEDS_DATA",
+        "current_value": "Sector B at 63.5 PSI (3.175x above threshold). No data from other sectors.",
+        "target": "All sectors >20 PSI",
+        "movement_since_last": "unknown"
+      },
+      {
+        "criterion": "4. Regulatory Pressure Breach (System Pressure <40 PSI)",
+        "status": "TRACKING",
+        "current_value": "66.2 PSI (65.5% above threshold)",
+        "target": "Above 40 PSI",
+        "movement_since_last": "stable"
+      },
+      {
+        "criterion": "5. Divergent Inventory Paradox (Reservoir >90% AND Pressure drop >20% from baseline)",
+        "status": "MONITORING",
+        "current_value": "Reservoir at 94.1% (>90% condition MET). System pressure at 66.2 PSI. Baseline pressure unknown — cannot calculate percentage drop.",
+        "target": "Either reservoir <90% OR pressure within 20% of baseline",
+        "movement_since_last": "unknown"
+      }
+    ],
+    "compound_stress": {
+      "level": "N/A",
+      "usd_jpy": {
+        "current": "N/A",
+        "threshold_status": "N/A",
+        "trajectory": "N/A"
+      },
+      "jgb_10y": {
+        "current": "N/A",
+        "threshold_status": "N/A",
+        "trajectory": "N/A"
+      },
+      "brent": {
+        "current": "N/A",
+        "threshold_status": "N/A",
+        "trajectory": "N/A"
+      },
+      "pre_loaded": false,
+      "pre_loaded_detail": "The thesis context for this assessment is a Regional Water Distribution Network, not a financial instrument. No Compound Stress Matrix section exists in the thesis context. USD/JPY, JGB 10Y, and Brent Crude are not relevant to this system's risk profile. The compound stress framework does not apply to this domain. The system's compound stress analog is the combination of: (1) zero pump redundancy, (2) elevated vibration on Pump 3, and (3) elevated ambient temperature — these three factors compound each other in the same structural way the financial stress matrix would. The system IS pre-loaded in its domain-specific sense: any additional stressor (demand spike, Pump 3 failure, extended Pump 4 outage) hits a structure with zero remaining buffer.",
+      "stress_chain_proximity": "Not applicable in financial terms. In domain terms, the system is one pump failure away from cascading pressure loss. The pre-loaded condition (zero redundancy + Pump 3 vibration + heat) means the break threshold is significantly lower than it would be under normal four-pump operations."
+    },
+    "bear_pressure": 68,
+    "bear_pressure_reasoning": "Bear pressure has increased dramatically from 32 to 68 based on the following verified findings: (1) CRITICAL: Zero mechanical redundancy — the core thesis claim of 'sufficient redundancy' is currently not true as an operational reality (SIG-006, severity 9). (2) HIGH: All active pumps at 98.5-99.1% load, far outside normal 70-85% range, with ambiguous proximity to kill switch #1 depending on threshold definition (SIG-001, severity 7). (3) HIGH: Pump 3 vibration at 22.4 Hz approaching 25 Hz concern threshold with load condition for kill switch #2 already met (SIG-002, severity 7). (4) HIGH: Unknown Pump 4 restoration timeline means exposure duration is unquantifiable (SIG-008, severity 7). (5) MODERATE: MWA narrative minimization consistent with institutional tendency to delay repairs (SIG-005, severity 6). (6) MODERATE: Regulatory blind spot prevents external intervention (SIG-009, severity 5). OFFSETTING POSITIVE: System pressure (66.2 PSI) and water quality (0.9 NTU) remain healthy with large margins to their respective thresholds. Reservoir supply is ample (94.1%). Pumps 1-2 show normal vibration despite extreme load. No kill switches have been triggered yet. The thesis is NOT FALSIFIED but is in a fragile state where the safety margins that support the thesis (redundancy, buffer capacity) have been consumed. The system is currently functioning but brittle — one additional stressor could cascade rapidly. Bear pressure at 68 reflects a system that is delivering on outputs (pressure, quality) while the structural foundation supporting those outputs (redundancy, headroom) has been severely compromised.",
+    "layer2_summary": "The RWDN is in a fragile but currently functional state. All three active pumps operate at ~99% load with zero redundancy (Pump 4 offline, unknown return timeline), directly contradicting the thesis claim of 'sufficient mechanical redundancy.' Pump 3 shows unit-specific vibration at 22.4 Hz approaching the 25 Hz concern threshold. Despite this pump-level stress, downstream outputs remain healthy: system pressure at 66.2 PSI (65% above regulatory floor), Sector B hydrant at 63.5 PSI, water quality at 0.9 NTU, and reservoir at 94.1%. No kill switches have triggered, but kill switches #1 and #2 are on WARNING status. Layer 3 needs to determine: (1) Pump 4 restoration timeline — this is the single most important unknown, (2) clarification of kill switch #1 threshold definition ('rated capacity' for active vs. design configuration), (3) pressure data from sectors other than Sector B, and (4) baseline system pressure for kill switch #5 assessment. Bear pressure elevated from 32 to 68. Per CL-001, no fire dispatch data exists and no inference should be drawn from its absence."
+  },
+  "_pipeline_version": "4-layer-v1",
+  "_generated_at": "2026-03-10T21:27:06.644Z",
+  "_layer1_raw": [
+    {
+      "threat": "Three-pump aggregate load near critical threshold",
+      "description": "With Pump 4 offline, Pumps 1-3 are running at 98.5%, 99.1%, and 98.8% respectively. Aggregate active capacity is approximately 296.4% of single-pump rating across three units, meaning each pump is near 99% load. This exceeds the normal 70-85% range dramatically. If this persists >48 hours, it approaches the 115% aggregate rated capacity falsification threshold depending on how rated capacity is defined across the three-pump configuration.",
+      "direction": "DETERIORATION",
+      "severity": "critical",
+      "proximity": "immediate",
+      "confidence": "high",
+      "evidence": "pump_1_load_pct: 98.5, pump_2_load_pct: 99.1, pump_3_load_pct: 98.8, pump_4_status: OFFLINE_MAINTENANCE",
+      "blind_spot": false,
+      "category": "structure",
+      "signal_ids": [
+        "20260310-2115-SIG-001"
+      ]
+    },
+    {
+      "threat": "Pump 3 vibration trending toward cavitation zone",
+      "description": "Pump 3 vibration at 22.4 Hz is significantly elevated above Pumps 1-2 (12.8-13.0 Hz) and approaching the 25 Hz concern threshold. At 98.8% load, any further vibration increase toward 35 Hz while load remains >95% would trigger the cavitation falsification criterion. The maintenance log confirms awareness ('adjusting flow control valves'), but the trend direction under sustained high load is concerning.",
+      "direction": "DETERIORATION",
+      "severity": "high",
+      "proximity": "immediate",
+      "confidence": "high",
+      "evidence": "pump_3_vibration_hz: 22.4, pump_3_load_pct: 98.8, maintenance log acknowledges elevated vibration",
+      "blind_spot": false,
+      "category": "technology",
+      "signal_ids": [
+        "20260310-2115-SIG-002"
+      ]
+    },
+    {
+      "threat": "System pressure holding above regulatory floor",
+      "description": "System pressure at 66.2 PSI remains well above the 40 PSI regulatory breach threshold. Sector B hydrant pressure at 63.5 PSI is well above the 20 PSI fire flow minimum. This indicates the distribution network is currently translating pump output into adequate pressure despite degraded pump configuration.",
+      "direction": "ACCELERATION",
+      "severity": "moderate",
+      "proximity": "immediate",
+      "confidence": "high",
+      "evidence": "system_pressure_psi: 66.2 (65% above 40 PSI floor), sector_b_hydrant_psi: 63.5 (3x above 20 PSI fire flow minimum)",
+      "blind_spot": false,
+      "category": "structure",
+      "signal_ids": [
+        "20260310-2115-SIG-003"
+      ]
+    },
+    {
+      "threat": "Reservoir level high with stable pressure — no divergent inventory paradox",
+      "description": "Reservoir Alpha at 94.1% with system pressure at 66.2 PSI. No evidence of supply-distribution decoupling. The pumps are successfully drawing from reservoir and maintaining pressure. This is a positive structural signal that the fifth falsification criterion (Divergent Inventory Paradox) is not triggered. However, this also means failure risk is concentrated purely in pump mechanics, not supply.",
+      "direction": "ACCELERATION",
+      "severity": "moderate",
+      "proximity": "immediate",
+      "confidence": "high",
+      "evidence": "reservoir_alpha_level_pct: 94.1, system_pressure_psi: 66.2, no pressure drop concurrent with high reservoir",
+      "blind_spot": false,
+      "category": "structure",
+      "signal_ids": [
+        "20260310-2115-SIG-004"
+      ]
+    },
+    {
+      "threat": "MWA public statement minimizes operational stress",
+      "description": "MWA describes situation as 'routine maintenance' with 'no service interruptions' while all three active pumps run at ~99% load with one showing elevated vibration. This framing gap between public narrative and operational telemetry is consistent with the thesis context noting MWA is 'historically prone to delaying capital-intensive emergency repairs' and focused on 'public reassurance.'",
+      "direction": "DETERIORATION",
+      "severity": "high",
+      "proximity": "immediate",
+      "confidence": "high",
+      "evidence": "Public statement: 'Routine maintenance underway. No service interruptions.' vs. pump loads at 98.5-99.1% and Pump 3 vibration at 22.4 Hz",
+      "blind_spot": false,
+      "category": "narrative",
+      "signal_ids": [
+        "20260310-2115-SIG-005"
+      ]
+    },
+    {
+      "threat": "Zero pump headroom for additional contingency",
+      "description": "With Pump 4 offline and Pumps 1-3 at ~99% load, there is effectively zero mechanical redundancy remaining. Any second pump failure or trip would immediately cause catastrophic pressure loss. The thesis premise of 'sufficient mechanical redundancy' is functionally suspended during this operating state. The system is one failure away from cascading degradation.",
+      "direction": "DETERIORATION",
+      "severity": "critical",
+      "proximity": "immediate",
+      "confidence": "high",
+      "evidence": "All three active pumps at 98.5-99.1% load; fourth pump offline; no reserve capacity exists",
+      "blind_spot": false,
+      "category": "assumption_decay",
+      "signal_ids": [
+        "20260310-2115-SIG-006"
+      ]
+    },
+    {
+      "threat": "Elevated ambient temperature increasing demand risk",
+      "description": "Ambient temperature at 88°F increases residential water consumption (irrigation, cooling) and stresses mechanical equipment (pump motor cooling, bearing lubrication viscosity). Higher demand during sustained heat could push already-maxed pumps beyond rated capacity. Temperature also affects water main pressure loss through increased pipe friction with warmer water.",
+      "direction": "DETERIORATION",
+      "severity": "moderate",
+      "proximity": "near-term",
+      "confidence": "medium",
+      "evidence": "ambient_temp_f: 88, which correlates with elevated municipal water demand patterns",
+      "blind_spot": true,
+      "category": "macro",
+      "signal_ids": [
+        "20260310-2115-SIG-007"
+      ]
+    },
+    {
+      "threat": "Pump 4 maintenance timeline unknown",
+      "description": "No data on expected Pump 4 return-to-service date. The maintenance log says 'Pump 4 offline' but provides no timeline. Duration of the current degraded three-pump configuration directly determines how long the system remains at critical load levels and whether the 48-hour aggregate load threshold is approached.",
+      "direction": "AMBIGUOUS",
+      "severity": "high",
+      "proximity": "immediate",
+      "confidence": "medium",
+      "evidence": "maintenance_log mentions Pump 4 offline but contains no restoration ETA or scope of maintenance work",
+      "blind_spot": true,
+      "category": "agent_capacity",
+      "signal_ids": [
+        "20260310-2115-SIG-008"
+      ]
+    },
+    {
+      "threat": "Regulator lacks real-time visibility into pump stress",
+      "description": "The State Public Utility Commission monitors 'macro-level compliance' (reservoir levels, basic PSI) but lacks real-time telemetry oversight. Current reservoir (94.1%) and system pressure (66.2 PSI) both read nominally compliant. Regulators would see no anomaly while pumps operate at 99% load with deteriorating vibration signatures. This regulatory blind spot delays external intervention.",
+      "direction": "DETERIORATION",
+      "severity": "moderate",
+      "proximity": "near-term",
+      "confidence": "high",
+      "evidence": "Thesis context: regulators lack real-time telemetry; current PSI and reservoir levels are within nominal compliance bounds",
+      "blind_spot": true,
+      "category": "regulatory",
+      "signal_ids": [
+        "20260310-2115-SIG-009"
+      ]
+    },
+    {
+      "threat": "No fire dispatch anomaly signals detected",
+      "description": "No data indicates Regional Fire Dispatch has requested water tankers or altered operations. Per thesis context, fire dispatch operational adjustments are 'an independent, high-fidelity indicator of actual system capability.' Absence of such adjustments is a positive signal that end-user pressure delivery remains functionally adequate at this time.",
+      "direction": "ACCELERATION",
+      "severity": "moderate",
+      "proximity": "immediate",
+      "confidence": "medium",
+      "evidence": "No mention of fire dispatch anomalies in current data; sector_b_hydrant_psi at 63.5 supports adequate fire flow",
+      "blind_spot": false,
+      "category": "integration",
+      "signal_ids": [
+        "20260310-2115-SIG-010"
+      ]
+    },
+    {
+      "threat": "Pump 3 valve adjustment may mask or delay failure",
+      "description": "Maintenance log notes 'adjusting flow control valves' for Pump 3's vibration. This intervention could reduce vibration but may redistribute load to Pumps 1-2, potentially pushing them beyond current levels. Alternatively, throttling Pump 3 flow could reduce total system output and pressure. The net effect of this adjustment is not yet visible in the data.",
+      "direction": "AMBIGUOUS",
+      "severity": "high",
+      "proximity": "immediate",
+      "confidence": "medium",
+      "evidence": "maintenance_log: 'Pump 3 showing elevated vibration; adjusting flow control valves'",
+      "blind_spot": true,
+      "category": "technology",
+      "signal_ids": [
+        "20260310-2115-SIG-011"
+      ]
+    },
+    {
+      "threat": "Water quality remains nominal",
+      "description": "Turbidity at 0.9 NTU is well within safe drinking water standards (EPA limit: 4 NTU, treatment goal: <1 NTU). No evidence of backflow contamination or treatment failure. This confirms that despite mechanical stress, the system has not yet experienced the sanitary integrity compromise associated with low-pressure events.",
+      "direction": "ACCELERATION",
+      "severity": "low",
+      "proximity": "immediate",
+      "confidence": "high",
+      "evidence": "water_turbidity_ntu: 0.9, well within EPA standards; system_pressure_psi: 66.2 maintains positive pressure",
+      "blind_spot": false,
+      "category": "integration",
+      "signal_ids": [
+        "20260310-2115-SIG-012"
+      ]
+    },
+    {
+      "threat": "Pumps 1-2 vibration normal despite extreme load",
+      "description": "Pumps 1 and 2 show vibration at 12.8 and 13.0 Hz respectively — well within normal parameters — despite operating at ~99% load. This suggests these two units are in good mechanical health and tolerating the stress. However, this also means Pump 3's elevated vibration (22.4 Hz) is anomalous and unit-specific, not a system-wide degradation pattern.",
+      "direction": "CONTRADICTORY",
+      "severity": "moderate",
+      "proximity": "immediate",
+      "confidence": "high",
+      "evidence": "pump_1_vibration_hz: 12.8, pump_2_vibration_hz: 13.0 at loads of 98.5-99.1% vs. pump_3_vibration_hz: 22.4 at 98.8%",
+      "blind_spot": false,
+      "category": "technology",
+      "signal_ids": [
+        "20260310-2115-SIG-013"
+      ]
+    },
+    {
+      "threat": "Single-sector pressure visibility limits assessment",
+      "description": "Only Sector B hydrant pressure is reported (63.5 PSI). No data on Sectors A, C, or others. Localized pressure deficits in distant or elevated sectors could exist undetected. The fire flow falsification criterion (Sector Hydrant Pressure <20 PSI) could potentially be breached in unreported sectors, especially those at higher elevation or end-of-line positions.",
+      "direction": "AMBIGUOUS",
+      "severity": "moderate",
+      "proximity": "immediate",
+      "confidence": "medium",
+      "evidence": "Only sector_b_hydrant_psi provided; no telemetry from other municipal sectors",
+      "blind_spot": true,
+      "category": "assumption_decay",
+      "signal_ids": [
+        "20260310-2115-SIG-014"
+      ]
+    },
+    {
+      "threat": "No alternative supply or competitive infrastructure signals",
+      "description": "No data on interconnections with neighboring water utilities, emergency supply agreements, or portable treatment/pumping assets. If the RWDN experiences further degradation, the absence of visible backup supply pathways means recovery depends entirely on internal MWA resources and Pump 4 restoration.",
+      "direction": "AMBIGUOUS",
+      "severity": "moderate",
+      "proximity": "near-term",
+      "confidence": "low",
+      "evidence": "No data in current telemetry or logs regarding mutual aid agreements, emergency interconnections, or alternative supply sources",
+      "blind_spot": true,
+      "category": "competitive",
+      "signal_ids": [
+        "20260310-2115-SIG-015"
+      ]
+    }
+  ]
+}

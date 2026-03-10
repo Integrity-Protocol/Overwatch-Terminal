@@ -1,0 +1,238 @@
+[
+  {
+    "timestamp": "2026-03-10T21:28:32.024Z",
+    "layer": 1,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "Aggregate Load Approaching Kill Switch",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "Confidence is listed as 'medium' but the finding states 'The 48-hour clock may already be running; current data provides no start timestamp.' This is a critical missing piece of evidence that makes it impossible to assess whether the kill switch condition is being met. The confidence should be lower, or the finding should acknowledge insufficient evidence more explicitly. The calculation itself (301.7% across 3 pumps) is sound, but whether this constitutes a kill switch breach depends entirely on duration, which is unknown.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Emerging Divergent Inventory Paradox",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "This finding rests on at least three unproven assumptions: (1) that baseline pressure is ~75 PSI, (2) that a ~22.7% drop has occurred, and (3) that this 'approaches or breaches' the 20% kill switch threshold. The analyst states 'The exact baseline is not stated, creating ambiguity' but proceeds to build a high-severity threat finding anyway. Without knowing the baseline, the entire percentage calculation is speculative. This chains multiple assumptions to reach a conclusion.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "Ambient Heat Stress Amplification",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The finding states 'Pump 3's 92.5°C may partly reflect reduced heat dissipation efficiency' and 'High ambient temp also correlates with peak demand periods, further straining pumps.' This presents correlation (ambient heat and pump temperature occurring simultaneously) as if it establishes causation (ambient heat causing the pump temperature issue). The pump's temperature could be entirely due to mechanical fault independent of ambient conditions. The correlation is noted but the causal language ('amplification,' 'compounds') oversteps the evidence.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "MWA Historical Repair Delay Pattern",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "This finding builds a causal explanation on multiple unproven assumptions: (1) that the supply chain delay reflects institutional behavior rather than external constraints, (2) that MWA deferred maintenance, (3) that MWA failed to pre-stock spares, and (4) that this represents organizational capacity failure. The evidence cited is 'Thesis context on MWA behavior patterns' (a general characterization, not a verified data point about this specific event) plus the maintenance log showing delay. The finding explicitly states 'may reflect' but then categorizes it as a threat with medium confidence despite having no direct evidence for the causal mechanism proposed.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Fire Dispatch Behavioral Signal Absent",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The finding correctly identifies absence of data but then constructs two interpretive possibilities ('either dispatch hasn't reacted yet (positive) or the data simply isn't being collected (blind spot)'). However, the framing as a 'threat' with 'AMBIGUOUS' direction and the statement 'The absence of this signal is itself a gap' veers into treating absence of evidence as if it has evidentiary weight. The finding acknowledges this is a blind spot but still assigns it moderate severity and low confidence as a distinct threat, rather than simply flagging insufficient data under LZ-EPH-001.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "No Cross-Jurisdictional Mutual Aid Evidence",
+          "rule_violated": "LZ-RC-003",
+          "violation": "Similar to the fire dispatch finding, this treats absence of evidence ('No mention of emergency interconnects... mutual aid agreements, or portable pumping capacity') as evidence of a threat ('the absence of contingency activation... represents an unexamined dependency'). The absence of data about mutual aid agreements does not establish that they don't exist or haven't been activated. This should be flagged as insufficient evidence rather than constructed as a distinct threat finding with moderate severity.",
+          "severity": "MINOR"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 15,
+      "clean_findings": 9,
+      "reviewer_notes": "The output demonstrates strong anchoring to hard telemetry data in most findings, particularly the pump cavitation and thermal assessments. Violations cluster around two patterns: (1) building threat narratives on assumption chains where baseline data is missing (pressure baseline, MWA behavior causation), and (2) treating absence of data as a signal rather than acknowledging insufficient evidence. The 'Emerging Divergent Inventory Paradox' is the most serious violation—it constructs a kill switch breach scenario based on an assumed baseline that is explicitly acknowledged as unknown. The analyst should have either sought the baseline pressure data or explicitly flagged this as 'insufficient evidence to assess kill switch #5' rather than proceeding with medium confidence."
+    },
+    "violations_count": 6,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  },
+  {
+    "timestamp": "2026-03-10T21:32:35.217Z",
+    "layer": 2,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "SIG-005 (Aggregate Load Approaching Kill Switch) - severity score of 5/10 after knowledge audit identified that aggregate load is NOT near 115% threshold under any interpretation",
+          "rule_violated": "LZ-EPH-001",
+          "violation": "The finding acknowledges that Layer 1 overstated proximity to Kill Switch #1, confirms aggregate load is ~100.6% of 3-pump capacity (NOT near 115%), yet still assigns a severity score of 5/10 with reasoning about 'cascade scenario' rather than declaring 'I don't know' or removing the threat entirely. The kill switch is either approaching breach or it is not. The audit determined it is NOT. The cascade scenario described (if Pump 3 fails, load redistributes) is a different threat (future contingent event), not evidence that THIS kill switch is 'approaching.' The honest output for a kill switch that is NOT approaching breach is either zero severity or reclassification as a different threat type. Instead, the system preserved a moderate severity score by pivoting to a speculative cascade scenario, avoiding the 'this threat was misidentified' conclusion.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "SIG-006 (Divergent Inventory Paradox) - scored at 6/10 severity with MEDIUM confidence despite explicitly stating baseline pressure is unknown and 'Kill Switch #5 CANNOT be evaluated'",
+          "rule_violated": "LZ-EPH-001",
+          "violation": "The finding explicitly states 'I CANNOT confirm the kill switch is triggered without baseline pressure data' and identifies this as 'the single most important missing data point,' yet still assigns a severity score of 6/10. This violates the principle that 'I don't know' is a high-quality output. If the kill switch cannot be evaluated due to missing critical data, the correct output is UNSCORED with status NEEDS_DATA (which the kill_switch_status section correctly identifies), not a scored threat at 6/10 severity. The reasoning attempts to score 'the pattern' as directionally concerning, but the kill switch itself is binary — either triggered or not — and cannot be determined. Scoring a pattern similarity instead of the actual kill switch condition is a category error wrapped in hedged language.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "SIG-009 (Ambient Heat Stress Amplification) - claims ambient temperature 'partly reflects reduced heat dissipation efficiency' for Pump 3's thermal stress, then correctly applies LZ-RC-001 to note correlation does not establish causation, but still scores the signal at 4/10",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The knowledge audit correctly identifies that the causal chain from ambient heat to pump thermal stress is 'plausible but unverified' and explicitly invokes LZ-RC-001. However, the reasoning then scores the threat at 4/10 as a 'real compounding factor' despite acknowledging the causal link is assumed. If correlation does not establish causation, and no independent evidence confirms the causal mechanism, then the 'compounding factor' claim lacks evidentiary support. The score should either be lower (reflecting pure correlation without confirmed mechanism) or the threat should be unscored pending verification of the causal pathway. The current score implicitly treats the correlation as partial evidence of causation.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Bear pressure increase from 70 to 88 (+18 points) attributes +15 points to 'Kill Switch #2 CONFIRMED TRIGGERED' but then applies -5 point offset for mitigating factors and 'moderated to +18' due to unresolved KS-5 and overstated KS-1, resulting in net calculation inconsistency",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The bear pressure reasoning states '+28 from deterioration, -5 from mitigating factors = +23 raw, moderated to +18' but the initial claim was an increase of 18 points, and the math shows 23 raw moderated to 18 (a 5-point moderation). However, the individual components list +15 for KS-2, +10 for zero redundancy, +5 for regulator blind spot, +3 for pressure trajectory = +33, not +28. The -5 offset is listed as -3 for healthy pumps and -2 for pressure margins = -5 total. 33 - 5 = 28, which matches the stated 'deterioration' total. But then 'moderated to +18' implies a further -10 reduction (28 - 10 = 18), yet the text only accounts for -5 moderation. The confidence expressed in the final bear pressure of 88 is HIGH (definitive language: 'CONFIRMED TRIGGERED,' 'directly falsified') but the mathematical reconciliation between component scores and final delta is internally inconsistent, suggesting confidence in the number is not proportional to the clarity of the calculation supporting it.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "SIG-012 (System Pressure Still Above Regulatory Floor) - applies LZ-RC-002 to note 'a single data point does not establish a trend' regarding pressure trajectory, but then scores the threat at 4/10 while stating 'the downward trajectory is logically inferred from pump degradation'",
+          "rule_violated": "LZ-RC-002",
+          "violation": "The finding correctly identifies that trajectory cannot be confirmed from a single pressure snapshot per LZ-RC-002, yet the severity score and reasoning incorporate an assumption about 'narrowing buffer' based on inferred downward trajectory. If the trajectory is not confirmed by time-series data, then the score should reflect only the current static margin (58 > 40 PSI, 51 > 20 PSI), not a dynamic 'narrowing' assessment. The 'logically inferred' trajectory based on pump degradation is a multi-assumption chain: (1) pump degradation will continue, (2) degradation will reduce pressure, (3) pressure is currently declining. Each is unproven. The score treats logical inference as partial substitute for measurement, which contradicts the rule that one data point is not a trend.",
+          "severity": "MODERATE"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 28,
+      "clean_findings": 23,
+      "reviewer_notes": "Two SERIOUS violations and three MODERATE violations identified, but the output demonstrates unusually rigorous self-audit discipline in the knowledge_audit section. Most violations occur where the scoring system attempted to preserve threat severity despite audit findings that undermined the original framing (SIG-005, SIG-006). The system correctly applied stored lesson CL-001 and correctly flagged multiple data gaps, showing the epistemological framework is being actively used. The violations are concentrated in the tension between 'this threat was overstated/cannot be confirmed' audit findings and the reluctance to output zero severity or UNSCORED status. SIG-006 is the clearest violation: explicitly stating a kill switch 'CANNOT be evaluated' but then scoring it anyway. Recommend: when audit determines a kill switch is indeterminate, route to UNSCORED rather than attempting to score 'the pattern.' The bear_pressure math inconsistency is minor but suggests the composite scoring mechanism may need clearer reconciliation logic."
+    },
+    "violations_count": 5,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  },
+  {
+    "timestamp": "2026-03-10T21:36:32.713Z",
+    "layer": 3,
+    "model_used": "claude-opus-4-6",
+    "tier1_flags_count": 1,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [
+      {
+        "rule_id": "LZ-EPH-003",
+        "finding": "MWA continuing to operate Pump 3 through active cavitation and thermal warning",
+        "detail": "assumption_count is 0 but assumptions array has 1 entries. Miscount detected.",
+        "severity": "FLAG",
+        "timestamp": "2026-03-10T21:35:45.208Z"
+      }
+    ],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "Strategic Inference: MWA continuing to operate Pump 3 through active cavitation and thermal warning",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The assumptions array contains 1 entry ('MWA is aware of Pump 3's condition') but assumption_count is listed as 0. The text argues the assumption is 'largely verified' and 'reduced to near-zero weight,' but the rule counts unproven assumptions by their presence, not by the analyst's subjective weighting. The assumption is listed because it is not fully proven — the maintenance log confirms a temp warning was triggered, but does not confirm operator awareness of vibration/cavitation data specifically. Even granting the analyst's self-reduction logic, the count must match the array. This is a direct miscount flagged by Tier 1 code checks.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Strategic Inference: Divergent Inventory Paradox — Kill Switch #5",
+          "rule_violated": "LZ-EH-002",
+          "violation": "The reasoning uses the PUC's word 'slightly degraded' as evidence that baseline is above 58 PSI, stating it 'eliminates the possibility that 58 PSI IS the baseline.' However, the PUC filing is an intermediary regulatory report — it is not the primary SCADA source for baseline pressure. Per LZ-EH-002, the PUC's characterization of pressure as 'degraded' carries less evidentiary weight than the actual historical SCADA readings would. The analysis correctly identifies the need for SCADA baseline data in x402 trades, but within the inference itself, it treats the PUC's secondary characterization as sufficient to eliminate one interpretation ('58 PSI is baseline'). This overstates the evidentiary power of a secondhand qualitative description.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Strategic Inference: Divergent Inventory Paradox — which_is_more_likely set to 'primary' over null",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The finding has 1 acknowledged unverified assumption (system baseline pressure is meaningfully higher than 58 PSI) and explicitly states 'without baseline, both interpretations are equally valid' in the alternative_explanation field. Despite this admission of equal validity, which_is_more_likely is set to 'primary' rather than flagging the contradiction per LZ-EH-005 or maintaining proportional confidence. The confidence is rated 'medium,' which partially mitigates this, but the directional selection ('primary is more likely') is not supported by the evidence structure the analyst themselves described. The PUC's 'slightly degraded' language provides weak directional evidence, but the analyst already classified it as insufficient to quantify the baseline.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Hidden Move: MWA may have deliberately suppressed or overridden automatic shutdown protections on Pump 3",
+          "rule_violated": "LZ-RC-004",
+          "violation": "The inference jumps to deliberate operator override as a plausible hidden move without first fully testing the simpler explanation: that the pump system may simply lack automatic shutdown interlocks at these thresholds. The analysis acknowledges both possibilities in evidence_hints ('(a) the system lacks automatic shutdown capability, or (b) automatic shutdown has been overridden') but frames the hidden move around option (b) — the more complex explanation — without establishing that option (a) is insufficient. Per LZ-RC-004, the simpler explanation (system lacks auto-shutdown) must be tested first.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Feedback Loop: Ambient Heat → Demand Increase + Reduced Cooling Efficiency → Accelerated Pump Stress",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The loop posits a causal chain from ambient temperature to increased demand to reduced cooling efficiency to accelerated pump stress. The analysis correctly self-flags this as 'plausible but unverified' and notes the lack of demand data and cooling specifications. However, the loop is still classified as 'active_orderly' — meaning active — despite the analyst's own admission that the causal mechanism is 'assumed, not measured.' Classifying an unverified causal chain as 'active' (even with an orderly qualifier) grants it more status than the evidence supports. The analysis's own caveats are sound, but the classification label contradicts those caveats.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Compound Stress Inference: catalyst_proximity and pre_load_assessment",
+          "rule_violated": "LZ-RC-002",
+          "violation": "The compound stress inference states that 'Pump 3's remaining life is finite and decreasing' and describes five 'simultaneously active' stress vectors. While the analysis correctly notes the single-snapshot limitation and cites LZ-RC-002, it then proceeds to build the compound stress narrative on the assumption that all measured values represent deteriorating conditions rather than a potentially stable (if degraded) state. The inference that remaining life is 'decreasing' treats the single cavitation measurement as implying a progressive trend. The analysis partially self-corrects by noting 'could be hours or days,' but the framing of 'finite and decreasing' goes beyond what a single snapshot supports.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Scenario Probability: thesis_falsified at 65%",
+          "rule_violated": "LZ-RC-005",
+          "violation": "The 65% probability includes forward-looking predictions about system cascade and physical failure ('the only uncertainty being whether the system physically fails before Pump 4 returns') blended with the historical/current measurement of Kill Switch #2 being triggered. The analysis conflates the binary factual finding (KS-2 is triggered by current data) with probabilistic predictions about future physical outcomes. Per LZ-RC-005, the KS-2 trigger is a measurement (verifiable, high weight) while the cascade prediction is a forecast (inherently uncertain, lower weight). These are presented together in a single probability without distinguishing their categorically different evidentiary natures. If KS-2 alone falsifies the thesis by its own criteria, the probability should be higher and based purely on the measurement; if the probability reflects uncertainty about physical outcomes, it should be labeled as predictive.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Compound Stress Inference: thesis_paradox section",
+          "rule_violated": "LZ-CC-001",
+          "violation": "The thesis_paradox narrative — that surface stability is 'produced by' behavior guaranteeing eventual catastrophic loss, and that the thesis 'looks most defensible at precisely the moment when the underlying system is most fragile' — is internally coherent and compelling but partially exceeds its verifiable anchors. The specific claim that there is 'no intermediate stable state' between current conditions and rapid degradation is an unverified physical assertion. The system could potentially stabilize at a lower pressure equilibrium after losing Pump 3 (e.g., if demand drops, or if Pumps 1&2 can sustain partial load). The narrative presents a worst-case cascade as the only possible outcome without anchoring the 'no intermediate state' claim to engineering data or multiple verified scenarios.",
+          "severity": "MINOR"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-opus-4-6",
+      "gate_failed": false,
+      "findings_reviewed": 28,
+      "clean_findings": 20,
+      "reviewer_notes": "The Tier 1 code flag on LZ-EPH-003 miscount is confirmed as a genuine violation — the analyst rationalized reducing the count to zero by arguing the assumption was 'largely verified,' but the assumption remained in the array precisely because it is not fully verified. This is a pattern worth monitoring: self-justifying assumption downgrades. The most consequential violation is the Divergent Inventory Paradox finding, where the analyst explicitly states both interpretations are 'equally valid' but then selects one as more likely — this is structurally close to an LZ-EH-005 violation (resolving equal-weight contradiction without independent tie-breaking evidence) though it is partially mitigated by the PUC's 'degraded' language providing weak directional evidence. Overall, the output demonstrates unusually high epistemological discipline — self-flagging limitations, citing rules inline, and maintaining corrections ledger integrity. The violations are mostly at the margins where the analyst's narrative instincts slightly outpaced the evidence constraints."
+    },
+    "violations_count": 8,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  },
+  {
+    "timestamp": "2026-03-10T21:40:06.281Z",
+    "layer": 4,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "Divergent Inventory Paradox — distribution decoupling pattern with unresolvable kill switch status - classification as VALID with 1 assumption",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The inference that baseline pressure is meaningfully higher than 58 PSI is treated as a single assumption 'partially supported' by PUC's 'degraded' language. However, the full inference chain contains at least 3 unproven assumptions: (1) baseline pressure is meaningfully higher than 58 PSI, (2) the distribution system is decoupling from supply (not directly measured, inferred from the pressure/reservoir divergence), (3) the PUC's use of 'degraded' constitutes quantitative evidence rather than qualitative characterization. The reasoning compresses a multi-assumption causal chain into a single assumption claim.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Compound stress final assessment: 'Rate of deterioration is unknown due to single-snapshot data per [LZ-RC-002], but the direction is unambiguous — Pump 3 is in a physically deteriorating state (active cavitation causes progressive damage)'",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The statement 'active cavitation causes progressive damage' is presented as settled causation when it is engineering domain knowledge being applied to this specific case. While the general principle that cavitation damages pumps is well-established, the assertion that THIS pump IS deteriorating progressively (rather than having reached a damaged but stable state) treats correlation (cavitation is present AND damage occurs over time in general) as confirmed causation (cavitation IS causing progressive damage right now in this instance) without direct measurement of progression.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Final bear pressure reduction reasoning: 'The stripped hidden-moves inference about MWA recovery actions means we genuinely do not know if recovery is being pursued — this creates a two-way uncertainty that the 88 score resolved only bearishly, but per [LZ-EPH-002] genuine uncertainty should not be scored as purely negative (-1)'",
+          "rule_violated": "LZ-RC-003",
+          "violation": "This reasoning treats absence of evidence (no data on recovery actions) as weak evidence of absence (probably no recovery happening), then uses that probabilistic judgment to reduce the bear score. [LZ-RC-003] states absence of evidence is informationally neutral — it proves neither presence nor absence. The -1 reduction treats the unknown as partially bullish, which violates the neutrality principle. Genuine uncertainty should not adjust scores in either direction.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Kill Switch #5 final status upgraded from NEEDS_DATA to WARNING based on PUC 'slightly degraded' language",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The upgrade from NEEDS_DATA to WARNING status is described as warranted by 'directional evidence' from PUC language, but the actual evidentiary support remains unchanged — baseline pressure is still unknown. The PUC's qualitative characterization ('slightly degraded') does not provide quantitative data. Upgrading a kill switch status from 'cannot evaluate' to 'warning' based on qualitative language rather than measurement data reflects confidence exceeding evidence. The reasoning acknowledges 'I cannot declare this triggered' per [LZ-EPH-001], then immediately assigns WARNING status, which is an intermediate confidence claim without intermediate evidence.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Tactical recommendation reasoning: 'While pressure margins still exist (58 > 40 PSI), these margins are sustained by a pump in active self-destruction, making their persistence a function of how long Pump 3 survives'",
+          "rule_violated": "LZ-RC-005",
+          "violation": "This reasoning uses a forward-looking prediction (Pump 3 will fail, making current margins temporary) to discount a present measurement (18 PSI margin exists now). The statement 'making their persistence a function of how long Pump 3 survives' is a prediction about future margin erosion, not a measurement of current margin. [LZ-RC-005] requires measurements and predictions to carry different evidentiary weight. The EXIT_SIGNAL reasoning appropriately weights the triggered kill switch, but this specific clause within the reasoning conflates the measured present state with the predicted future state.",
+          "severity": "MINOR"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 42,
+      "reviewer_notes": "The output demonstrates strong rule adherence in most areas — particularly good discipline on null hypothesis testing, honest assumption counting in most cases, and appropriate application of [LZ-CC-001] to strip unsupported inferences. The violations are concentrated in three patterns: (1) assumption chain compression on the Divergent Inventory finding, (2) treating absence of evidence as directionally informative rather than neutral, and (3) confidence exceeding evidence on Kill Switch #5 status upgrade. None of the violations appear to reverse the core EXIT_SIGNAL recommendation, which rests primarily on the well-supported Kill Switch #2 trigger. The most concerning violation is the [LZ-RC-003] breach in bear pressure adjustment — using unknown recovery actions to reduce bearish pressure violates the neutrality principle and could systematically bias scoring. Recommend Sunday audit focus on how absence-of-evidence scenarios are being scored across the broader dataset."
+    },
+    "violations_count": 5,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  }
+]

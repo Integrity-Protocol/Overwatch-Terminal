@@ -1,0 +1,27 @@
+[
+  {
+    "layer3_inference": "MWA has likely contacted emergency contractors and/or neighboring utility systems for mutual aid",
+    "signal_ids": [
+      "20260310-2209-SIG-008",
+      "20260310-2209-SIG-015"
+    ],
+    "rejection_reason": "Layer 3 correctly classified this as SPECULATIVE (3 assumptions) with LOW confidence, and it was stripped during burden of proof application. However, Layer 4 formally rejects it from all scoring influence because: (1) SPECULATIVE classification per Step 1, (2) zero data support per Step 2, (3) CL-002 and CL-003 explicitly prohibit this class of inference based on prior cycle corrections. The plausibility of the inference (it IS what a rational operator would do) does not compensate for the complete absence of evidence. Per LZ-EPH-001, 'I don't know what MWA is doing operationally' is the correct output.",
+    "root_cause": "INSUFFICIENT_EVIDENCE",
+    "confidence_in_rejection": "high",
+    "corrections_ledger_action": "auto_commit",
+    "timestamp": "2026-03-10T22:20:25.730Z",
+    "source": "layer4_reconcile"
+  },
+  {
+    "layer3_inference": "State regulator has likely been formally notified and is initiating response procedures",
+    "signal_ids": [
+      "20260310-2209-SIG-009"
+    ],
+    "rejection_reason": "FLAGGED classification (2 assumptions) at 50% weight, but zero data support strips it entirely per Step 2. The inference that a boil water advisory triggers regulatory notification is procedurally reasonable but we have no evidence it has occurred in this case. The regulator remains a complete data void. Logged but stripped from all scoring.",
+    "root_cause": "INSUFFICIENT_EVIDENCE",
+    "confidence_in_rejection": "high",
+    "corrections_ledger_action": "auto_commit",
+    "timestamp": "2026-03-10T22:20:25.730Z",
+    "source": "layer4_reconcile"
+  }
+]
