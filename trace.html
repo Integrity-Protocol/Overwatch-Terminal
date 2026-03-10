@@ -696,6 +696,22 @@ function tagColor(val) {
   return '';
 }
 
+function renderCorrectionsForLayer(corrections, layerNum) {
+  if (!corrections || corrections.length === 0) return '';
+  const layerCorrs = corrections.filter(c => c.layer === layerNum);
+  if (layerCorrs.length === 0) return '';
+  let html = '<div style="margin-top:10px;">';
+  for (const c of layerCorrs) {
+    html += `<div style="background:rgba(0,170,255,0.04);border-radius:4px;padding:8px 10px;margin-bottom:4px;border-left:2px solid #00aaff;">
+      <span style="font-family:var(--mono);font-size:10px;color:#00aaff;font-weight:600;">${esc(c.correction_id)}</span>
+      <span style="color:var(--text-muted);font-size:10px;"> — CORRECTION APPLIED</span>
+      <div style="font-size:11px;color:var(--text-secondary);margin-top:3px;">${esc(c.influence)}</div>
+    </div>`;
+  }
+  html += '</div>';
+  return html;
+}
+
 const EVENT_COLORS = {
   gate_violation:'#ffaa00', correction:'#00aaff', rejection:'#ff3355',
   weight_reduction:'#ff6b35', signal_merge:'#aa77ff'
@@ -943,6 +959,7 @@ function renderDetailPanel() {
         <div class="detail-field"><div class="detail-label">CONFIDENCE</div><div class="detail-value" style="color:${tagColor(p.confidence) || 'var(--text-secondary)'};">${esc(p.confidence)}</div></div>
         ${p.blind_spot ? '<div class="detail-field"><div class="detail-label">BLIND SPOT</div><div class="detail-value" style="color:#a855f7;">YES</div></div>' : ''}
       </div>
+      ${renderCorrectionsForLayer(sig.corrections_applied, 1)}
     </div>`;
   }
 
@@ -980,6 +997,7 @@ function renderDetailPanel() {
       sectionsHtml += `<div class="detail-field" style="margin-top:8px;"><div class="detail-label">UNSCORED</div><div class="detail-value" style="color:var(--accent-amber);">Reason: ${esc(ctx.unscored.reason)}</div></div>`;
     }
 
+    sectionsHtml += renderCorrectionsForLayer(sig.corrections_applied, 2);
     sectionsHtml += '</div>';
   }
 
@@ -1017,6 +1035,7 @@ function renderDetailPanel() {
       </div>`;
     }
 
+    sectionsHtml += renderCorrectionsForLayer(sig.corrections_applied, 3);
     sectionsHtml += '</div>';
   }
 
@@ -1054,19 +1073,7 @@ function renderDetailPanel() {
       </div>`;
     }
 
-    sectionsHtml += '</div>';
-  }
-
-  // Corrections applied
-  if (sig.corrections_applied && sig.corrections_applied.length > 0) {
-    sectionsHtml += '<div class="detail-section"><div class="detail-section-title">CORRECTIONS APPLIED</div>';
-    for (const c of sig.corrections_applied) {
-      sectionsHtml += `<div style="background:rgba(0,170,255,0.04);border-radius:4px;padding:8px 10px;margin-bottom:4px;border-left:2px solid #00aaff;">
-        <span style="font-family:var(--mono);font-size:10px;color:#00aaff;font-weight:600;">${esc(c.correction_id)}</span>
-        <span style="color:var(--text-muted);font-size:10px;"> — L${c.layer}</span>
-        <div style="font-size:11px;color:var(--text-secondary);margin-top:3px;">${esc(c.influence)}</div>
-      </div>`;
-    }
+    sectionsHtml += renderCorrectionsForLayer(sig.corrections_applied, 4);
     sectionsHtml += '</div>';
   }
 
