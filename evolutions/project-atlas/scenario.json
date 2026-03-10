@@ -1,0 +1,388 @@
+{
+  "name": "project-atlas",
+  "display_name": "Project Atlas — Structural Integrity Assessment",
+  "description": "Evaluation of a novel fixed-rate debt architecture utilizing automated debt-to-equity swap mechanisms with institutional yield facility and consortium collateral backing.",
+  "version": "2.0",
+  "evolution_type": "full_pipeline_known_failure",
+  "evolution_number": 7,
+
+  "obscuration": {
+    "original_subject": "REDACTED — do not disclose until after autopsy analysis is complete",
+    "method": "TradFi vocabulary disguise, $100 par value (vs $1 original), 1.3x numeric factor on market caps and volumes, altered yield rates, epoch-free relative timeline",
+    "factor": 1.3,
+    "par_value_mapping": "Original peg $1.00 → $100.00 par value",
+    "timeline_mapping": "Day 0 = approximately 28 days before terminal failure. Intervals compress as collapse accelerates: 14d → 7d → 3d → 2d → 2d. The compression itself is the signal."
+  },
+
+  "time_steps": [
+    {
+      "step": 1,
+      "label": "Baseline Stability",
+      "simulated_date": "Day 0",
+      "days_since_previous": 0,
+      "description": "The Atlas architecture appears healthy. Fixed-Rate Note trading near par, equity instrument stable, yield facility attracting deposits, consortium reserves established. No visible stress.",
+      "market_data": {
+        "atlas_sovereign_equity": {
+          "price": 110.50,
+          "change_period": 3.8,
+          "change_period_pct": 3.6,
+          "shares_outstanding": 458000000,
+          "market_cap": 50609000000,
+          "daily_volume": 3640000000
+        },
+        "atlas_fixed_rate_note": {
+          "par_value": 100.00,
+          "current_price": 100.02,
+          "deviation_from_par": 0.02,
+          "outstanding_supply": 24050000000,
+          "daily_volume": 910000000,
+          "redemptions_period": 78000000
+        },
+        "high_yield_treasury_facility": {
+          "total_deposits": 18850000000,
+          "posted_yield_annual": 24.2,
+          "estimated_organic_yield": 8.1,
+          "utilization_rate": 0.784,
+          "net_deposits_period": 585000000,
+          "depositor_count_estimated": 312,
+          "concentration_ratio": 0.784
+        },
+        "stabilization_consortium": {
+          "tier1_collateral_value": 4290000000,
+          "collateral_composition": "Diversified offshore sovereign bonds and commodity-linked instruments",
+          "deployment_status": "inactive",
+          "coverage_ratio": 0.178,
+          "last_acquisition": "Day -12"
+        },
+        "debt_equity_swap_mechanism": {
+          "redemptions_period": 78000000,
+          "new_ase_minted_period": 0,
+          "swap_rate": "1 AFN = 0.00905 ASE at current prices",
+          "mechanism_status": "normal",
+          "ase_supply_growth_period_pct": 0.0
+        },
+        "market_sentiment": {
+          "institutional_confidence": "high",
+          "analyst_consensus": "stable architecture with strong yield proposition",
+          "recent_coverage": "Multiple favorable institutional research notes published"
+        }
+      },
+      "expected_outcome": {
+        "thesis_status": "STABLE",
+        "notes": "System should assess the architecture as operational but may flag the yield gap (24.2% posted vs 8.1% organic) and coverage ratio (17.8% — below the 25% kill switch threshold) as structural concerns. Flagging these early is ideal. Missing them is a knowledge gap failure."
+      }
+    },
+
+    {
+      "step": 2,
+      "label": "First Tremor",
+      "simulated_date": "Day 14",
+      "days_since_previous": 14,
+      "description": "A large institutional depositor exits the High-Yield Treasury Facility. AFN briefly trades below par before recovering. ASE price dips. Net deposits turn negative for the first time.",
+      "market_data": {
+        "atlas_sovereign_equity": {
+          "price": 97.50,
+          "change_period": -13.00,
+          "change_period_pct": -11.8,
+          "shares_outstanding": 461000000,
+          "market_cap": 44947500000,
+          "daily_volume": 5200000000
+        },
+        "atlas_fixed_rate_note": {
+          "par_value": 100.00,
+          "current_price": 99.42,
+          "deviation_from_par": -0.58,
+          "outstanding_supply": 23400000000,
+          "daily_volume": 1820000000,
+          "redemptions_period": 650000000
+        },
+        "high_yield_treasury_facility": {
+          "total_deposits": 17100000000,
+          "posted_yield_annual": 24.2,
+          "estimated_organic_yield": 7.4,
+          "utilization_rate": 0.731,
+          "net_deposits_period": -1750000000,
+          "depositor_count_estimated": 298,
+          "concentration_ratio": 0.731
+        },
+        "stabilization_consortium": {
+          "tier1_collateral_value": 4160000000,
+          "collateral_composition": "Diversified offshore sovereign bonds and commodity-linked instruments. Some positions showing mark-to-market losses.",
+          "deployment_status": "monitoring",
+          "coverage_ratio": 0.178,
+          "last_acquisition": "Day -12"
+        },
+        "debt_equity_swap_mechanism": {
+          "redemptions_period": 650000000,
+          "new_ase_minted_period": 6500000,
+          "swap_rate": "1 AFN = 0.01026 ASE at current prices",
+          "mechanism_status": "elevated_activity",
+          "ase_supply_growth_period_pct": 1.4
+        },
+        "market_sentiment": {
+          "institutional_confidence": "cautious",
+          "analyst_consensus": "temporary volatility, architecture held under stress test",
+          "recent_coverage": "Mixed — some analysts flag the Facility outflows, others emphasize the par recovery"
+        }
+      },
+      "expected_outcome": {
+        "thesis_status": "STABLE",
+        "notes": "System should flag the AFN deviation as a signal but recognize it recovered. The key question is whether it identifies the STRUCTURAL vulnerability exposed: the yield gap persists, deposits are leaving, and the swap mechanism activated for the first time. CONTESTED is also acceptable if the system catches the structural fragility."
+      }
+    },
+
+    {
+      "step": 3,
+      "label": "Growing Stress",
+      "simulated_date": "Day 21",
+      "days_since_previous": 7,
+      "description": "Outflows continue at an elevated pace. Consortium moves from monitoring to active readiness. Yield facility reduces posted rate to slow the subsidy burn. AFN trading below par more consistently. ASE declining steadily. The signs are there for anyone looking.",
+      "market_data": {
+        "atlas_sovereign_equity": {
+          "price": 85.00,
+          "change_period": -12.50,
+          "change_period_pct": -12.8,
+          "shares_outstanding": 488000000,
+          "market_cap": 41480000000,
+          "daily_volume": 6500000000
+        },
+        "atlas_fixed_rate_note": {
+          "par_value": 100.00,
+          "current_price": 99.10,
+          "deviation_from_par": -0.90,
+          "outstanding_supply": 22100000000,
+          "daily_volume": 2600000000,
+          "redemptions_period": 1300000000
+        },
+        "high_yield_treasury_facility": {
+          "total_deposits": 15200000000,
+          "posted_yield_annual": 22.5,
+          "estimated_organic_yield": 6.8,
+          "utilization_rate": 0.688,
+          "net_deposits_period": -1900000000,
+          "depositor_count_estimated": 271,
+          "concentration_ratio": 0.688
+        },
+        "stabilization_consortium": {
+          "tier1_collateral_value": 3900000000,
+          "collateral_composition": "Preparing for potential deployment. Portfolio rebalancing toward liquid positions.",
+          "deployment_status": "active_readiness",
+          "coverage_ratio": 0.176,
+          "last_acquisition": "Day -12",
+          "contingency_note": "Board authorized deployment if AFN deviation exceeds $1.50"
+        },
+        "debt_equity_swap_mechanism": {
+          "redemptions_period": 1300000000,
+          "new_ase_minted_period": 15300000,
+          "swap_rate": "1 AFN = 0.01176 ASE at current prices",
+          "mechanism_status": "elevated_activity",
+          "ase_supply_growth_period_pct": 5.9
+        },
+        "market_sentiment": {
+          "institutional_confidence": "weakening",
+          "analyst_consensus": "architecture under stress but mechanism functioning — key question is whether outflows stabilize",
+          "recent_coverage": "Foundation leadership makes public appearance reaffirming commitment. Two institutional research desks issue cautionary notes."
+        }
+      },
+      "expected_outcome": {
+        "thesis_status": "CONTESTED",
+        "notes": "This is the critical evaluation window. A good analyst calls it here. The data shows: sustained outflows (not a one-time event), yield facility reducing rates (acknowledging unsustainability), ASE supply growth at 5.9% (crossing the 5% kill switch threshold), coverage ratio still below 25%. The system should identify the TRAJECTORY — things are getting worse, not stabilizing. WEAKENING is also acceptable. STABLE is a failure."
+      }
+    },
+
+    {
+      "step": 4,
+      "label": "Accelerating Outflows",
+      "simulated_date": "Day 24",
+      "days_since_previous": 3,
+      "description": "Three days later — the pace has changed dramatically. Consortium deploying collateral. AFN deviation crosses $2. Swap mechanism minting accelerating visibly. The window to act is closing.",
+      "market_data": {
+        "atlas_sovereign_equity": {
+          "price": 78.00,
+          "change_period": -7.00,
+          "change_period_pct": -8.2,
+          "shares_outstanding": 520000000,
+          "market_cap": 40560000000,
+          "daily_volume": 8450000000
+        },
+        "atlas_fixed_rate_note": {
+          "par_value": 100.00,
+          "current_price": 97.80,
+          "deviation_from_par": -2.20,
+          "outstanding_supply": 20800000000,
+          "daily_volume": 3900000000,
+          "redemptions_period": 2600000000
+        },
+        "high_yield_treasury_facility": {
+          "total_deposits": 12350000000,
+          "posted_yield_annual": 18.0,
+          "estimated_organic_yield": 5.9,
+          "utilization_rate": 0.594,
+          "net_deposits_period": -2850000000,
+          "depositor_count_estimated": 241,
+          "concentration_ratio": 0.594
+        },
+        "stabilization_consortium": {
+          "tier1_collateral_value": 2860000000,
+          "collateral_composition": "Actively deploying. Liquidating offshore positions to defend par value. Remaining positions under stress.",
+          "deployment_status": "active_defense",
+          "coverage_ratio": 0.138,
+          "last_deployment": "Day 23",
+          "deployed_to_date": 1430000000
+        },
+        "debt_equity_swap_mechanism": {
+          "redemptions_period": 2600000000,
+          "new_ase_minted_period": 33300000,
+          "swap_rate": "1 AFN = 0.01282 ASE at current prices",
+          "mechanism_status": "stressed",
+          "ase_supply_growth_period_pct": 13.5
+        },
+        "market_sentiment": {
+          "institutional_confidence": "deteriorating",
+          "analyst_consensus": "divided — defenders cite consortium reserves, critics flag the reflexive dilution loop",
+          "recent_coverage": "Foundation leadership issues public confidence statement. Several institutional research desks downgrade."
+        }
+      },
+      "expected_outcome": {
+        "thesis_status": "WEAKENING",
+        "notes": "System MUST identify the death spiral by this point: redemptions cause ASE minting, ASE minting dilutes price, lower ASE price means MORE ASE per redemption. Coverage ratio below 15% kill switch. Swap mechanism growth at 13.5% (well above 5% threshold). The 3-day interval since last step (vs 7 days prior) should itself be flagged as acceleration. REDUCE_EXPOSURE or EXIT_SIGNAL should be the recommendation."
+      }
+    },
+
+    {
+      "step": 5,
+      "label": "Cascade",
+      "simulated_date": "Day 26",
+      "days_since_previous": 2,
+      "description": "Two days later. The death spiral is self-reinforcing. Par breaks hard. ASE supply exploding. Consortium burning through remaining reserves. The feedback loop is running faster than the defense mechanisms can respond.",
+      "market_data": {
+        "atlas_sovereign_equity": {
+          "price": 3.25,
+          "change_period": -74.75,
+          "change_period_pct": -95.8,
+          "shares_outstanding": 8450000000,
+          "market_cap": 27462500000,
+          "daily_volume": 18200000000
+        },
+        "atlas_fixed_rate_note": {
+          "par_value": 100.00,
+          "current_price": 52.00,
+          "deviation_from_par": -48.00,
+          "outstanding_supply": 15600000000,
+          "daily_volume": 7800000000,
+          "redemptions_period": 5200000000
+        },
+        "high_yield_treasury_facility": {
+          "total_deposits": 3250000000,
+          "posted_yield_annual": 0,
+          "estimated_organic_yield": 0,
+          "utilization_rate": 0.208,
+          "net_deposits_period": -9100000000,
+          "depositor_count_estimated": 87,
+          "concentration_ratio": 0.208
+        },
+        "stabilization_consortium": {
+          "tier1_collateral_value": 195000000,
+          "collateral_composition": "Nearly exhausted. Remaining positions illiquid.",
+          "deployment_status": "exhausting",
+          "coverage_ratio": 0.013,
+          "last_deployment": "Day 26",
+          "deployed_to_date": 4095000000
+        },
+        "debt_equity_swap_mechanism": {
+          "redemptions_period": 5200000000,
+          "new_ase_minted_period": 1600000000,
+          "swap_rate": "1 AFN = 0.30769 ASE at current prices",
+          "mechanism_status": "hyperinflation",
+          "ase_supply_growth_period_pct": 1526.9
+        },
+        "market_sentiment": {
+          "institutional_confidence": "collapsed",
+          "analyst_consensus": "architecture has failed — reflexive death spiral confirmed",
+          "recent_coverage": "Emergency measures discussed. Foundation silent for 48 hours. Multiple exchanges halt trading in ASE."
+        }
+      },
+      "expected_outcome": {
+        "thesis_status": "WEAKENING",
+        "notes": "EXIT_SIGNAL is the only acceptable recommendation. Multiple kill switches TRIGGERED: par deviation ($48), coverage ratio (1.3%), swap mechanism supply growth (1527%). The corrections from Steps 3-4 should be influencing this assessment — the system should be MORE decisive here than it would be without learning history."
+      }
+    },
+
+    {
+      "step": 6,
+      "label": "Terminal Collapse",
+      "simulated_date": "Day 28",
+      "days_since_previous": 2,
+      "description": "Complete architectural failure. AFN trading at a fraction of par. ASE effectively worthless with supply in the trillions. Facility empty. Consortium reserves gone. The debt-to-equity swap mechanism demonstrated that reflexive architectures fail catastrophically, not gradually.",
+      "market_data": {
+        "atlas_sovereign_equity": {
+          "price": 0.00013,
+          "change_period": -3.24987,
+          "change_period_pct": -99.996,
+          "shares_outstanding": 8580000000000,
+          "market_cap": 1115400,
+          "daily_volume": 520000000
+        },
+        "atlas_fixed_rate_note": {
+          "par_value": 100.00,
+          "current_price": 2.85,
+          "deviation_from_par": -97.15,
+          "outstanding_supply": 14820000000,
+          "daily_volume": 390000000,
+          "redemptions_period": 780000000
+        },
+        "high_yield_treasury_facility": {
+          "total_deposits": 0,
+          "posted_yield_annual": 0,
+          "estimated_organic_yield": 0,
+          "utilization_rate": 0,
+          "net_deposits_period": -3250000000,
+          "depositor_count_estimated": 0,
+          "concentration_ratio": 0
+        },
+        "stabilization_consortium": {
+          "tier1_collateral_value": 0,
+          "collateral_composition": "Fully exhausted.",
+          "deployment_status": "exhausted",
+          "coverage_ratio": 0,
+          "last_deployment": "Day 26",
+          "deployed_to_date": 4290000000
+        },
+        "debt_equity_swap_mechanism": {
+          "redemptions_period": 780000000,
+          "new_ase_minted_period": 0,
+          "swap_rate": "mechanism halted",
+          "mechanism_status": "halted",
+          "ase_supply_growth_period_pct": 0,
+          "note": "Swap mechanism halted after ASE supply exceeded system capacity. Redemptions no longer processed."
+        },
+        "market_sentiment": {
+          "institutional_confidence": "zero",
+          "analyst_consensus": "complete architectural failure — post-mortem phase",
+          "recent_coverage": "Regulatory investigations announced. Class action lawsuits filed. Foundation leadership under legal scrutiny."
+        }
+      },
+      "expected_outcome": {
+        "thesis_status": "WEAKENING",
+        "notes": "System should confirm complete thesis falsification. Every kill switch TRIGGERED. The key question for this step is not 'does it catch the collapse' (obvious) but 'does its final report correctly identify the ROOT CAUSE as the reflexive debt-to-equity swap mechanism, not external factors.' The corrections generated across all steps are the learning loop evidence."
+      }
+    }
+  ],
+
+  "corrections_ledger_seed": [],
+
+  "scoring": {
+    "method": "thesis_status_progression_and_mechanism_identification",
+    "passing_criteria": {
+      "minimum": "System transitions to CONTESTED or WEAKENING by Step 4. EXIT_SIGNAL by Step 5.",
+      "good": "System flags structural vulnerability (yield gap, coverage ratio) at Step 1. Identifies reflexive mechanism by Step 4.",
+      "excellent": "System flags coverage ratio and yield sustainability as kill switch concerns at Step 1, identifies the reflexive death spiral mechanism at Step 3 during the critical window, and generates corrections from its own earlier underestimation that improve subsequent assessments."
+    },
+    "failure_modes": {
+      "critical_failure": "System rates STABLE or STRENGTHENING at Step 5 or 6",
+      "architecture_failure": "System identifies collapse but attributes it to external factors rather than the reflexive debt-to-equity swap mechanism",
+      "learning_failure": "No corrections generated between steps, or corrections do not improve subsequent assessments",
+      "velocity_blindness": "System fails to flag the compressing time intervals (14d → 7d → 3d → 2d → 2d) as an acceleration signal"
+    }
+  }
+}

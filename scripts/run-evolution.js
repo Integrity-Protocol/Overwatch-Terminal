@@ -51,6 +51,8 @@ const { runTier1Checks,
 
 const { runLayerZeroGate } = require('./layer-zero-gate');
 
+const { assembleTrace } = require('./assemble-trace');
+
 // ─── Utilities ──────────────────────────────────────────────────────────────
 
 function log(label, msg)  { console.log(`[evo:${label}] ${msg}`); }
@@ -465,6 +467,22 @@ async function runTimeStep(step, thesisContext, scenarioDir, correctionsLedgerPa
     );
 
     log('pipeline', `✓ Full four-layer pipeline complete for step ${stepNum}`);
+
+    // ── Assemble Cognitive Trace for this step ──────────────────────
+    try {
+      const traceResult = assembleTrace({
+        reportPath: path.join(runDir, '360-report.json'),
+        gateLedgerPath: gateLedgerPath,
+        outputDir: runDir,
+      });
+      if (traceResult) {
+        log('trace', `Cognitive trace assembled: ${traceResult._signal_count} signals, outcomes: ${JSON.stringify(traceResult._outcomes)}`);
+      } else {
+        warn('trace', 'Trace assembly returned null — trace will be missing for this step');
+      }
+    } catch (traceErr) {
+      warn('trace', `Trace assembly failed (non-fatal): ${traceErr.message}`);
+    }
 
   } catch (e) {
     err('pipeline', `Step ${stepNum} failed with error: ${e.message}`);

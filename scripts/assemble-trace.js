@@ -83,19 +83,24 @@ function getGateViolationsForSignal(gateEntry, signalId) {
 
 // ─── Assembler ────────────────────────────────────────────────────────────────
 
-function assembleTrace() {
+function assembleTrace(options) {
+  const opts = options || {};
+  const reportPath = opts.reportPath || REPORT_PATH;
+  const gateLedgerPath = opts.gateLedgerPath || GATE_LEDGER;
+  const outputDir = opts.outputDir || DATA_DIR;
+
   log('init', '=== COGNITIVE TRACE ASSEMBLER ===');
 
   // ── Load 360 report ──
-  if (!fs.existsSync(REPORT_PATH)) {
+  if (!fs.existsSync(reportPath)) {
     err('init', '360-report.json not found — cannot assemble trace');
-    process.exit(1);
+    return null;
   }
-  const report = JSON.parse(fs.readFileSync(REPORT_PATH, 'utf8'));
+  const report = JSON.parse(fs.readFileSync(reportPath, 'utf8'));
   const generatedAt = report._generated_at;
   if (!generatedAt) {
     err('init', '360-report.json missing _generated_at — cannot identify run');
-    process.exit(1);
+    return null;
   }
   log('init', `Run timestamp: ${generatedAt}`);
 
@@ -120,8 +125,8 @@ function assembleTrace() {
 
   // ── Load gate ledger ──
   let gates = {};
-  if (fs.existsSync(GATE_LEDGER)) {
-    const gateLedger = JSON.parse(fs.readFileSync(GATE_LEDGER, 'utf8'));
+  if (fs.existsSync(gateLedgerPath)) {
+    const gateLedger = JSON.parse(fs.readFileSync(gateLedgerPath, 'utf8'));
     gates = getGateEntriesForCurrentRun(gateLedger);
     const found = Object.keys(gates).length;
     log('init', `Gate ledger: found ${found}/4 gate entries for current run`);
@@ -403,7 +408,7 @@ function assembleTrace() {
   // Timestamp format for filename: strip colons and periods for filesystem safety
   const tsForFile = generatedAt.replace(/[:.]/g, '-');
   const traceFilename = `cognitive-trace-${tsForFile}.json`;
-  const tracePath = path.join(DATA_DIR, traceFilename);
+  const tracePath = path.join(outputDir, traceFilename);
 
   const traceOutput = {
     _trace_version: '1.0',
@@ -423,4 +428,8 @@ function assembleTrace() {
 
 // ─── Run ──────────────────────────────────────────────────────────────────────
 
-assembleTrace();
+if (require.main === module) {
+  assembleTrace();
+}
+
+module.exports = { assembleTrace };
