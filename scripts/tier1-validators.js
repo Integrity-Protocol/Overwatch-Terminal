@@ -42,10 +42,10 @@ function createFlag(ruleId, finding, detail, severity = 'FLAG') {
  * but only 0-1 citations. Calibration data — not pass/fail.
  *
  * @param {Array} findings — array of objects with evidence_citations and confidence fields
- * @param {string} findingNameField — which field contains the finding name (e.g., 'threat', 'finding_from_layer2')
+ * @param {string} findingNameField — which field contains the finding name (e.g., 'signal', 'finding_from_layer2')
  * @returns {Array} flags
  */
-function checkCitationCount(findings, findingNameField = 'threat') {
+function checkCitationCount(findings, findingNameField = 'signal') {
   const flags = [];
   if (!Array.isArray(findings)) return flags;
 
@@ -275,11 +275,11 @@ function checkZeroGapOutput(layerOutput, layerName) {
   const flags = [];
   if (!layerOutput) return flags;
 
-  // Check scored threats (Layer 2)
-  const scored = layerOutput.scored_threats;
+  // Check scored signals (Layer 2)
+  const scored = layerOutput.scored_signals;
   if (Array.isArray(scored) && scored.length > 0) {
     const allHigh = scored.every(t => (t.confidence || '').toUpperCase() === 'HIGH');
-    const unscored = layerOutput.unscored_threats;
+    const unscored = layerOutput.unscored_signals;
     const noGaps = !Array.isArray(unscored) || unscored.length === 0;
     const knowledgeAudit = layerOutput.knowledge_audit;
     const noKnowledgeGaps = !Array.isArray(knowledgeAudit) ||
@@ -289,7 +289,7 @@ function checkZeroGapOutput(layerOutput, layerName) {
       flags.push(createFlag(
         'LZ-EPH-001',
         `${layerName} output`,
-        `All ${scored.length} threats scored HIGH confidence with zero knowledge gaps and zero unscored threats. Suspiciously perfect — verify the model is admitting uncertainty where warranted.`
+        `All ${scored.length} signals scored HIGH confidence with zero knowledge gaps and zero unscored signals. Suspiciously perfect — verify the model is admitting uncertainty where warranted.`
       ));
     }
   }
@@ -322,7 +322,7 @@ function checkZeroGapOutput(layerOutput, layerName) {
  * @param {string} findingNameField — field name for the finding identifier
  * @returns {Array} flags
  */
-function checkConfidenceEvidenceRatio(findings, findingNameField = 'threat') {
+function checkConfidenceEvidenceRatio(findings, findingNameField = 'signal') {
   const flags = [];
   if (!Array.isArray(findings)) return flags;
 
@@ -419,7 +419,7 @@ function getNestedValue(obj, path) {
  * Layer 1 is raw intake — minimal code checks apply.
  * Main concern: input data quality.
  *
- * @param {Array}  output    — Layer 1 threat array
+ * @param {Array}  output    — Layer 1 signal array
  * @param {object} inputData — dashboard-data.json
  * @returns {Array} flags
  */
@@ -437,7 +437,7 @@ function validateLayer1(output, inputData) {
 
 /**
  * Layer 2 (CONTEXTUALIZE) validator.
- * Knowledge audit + contextual scoring. Checks scored threats for
+ * Knowledge audit + contextual scoring. Checks scored signals for
  * confidence-evidence calibration and zero-gap suspicion.
  *
  * @param {object} output    — Layer 2 output object
@@ -461,13 +461,13 @@ function validateLayer2(output, inputData) {
   // LZ-EPH-001: Check for suspiciously zero-gap output
   flags.push(...checkZeroGapOutput(output, 'Layer 2'));
 
-  // LZ-EPH-002: Check confidence-to-evidence ratio on scored threats
-  // Layer 2 scored_threats may not have evidence_citations (that's Layer 3),
+  // LZ-EPH-002: Check confidence-to-evidence ratio on scored signals
+  // Layer 2 scored_signals may not have evidence_citations (that's Layer 3),
   // but if they do, check them
-  if (Array.isArray(output.scored_threats)) {
-    const withCitations = output.scored_threats.filter(t => Array.isArray(t.evidence_citations));
+  if (Array.isArray(output.scored_signals)) {
+    const withCitations = output.scored_signals.filter(t => Array.isArray(t.evidence_citations));
     if (withCitations.length > 0) {
-      flags.push(...checkConfidenceEvidenceRatio(withCitations, 'threat'));
+      flags.push(...checkConfidenceEvidenceRatio(withCitations, 'signal'));
     }
   }
 
