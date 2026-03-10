@@ -585,7 +585,7 @@ function getRunType() {
  * @param {object} marketData — current dashboard data (from dashboard-data.json)
  * @returns {Promise<Array>}
  */
-async function runSweep(marketData) {
+async function runSweep(marketData, thesisContext) {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
     err('360-sweep', 'ANTHROPIC_API_KEY not set — cannot run sweep');
@@ -598,18 +598,11 @@ Positive, negative, ambiguous, contradictory. Apply equal rigor in all direction
 
 You are not evaluating these signals. You are not determining their impact on the thesis. You are identifying what is happening in the environment. Later layers will contextualize, reason about, and judge what you find.
 
-THESIS:
-XRP/XRPL is positioned to become primary institutional settlement infrastructure for cross-border payments. Convergent catalysts include: Ripple institutional partnerships (BIS, IMF, central banks), RLUSD stablecoin growth toward $5B circulation, ODL volume expansion, Permissioned Domains enabling compliant institutional access, XRP ETF approval and sustained inflows, and Japanese institutional adoption via SBI Holdings.
+THESIS CONTEXT (includes thesis statement, falsification criteria, key players, and graduated lessons):
+${thesisContext}
 
 CURRENT DATA:
 ${JSON.stringify(marketData)}
-
-FALSIFICATION CRITERIA (existing kill switches):
-- ODL Volume: Must show growth trajectory toward institutional-grade volume by Q3 2026
-- RLUSD Circulation: Tracking toward $5B target
-- PermissionedDEX: Institutional count must be verifiable
-- XRP ETF: Sustained outflows beyond 30 days triggers review
-- Fear & Greed: Extended period below 20 signals structural risk
 
 SIGNAL CATEGORIES:
 Every signal must be classified into one of these universal categories:
@@ -639,13 +632,6 @@ INSTRUCTIONS:
 4. Think laterally. The most important signals are often the ones not already being tracked.
 
 5. Do not self-censor signals in any direction. A material positive development requires the same reporting discipline as a material negative development.
-
-GRADUATED LESSONS (promoted from corrections ledger — operational experience):
-These principles were identified through repeated errors in production runs and promoted from the Overledger into standing perceptual instructions. They represent patterns the system got wrong multiple times before the lesson was formalized.
-
-6. Personal social media content from individuals relevant to the thesis is not a business signal unless it contains verifiable thesis-relevant content. Personal posts, lifestyle content, and non-business commentary do not qualify as signals regardless of the individual's organizational role. [Graduated from CL-030]
-
-7. Retail sentiment indices measure public mood, not institutional behavior. Do not treat sentiment index movements as signals of institutional activity without independent flow evidence. [Graduated from CL-031]
 
 Respond with ONLY a JSON array. Each element:
 {
@@ -793,11 +779,7 @@ For each significant signal from Layer 1, perform the following check BEFORE sco
      * USD/JPY (current value, trajectory)
      * JGB 10Y yield (current value, trajectory)
      * Brent Crude (current value, trajectory)
-   - Assess compound stress level:
-     * MONITORING: Any one indicator in elevated range
-     * ELEVATED: Any two of (Brent >$85, JGB 10Y >2.3%, USD/JPY >157) simultaneously
-     * CRITICAL: Any two of (Brent >$95, JGB 10Y >2.5%, USD/JPY >160) OR any Hormuz disruption event
-     * EMERGENCY: Hormuz closure + forced BOJ intervention + JGB 10Y >2.5%
+   - Assess compound stress level using the thresholds defined in the THESIS CONTEXT (Compound Stress Matrix section).
    - The break point of a pre-loaded structure is LOWER than the break point of an unloaded structure. If one leg is already elevated, less force is needed from the other two to reach critical. State this explicitly.
    - Velocity and trajectory matter as much as current level. A fast move toward a threshold is more dangerous than sitting at it.
 
@@ -1053,15 +1035,7 @@ CORRECTIONS LEDGER CHECK:
 
 A) PLAYER BEHAVIORAL ANALYSIS
 
-For each key player, analyze the gap between what they SAY and what they DO:
-
-1. RIPPLE — Actions: resource commitments, hiring, product launches. Key question: Why stop publishing ODL data?
-2. BIS / PROJECT NEXUS / mBRIDGE — Actions: pilot programs, central bank enrollment. Key question: Replace bridge currencies or coexist?
-3. SWIFT — Actions: Go-Live timeline, messaging upgrades. Key question: Upgrade sufficient to eliminate alternatives?
-4. JAPANESE INSTITUTIONS (SBI Holdings, BOJ) — Actions: SBI XRPL integration, BOJ policy moves. Key question: XRPL adoption from conviction or desperation?
-5. INSTITUTIONAL ASSET MANAGERS (Franklin Templeton, etc) — Actions: ETF launches, custody, public statements. Key question: Would $1.5T managers launch without private data?
-6. COMPETING INFRASTRUCTURE (Circle/USDC, bank networks) — Actions: CCTP v2, tokenized deposit rollouts. Key question: Parallel to XRPL or competing for same corridors?
-7. CENTRAL BANKS / MACRO ACTORS (BOJ, Fed, ECB) — Actions: rate decisions, intervention signals, fiscal policy. Key question: How do their trapped positions create second-order effects for settlement infrastructure demand?
+For each key player identified in the THESIS CONTEXT (Key Players for Behavioral Analysis section), analyze the gap between what they SAY and what they DO.
 
 For each player: What resources are they committing? (money > words) What talent are they hiring? (reveals future plans) What partnerships are they forming? (reveals strategy) What are they NOT doing that they should be? (reveals doubt)
 
@@ -1678,7 +1652,7 @@ async function main() {
 
   // ── Layer 1: SWEEP ──────────────────────────────────────────────────────
   console.log('\n═══ LAYER 1: SWEEP ═══');
-  const sweepResults = await runSweep(dashboardData);
+  const sweepResults = await runSweep(dashboardData, thesisContext);
 
   // Tier 1 validators — Layer 1
   let tier1Layer1 = { flags: [], hard_fails: 0, total_flags: 0, layer: 1 };
