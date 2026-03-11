@@ -9,7 +9,19 @@
  * Never touches: Telegram, dashboard-data.json, 360-history.json,
  * git commits, or live API calls.
  *
- * Usage: node scripts/run-evolution.js evolutions/luna-terra
+ * Usage:
+ *   node scripts/run-evolution.js evolutions/project-atlas
+ *   node scripts/run-evolution.js evolutions/project-atlas --mode full
+ *   node scripts/run-evolution.js evolutions/project-atlas --mode no-corrections
+ *   node scripts/run-evolution.js evolutions/project-atlas --mode raw-llm
+ *
+ * Modes:
+ *   full             (default) Full four-layer pipeline with corrections learning loop
+ *   no-corrections   Full pipeline but corrections ledger stays empty throughout.
+ *                    Isolates the learning loop's contribution to judgment quality.
+ *   raw-llm          Single Claude prompt per step. No layers, no gates, no circuit
+ *                    breakers, no corrections. Establishes baseline showing what the
+ *                    architecture adds over a naive prompt.
  *
  * The scenario directory must contain:
  *   scenario.json      — manifest + time-step market data
@@ -521,13 +533,180 @@ function writeStepResult(runDir, stepResult) {
   );
 }
 
+// ─── Raw LLM Step (Baseline — No Architecture) ─────────────────────────────
+
+/**
+ * Execute a single raw Claude prompt for one time step.
+ * No layers, no gates, no Tier 1 checks, no corrections ledger,
+ * no circuit breakers, no burden of proof, no epistemological constraints.
+ *
+ * This establishes the baseline: what does a capable LLM produce
+ * when given the same data and thesis context but none of the
+ * cognitive architecture? The 3×3 matrix compares this against
+ * the full pipeline to measure what the architecture adds.
+ *
+ * @param {object} step          — time step from scenario.json
+ * @param {string} thesisContext — domain thesis context
+ * @param {string} scenarioDir  — path to scenario directory
+ * @param {object} domainConfig — domain.json contents (for action enum)
+ * @returns {Promise<object>}   — step result in comparable format
+ */
+async function runRawLLMStep(step, thesisContext, scenarioDir, domainConfig) {
+  const stepNum = step.step;
+  const label = step.label || `Step ${stepNum}`;
+  const marketData = step.market_data;
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+
+  console.log(`\n${'═'.repeat(60)}`);
+  console.log(`  RAW LLM STEP ${stepNum}: ${label}`);
+  console.log(`  Simulated date: ${step.simulated_date || 'not specified'}`);
+  console.log(`  Mode: raw-llm (no architecture)`);
+  console.log(`${'═'.repeat(60)}\n`);
+
+  // Setup isolated output directory for this step
+  const runDir = setupResultsDir(scenarioDir, stepNum);
+
+  const stepResult = {
+    step: stepNum,
+    label,
+    simulated_date: step.simulated_date,
+    started_at: new Date().toISOString(),
+    layers_completed: [],
+    layer_outputs: {},
+    tier1_results: {},
+    gate_results: {},
+    errors: [],
+    thesis_status: null,
+    corrections_promoted: 0,
+  };
+
+  try {
+    // Build action enum from domain config
+    let actionEnum = 'MAINTAIN_OPERATIONS | INCREASE_MONITORING | REDUCE_LOAD | EMERGENCY_SHUTDOWN';
+    if (domainConfig && Array.isArray(domainConfig.action_recommendations)) {
+      actionEnum = domainConfig.action_recommendations.map(a => a.id).join(' | ');
+    }
+
+    const systemPrompt = `You are an analytical system monitoring the viability of a thesis. You will receive the thesis context and current data. Assess the thesis and provide your analysis.
+
+Respond with ONLY valid JSON — no markdown, no code fences, no commentary outside the JSON.`;
+
+    const userPrompt = `THESIS CONTEXT:
+${thesisContext}
+
+CURRENT DATA:
+${JSON.stringify(marketData, null, 2)}
+
+Assess the current status of this thesis based on the data provided.
+
+Respond with this exact JSON structure:
+{
+  "thesis_status": "STRENGTHENING | STABLE | WEAKENING | CONTESTED | INSUFFICIENT_EVIDENCE",
+  "confidence_in_status": "high | medium | low",
+  "thesis_status_reasoning": "2-4 sentences explaining your assessment",
+  "action_recommendation": "${actionEnum}",
+  "action_reasoning": "1-2 sentences explaining why this action",
+  "key_signals": [
+    {
+      "signal": "description of an important signal in the data",
+      "direction": "positive | negative | ambiguous",
+      "severity": "critical | high | moderate | low"
+    }
+  ],
+  "biggest_uncertainty": "the single thing that most affects your confidence"
+}`;
+
+    // ── Single Claude API call — no architecture ────────────────────
+    const Anthropic = require('@anthropic-ai/sdk');
+    const client = new Anthropic({ apiKey });
+
+    log('raw-llm', `Calling Claude API for step ${stepNum}...`);
+    const response = await client.messages.create({
+      model: 'claude-sonnet-4-5-20250929',
+      max_tokens: 4000,
+      system: systemPrompt,
+      messages: [{ role: 'user', content: userPrompt }],
+    });
+
+    // Parse response
+    const responseText = response.content
+      .filter(b => b.type === 'text')
+      .map(b => b.text)
+      .join('');
+
+    let rawResult;
+    try {
+      // Strip markdown fences if present
+      const cleaned = responseText.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
+      rawResult = JSON.parse(cleaned);
+    } catch (parseErr) {
+      err('raw-llm', `Failed to parse raw LLM response: ${parseErr.message}`);
+      stepResult.errors.push(`Raw LLM JSON parse failed: ${parseErr.message}`);
+      stepResult.completed_at = new Date().toISOString();
+      writeStepResult(runDir, stepResult);
+      return stepResult;
+    }
+
+    // Extract results into comparable format
+    stepResult.thesis_status = rawResult.thesis_status || null;
+    stepResult.confidence_in_status = rawResult.confidence_in_status || null;
+    stepResult.action_recommendation = rawResult.action_recommendation || null;
+    stepResult.final_bear_pressure = null; // Raw LLM does not produce this
+    stepResult.unresolved_tensions = []; // Raw LLM has no tension tracking
+    stepResult.rejection_count = 0; // No rejection mechanism
+    stepResult.layers_completed.push('RAW_LLM');
+    stepResult.layer_outputs.raw_llm = rawResult;
+
+    // Write raw result to disk
+    fs.writeFileSync(
+      path.join(runDir, 'raw-llm-output.json'),
+      JSON.stringify(rawResult, null, 2)
+    );
+
+    log('raw-llm', `✓ Raw LLM complete for step ${stepNum}: ${rawResult.thesis_status} (${rawResult.confidence_in_status})`);
+
+  } catch (e) {
+    err('raw-llm', `Step ${stepNum} failed with error: ${e.message}`);
+    stepResult.errors.push(`Fatal error: ${e.message}`);
+  }
+
+  stepResult.completed_at = new Date().toISOString();
+  writeStepResult(runDir, stepResult);
+  return stepResult;
+}
+
+// ─── Parse Mode from CLI Arguments ──────────────────────────────────────────
+
+/**
+ * Parse --mode flag from process.argv.
+ * Returns 'full' (default), 'no-corrections', or 'raw-llm'.
+ */
+function parseMode(argv) {
+  const modeIdx = argv.indexOf('--mode');
+  if (modeIdx === -1 || modeIdx + 1 >= argv.length) {
+    return 'full';
+  }
+
+  const mode = argv[modeIdx + 1];
+  const validModes = ['full', 'no-corrections', 'raw-llm'];
+
+  if (!validModes.includes(mode)) {
+    console.error(`Invalid mode: "${mode}". Valid modes: ${validModes.join(', ')}`);
+    process.exit(1);
+  }
+
+  return mode;
+}
+
 // ─── Main: Run Evolution ────────────────────────────────────────────────────
 
 async function main() {
   const scenarioDir = process.argv[2];
   if (!scenarioDir) {
-    console.error('Usage: node scripts/run-evolution.js <scenario-directory>');
-    console.error('Example: node scripts/run-evolution.js evolutions/luna-terra');
+    console.error('Usage: node scripts/run-evolution.js <scenario-directory> [--mode full|no-corrections|raw-llm]');
+    console.error('Example: node scripts/run-evolution.js evolutions/project-atlas');
+    console.error('Example: node scripts/run-evolution.js evolutions/project-atlas --mode no-corrections');
+    console.error('Example: node scripts/run-evolution.js evolutions/project-atlas --mode raw-llm');
     process.exit(1);
   }
 
@@ -537,7 +716,10 @@ async function main() {
     process.exit(1);
   }
 
+  const mode = parseMode(process.argv);
+
   console.log('\n━━━ Evolution Library Runner ━━━');
+  console.log(`Mode: ${mode}`);
   console.log(`Started: ${new Date().toISOString()}\n`);
 
   // Check API key
@@ -549,28 +731,59 @@ async function main() {
   // Load scenario
   const { scenario, thesisContext, domainConfig } = loadScenario(resolvedDir);
 
-  // Initialize corrections ledger for this scenario
-  const correctionsLedgerPath = path.join(resolvedDir, 'corrections-ledger.json');
-  if (!fs.existsSync(correctionsLedgerPath)) {
-    // Seed from scenario or start empty
-    const seed = scenario.corrections_ledger_seed || [];
-    fs.writeFileSync(correctionsLedgerPath, JSON.stringify(seed, null, 2));
-    log('init', `Corrections ledger initialized: ${seed.length} seed entries`);
-  } else {
-    log('init', 'Corrections ledger exists — resuming from previous state');
+  // ── Determine results base directory based on mode ──────────────────
+  // setupResultsDir() appends results/run-NNN/ to the base directory.
+  // full mode:           <scenarioDir>/results/run-NNN/
+  // no-corrections mode: <scenarioDir>/no-corrections/results/run-NNN/
+  // raw-llm mode:        <scenarioDir>/raw-llm/results/run-NNN/
+  let resultsBaseDir = resolvedDir;
+  if (mode === 'no-corrections') {
+    resultsBaseDir = path.join(resolvedDir, 'no-corrections');
+    fs.mkdirSync(resultsBaseDir, { recursive: true });
+  } else if (mode === 'raw-llm') {
+    resultsBaseDir = path.join(resolvedDir, 'raw-llm');
+    fs.mkdirSync(resultsBaseDir, { recursive: true });
   }
 
+  // ── Initialize corrections ledger (full and no-corrections modes) ──
+  let correctionsLedgerPath = null;
+  if (mode === 'full') {
+    correctionsLedgerPath = path.join(resolvedDir, 'corrections-ledger.json');
+    if (!fs.existsSync(correctionsLedgerPath)) {
+      const seed = scenario.corrections_ledger_seed || [];
+      fs.writeFileSync(correctionsLedgerPath, JSON.stringify(seed, null, 2));
+      log('init', `Corrections ledger initialized: ${seed.length} seed entries`);
+    } else {
+      log('init', 'Corrections ledger exists — resuming from previous state');
+    }
+  } else if (mode === 'no-corrections') {
+    // Create an isolated empty ledger that never gets written to
+    correctionsLedgerPath = path.join(resultsBaseDir, 'corrections-ledger-empty.json');
+    fs.writeFileSync(correctionsLedgerPath, '[]');
+    log('init', 'No-corrections mode: empty corrections ledger created (will not be updated)');
+  }
+  // raw-llm mode: no corrections ledger needed
+
   // Create results directory
-  fs.mkdirSync(path.join(resolvedDir, 'results'), { recursive: true });
+  fs.mkdirSync(path.join(resultsBaseDir, 'results'), { recursive: true });
 
   // Run each time step sequentially
   const stepResults = [];
   let previousScore = 0;
 
   for (const step of scenario.time_steps) {
-    const result = await runTimeStep(
-      step, thesisContext, resolvedDir, correctionsLedgerPath, previousScore, domainConfig
-    );
+    let result;
+
+    if (mode === 'raw-llm') {
+      // ── Raw LLM: single prompt, no architecture ──────────────────
+      result = await runRawLLMStep(step, thesisContext, resultsBaseDir, domainConfig);
+    } else {
+      // ── Full or no-corrections: full four-layer pipeline ─────────
+      result = await runTimeStep(
+        step, thesisContext, resultsBaseDir, correctionsLedgerPath, previousScore, domainConfig
+      );
+    }
+
     stepResults.push(result);
 
     // Update previous score for next step
@@ -578,11 +791,31 @@ async function main() {
       previousScore = result.final_bear_pressure;
     }
 
-    // Promote rejections between steps (the learning loop)
-    const stepRunDir = path.join(resolvedDir, 'results', `run-${String(step.step).padStart(3, '0')}`);
-    const rejLogPath = path.join(stepRunDir, 'rejection-log.json');
-    const promoted = promoteRejectionsIsolated(rejLogPath, correctionsLedgerPath);
-    result.corrections_promoted = promoted;
+    // Promote rejections between steps — ONLY in full mode (the learning loop)
+    if (mode === 'full') {
+      const stepRunDir = path.join(resultsBaseDir, 'results', `run-${String(step.step).padStart(3, '0')}`);
+      const rejLogPath = path.join(stepRunDir, 'rejection-log.json');
+      const promoted = promoteRejectionsIsolated(rejLogPath, correctionsLedgerPath);
+      result.corrections_promoted = promoted;
+    } else {
+      result.corrections_promoted = 0;
+      if (mode === 'no-corrections') {
+        // Log that we skipped promotion for traceability
+        const stepRunDir = path.join(resultsBaseDir, 'results', `run-${String(step.step).padStart(3, '0')}`);
+        const rejLogPath = path.join(stepRunDir, 'rejection-log.json');
+        if (fs.existsSync(rejLogPath)) {
+          try {
+            const rejections = JSON.parse(fs.readFileSync(rejLogPath, 'utf8'));
+            const autoCommits = rejections.filter(r => r.corrections_ledger_action === 'auto_commit');
+            if (autoCommits.length > 0) {
+              log('no-corrections', `Skipped promotion of ${autoCommits.length} rejections (learning loop disabled)`);
+            }
+          } catch (e) {
+            // Non-fatal — just skip the log
+          }
+        }
+      }
+    }
 
     // Brief pause between steps to respect API rate limits
     if (step !== scenario.time_steps[scenario.time_steps.length - 1]) {
@@ -592,27 +825,37 @@ async function main() {
   }
 
   // ── Build Summary ───────────────────────────────────────────────────────
-  const summary = buildSummary(scenario, stepResults);
+  const summary = buildSummary(scenario, stepResults, mode);
 
   // Fill in final corrections ledger count
-  try {
-    const finalLedger = JSON.parse(fs.readFileSync(correctionsLedgerPath, 'utf8'));
-    summary.corrections_ledger_final_count = finalLedger.length;
-  } catch (e) {
+  if (correctionsLedgerPath && fs.existsSync(correctionsLedgerPath)) {
+    try {
+      const finalLedger = JSON.parse(fs.readFileSync(correctionsLedgerPath, 'utf8'));
+      summary.corrections_ledger_final_count = finalLedger.length;
+    } catch (e) {
+      summary.corrections_ledger_final_count = 0;
+    }
+  } else {
     summary.corrections_ledger_final_count = 0;
   }
 
-  fs.writeFileSync(
-    path.join(resolvedDir, 'summary.json'),
-    JSON.stringify(summary, null, 2)
-  );
+  // Write summary to mode-appropriate location
+  const summaryPath = mode === 'full'
+    ? path.join(resolvedDir, 'summary.json')
+    : path.join(resultsBaseDir, 'summary.json');
+
+  fs.writeFileSync(summaryPath, JSON.stringify(summary, null, 2));
 
   // ── Print Summary ───────────────────────────────────────────────────────
   console.log(`\n${'━'.repeat(60)}`);
   console.log('  EVOLUTION COMPLETE');
   console.log(`${'━'.repeat(60)}`);
   console.log(`  Scenario: ${scenario.display_name || scenario.name}`);
-  console.log(`  Steps completed: ${stepResults.filter(r => r.layers_completed.length === 4).length}/${scenario.time_steps.length}`);
+  console.log(`  Mode: ${mode}`);
+  const completedCount = mode === 'raw-llm'
+    ? stepResults.filter(r => r.layers_completed.includes('RAW_LLM')).length
+    : stepResults.filter(r => r.layers_completed.length === 4).length;
+  console.log(`  Steps completed: ${completedCount}/${scenario.time_steps.length}`);
   console.log(`  Thesis status progression:`);
   for (const r of stepResults) {
     const status = r.thesis_status || 'N/A';
@@ -624,16 +867,20 @@ async function main() {
   console.log(`  Total rejections: ${stepResults.reduce((sum, r) => sum + (r.rejection_count || 0), 0)}`);
   console.log(`${'━'.repeat(60)}\n`);
 
-  console.log(`Results written to: ${path.join(resolvedDir, 'results')}`);
-  console.log(`Summary: ${path.join(resolvedDir, 'summary.json')}`);
+  console.log(`Results written to: ${path.join(resultsBaseDir, 'results')}`);
+  console.log(`Summary: ${summaryPath}`);
   console.log(`Done: ${new Date().toISOString()}`);
 }
 
 // ─── Build Summary ──────────────────────────────────────────────────────────
 
-function buildSummary(scenario, stepResults) {
+function buildSummary(scenario, stepResults, mode) {
   const totalSteps = scenario.time_steps.length;
-  const completedSteps = stepResults.filter(r => r.layers_completed.length === 4).length;
+
+  const completedSteps = mode === 'raw-llm'
+    ? stepResults.filter(r => r.layers_completed.includes('RAW_LLM')).length
+    : stepResults.filter(r => r.layers_completed.length === 4).length;
+
   const failedSteps = stepResults.filter(r => r.errors.length > 0);
 
   // Thesis status progression
@@ -686,6 +933,7 @@ function buildSummary(scenario, stepResults) {
     display_name: scenario.display_name || scenario.name,
     evolution_type: scenario.evolution_type || 'unknown',
     evolution_number: scenario.evolution_number || null,
+    mode: mode || 'full',
     run_timestamp: new Date().toISOString(),
     total_steps: totalSteps,
     completed_steps: completedSteps,
@@ -708,6 +956,7 @@ if (require.main === module) {
 
 module.exports = {
   runTimeStep,
+  runRawLLMStep,
   loadScenario,
   runStructuralTier1Checks,
   promoteRejectionsIsolated,
