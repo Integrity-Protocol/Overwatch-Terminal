@@ -197,7 +197,7 @@ function assembleTrace(options) {
     // — Layer 1: Perception —
     const l1Signal = layer1.find(s => entryContainsSignal(s, sigId));
     const perception = l1Signal ? {
-      signal: l1Signal.signal,
+      signal: l1Signal.signal || l1Signal.threat,
       description: l1Signal.description,
       direction: l1Signal.direction,
       severity: l1Signal.severity,
