@@ -33,6 +33,7 @@ const Anthropic = require('@anthropic-ai/sdk');
 const promoteRejections = require('./promote-rejections');
 const { runTier1Checks } = require('./tier1-validators');
 const { runLayerZeroGate } = require('./layer-zero-gate');
+const { assembleTrace } = require('./assemble-trace');
 
 const DASHBOARD_PATH      = path.join(__dirname, '..', 'dashboard-data.json');
 const ANALYSIS_PATH       = path.join(__dirname, '..', 'analysis-output.json');
@@ -426,6 +427,8 @@ ${scChanges}
 ${probLine}
 🐻 <b>COUNTER-THESIS:</b> ${bearScore}/100
 ${bearOneLiner || '(no bear narrative)'}
+
+📋 <b>THESIS STATUS:</b> ${analysis.assessment_360?.thesis_status ?? '--'} (confidence: ${analysis.assessment_360?.confidence_in_status ?? '--'})
 ${eventsSection}
 
 <i>To apply: trigger "Apply Approved Analysis" workflow in GitHub Actions.</i>`;
@@ -1610,7 +1613,14 @@ function buildDashboardCompatible(reconcileResult, contextualizeResult, inferenc
     _layer3_raw: inferenceResult,
     _layer2_raw: contextualizeResult,
     _pipeline_version: '4-layer-v1',
-    _generated_at: new Date().toISOString()
+    _generated_at: new Date().toISOString(),
+
+    // Layer 4 thesis assessment fields — surfaced for evolution scoring and audit
+    thesis_status:          reconcileResult.thesis_status || null,
+    confidence_in_status:   reconcileResult.confidence_in_status || null,
+    action_recommendation:  reconcileResult.action_recommendation || null,
+    action_reasoning:       reconcileResult.action_reasoning || null,
+    unresolved_tensions:    reconcileResult.unresolved_tensions || null
   };
 
   log('bridge', `Bridge complete: score=${bearPressure}, delta=${scoreDelta}, rec=${dashCompat.tactical_recommendation}, signals=${signalMatrix.length}`);
@@ -1797,6 +1807,18 @@ async function main() {
           // ── Compatibility Bridge ──────────────────────────────────────
           assessment360 = buildDashboardCompatible(reconcileResult, contextualizeResult, inferenceResult, previousBearScore);
           log('pipeline', '✓ Full four-layer pipeline complete');
+
+          // ── Assemble Cognitive Trace ──────────────────────────────────
+          try {
+            const traceResult = assembleTrace();
+            if (traceResult) {
+              log('trace', `Cognitive trace assembled: ${traceResult._signal_count} signals, outcomes: ${JSON.stringify(traceResult._outcomes)}`);
+            } else {
+              warn('trace', 'Trace assembly returned null — trace will be missing for this run');
+            }
+          } catch (traceErr) {
+            warn('trace', `Trace assembly failed (non-fatal): ${traceErr.message}`);
+          }
         } else {
           // Layer 4 failed — fall back to Layer 2 output via old bridge
           warn('pipeline', 'Layer 4 failed — using Layer 2 output as fallback');
