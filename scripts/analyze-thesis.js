@@ -1577,7 +1577,7 @@ function buildDashboardCompatible(reconcileResult, contextualizeResult, inferenc
     bull_indicators:      bullCount,
     bear_indicators:      bearCount,
     ratio:                `${bullCount}:${bearCount}`,
-    assessment:           reconcileResult.pressure_reasoning || '',
+    assessment:           reconcileResult.thesis_status_reasoning || '',
     recommended_additions: null
   };
 
