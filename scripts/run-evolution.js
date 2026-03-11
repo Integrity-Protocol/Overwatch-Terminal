@@ -569,7 +569,7 @@ async function main() {
 
   for (const step of scenario.time_steps) {
     const result = await runTimeStep(
-      step, thesisContext, resolvedDir, correctionsLedgerPath, previousScore
+      step, thesisContext, resolvedDir, correctionsLedgerPath, previousScore, domainConfig
     );
     stepResults.push(result);
 
