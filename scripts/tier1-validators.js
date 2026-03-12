@@ -549,6 +549,26 @@ function validateLayer4(output, inputData) {
     }
   }
 
+  // AD #14: Auditor override consistency check
+  if (output.auditor_override === true) {
+    if (!output.state_lock_active) {
+      flags.push(createFlag(
+        'AD14-OVERRIDE-NO-LOCK',
+        'Auditor Override',
+        'auditor_override is true but state_lock_active is false. A Phase 2 override must always activate the state-lock.',
+        'HARD_FAIL'
+      ));
+    }
+    if (!output.auditor_override_reasoning || output.auditor_override_reasoning.trim() === '') {
+      flags.push(createFlag(
+        'AD14-OVERRIDE-NO-REASONING',
+        'Auditor Override',
+        'auditor_override is true but auditor_override_reasoning is empty. Every override must include the Auditor reasoning.',
+        'HARD_FAIL'
+      ));
+    }
+  }
+
   return flags;
 }
 

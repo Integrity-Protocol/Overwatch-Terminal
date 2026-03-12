@@ -33,6 +33,7 @@ const Anthropic = require('@anthropic-ai/sdk');
 const promoteRejections = require('./promote-rejections');
 const { runTier1Checks } = require('./tier1-validators');
 const { runLayerZeroGate } = require('./layer-zero-gate');
+const { runBlindAuditor, applyAuditorToOutput } = require('./blind-auditor');
 const { assembleTrace } = require('./assemble-trace');
 
 const DASHBOARD_PATH      = path.join(__dirname, '..', 'dashboard-data.json');
@@ -1249,6 +1250,24 @@ async function runReconcile(contextualizeResult, inferenceResult, marketData, th
   const actionSevere = (opts.domainConfig && opts.domainConfig.action_severe) || 'EXIT_SIGNAL';
   const actionMonitor = (opts.domainConfig && opts.domainConfig.action_monitor) || 'INCREASE_MONITORING';
 
+  // AD #14: Load active Blind Auditor advisory (if any) for Layer 4 to address
+  let advisorySection = '';
+  try {
+    const { getActiveAdvisory, loadFindings } = require('./blind-auditor');
+    const findingsPath = opts.findingsPath || path.join(__dirname, '..', 'data', 'audit-findings.json');
+    const findings = loadFindings(findingsPath);
+    const activeAdvisory = getActiveAdvisory(findings);
+    if (activeAdvisory) {
+      const mismatchDetails = (activeAdvisory.mismatches || [])
+        .map(m => `- ${m.type} (${m.severity}): ${m.detail}`)
+        .join('\n');
+      advisorySection = `\n=== BLIND AUDITOR ADVISORY — YOU MUST ADDRESS THIS ===\n\n${activeAdvisory.advisory_text}\n\nSpecific findings:\n${mismatchDetails}\n\nYou must either:\n1. COMMIT: Change your action_recommendation to match the direction your evidence shows.\n2. JUSTIFY: Name specific, verifiable evidence that warrants continued restraint. The justification must identify what you are waiting for and what observable outcome would resolve the question.\n\nIf you do neither, the Blind Auditor will override your action recommendation on the next run.\n`;
+      log('analysis', `Blind Auditor advisory loaded: ${activeAdvisory.mismatches?.length || 0} findings for Layer 4 to address`);
+    }
+  } catch (e) {
+    warn('analysis', `Blind Auditor advisory load failed (non-fatal): ${e.message}`);
+  }
+
   const prompt = `${LAYER_ZERO_RULES}
 
 You are the final decision-maker in a four-layer investment thesis monitoring system. You have the most complete picture of any layer: scored data from Layer 2 AND strategic reasoning from Layer 3. Your job is not to add more analysis. Your job is to DECIDE what everything means and what to do about it.
@@ -1266,7 +1285,7 @@ ${JSON.stringify(marketData)}
 
 THESIS CONTEXT:
 ${thesisContext}
-
+${advisorySection}
 === BURDEN OF PROOF — APPLY BEFORE ALL ELSE ===
 
 For every inference Layer 3 produced, apply judicial skepticism:
@@ -1894,6 +1913,44 @@ async function main() {
     if (prunedSignals.length > 0) {
       assessment360._pruned_signals = prunedSignals;
     }
+
+    // ── Blind Auditor: AD #14 Trajectory Review ───────────────────────────
+    try {
+      const historyPath = path.join(__dirname, '..', 'data', '360-history.json');
+      let auditHistory = [];
+      if (fs.existsSync(historyPath)) {
+        auditHistory = JSON.parse(fs.readFileSync(historyPath, 'utf8'));
+      }
+      let domainConfig = {};
+      const domainConfigPath = path.join(__dirname, '..', 'config', 'domain.json');
+      if (fs.existsSync(domainConfigPath)) {
+        domainConfig = JSON.parse(fs.readFileSync(domainConfigPath, 'utf8'));
+      }
+      const auditorResult = runBlindAuditor({
+        history: auditHistory,
+        currentOutput: assessment360,
+        domainConfig,
+        runIndex: auditHistory.length,
+      });
+      applyAuditorToOutput(assessment360, auditorResult);
+      if (auditorResult.override) {
+        log('auditor', `PHASE 2 OVERRIDE: action changed to ${auditorResult.override_action}`);
+        // Break-glass: immediate high-priority Telegram alert
+        await sendTelegram(
+          `🚨🚨🚨 <b>OVERWATCH: BLIND AUDITOR OVERRIDE</b> 🚨🚨🚨\n\n` +
+          `The Blind Auditor has overridden the action recommendation.\n\n` +
+          `<b>Action changed to:</b> ${auditorResult.override_action}\n` +
+          `<b>Reason:</b> ${auditorResult.override_reasoning}\n\n` +
+          `<b>STATE-LOCK ACTIVE.</b> Layer 4 cannot reverse this. Only you can release the lock by deleting data/auditor-state-lock.json.\n\n` +
+          `Review immediately.`
+        );
+      } else if (auditorResult.phase === 1) {
+        log('auditor', `Phase 1 advisory written. Layer 4 must address on next run.`);
+      }
+    } catch (auditorErr) {
+      warn('auditor', `Blind Auditor failed (non-fatal): ${auditorErr.message}`);
+    }
+
     try {
       const reportPath = path.join(__dirname, '..', 'data', '360-report.json');
       fs.writeFileSync(reportPath, JSON.stringify(assessment360, null, 2));

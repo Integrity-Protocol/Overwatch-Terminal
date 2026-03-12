@@ -304,12 +304,16 @@ async function runTimeStep(step, thesisContext, scenarioDir, correctionsLedgerPa
   fs.writeFileSync(gateLedgerPath, '[]');
 
   // Build isolation options for layer functions
+  // AD #14: Isolated audit findings path for this scenario
+  const auditFindingsPath = path.join(scenarioDir, 'audit-findings.json');
+
   const layerOptions = {
     correctionsLedgerPath,
     rejectionLogPath,
     enableTelegram: false,
     enablePromoteRejections: false,  // We handle promotion ourselves between steps
     domainConfig: domainConfig || null,
+    findingsPath: auditFindingsPath,  // AD #14: Layer 4 reads advisory from isolated path
   };
 
   const gateOptions = {
@@ -814,6 +818,57 @@ async function main() {
             // Non-fatal — just skip the log
           }
         }
+      }
+    }
+
+    // ── AD #14: Blind Auditor Trajectory Review ──────────────────────────
+    if (mode === 'full') {
+      try {
+        const { runBlindAuditor, applyAuditorToOutput } = require('./blind-auditor');
+        // Build history from accumulated stepResults (mimics 360-history.json)
+        const auditHistory = stepResults.map(sr => ({
+          timestamp: sr.completed_at || new Date().toISOString(),
+          thesis_status: sr.thesis_status || null,
+          confidence_in_status: sr.confidence_in_status || null,
+          action_recommendation: sr.action_recommendation || sr.tactical_recommendation || null,
+          tactical_recommendation: sr.tactical_recommendation || null,
+          unresolved_tensions: sr.unresolved_tensions || [],
+          bear_pressure_score: sr.final_bear_pressure || sr.bear_pressure || null,
+          kill_switches: sr.kill_switches || [],
+        }));
+        const auditFindingsPath = path.join(resultsBaseDir, 'audit-findings.json');
+        const auditLockPath = path.join(resultsBaseDir, 'auditor-state-lock.json');
+        const auditorResult = runBlindAuditor({
+          history: auditHistory,
+          currentOutput: result,
+          domainConfig: domainConfig || {},
+          runIndex: stepResults.length - 1,
+          findingsPath: auditFindingsPath,
+          lockPath: auditLockPath,
+        });
+        // Attach auditor metadata to step result
+        result.auditor_phase = auditorResult.phase;
+        result.auditor_override = auditorResult.override || false;
+        result.auditor_override_action = auditorResult.override_action || null;
+        result.state_lock_active = auditorResult.state_lock_active || false;
+        result.anomalies_triggered = auditorResult.anomalies_triggered || [];
+        // If override, update the 360-report on disk
+        if (auditorResult.override && auditorResult.override_action) {
+          const stepRunDir = path.join(resultsBaseDir, 'results', `run-${String(step.step).padStart(3, '0')}`);
+          const reportPath = path.join(stepRunDir, '360-report.json');
+          if (fs.existsSync(reportPath)) {
+            const report = JSON.parse(fs.readFileSync(reportPath, 'utf8'));
+            applyAuditorToOutput(report, auditorResult);
+            fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
+            log('auditor', `Step ${step.step}: PHASE 2 OVERRIDE — action changed to ${auditorResult.override_action}`);
+          }
+          result.action_recommendation = auditorResult.override_action;
+          result.tactical_recommendation = auditorResult.override_action;
+        } else if (auditorResult.phase === 1) {
+          log('auditor', `Step ${step.step}: Phase 1 advisory written. Next step Layer 4 must address.`);
+        }
+      } catch (auditorErr) {
+        warn('auditor', `Blind Auditor failed (non-fatal): ${auditorErr.message}`);
       }
     }
 

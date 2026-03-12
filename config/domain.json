@@ -12,31 +12,44 @@
   },
 
   "action_recommendations": [
-    {
-      "id": "HOLD_POSITION",
-      "description": "Maintain current position and monitoring cadence",
-      "when": "Thesis status is STABLE or STRENGTHENING with high confidence"
-    },
-    {
-      "id": "INCREASE_MONITORING",
-      "description": "Increase monitoring frequency and attention to emerging signals",
-      "when": "Thesis status is CONTESTED, WEAKENING with low confidence, or significant unresolved tensions exist"
-    },
-    {
-      "id": "REDUCE_EXPOSURE",
-      "description": "Reduce position size or hedge against identified risks",
-      "when": "Thesis status is WEAKENING with medium-high confidence"
-    },
-    {
-      "id": "EXIT_SIGNAL",
-      "description": "Evidence warrants full position exit — thesis falsification criteria approaching or met",
-      "when": "Kill switch TRIGGERED or thesis status is WEAKENING with high confidence and multiple confirming signals"
-    }
+    { "id": "HOLD_POSITION", "description": "Maintain current position and monitoring cadence", "when": "Evidence is stable or mixed with no clear directional pressure" },
+    { "id": "INCREASE_MONITORING", "description": "Increase monitoring frequency and attention", "when": "Early signals of directional change detected but not yet confirmed" },
+    { "id": "REDUCE_EXPOSURE", "description": "Reduce position size or hedge", "when": "Confirmed weakening with multiple corroborating signals" },
+    { "id": "EXIT_SIGNAL", "description": "Evidence warrants full position exit", "when": "Falsification criteria triggered or collapse trajectory confirmed" }
   ],
 
   "action_severe": "EXIT_SIGNAL",
   "action_monitor": "INCREASE_MONITORING",
+  "action_baseline": "HOLD_POSITION",
 
   "scoring_label": "Thesis Status",
-  "scoring_description": "Directional assessment of thesis viability based on current evidence"
+  "scoring_description": "Directional assessment of thesis viability based on current evidence",
+
+  "audit_cadence": 3,
+  "audit_cadence_description": "Number of consecutive runs between scheduled Blind Auditor trajectory reviews. At 2 runs/day, cadence of 3 means the Auditor reviews trajectory every ~1.5 days.",
+
+  "anomaly_triggers": [
+    {
+      "id": "KILL_SWITCH_JUMP",
+      "description": "Any kill switch changes status by 2+ levels in a single run",
+      "trigger": "kill_switch_status_delta >= 2"
+    },
+    {
+      "id": "COMPOUND_STRESS_ESCALATION",
+      "description": "Compound stress level increases by one or more levels",
+      "trigger": "compound_stress_level_increase"
+    },
+    {
+      "id": "ACTION_STATUS_DIVERGENCE",
+      "description": "thesis_status and action_recommendation move in opposite directions within the same run",
+      "trigger": "status_direction != action_direction"
+    }
+  ],
+
+  "auditor_phase1_instructions": "The Blind Auditor has flagged a mismatch between your evidence trajectory and your action trajectory. Address this finding: either commit to acting on your assessment or justify the hold with specific, verifiable evidence that warrants continued restraint. A justification must name what specific new information you are waiting for and what observable outcome would resolve the question.",
+
+  "auditor_override_actions": {
+    "escalate_to": "EXIT_SIGNAL",
+    "deescalate_to": "HOLD_POSITION"
+  }
 }
