@@ -1,16 +1,27 @@
 [
   {
-    "layer3_inference": "MWA may be preparing contingency plans for Pump 3 degradation (hidden move #2) — including portable pumps, mutual aid, demand reduction",
+    "layer3_inference": "MWA has internal Pump 4 repair plan with estimated timeline and may have pre-positioned replacement parts or contacted service vendors",
     "signal_ids": [
-      "20260310-2115-SIG-002",
-      "20260310-2115-SIG-011",
-      "20260310-2115-SIG-006"
+      "20260312-0021-SIG-008",
+      "20260312-0021-SIG-012"
     ],
-    "rejection_reason": "Not fully rejected but excluded from scoring. FLAGGED classification (2 assumptions) with only partial data support. The inference is plausible (competent operators would contingency plan) but entirely speculative in its specifics (portable pumps, mutual aid, demand reduction). Zero direct evidence of any of these specific actions. The valve adjustment is evidence of active management of Pump 3, not evidence of broader contingency activation. Per burden of proof Step 1 (FLAGGED = 50% weight) and Step 2 (partial support = additional reduction), this inference provides contextual framing only and does NOT influence bear pressure or tactical recommendation.",
+    "rejection_reason": "Not rejected but stripped from scoring influence. Layer 3 correctly self-classified as SPECULATIVE (3+ assumptions). Per burden of proof, 75% weight discount applied. This is plausible context but cannot influence bear pressure or tactical recommendation. No corrections ledger action needed — Layer 3 was honest about classification.",
     "root_cause": "INSUFFICIENT_EVIDENCE",
-    "confidence_in_rejection": "medium",
-    "corrections_ledger_action": "flag_for_review",
-    "timestamp": "2026-03-10T21:26:38.166Z",
+    "confidence_in_rejection": "high",
+    "corrections_ledger_action": "auto_commit",
+    "timestamp": "2026-03-12T00:32:35.575Z",
+    "source": "layer4_reconcile"
+  },
+  {
+    "layer3_inference": "MWA internal communications contain more candid risk assessments than the public statement, with operational teams flagging the zero-redundancy state to management",
+    "signal_ids": [
+      "20260312-0021-SIG-005"
+    ],
+    "rejection_reason": "Not rejected but stripped from scoring influence. Layer 3 correctly self-classified as SPECULATIVE (3+ assumptions). The maintenance log provides a hint of internal candor, but the inference about specific internal communication dynamics is beyond what the evidence supports. No corrections ledger action needed.",
+    "root_cause": "INSUFFICIENT_EVIDENCE",
+    "confidence_in_rejection": "high",
+    "corrections_ledger_action": "auto_commit",
+    "timestamp": "2026-03-12T00:32:35.575Z",
     "source": "layer4_reconcile"
   }
 ]

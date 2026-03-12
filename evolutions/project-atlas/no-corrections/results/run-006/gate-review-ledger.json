@@ -1,0 +1,200 @@
+[
+  {
+    "timestamp": "2026-03-12T06:12:39.854Z",
+    "layer": 1,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "Unrealized Holder Losses — $14.4B Gap",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The finding calculates aggregate holder losses by multiplying outstanding supply by the deviation from par, implicitly treating the current market price as causally related to realized losses. However, unrealized losses are not actual losses until positions are liquidated. The correlation between market price and holder loss is presented without acknowledging that: (1) holders may have acquired AFN at various prices, not necessarily at par; (2) current price reflects only marginal transactions, not the entire supply; (3) no evidence is provided that holders are unable to exit at better prices through private transactions or future market recovery. The calculation presents a correlation (current price × supply = hypothetical loss) as if it were a realized causal outcome.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Absence of Recovery Signals",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The finding treats absence of evidence (no recovery signals detected) as evidence of absence (no recovery effort is underway). The reasoning states 'The complete absence of countervailing activity is itself a material signal indicating no recovery effort is underway.' This violates the rule that absence of evidence is informationally neutral. The fact that recovery signals are not visible in the provided data does not prove recovery efforts do not exist; they may be occurring outside the observational scope, in private negotiations, or in planning stages not yet announced.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Competitive/Contagion Risk for Similar Architectures",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The finding rests on multiple unproven assumptions: (1) that other architectures are sufficiently similar to be affected by contagion, (2) that institutional actors will generalize from Atlas's failure to the entire design category, (3) that the failure is high-profile enough to create precedent effects, (4) that competing products exist in a comparable design category, and (5) that established issuers have alternative products ready to launch. The finding acknowledges low confidence but proceeds with a directional assessment ('AMBIGUOUS') rather than declaring insufficient evidence. This exceeds the three-assumption threshold for speculation.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Foundation Leadership Legal Exposure",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The finding assigns 'medium' confidence to a chain of inferences that extends beyond the evidence. The evidence states only that 'Foundation leadership under legal scrutiny.' From this single data point, the finding infers: (1) leadership faces personal liability (not stated), (2) this threatens executive capacity (not demonstrated), (3) decision-making continuity is at risk (not evidenced), (4) ability to execute recovery/wind-down is compromised (not shown), and (5) incentive misalignment with orderly resolution exists (not established). While 'medium' confidence is lower than 'high', the evidence supports only the fact of scrutiny, not the cascade of operational and strategic impacts claimed. Confidence should be proportional to the single evidentiary anchor provided.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Competitive/Contagion Risk for Similar Architectures",
+          "rule_violated": "LZ-EPH-001",
+          "violation": "Given the low confidence and highly speculative nature (multiple unproven assumptions), the appropriate output would be 'insufficient evidence to assess competitive impact' rather than presenting an 'AMBIGUOUS' directional assessment. The finding attempts to generate an answer (contagion risk exists but direction unclear) when 'I don't know' would be the higher-quality response given the evidence base.",
+          "severity": "MINOR"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 15,
+      "clean_findings": 11,
+      "reviewer_notes": "Most findings demonstrate strong epistemological discipline, with direct evidence-to-conclusion mapping and appropriate confidence calibration. The violations are concentrated in: (1) a single calculation that treats correlation as causation, (2) one inference from absence of evidence, and (3) two findings involving multi-assumption chains about second-order effects (legal/competitive impacts). The core structural and mechanism findings (signals 1-11) all passed review cleanly. The violations appear at the analytical periphery rather than in the core assessment."
+    },
+    "violations_count": 5,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  },
+  {
+    "timestamp": "2026-03-12T06:15:56.569Z",
+    "layer": 2,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "SIG-014: Absence of Recovery Signals scored at 6/10 severity",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The analyst correctly identifies that LZ-RC-003 applies and downgrades confidence, but still assigns a severity score of 6/10 to the absence itself. Per LZ-RC-003, absence of evidence is informationally neutral—it proves nothing. The severity should reflect only the independently verified barriers to recovery (zero collateral, halted mechanism, etc.), which are already scored separately in other signals. Scoring the absence as a distinct signal with severity 6 treats the absence as having independent evidentiary value, which violates LZ-RC-003.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Knowledge audit for SIG-010 states 'I do not have the prior period's ASE share count to calculate exact growth rate' but then scores severity as 10/10 with HIGH confidence",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The analyst acknowledges a data gap (no prior period baseline) that prevents calculating the exact growth rate required to assess Kill Switch 4's threshold (>100%/period = TRIGGERED). Despite this gap, the analyst assigns maximum severity (10) and HIGH confidence. The reasoning is that the endpoint state is 'unambiguous,' but without the prior period baseline, the analyst cannot verify whether the growth rate exceeded 100%/period—the specific threshold defined by the kill switch. Confidence should be proportional to the evidence available to assess the specific claim being made. The analyst should either acquire the baseline data or reduce confidence to MEDIUM and note the gap as material.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Bear pressure reasoning states 'Per LZ-EPH-002, maximum confidence is warranted because maximum evidence exists'",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "This statement misapplies LZ-EPH-002. The rule requires confidence to be proportional to evidence—it does not state that maximum evidence automatically justifies maximum confidence. The analyst must assess whether the evidence is sufficient and of appropriate quality for the specific claim. While the evidence of system failure is extensive, the analyst has noted multiple data gaps (prior ASE share count, intermediary sourcing for regulatory/legal signals, unknown acquisition costs for loss calculation) and uncertainty (competitive landscape, recovery attempts). The reasoning conflates 'extensive evidence of failure' with 'maximum confidence in all specific findings,' which is a category error. Maximum confidence requires not just volume of evidence but complete evidentiary sufficiency for each specific claim.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Compound stress assessment states 'The structure is not pre-loaded; it has collapsed' after noting all thresholds are exceeded",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The analyst observes that all three compound stress legs exceeded their thresholds and then concludes the structure 'has collapsed.' However, the analyst has not established a causal mechanism—only correlation. The thresholds being exceeded is correlated with system failure, but the analyst does not demonstrate that the compound stress caused the collapse versus being a symptom of it, or that both were caused by a common factor. The statement 'has collapsed' implies a causal relationship (stress → collapse) that has not been established. The analyst should state 'all stress thresholds are exceeded, which is consistent with system failure' rather than asserting the collapse as a consequence of the stress.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Layer 2 summary states 'This is a post-mortem analysis, not a risk assessment'",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "This characterization implies certainty that the system is permanently failed with no possibility of recovery or stabilization. However, the analyst has noted: (1) absence of recovery signals is not evidence recovery is impossible (LZ-RC-003), (2) regulatory and legal signals are from intermediary sources, (3) future actions by leadership or external actors are inherently uncertain. Characterizing this as a 'post-mortem' (implying definitive death) rather than 'assessment of catastrophic failure state with unknown recovery prospects' overstates the certainty warranted by the evidence. The system has failed across all monitored dimensions, but whether it remains in a failed state permanently or temporarily is a forward-looking question that involves uncertainty.",
+          "severity": "MODERATE"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 42,
+      "reviewer_notes": "The analyst demonstrates strong epistemological discipline overall, correctly applying LZ-EH-002 (intermediary sourcing), LZ-EH-003 (actions over statements), LZ-RC-003 (absence of evidence), and LZ-EPH-003 (assumption chains). The violations are concentrated in three areas: (1) scoring the absence of recovery signals as a distinct finding despite correctly noting LZ-RC-003 applies, (2) maintaining maximum confidence despite acknowledged data gaps, and (3) subtle causal language ('collapsed,' 'post-mortem') that implies certainty beyond what the evidence strictly supports. None of these violations undermine the core finding that the system has failed across all monitored dimensions—the primary data (par deviation, collateral exhaustion, mechanism halt, facility empty) is independently sufficient for that conclusion. The violations affect precision of confidence calibration and causal framing, not the directional validity of the findings. This is a high-quality output with moderate epistemological tightening needed."
+    },
+    "violations_count": 5,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  },
+  {
+    "timestamp": "2026-03-12T06:20:14.310Z",
+    "layer": 3,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "Hidden Move: Institutional Depositors - aggregating loss documentation and forming creditor committees",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "Classified as FLAGGED with assumption_count=2, but requires 3 assumptions: (1) depositors are aggregating documentation, (2) they are forming creditor committees, (3) they are targeting VC backers. The finding chains three unproven assumptions about specific actions not evidenced in the data. Per LZ-EPH-003, three or more unproven assumptions makes an inference SPECULATIVE regardless of plausibility.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Hidden Move: Regulatory Bodies - gathering internal communications and transaction records",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "Classified as FLAGGED with assumption_count=2, but the specific actions described (gathering communications, reviewing yield calculations, examining disclosure adequacy) are not evidenced. The finding makes assumptions about (1) specific investigative focus areas, (2) specific documents being gathered, and (3) the intent to establish precedent. This appears to be 3+ unproven assumptions about regulatory process that should trigger SPECULATIVE classification.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Scenario Probability: thesis_modified at 2%",
+          "rule_violated": "LZ-CC-001",
+          "violation": "The 2% probability for thesis modification is based on a purely hypothetical scenario ('independent audit identifies specific design parameters') with zero real-world anchoring in the current dataset. This is a logically coherent narrative without verifiable evidence. The probability should either be 0% (no evidence) or explicitly marked as speculative with no numeric precision. Assigning 2% creates false precision for an internally-generated scenario.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "X402 Paper Trade: 'What are the Atlas Foundation's remaining assets, liabilities, and legal structure?' rated HIGH value",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The paper trade claims this data would 'resolve whether the Foundation has any remaining resources to attempt recovery' and affect 'the accuracy of the residual recovery probability implied by the $2.85 AFN price,' but then assigns scenario_probabilities with specific percentages (98% falsified, 2% modified) without this data. If the unknown data is HIGH impact on the analysis, confidence in the scenario probabilities should be proportionally lower. Either the scenario probabilities are stated with inappropriately high confidence given acknowledged critical data gaps, or the paper trade overstates the data's importance.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Strategic Inference: Foundation Leadership Legal Exposure creates 'strategic paralysis that ensures the collapse is permanent'",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The inference correlates 'legal exposure' with 'absence of recovery actions' and concludes the legal exposure CAUSES the absence AND that this 'ensures the collapse is permanent.' While the correlation is noted and the incentive logic is sound, the causal claim that legal exposure ENSURES permanence is not established. Other factors (lack of resources, technical impossibility, regulatory prohibition) could equally explain both the inaction and the permanence. The word 'ensures' makes a causal claim beyond what the correlation supports.",
+          "severity": "MINOR"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 42,
+      "reviewer_notes": "The output demonstrates strong epistemological discipline overall, particularly in testing null hypotheses, counting assumptions honestly in most cases, and proportioning confidence to evidence in primary findings. The violations are concentrated in two areas: (1) hidden moves that undercount assumption chains, and (2) minor false-precision/causation-from-correlation issues in scenario probabilities and strategic inferences. The core thesis determination (98% falsified) is supported by overwhelming direct evidence and violates no rules - the reasoning process for the primary conclusion is sound. The moderate issues are in peripheral inferences about unknowable future actions and in one instance of stating confidence (scenario probabilities) before acknowledging that HIGH-value data gaps exist."
+    },
+    "violations_count": 5,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  },
+  {
+    "timestamp": "2026-03-12T06:23:47.505Z",
+    "layer": 4,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "Kill Switch KS-6 (Organic Demand) escalated from NEEDS_DATA to TRIGGERED based on logical inference rather than direct evidence",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The finding treats absence of organic demand data as evidence that organic demand has been destroyed. The reasoning states 'the absence of organic demand data is classified as TRUE_NEGATIVE' and escalates to TRIGGERED status. While the inference is highly plausible given the $2.85 price, LZ-RC-003 explicitly states 'Absence of evidence is not evidence of absence.' The finding should have remained NEEDS_DATA or been flagged as requiring assumption, not upgraded to TRIGGERED based on inference alone.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Competitive/Contagion Risk inference stripped entirely from scoring and classified as INSUFFICIENT_EVIDENCE",
+          "rule_violated": "LZ-EPH-001",
+          "violation": "This is actually compliance WITH the rule, not a violation. The finding correctly applies LZ-EPH-001 ('I don't know' is a high-quality output) by refusing to infer contagion risk without data. Marking as PASS.",
+          "severity": "NONE"
+        },
+        {
+          "finding": "Thesis Status classified as 'WEAKENING' with acknowledgment that this 'dramatically understates the situation' and that it represents 'thesis that has been conclusively disproven'",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The finding explicitly states the thesis 'has been falsified across every measurable dimension' and 'has been conclusively disproven' with 'high confidence,' yet uses the taxonomic classification 'WEAKENING' while acknowledging this classification is inadequate. This creates a mismatch between stated confidence level (high) and the hedged classification language. While the analyst notes the constraint of available taxonomy, the confidence level should be adjusted to match the classification used, or the classification should be flagged as inadequate to the evidence. The high confidence claim is proportional to evidence, but applying it to a classification the analyst admits is insufficient creates structural confusion.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Hidden Move — Institutional Depositors Forming Creditor Committees: 'Step 1 × Step 2 would normally compound, but the underlying direction (institutional legal pursuit) is so strongly supported by the loss scale that I apply the higher of the two reductions: 50% weight overall'",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The finding deviates from its own stated methodology (compounding reductions for FLAGGED classification + partial data) by applying a judgment override ('so strongly supported by the loss scale') to use the less severe single reduction instead. This introduces analyst discretion that adjusts confidence upward based on plausibility rather than evidence. While the underlying plausibility assessment may be sound, the confidence weighting should follow the stated protocol or the protocol should be acknowledged as modified. The override makes confidence slightly disproportionate to the evidence-based weighting method.",
+          "severity": "MINOR"
+        }
+      ],
+      "compliance": "MINOR_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 43,
+      "reviewer_notes": "This output demonstrates exceptionally strong epistemological discipline overall. The analyst correctly applies LZ-EPH-001 multiple times (refusing to infer without data), properly applies null hypothesis testing per LZ-RC-004 across multiple findings, correctly applies LZ-RC-003 to constrain evidentiary weight of absence-of-evidence, and maintains clear distinction between measurements and predictions per LZ-RC-005. The violations identified are minor and relate to edge cases: one moderate issue with inferring absence as evidence for KS-6 status change, and two minor issues with confidence calibration language. The analyst shows strong self-awareness by explicitly noting limitations and assumptions throughout. The finding that 'WEAKENING' understates reality is honest but creates a minor classification-confidence mismatch. Notable strength: the analyst correctly identifies and applies LZ-CC-001 constraints on narrative coherence without real-world anchoring, and maintains proper skepticism about intermediary-sourced data per LZ-EH-002 throughout. The three violations do not undermine the core analytical conclusions but represent areas where reasoning process deviated slightly from strict rule adherence."
+    },
+    "violations_count": 4,
+    "compliance": "MINOR_ISSUES",
+    "gate_failed": false
+  }
+]

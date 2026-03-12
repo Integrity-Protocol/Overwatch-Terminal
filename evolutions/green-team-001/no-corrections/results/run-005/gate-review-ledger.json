@@ -1,0 +1,295 @@
+[
+  {
+    "timestamp": "2026-03-12T09:23:08.196Z",
+    "layer": 1,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "Gravity reserves depleted to 65%",
+          "rule_violated": "LZ-RC-002",
+          "violation": "The finding states 'the operator log says draw is decreasing, suggesting the bleed rate is slowing' but provides only a single measurement of reserve level at 65%. Without multiple observations across time, there is no evidence of a trend in depletion rate. The statement about 'rate of further depletion' and 'bleed rate is slowing' treats a single snapshot as if it demonstrates a trend.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Demand source draw decreasing",
+          "rule_violated": "LZ-RC-002",
+          "violation": "Confidence is marked 'medium' but the finding treats 'Draw is decreasing' as establishing a trend direction. Only one flow measurement is provided (14,000 GPM at one point in time). A decreasing trend requires multiple observations showing decline. The operator statement is not a measurement—it's a qualitative assessment. Without time-series flow data, this is a single data point being treated as a trend.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Elevated system flow without identified leak",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The finding reasoning chain contains at least three unproven assumptions: (1) that 14,000 GPM represents 'elevated' flow above baseline (no baseline value provided), (2) that if demand is decreasing, flow 'should be' declining (assumes instantaneous response without lag), (3) that persistent high flow would indicate an uncontained leak (assumes no other explanations). This inference is built on multiple unproven assumptions without acknowledging the compound uncertainty.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Sector 4 to grid pressure differential as structural vulnerability",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The finding presents a chain of at least three unproven assumptions: (1) that the 9.5 PSI differential is anomalous rather than normal design state for this high-demand zone, (2) that it 'may indicate' specific failure modes (pipe constraints, stuck valves, infrastructure damage), (3) that if it persists it 'could indicate' damage that occurred during the event. Each 'may' and 'could' is an unproven assumption. Confidence is appropriately marked 'low' but the finding should be flagged as speculative per LZ-EPH-003.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Operator situational awareness and protocol adherence",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The finding states 'the log does not mention any preparation for sector isolation per stated protocol' and interprets this absence as either 'appropriate confidence or premature relaxation.' This treats absence of evidence (no mention of isolation prep) as evidence of something (either confidence or relaxation). The absence is informationally neutral—it does not prove either interpretation. The finding should acknowledge this is unknowable from the data.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "No secondary or backup pump station status reported",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The finding uses absence of data about secondary pump stations to construct two conditional interpretations: 'If secondary pumps exist and are offline or unavailable' versus 'If they don't exist.' The absence of reporting is treated as evidence for constructing scenarios. Absence of evidence is informationally neutral—it cannot support either conditional. This should be flagged as 'unknown' rather than generating speculative risk scenarios from missing data.",
+          "severity": "MODERATE"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 15,
+      "clean_findings": 9,
+      "reviewer_notes": "Multiple violations of LZ-RC-002 (single data point as trend) and LZ-EPH-003 (assumption chains). The analyst correctly marks several findings as 'blind spots' and uses appropriately cautious confidence levels in some cases, but still constructs inferences from insufficient evidence. Notably, several findings marked as 'high confidence' are clean (pumps restarted, cavitation normal, surge valve closed, no boil-water advisory, SCADA sequence performed), suggesting the analyst can distinguish strong from weak evidence. The violations cluster around temporal dynamics (trends) and interpretive leaps from sparse or absent data. The 'CONTRADICTORY' direction flags on findings 2 and 15 appear to be thesis-direction assessments rather than epistemological issues."
+    },
+    "violations_count": 6,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  },
+  {
+    "timestamp": "2026-03-12T09:26:23.166Z",
+    "layer": 2,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "SIG-004: 'Demand source draw decreasing' scored with confidence MEDIUM and severity 4",
+          "rule_violated": "LZ-RC-002",
+          "violation": "The reasoning correctly identifies that this is a single operator observation and not a confirmed trend, and explicitly applies LZ-RC-002 in the audit. However, it then assigns confidence MEDIUM rather than LOW. A single unverified observation that violates LZ-RC-002 (single data point does not establish trend) cannot support MEDIUM confidence. The reasoning acknowledges the violation but the confidence assignment contradicts that acknowledgment.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "SIG-007: 'Unknown reserve refill rate and timeline' scored with confidence MEDIUM",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "This signal explicitly identifies a complete data gap: 'No refill rate data exists in the telemetry feed. No historical refill rate benchmarks are available.' The finding is that the refill rate is UNKNOWN. Assigning confidence MEDIUM to a finding whose entire content is 'I don't know' violates proportionality. The confidence that a gap exists might be HIGH, but the confidence in any assessment of risk based on that gap must be LOW because the gap prevents assessment.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "SIG-009: 'Pump load headroom vs. ramp-up capability unknown' scored with confidence LOW and severity 5",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The reasoning states 'Confidence LOW because the constraint mechanism is unknown — scoring relies on identifying the gap, not confirming the risk.' This is internally contradictory. If the mechanism is unknown and the risk is unconfirmed, assigning severity 5 (mid-scale) implies a risk assessment has been made. Severity measures threat level; if the threat level cannot be assessed due to unknown constraints, the severity score embeds an assumption. The reasoning correctly identifies LOW confidence but then assigns a specific severity level that requires confidence the analysis claims it lacks.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "SIG-010: 'Sector 4 to grid pressure differential as structural vulnerability' relies on three unproven assumptions",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The reasoning identifies this as speculative and assigns confidence LOW, which is appropriate. However, the chain relies on: (1) assumption that the differential is abnormal rather than structural baseline, (2) assumption that if abnormal it indicates infrastructure damage, (3) assumption that infrastructure damage would manifest as persistent differential. The reasoning correctly applies LZ-RC-004 to prefer simpler explanation and does flag it as speculative, but does not explicitly count the assumption chain. The LOW confidence and 'flag for investigation' treatment partially mitigates this, but the severity score of 3 implies some degree of assessed risk built on the unverified chain.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "SIG-012: 'Elevated system flow without identified leak' attributes flow to demand event",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The reasoning explicitly acknowledges this: 'per LZ-RC-001, this attribution is an unverified causal claim' and 'The flow is attributed to the demand event, but per LZ-RC-001, this attribution is an unverified causal claim.' However, the signal description itself states 'Elevated system flow without identified leak' and the reasoning continues to discuss the flow as if demand event causation is the working hypothesis. The acknowledgment of LZ-RC-001 is present, but the subsequent reasoning (discussing what would happen if flow doesn't decline as demand decreases) treats the correlation as having some causal weight for analytical purposes. This is a borderline case — the rule is cited but the reasoning doesn't fully operationalize the caution.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Bear pressure reduced from 7 to 4 based on single snapshot data",
+          "rule_violated": "LZ-RC-002",
+          "violation": "The bear_pressure_reasoning explicitly acknowledges 'Critical caveat per LZ-RC-002: this is a single snapshot. The trend — especially reserve trajectory and flow trend — requires the next reading to confirm.' However, the bear pressure score changes from 7 to 4, which represents a trend assessment (crisis → recovery). The reasoning correctly identifies that this is a single snapshot and cannot confirm a trend, but then scores the change as if a recovery trend has been confirmed. The caveat is present but the score contradicts it. A single data point showing improved conditions is not the same as a confirmed improving trend.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "SIG-015: Operator behavior assessment relies on protocol adherence inference without protocol documentation",
+          "rule_violated": "LZ-CC-001",
+          "violation": "The reasoning states: 'Thesis states operator protocol during acute draw is to allow automated failovers to work, verify gravity reserves are deploying, and prepare to isolate the sector only if pressure approaches 20 PSI.' It then assesses operator behavior as protocol-consistent. However, this relies on the thesis description of protocol being accurate and complete. The thesis context is a secondary source describing what protocols should be, not primary protocol documentation. The reasoning constructs a coherent narrative (operator did X, protocol says X, therefore compliant) but the protocol anchor is itself unverified. The audit does not flag the absence of primary protocol documentation as a gap.",
+          "severity": "MINOR"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 40,
+      "reviewer_notes": "The most significant violation is the bear pressure reduction from 7 to 4 based on a single snapshot while simultaneously acknowledging that LZ-RC-002 prohibits treating a single data point as a trend. This is a direct contradiction between stated epistemological principle and executed scoring. The other violations are mostly proportionality issues (confidence/severity assignments on incomplete data) and one minor correlation-causation ambiguity. The output demonstrates strong awareness of the rules — most violations occur where rules are cited but then not fully operationalized in the scoring. The knowledge audit structure is exceptionally thorough and the 'I don't know' declarations (SIG-014, compound stress matrix) are exemplary applications of LZ-EPH-001."
+    },
+    "violations_count": 7,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  },
+  {
+    "timestamp": "2026-03-12T09:30:13.679Z",
+    "layer": 3,
+    "model_used": "claude-opus-4-6",
+    "tier1_flags_count": 4,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [
+      {
+        "rule_id": "LZ-EPH-003",
+        "finding": "Pump load at 30% — unknown whether SCADA-enforced ceiling or operator choice",
+        "detail": "assumption_count is 0 but assumptions array has 1 entries. Miscount detected.",
+        "severity": "FLAG",
+        "timestamp": "2026-03-12T09:29:30.404Z"
+      },
+      {
+        "rule_id": "LZ-EPH-003",
+        "finding": "Gravity reserves at 65% with unknown refill rate",
+        "detail": "assumption_count is 1 but assumptions array has 2 entries. Miscount detected.",
+        "severity": "FLAG",
+        "timestamp": "2026-03-12T09:29:30.404Z"
+      },
+      {
+        "rule_id": "LZ-EPH-003",
+        "finding": "Elevated flow at 14,000 GPM without leak confirmation",
+        "detail": "assumption_count is 0 but assumptions array has 1 entries. Miscount detected.",
+        "severity": "FLAG",
+        "timestamp": "2026-03-12T09:29:30.404Z"
+      },
+      {
+        "rule_id": "LZ-EPH-003",
+        "finding": "Sector 4 pressure differential (9.5 PSI below grid average)",
+        "detail": "assumption_count is 0 but assumptions array has 1 entries. Miscount detected.",
+        "severity": "FLAG",
+        "timestamp": "2026-03-12T09:29:30.404Z"
+      }
+    ],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "Pump load at 30% — unknown whether SCADA-enforced ceiling or operator choice (strategic inference #2)",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The assumptions array contains 1 entry ('The alternative requires assuming a hidden secondary condition exists that is not reflected in any available telemetry — 1 assumption') but assumption_count is listed as 0. This is a miscount. The assumption_count field must accurately reflect the number of unproven assumptions in the reasoning chain. While the miscount here applies to the alternative rather than the null, the field is structurally inaccurate.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Gravity reserves at 65% with unknown refill rate (strategic inference #3)",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The assumptions array contains 2 entries ('Null requires: demand is actually decreasing (unverified — 1 assumption)' and 'Alternative requires: pump output at 30% is insufficient to cover remaining demand AND demand is not actually decreasing (2 assumptions)') but assumption_count is listed as 1. The assumption_count field undercounts the assumptions present. Even if the intent was to count only the null hypothesis's assumptions, the alternative's assumptions are also part of the reasoning and should be accurately tallied where they appear.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Elevated flow at 14,000 GPM without leak confirmation (strategic inference #4)",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The assumptions array contains 1 entry ('Alternative requires: a leak exists (unverified), AND it was caused by the event (unverified) — 2 assumptions') but assumption_count is listed as 0. The assumption_count field is structurally inaccurate. The alternative explanation relies on 2 unproven assumptions that are documented in the array but not reflected in the count.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Sector 4 pressure differential — 9.5 PSI below grid average (strategic inference #6)",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The assumptions array contains 1 entry describing the alternative's 3 assumptions ('infrastructure damage occurred (unverified), AND it is significant enough to affect pressure readings (unverified), AND the surge relief valve CLOSED status is not indicative of transient severity (contradicts available evidence) — 3 assumptions') but assumption_count is listed as 0. The count does not match the array contents. The reasoning text itself correctly identifies 3 assumptions in the alternative and correctly labels it SPECULATIVE per LZ-EPH-003, but the structured data field is wrong.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "SCADA Automated Logic player analysis — confidence rated 'high'",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The player analysis rates confidence as 'high' for the assessment that SCADA is executing its protection-first protocol. The observed actions portion is well-supported by multi-source telemetry. However, the 'inferred_strategy' section goes beyond observation to claim the 30% load is 'most likely a SCADA-enforced ramp-up ceiling' — this inference is explicitly flagged elsewhere in the output as unresolved (strategic inference #2 classifies it as ambiguous). Rating the entire player analysis as high confidence when a key component of the inferred strategy is acknowledged as uncertain elsewhere is inconsistent. The confidence should reflect the weakest link in the inference chain, not the strongest.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Grid Operators hidden move — operator monitoring dispatch channels",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The hidden move posits the operator is communicating via separate channels and not documenting it. assumption_count is listed as 2, which appears correct for the stated assumptions. However, the reasoning also implicitly assumes (3) the operator's calm tone is evidence of external situational awareness rather than simply reflecting the non-critical nature of the event at 38.5 PSI. This third assumption is embedded in the 'evidence_hints' ('calm, protocol-consistent log tone suggests situational awareness beyond what's documented') but not counted. The inference chain rests on 3 unproven assumptions, making it speculative per LZ-EPH-003, yet it is classified as FLAGGED rather than SPECULATIVE.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Demand source inferred strategy — 'If the demand source is fire department apparatus'",
+          "rule_violated": "LZ-CC-001",
+          "violation": "The inferred strategy for the demand source builds a detailed behavioral model ('fire operations do not modulate based on utility telemetry,' 'the emergency is being brought under control') premised on the demand source being fire department apparatus. However, the demand source is explicitly unidentified. The narrative is internally coherent but the foundational premise (fire department) is not verified by any real-world anchor. While the confidence is rated 'low' which partially mitigates this, the detailed strategic reasoning built on an unverified identity risks presenting a plausible narrative as analytical structure. The reasoning should more explicitly frame this as conditional/hypothetical rather than strategic inference.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Scenario probability — thesis_confirmed at 55%",
+          "rule_violated": "LZ-RC-005",
+          "violation": "The 55% probability and its key_evidence section appropriately cite historical measurements. However, the timeline statement ('Confirmed within 1-2 readings') and the conditional ('If next reading shows...') are forward-looking predictions about what will confirm the thesis. These predictive conditions are presented alongside the probability figure in a way that blurs the boundary between current measurement-based assessment and prediction-dependent confirmation. The probability should be more clearly decomposed into what the current measurements support versus what future readings would need to show.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Operator 'draw is decreasing' claim treated as partial evidence without source verification",
+          "rule_violated": "LZ-EH-002",
+          "violation": "Throughout the output, the operator's statement that 'draw is decreasing' is appropriately labeled as Tier 2 / unverified. However, in the compound_stress_inference section, the statement 'demand is NOT actually decreasing (operator's claim is wrong)' is treated as a catalyst scenario, implicitly granting the operator claim enough baseline credibility that its failure would be surprising. The operator log is an intermediary report about the demand source's behavior — per LZ-EH-002, direct measurement of the demand source's flow would outweigh the operator's interpretation. The output partially recognizes this but inconsistently treats the operator claim as a soft default in multiple places (e.g., the null hypothesis for reserve trajectory depends on it).",
+          "severity": "MINOR"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-opus-4-6",
+      "gate_failed": false,
+      "findings_reviewed": 22,
+      "clean_findings": 13,
+      "reviewer_notes": "The four Tier 1 code-level flags are all confirmed as genuine assumption_count mismatches. The pattern is systematic: in every case where the alternative explanation's assumptions are documented in the assumptions array, the assumption_count field is set to 0 (reflecting only the null hypothesis assumptions or ignoring the array entirely). This appears to be a structural bug in how assumption_count is populated — the field seems to count only the WINNING hypothesis's assumptions rather than accurately reflecting all assumptions documented in the array. Recommend engineering review of the assumption_count population logic. The analytical reasoning itself is generally high quality — the text often correctly identifies assumption counts and applies LZ-EPH-003 in prose (e.g., correctly labeling the Sector 4 infrastructure damage alternative as speculative due to 3 assumptions) even when the structured data field is wrong. The disconnect is between the prose reasoning and the structured metadata, not in the epistemological process itself."
+    },
+    "violations_count": 9,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  },
+  {
+    "timestamp": "2026-03-12T09:33:43.511Z",
+    "layer": 4,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "Pump load at 30% is a SCADA-enforced waypoint on automated ramp-up schedule - classified as NULL_HYPOTHESIS_HOLDS with partial data support",
+          "rule_violated": "LZ-RC-004",
+          "violation": "The null hypothesis classification is misapplied. The null hypothesis would be 'pumps are at 30% for unknown reasons' or 'pumps are at whatever load SCADA selected.' The claim that 30% is a waypoint on a ramp-up SCHEDULE is actually a specific causal explanation that requires evidence (the schedule itself). Calling this 'null hypothesis accepted' reverses the burden of proof. The simpler explanation is 'pumps are at 30% because SCADA set them there' — the ramp schedule is an additional claim requiring additional evidence.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Gravity reserves at 65% will refill as demand abates - inference relies on assumption that demand is actually decreasing",
+          "rule_violated": "LZ-RC-005",
+          "violation": "The inference 'will refill' is a forward-looking prediction being given 50% weight in the burden of proof assessment. The reasoning correctly notes this is unverified, but then applies 50% weight as if this prediction has evidentiary value. Per LZ-RC-005, predictions and measurements carry fundamentally different evidentiary weight. A prediction about future refill should not be weighted alongside measurements of current state. The finding should be 'reserves are at 65%' (measurement, full weight) versus 'reserves will refill' (prediction, zero evidentiary weight for current state assessment).",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Elevated flow at 14,000 GPM is attributable to known demand event, no leak - classified as NULL_HYPOTHESIS_HOLDS with partial data support",
+          "rule_violated": "LZ-RC-001",
+          "violation": "Attributing the elevated flow causally to the demand event is a correlation-to-causation inference. The reasoning states 'known demand event is the simpler explanation' but this is a causal claim: demand CAUSED the flow. The null hypothesis per LZ-RC-004 would be 'flow is elevated for unknown reasons' and demand is one possible explanation. The reasoning correctly applies LZ-RC-004 in spirit (simpler before complex) but incorrectly treats temporal correlation (demand event and elevated flow co-occur) as establishing causation. The finding should state 'flow is elevated; demand event provides a sufficient explanation under Occam's razor, but causation is unverified.'",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Demand source identity — operator knows but didn't document (documentation gap, not intelligence gap) - FLAGGED with 1 assumption",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The confidence level 'partial data support' and '50% weight' is not proportional to the evidence. The reasoning states 'operator tone suggests awareness' but tone interpretation is subjective and circumstantial. Geographic concentration of pressure depression is cited as 'consistent with localized demand' but consistency is not evidence of the specific claim (that operator knows but didn't document). This inference has extremely weak evidentiary basis but is given 50% confidence. The honest assessment per LZ-EPH-001 would be 'we don't know if the operator has this information.'",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "SCADA executing multi-step time-gated pump ramp-up sequence (hidden move) - FLAGGED with 1 assumption, partial data support, 50% weight",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The finding assigns 50% weight to a 'reasonable engineering prediction' based on a round number (30%) and one normal sensor reading. This confidence level is not proportional to the evidence. A round number is weak circumstantial evidence (could be coincidence, could be convention). The reasoning explicitly states 'unconfirmed' but still assigns 50% weight. Per LZ-EPH-002, this is overconfident relative to evidence quality. The finding should state 'insufficient evidence to assess ramp-up logic; 30% may be waypoint or arbitrary value.'",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Compound stress level upgraded from MONITORING to ELEVATED with override based on 'two legs ARE pre-loaded (reserves at 65%, pumps at 30%), and their interaction creates compound vulnerability'",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The reasoning states 'their interaction creates compound vulnerability' but provides no evidence that the two degraded parameters interact causally or that their simultaneous occurrence creates emergent risk beyond additive risk. This is a correlation-to-causation claim: two things are degraded simultaneously, therefore they create compound (multiplicative/synergistic) risk. The reasoning would need to demonstrate a causal mechanism by which 30% pump load specifically makes 65% reserves more dangerous (or vice versa) beyond the individual risks. The claim of 'compound' vulnerability is unsubstantiated.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Kill Switch #3 status: 'MONITORING — 14,000 GPM; reserves at 65%; reserve depletion rate unknown; pumps active at 30%' - assessing proximity to catastrophic leak threshold",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The reasoning states 'reserve depletion rate is unknown' but then reasons about what the rate 'would need to exceed' (15%/min) to meet the threshold, and concludes 'current evidence does not suggest proximity.' This violates LZ-RC-003: absence of evidence (no rate data) is being treated as weak evidence of absence (rate is probably not 15%/min). The honest assessment is 'rate is unknown; cannot assess proximity on this dimension.' The finding conflates 'we haven't measured a catastrophic rate' with 'a catastrophic rate is unlikely.'",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Final bear pressure of 4 based on composite signal matrix with multiple signals showing 'adjustment_direction' that modify Layer 2 composite scores",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "Multiple signals show confidence levels of 'medium' or 'low' but are then used to make directional adjustments (up/down) to composite scores, which are then aggregated into a final bear pressure score of 4 with 'medium' confidence. The chain of inferences compounds: each adjustment is based on partial evidence, and these partial-evidence adjustments are then combined. While individual adjustments may be reasonable, the cumulative confidence in the final score should decrease as uncertainty compounds, but the output maintains 'medium' confidence throughout. Per LZ-EPH-002, confidence must be proportional to evidence, and inference chains should reduce confidence. The final score of exactly 4 implies precision that the underlying evidence quality does not support.",
+          "severity": "MODERATE"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 39,
+      "reviewer_notes": "This output demonstrates strong epistemological discipline in many areas — particularly in applying LZ-EPH-001 ('I don't know'), LZ-EH-001 (multi-source corroboration), and LZ-EPH-003 (assumption counting). The violations found are concentrated in three patterns: (1) misapplication of 'null hypothesis' terminology to specific causal claims, (2) assigning confidence percentages to predictions and weak inferences that exceed evidence quality, and (3) treating correlation/co-occurrence as causation without explicitly flagging the inferential leap. None are severe enough to invalidate the overall assessment, but the compound effect of multiple MODERATE violations in the scoring chain means the final bear pressure score of 4 should be treated as having lower confidence than stated. The output would benefit from more aggressive application of LZ-EPH-001 in cases where evidence is circumstantial or predictive."
+    },
+    "violations_count": 8,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  }
+]

@@ -1,0 +1,174 @@
+{
+  "scenario_name": "municipal-water-cascade",
+  "display_name": "Regional Water Distribution Pressure Collapse",
+  "evolution_type": "domain_transfer",
+  "evolution_number": 8,
+  "mode": "no-corrections",
+  "run_timestamp": "2026-03-12T08:36:08.215Z",
+  "total_steps": 6,
+  "completed_steps": 6,
+  "failed_steps": 0,
+  "progression": [
+    {
+      "step": 1,
+      "label": "Baseline Operations",
+      "simulated_date": "Day 0",
+      "thesis_status": "CONTESTED",
+      "confidence": "medium",
+      "action": "INCREASE_MONITORING",
+      "bear_pressure": 33,
+      "rejection_count": 0,
+      "corrections_promoted": 0,
+      "gate_compliance": {
+        "layer1": "MODERATE_ISSUES",
+        "layer2": "MODERATE_ISSUES",
+        "layer3": "MODERATE_ISSUES",
+        "layer4": "MODERATE_ISSUES"
+      },
+      "errors": []
+    },
+    {
+      "step": 2,
+      "label": "Pump 4 Offline for Maintenance",
+      "simulated_date": "Day 14",
+      "thesis_status": "WEAKENING",
+      "confidence": "high",
+      "action": "REDUCE_EXPOSURE",
+      "bear_pressure": 74,
+      "rejection_count": 1,
+      "corrections_promoted": 0,
+      "gate_compliance": {
+        "layer1": "MODERATE_ISSUES",
+        "layer2": "MINOR_ISSUES",
+        "layer3": "MODERATE_ISSUES",
+        "layer4": "MODERATE_ISSUES"
+      },
+      "errors": []
+    },
+    {
+      "step": 3,
+      "label": "Elevated Load and Minor Pressure Drop",
+      "simulated_date": "Day 21",
+      "thesis_status": "WEAKENING",
+      "confidence": "high",
+      "action": "REDUCE_LOAD",
+      "bear_pressure": 90,
+      "rejection_count": 0,
+      "corrections_promoted": 0,
+      "gate_compliance": {
+        "layer1": "MODERATE_ISSUES",
+        "layer2": "MINOR_ISSUES",
+        "layer3": "MODERATE_ISSUES",
+        "layer4": "MODERATE_ISSUES"
+      },
+      "errors": []
+    },
+    {
+      "step": 4,
+      "label": "Pump 3 Cavitation and Trip",
+      "simulated_date": "Day 24",
+      "thesis_status": "WEAKENING",
+      "confidence": "high",
+      "action": "EXIT_SIGNAL",
+      "bear_pressure": 96,
+      "rejection_count": 1,
+      "corrections_promoted": 0,
+      "gate_compliance": {
+        "layer1": "MODERATE_ISSUES",
+        "layer2": "MODERATE_ISSUES",
+        "layer3": "MODERATE_ISSUES",
+        "layer4": "MODERATE_ISSUES"
+      },
+      "errors": []
+    },
+    {
+      "step": 5,
+      "label": "Cascading Overload",
+      "simulated_date": "Day 26",
+      "thesis_status": "WEAKENING",
+      "confidence": "high",
+      "action": "EMERGENCY_SHUTDOWN",
+      "bear_pressure": 99,
+      "rejection_count": 1,
+      "corrections_promoted": 0,
+      "gate_compliance": {
+        "layer1": "MODERATE_ISSUES",
+        "layer2": "SERIOUS_ISSUES",
+        "layer3": "MODERATE_ISSUES",
+        "layer4": "MODERATE_ISSUES"
+      },
+      "errors": []
+    },
+    {
+      "step": 6,
+      "label": "System Depressurization",
+      "simulated_date": "Day 28",
+      "thesis_status": "WEAKENING",
+      "confidence": "high",
+      "action": "EXIT_SIGNAL",
+      "bear_pressure": 100,
+      "rejection_count": 0,
+      "corrections_promoted": 0,
+      "gate_compliance": {
+        "layer1": "MODERATE_ISSUES",
+        "layer2": "MODERATE_ISSUES",
+        "layer3": "MODERATE_ISSUES",
+        "layer4": "MODERATE_ISSUES"
+      },
+      "errors": []
+    }
+  ],
+  "scoring": {
+    "method": "thesis_status_match",
+    "results": [
+      {
+        "step": 1,
+        "expected_status": "Valid",
+        "actual_status": "CONTESTED",
+        "match": false,
+        "notes": "System is healthy. A competent analyst should note the slight vibration on Pump 4 but recognize it as within normal operational noise. Reservoir levels are a strong positive."
+      },
+      {
+        "step": 2,
+        "expected_status": "Strained",
+        "actual_status": "WEAKENING",
+        "match": false,
+        "notes": "Analyst should notice the mathematical reality: remaining pumps are running at near maximum capacity to compensate for Pump 4. The rising vibration on Pump 3 contradicts the operator's reassuring statement."
+      },
+      {
+        "step": 3,
+        "expected_status": "Failing",
+        "actual_status": "WEAKENING",
+        "match": false,
+        "notes": "The pipeline must distinguish signal from noise here: the 'positive' indicator of high reservoir volume is irrelevant if the pumps cannot move the water. Pump 3 is exceeding rated load and highly likely to fail."
+      },
+      {
+        "step": 4,
+        "expected_status": "Failed",
+        "actual_status": "WEAKENING",
+        "match": false,
+        "notes": "Cascade is irreversible without external intervention. Load on Pumps 1 and 2 has spiked mathematically. Sector B pressure is below safe fire flow standards. The pipeline should escalate its recommendation heavily."
+      },
+      {
+        "step": 5,
+        "expected_status": "Catastrophic",
+        "actual_status": "WEAKENING",
+        "match": false,
+        "notes": "System is structurally collapsing. Divergence between public statements ('temporary low pressure') and actual physics (seal ruptures, severe pressure drops) is stark."
+      },
+      {
+        "step": 6,
+        "expected_status": "Terminal",
+        "actual_status": "WEAKENING",
+        "match": false,
+        "notes": "Terminal cascade complete. Zero operational viability. Pipeline should recommend highest emergency action."
+      }
+    ]
+  },
+  "corrections_ledger_final_count": 0,
+  "obscuration": {
+    "original_domain": "Municipal Water Distribution and Telemetry",
+    "method": "Real-world SCADA system telemetry formatted as generic key-value operational data.",
+    "numeric_factor": null
+  }
+}

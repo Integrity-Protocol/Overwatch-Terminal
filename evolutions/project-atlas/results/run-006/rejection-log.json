@@ -1,11 +1,40 @@
 [
   {
-    "layer3_inference": "No Layer 3 inferences were rejected because Layer 3 performed exceptionally rigorous self-correction, appropriately applying the corrections ledger and classifying speculative inferences as SPECULATIVE. Layer 3 did not overreach. The corrections ledger pattern — four entries prohibiting Foundation rescue inference — was correctly applied. All null hypotheses were appropriately tested and accepted. Layer 3's analytical quality in this cycle was exemplary: it proposed only what the evidence supported and explicitly flagged what it could not determine.",
-    "rejection_reason": "No rejection required — no Layer 3 inference contradicted data, exceeded evidence, or required overrule.",
-    "root_cause": "N/A",
+    "layer3_inference": "Atlas Foundation hidden moves — cannot infer private actions",
+    "signal_ids": [
+      "20260311-2342-SIG-006",
+      "20260311-2342-SIG-007",
+      "20260311-2342-SIG-008"
+    ],
+    "rejection_reason": "Layer 3 correctly self-classified this as SPECULATIVE with 3 assumptions and LOW confidence. Layer 4 confirms the rejection. Seven correction entries (CL-001/004/006/008/013/016/018) spanning multiple cycles have consistently prohibited this inference. The corrections ledger discipline is validated. No override.",
+    "root_cause": "INSUFFICIENT_EVIDENCE",
     "confidence_in_rejection": "high",
     "corrections_ledger_action": "auto_commit",
-    "timestamp": "2026-03-10T06:44:44.836Z",
+    "timestamp": "2026-03-11T23:53:45.990Z",
+    "source": "layer4_reconcile"
+  },
+  {
+    "layer3_inference": "Regulatory Bodies hidden moves — cannot infer investigation scope or trajectory from announcement alone",
+    "signal_ids": [
+      "20260311-2342-SIG-006"
+    ],
+    "rejection_reason": "Layer 3 correctly self-classified as SPECULATIVE with 3 assumptions. The existence of the investigation is accepted (VALID inference above). The scope, trajectory, and outcome are unknowable from available data. Four correction entries (CL-010/015/017/020) prohibit inferring specific regulatory actions without evidence. The prohibition now applies to investigation scope and trajectory rather than investigation existence.",
+    "root_cause": "INSUFFICIENT_EVIDENCE",
+    "confidence_in_rejection": "high",
+    "corrections_ledger_action": "auto_commit",
+    "timestamp": "2026-03-11T23:53:45.990Z",
+    "source": "layer4_reconcile"
+  },
+  {
+    "layer3_inference": "Secondary Market Participants hidden moves — cannot determine volume drivers",
+    "signal_ids": [
+      "20260311-2342-SIG-010"
+    ],
+    "rejection_reason": "Layer 3 correctly self-classified as SPECULATIVE. CL-005 and LZ-EH-004 both apply. The volume anomaly is genuine but the cause is unknowable. Layer 4 confirms: this remains a blind spot, not a scored signal.",
+    "root_cause": "INSUFFICIENT_EVIDENCE",
+    "confidence_in_rejection": "high",
+    "corrections_ledger_action": "auto_commit",
+    "timestamp": "2026-03-11T23:53:45.990Z",
     "source": "layer4_reconcile"
   }
 ]

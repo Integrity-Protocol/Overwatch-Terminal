@@ -1,27 +1,26 @@
 [
   {
-    "layer3_inference": "MWA has likely contacted emergency contractors and/or neighboring utility systems for mutual aid",
+    "layer3_inference": "Signal 014 — Cross-jurisdictional emergency water supply needs / mutual aid",
     "signal_ids": [
-      "20260310-2209-SIG-008",
-      "20260310-2209-SIG-015"
+      "20260312-0116-SIG-014"
     ],
-    "rejection_reason": "Layer 3 correctly classified this as SPECULATIVE (3 assumptions) with LOW confidence, and it was stripped during burden of proof application. However, Layer 4 formally rejects it from all scoring influence because: (1) SPECULATIVE classification per Step 1, (2) zero data support per Step 2, (3) CL-002 and CL-003 explicitly prohibit this class of inference based on prior cycle corrections. The plausibility of the inference (it IS what a rational operator would do) does not compensate for the complete absence of evidence. Per LZ-EPH-001, 'I don't know what MWA is doing operationally' is the correct output.",
+    "rejection_reason": "Layer 3 correctly identified this as unscorable. Layer 4 confirms: seven corrections ledger entries have stripped this inference class. The signal is built entirely on 'what would logically need to happen' without any real-world evidence. Per LZ-CC-001, internal logical consistency without real-world anchoring is not evidence. Layer 3 did not attempt to score this — it was already stripped. Layer 4 confirms the strip.",
     "root_cause": "INSUFFICIENT_EVIDENCE",
     "confidence_in_rejection": "high",
     "corrections_ledger_action": "auto_commit",
-    "timestamp": "2026-03-10T22:20:25.730Z",
+    "timestamp": "2026-03-12T01:29:11.941Z",
     "source": "layer4_reconcile"
   },
   {
-    "layer3_inference": "State regulator has likely been formally notified and is initiating response procedures",
+    "layer3_inference": "Signal 010 — Fire department forced to alternative water sourcing (behavioral inference about tanker operations)",
     "signal_ids": [
-      "20260310-2209-SIG-009"
+      "20260312-0116-SIG-010"
     ],
-    "rejection_reason": "FLAGGED classification (2 assumptions) at 50% weight, but zero data support strips it entirely per Step 2. The inference that a boil water advisory triggers regulatory notification is procedurally reasonable but we have no evidence it has occurred in this case. The regulator remains a complete data void. Logged but stripped from all scoring.",
+    "rejection_reason": "Layer 3 correctly classified the behavioral inference as SPECULATIVE with INSUFFICIENT_EVIDENCE. The underlying hydrant data (0 PSI) is valid but already fully captured in Signal 003. The fire dispatch behavioral layer adds zero independently verifiable information. Layer 4 reduces final composite to 0 — the signal's independent contribution is nil after removing the unsupported behavioral inference and the duplicative hydrant data.",
     "root_cause": "INSUFFICIENT_EVIDENCE",
     "confidence_in_rejection": "high",
     "corrections_ledger_action": "auto_commit",
-    "timestamp": "2026-03-10T22:20:25.730Z",
+    "timestamp": "2026-03-12T01:29:11.941Z",
     "source": "layer4_reconcile"
   }
 ]

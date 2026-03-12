@@ -1,0 +1,264 @@
+{
+  "step": 6,
+  "label": "Residual Monitoring",
+  "simulated_date": "10:00:00",
+  "started_at": "2026-03-12T09:33:48.544Z",
+  "layers_completed": [
+    "SWEEP",
+    "CONTEXTUALIZE",
+    "INFER",
+    "RECONCILE"
+  ],
+  "tier1_results": {
+    "layer1": {
+      "flags": [],
+      "hard_fails": 0,
+      "total_flags": 0,
+      "layer": 1
+    },
+    "layer2": {
+      "flags": [],
+      "hard_fails": 0,
+      "total_flags": 0,
+      "layer": 2
+    },
+    "layer3": {
+      "flags": [],
+      "hard_fails": 0,
+      "total_flags": 0,
+      "layer": 3
+    },
+    "layer4": {
+      "flags": [],
+      "hard_fails": 0,
+      "total_flags": 0,
+      "layer": 4
+    }
+  },
+  "gate_results": {
+    "layer1": {
+      "violations": [
+        {
+          "finding": "Extended replenishment window creates vulnerability",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "Inference chain relies on at least three unproven assumptions: (1) overnight replenishment takes 8-12 hours, (2) a second event could occur during this window, (3) such an event would have similar magnitude to the first, (4) this would trigger Kill Switch #4. The 8-12 hour timeline is not evidenced—operator log says 'overnight' but provides no duration. The second-event scenario and its interaction with Kill Switch #4 involves multiple hypotheticals compounded without verification.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Reserve replenishment competes with normal demand",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "Multiple unproven assumptions: (1) nighttime industrial users exist in this system, (2) they could create unexpected load, (3) this would extend replenishment timeline beyond anticipated, (4) operators haven't accounted for normal nighttime demand in their replenishment plan. The finding presents a coherent narrative but each link is speculative.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "No competing or alternative supply sources mentioned",
+          "rule_violated": "LZ-RC-003",
+          "violation": "Absence of evidence (no mention of mutual aid agreements or emergency interconnects) is treated as meaningful signal ('DETERIORATION' direction with severity 'moderate'). The finding explicitly acknowledges 'Absence of data, not evidence of absence' but then assigns negative valence to the absence. This violates the principle that absence of evidence is informationally neutral.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "Demand source behavior unresolved",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "Low confidence is appropriate, but the finding is assigned 'moderate' severity and 'AMBIGUOUS' direction based almost entirely on absence of confirmation. The operator log states 'Incident resolved' (positive evidence), but this is treated with less weight than the absence of detailed confirmation. The confidence-evidence proportion is misaligned—low evidence should produce either 'I don't know' or lower severity rating.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "No geopolitical or cybersecurity signals",
+          "rule_violated": "LZ-RC-003",
+          "violation": "Absence of cybersecurity monitoring fields in the data feed is treated as a signal ('AMBIGUOUS' direction, 'moderate' severity). The finding correctly identifies this as a 'structural blind spot' but then treats the absence itself as evidence of something meaningful. Absence of evidence is not evidence of presence or absence of cybersecurity issues.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "Assumption: 58% reserves are sufficient buffer",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The inference chain contains multiple unproven assumptions: (1) original reserve level was 95%, (2) a second event would have similar magnitude (37 percentage point drawdown), (3) linear extrapolation from one event is valid, (4) this would bring reserves to ~21%, (5) this is 'dangerously close' to 10% threshold. The calculation is mathematically coherent but built on speculative inputs. The pre-incident baseline is explicitly stated as unknown, yet the finding proceeds with quantitative projections.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "SCADA automated protection thesis validated",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "High confidence ('medium' is labeled but the severity is 'high' and language is definitive: 'validated', 'empirical evidence') is asserted for a complex causal claim with incomplete evidence. The finding infers that SCADA protection logic caused the successful outcome, but this is one possible explanation. The evidence shows post-incident recovery but does not isolate SCADA's causal role versus other factors (e.g., incident simply ending, manual operator intervention, inherent system capacity). Confidence should be lower for this causal inference.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Grid pressure differential between sector and average",
+          "rule_violated": "LZ-RC-004",
+          "violation": "The finding presents three possible explanations for the 5 PSI differential (residual localized demand, partially open hydrants, minor distribution friction) without testing the simplest sufficient explanation first. The null hypothesis—that a 5 PSI differential in a large water system during post-incident recovery is within normal operational variance—is not considered. The finding jumps to explanations that require additional phenomena without establishing that an explanation is needed.",
+          "severity": "MINOR"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 15,
+      "clean_findings": 7,
+      "reviewer_notes": "Two SERIOUS violations both involve treating absence of evidence as meaningful signal (LZ-RC-003). Four MODERATE violations involve assumption chain length (LZ-EPH-003) or confidence-evidence mismatch (LZ-EPH-002). The output demonstrates strong anchoring to verified data in most findings, but speculative extensions and absence-as-signal reasoning appear in vulnerability/risk projections. Pattern suggests analyst may be over-indexing on 'what could go wrong' scenarios beyond what evidence supports."
+    },
+    "layer2": {
+      "violations": [
+        {
+          "finding": "Signal 20260312-0935-SIG-009: 'SCADA automated protection thesis validated' - Knowledge audit states 'we cannot confirm the specific thesis mechanism (automated pump sacrifice) actually activated; it's possible the event never stressed the system enough to trigger SCADA protection logic' yet the signal is titled as thesis 'validated' and scored as positive evidence",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "Confidence is not proportional to evidence. The audit correctly identifies that the thesis mechanism cannot be confirmed to have activated, yet the signal is labeled 'validated' with MEDIUM confidence. The evidence shows only that the system survived - not that the specific thesis mechanism (automated pump sacrifice) was the cause. The title 'validated' expresses higher confidence than the evidence supports. The signal should be titled something like 'System survived incident - thesis mechanism unconfirmed' or confidence should be LOW.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Signal 20260312-0935-SIG-004: Severity reduced from 7 to 5 due to 'speculative assumption chain per LZ-EPH-003' - but the three assumptions are identified as: (1) pre-incident level was ~100%, (2) a repeat event would draw similar volume, (3) pumps might go offline during a repeat event",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The assumption count is incorrect or improperly applied. Assumption (3) 'pumps might go offline' is not required for the core vulnerability assessment - the vulnerability exists whether pumps go offline or not (the concern is reduced reserves during replenishment creating less buffer). The reasoning appears to be counting assumptions to trigger the three-assumption threshold when only two material assumptions exist for the directional concern (pre-incident baseline and repeat event draw magnitude). Additionally, the directional concern 'lower starting reserves = less buffer' does not require knowing the exact pre-incident level - it only requires knowing that reserves were consumed and are now lower.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Signal 20260312-0935-SIG-015: Scored at severity 4 with reasoning that 'the structural point that the system's passive safety margin is temporarily reduced is real and thesis-relevant' - but this is the same concern as Signal 004, creating potential double-counting of the same vulnerability",
+          "rule_violated": "LZ-CC-001",
+          "violation": "This appears to be a coherent narrative (reserves are lower, buffer is reduced, repeat event risk) that is internally consistent but may lack independent anchoring from Signal 004. The two signals (004 and 015) both assess the vulnerability window created by reserve depletion and replenishment timing. Signal 004 assesses the 8-12 hour window, Signal 015 assesses the sufficiency of 58% reserves as a buffer. These are different framings of the same structural reality (reduced reserves = reduced buffer) rather than independent findings. The output does not acknowledge this overlap or explain why both are scored separately, which could inflate the bear pressure assessment.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Bear pressure reduced from 4 to 3 with reasoning that includes 'one validated thesis test (3)' as an offsetting positive signal",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The bear pressure calculation incorporates Signal 009 ('SCADA automated protection thesis validated', severity 3) as a positive offset. However, the knowledge audit for that same signal concluded that the thesis mechanism could not be confirmed to have activated. Using 'validated thesis' as a weighted input to reduce bear pressure expresses confidence not proportional to the evidence. The reasoning should either exclude this signal from the bear calculation or weight it at significantly lower confidence given the uncertainty about whether the thesis mechanism was actually tested.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Kill Switch Status KS-4: 'movement_since_last: deteriorated' - but there is no prior baseline measurement provided in this output to establish movement direction",
+          "rule_violated": "LZ-RC-002",
+          "violation": "Movement assessment requires at least two measurements across time to establish direction. The output labels KS-4 status as 'deteriorated' but provides no prior reference point for comparison within this analytical output. This could be valid if prior state data exists elsewhere in the system, but without that context visible in this output, the movement assessment cannot be verified against the evidence presented. If this references external state tracking, it should be explicitly cited as the comparison baseline.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Signal 20260312-0935-SIG-012: Scored at severity 3 for 'No competing or alternative supply sources mentioned' despite correctly applying LZ-RC-003 that 'absence of mention is not evidence it doesn't exist' and flagging it as a data gap",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The reasoning correctly applies LZ-RC-003 and states 'This is a data gap flagged appropriately' and 'cannot be scored as a confirmed deterioration.' However, it then assigns a severity score of 3, which represents a weighted bear pressure contribution. Per LZ-RC-003, absence of evidence is informationally neutral - it should not contribute to directional scoring. The signal should either be unscored (if it's purely a gap to investigate) or scored at severity 0/1 if tracked for monitoring purposes only. Scoring it at 3 contradicts the correct application of LZ-RC-003 in the reasoning.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Signal 20260312-0935-SIG-014: Scored at severity 2 for 'No geopolitical or cybersecurity signals' as a 'standing structural blind spot' despite correctly applying LZ-RC-003",
+          "rule_violated": "LZ-RC-003",
+          "violation": "Same violation as Signal 012. The reasoning correctly states 'Per LZ-RC-003, absence of cybersecurity data is not an active threat indicator' and 'This is a monitoring gap to flag, not an active signal.' Yet it assigns severity 2, contributing 0.8 weighted severity to the bear assessment. Absence of monitoring data is informationally neutral per LZ-RC-003 and should not contribute directional pressure. This should be unscored or severity 0.",
+          "severity": "MODERATE"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 40,
+      "reviewer_notes": "The output demonstrates strong epistemological discipline in most areas - extensive use of LZ-RC-002, LZ-RC-003, LZ-EPH-003, and LZ-EH-002 in the knowledge audit shows the system is actively checking itself. However, there are systematic issues with: (1) applying rules correctly in audit but then violating them in scoring (Signals 012, 014 correctly invoke LZ-RC-003 but then score absence as bear pressure); (2) confidence calibration mismatch between audit findings and signal titles/weighting (Signal 009); (3) potential double-counting of the reserve vulnerability across Signals 004 and 015. The bear pressure reduction from 4 to 3 may be directionally sound but incorporates the 'validated thesis' signal at face value despite the audit's own uncertainty about mechanism confirmation. Recommend Sunday review of how data gaps should be handled in scoring - is absence of monitoring capability itself a scoreable risk factor, or should it be tracked separately from directional threat signals?"
+    },
+    "layer3": {
+      "violations": [
+        {
+          "finding": "Strategic Inference: 'Gravity reserves depleted to 58%' - classification NULL_HYPOTHESIS_HOLDS with assumption_count: 0",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The reasoning states 'Without knowing the pre-incident baseline or the incident magnitude, there is no evidence the drawdown was anomalous relative to the event that caused it.' This involves at least two unproven assumptions: (1) that a 58% level is normal/expected for this type of event, and (2) that the pre-incident baseline was at a level that makes 58% a reasonable outcome. The reasoning explicitly acknowledges not knowing key parameters but then draws a conclusion anyway. The assumption count should be ≥2, not 0.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Strategic Inference: 'Extended replenishment window creates vulnerability' - classification NULL_HYPOTHESIS_HOLDS with confidence: high",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The reasoning relies on assuming that 'Water utilities design their reserve systems with the understanding that reserves will be periodically drawn down and require replenishment' and that '8-12 hour replenishment window at 58% reserves is a routine operational condition' - but no evidence is cited that this specific utility operates this way, or that 58% for 8-12 hours is within their operational norms. High confidence is assigned based on generalized utility practice assumptions rather than evidence specific to this system.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Strategic Inference: 'SCADA automated protection thesis validated' - uses phrase 'thesis validated' then immediately contradicts by stating mechanism is unverified",
+          "rule_violated": "LZ-EPH-001",
+          "violation": "The finding title includes 'thesis validated' but the reasoning concludes 'The outcome supports the thesis but the mechanism is unverified' and 'we cannot confirm the specific thesis mechanism activated.' The honest output is 'I don't know if the thesis mechanism was validated' - but the finding is titled as if validation occurred. This creates analytical ambiguity where 'I don't know' would be the higher-quality answer.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Hidden Move: Grid Operators compiling detailed post-incident report - classified as 'FLAGGED' with assumption_count: 1",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The reasoning involves multiple unproven assumptions: (1) that detailed reports are compiled separately from SCADA logs, (2) that operators have regulatory obligations requiring such reports, (3) that 'forward-looking operational planning' in the log implies documentation activity, (4) that the overnight replenishment mention is evidence of broader systematic thinking rather than just operational necessity. At least 3-4 unproven assumptions chain together to infer this hidden move, but assumption_count is listed as 1.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Player Analysis: SCADA Automated Logic - 'HOWEVER, there is a critical unknown' section assigns medium confidence despite explicitly stating mechanism is unverified",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The analysis explicitly states 'we cannot confirm whether the SCADA logic actually activated' and 'The designed behavior...may or may not have been exercised' and 'the mechanism is unverified' - these are direct statements of high uncertainty. Medium confidence is not proportional to evidence when the core mechanism being assessed is explicitly acknowledged as unverifiable from available data.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Feedback Loop: 'Reserve Depletion → Reduced Buffer → Increased Kill Switch #4 Vulnerability' - trigger_to_next_state describes a hypothetical future scenario",
+          "rule_violated": "LZ-RC-005",
+          "violation": "The trigger_to_next_state describes 'A second acute demand event during the 8-12 hour replenishment window' - this is a forward-looking prediction being used to characterize the current state of a feedback loop. The loop's significance is being assessed based on a predicted future event that has not occurred, conflating prediction with measurement of current system state.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Scenario Probabilities: thesis_confirmed at 55% based on 'system survived an acute event'",
+          "rule_violated": "LZ-RC-002",
+          "violation": "The reasoning explicitly cites 'Full confirmation requires multiple incident survivals per LZ-RC-002' but then assigns 55% probability to 'thesis_confirmed' based on a single event. The analysis correctly identifies that one event doesn't establish a trend, then assigns majority probability to confirmation anyway. This is internally inconsistent application of the cited rule.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Compound Stress Inference: 'thesis paradox' section states 'consuming its reserves reduces its resilience to the next event'",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The statement treats temporal sequence (reserves consumed, then reserves lower) as if it creates a causal paradox. This confuses temporal ordering with contradiction. The system consuming reserves during an event and having lower reserves afterward is not a paradox - it is straightforward causation. Labeling this a 'paradox' elevates a simple resource-depletion pattern to a logical contradiction, which it is not.",
+          "severity": "MINOR"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 32,
+      "clean_findings": 24,
+      "reviewer_notes": "This output demonstrates sophisticated reasoning with strong null hypothesis discipline and appropriate evidence citation in most findings. The violations cluster around two patterns: (1) assumption counting that understates inference chain length, particularly when reasoning explicitly acknowledges unknowns but proceeds anyway, and (2) confidence calibration that doesn't fully track with the acknowledged uncertainty in the evidence. The analyst correctly identifies ambiguities and limits throughout but occasionally assigns confidence levels or classifications that don't align with those stated limits. The 'thesis validated' finding is particularly notable - the reasoning correctly concludes the mechanism is unverified, but the finding title contradicts this. The output would benefit from stricter assumption counting discipline and recalibration of several medium→low confidence ratings where mechanism uncertainty is explicitly acknowledged."
+    },
+    "layer4": {
+      "violations": [
+        {
+          "finding": "Inference: 'Grid operators compiling detailed post-incident report (hidden move)' assigned 50% weight after FLAGGED classification and partial data support",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "Confidence is not proportional to evidence. The inference rests on a single assumption (that a detailed report exists or is being compiled) with only partial data support (a forward-looking replenishment note). The reasoning chain is: operator log mentions replenishment → this suggests active management → active management is consistent with report compilation. This is three inferential steps from the actual data point, yet the finding assigns 25% net weight (50% FLAGGED × 50% partial support) as if this has measurable evidentiary value. Per LZ-EPH-002, expressing any positive weight here implies confidence that is not supported by the evidence. The honest answer per LZ-EPH-001 is 'we don't know whether a detailed report exists' — this should carry zero weight or be explicitly marked as speculative expectation rather than weighted inference.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Paradox resolution: 'System consumed significant reserves indicating substantial incident, yet operator log treats it as routine' marked as 'paradox_held' and resolved by noting both can be simultaneously true",
+          "rule_violated": "LZ-EPH-001",
+          "violation": "The resolution avoids declaring 'I don't know' when that is the correct answer. The reasoning states 'both are simultaneously true and do not actually contradict' — but this resolves the tension by redefining it away rather than acknowledging the genuine uncertainty. The operator treating something as routine could mean (a) it genuinely is routine, or (b) experienced operators have normalized abnormal events, or (c) the log is incomplete documentation of a more serious assessment. The analysis selects option (a) by stating 'The operator treating this as routine is consistent with either a genuinely routine event OR experienced operators who handle these events regularly' — but these are two different explanations, and we have no independent evidence to distinguish them. Per LZ-EPH-001, the high-quality output is 'we cannot determine from available evidence whether this incident was routine or whether routine treatment reflects operator normalization' rather than declaring the paradox resolved.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Final bear pressure score of 3 presented with 'medium' confidence",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The overall confidence assessment is stated as 'medium' but the scoring precision (integer 3) and the tactical recommendation (INCREASE_MONITORING with specific numeric triggers) imply higher confidence than the evidence supports. The analysis explicitly identifies that: (1) the core thesis mechanism may not have been tested, (2) incident severity is unknown, (3) Kill Switch #2 retrospective status is unresolved, and (4) the single most consequential data point is missing. Given these four major uncertainties, presenting a definitive integer bear pressure score creates false precision. The confidence level ('medium') acknowledges uncertainty in the narrative but the score itself (3, not a range) does not reflect that uncertainty structurally. Per LZ-EPH-002, confidence must be proportional to evidence — a range (2-4) or explicit confidence interval would better represent the actual epistemic state.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Layer 3 adjustment for SIG-009 states 'Slight upward adjustment in severity (meaning LESS positive than Layer 2 scored it)' changing composite from 3 to 3.5",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The confidence in the directional adjustment is not proportional to evidence. The reasoning correctly identifies that we cannot confirm whether the thesis mechanism activated (per LZ-RC-002, one event doesn't establish a trend). However, the precision of the 0.5-point adjustment implies measurable confidence in the degree of correction needed. The analysis knows the Layer 2 assessment was too optimistic but cannot quantify by how much, because the underlying question (did the mechanism activate?) is binary and unresolved. The honest representation per LZ-EPH-002 would be to flag this as unresolvable rather than applying a precise fractional correction that implies calibrated judgment where none exists.",
+          "severity": "MINOR"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 43,
+      "reviewer_notes": "The output demonstrates strong epistemological discipline in most areas — particularly in null hypothesis testing (LZ-RC-004), assumption counting (LZ-EPH-003), and data gap classification. The violations cluster around a specific pattern: the analysis correctly identifies uncertainty but then attempts to 'manage' it through precise numerical adjustments or narrative resolutions rather than holding it as irreducible uncertainty. The most significant issue is the paradox resolution mechanism, which redefines tensions as non-contradictions rather than acknowledging 'we cannot determine which explanation is correct.' This is a subtle but important distinction: the analysis is not inventing data or making wild leaps, but it is avoiding 'I don't know' in favor of 'both could be true, so no conflict' — which technically resolves the logical tension but epistemologically sidesteps the underlying uncertainty. The hidden move inference (detailed report compilation) is the clearest LZ-EPH-002 violation — assigning 25% weight to a three-step inference chain from partial evidence crosses the line from speculation to weighted finding. Overall: the reasoning is sophisticated and largely sound, but it needs to be more comfortable with unresolved uncertainty as a final state rather than a state to be managed away."
+    }
+  },
+  "errors": [],
+  "thesis_status": "STABLE",
+  "corrections_promoted": 0,
+  "confidence_in_status": "medium",
+  "action_recommendation": "INCREASE_MONITORING",
+  "final_bear_pressure": 3,
+  "unresolved_tensions": [
+    {
+      "description": "Whether Kill Switch #2 (20 PSI contamination threshold) was transiently breached during the incident. This is the single most consequential unknown — it determines whether the thesis was temporarily falsified and whether regulatory obligations have been triggered.",
+      "watch_for": "SCADA historical telemetry showing minimum Sector 4 pressure during the incident period. If minimum was >20 PSI, tension resolves favorably. If <20 PSI, thesis requires significant reassessment and regulatory exposure must be evaluated."
+    },
+    {
+      "description": "Whether the SCADA automated pump protection logic actually activated during the incident, or whether the event never stressed the system enough to trigger it. This determines whether the thesis mechanism was validated or merely untested.",
+      "watch_for": "SCADA event logs showing pump trip/restart events during the incident period. If pumps were tripped and restarted: thesis mechanism confirmed. If pumps ran continuously: thesis mechanism untested, gravity reserve drawdown occurred through passive head-pressure equalization."
+    },
+    {
+      "description": "The thesis paradox: successful deployment of gravity reserves simultaneously validates the architecture AND degrades its capacity for the next event. During the 8-12 hour replenishment window, the system is in a state where it has demonstrated resilience but has reduced capacity to demonstrate it again.",
+      "watch_for": "Reserve level recovery above 80% during overnight low-demand period, confirming the replenishment cycle functions as planned and the vulnerability window is closing."
+    }
+  ],
+  "rejection_count": 0,
+  "completed_at": "2026-03-12T09:44:40.270Z"
+}

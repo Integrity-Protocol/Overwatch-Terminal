@@ -2,7 +2,7 @@
   "step": 5,
   "label": "Stabilization and Capacity Confirmation",
   "simulated_date": "08:45:00",
-  "started_at": "2026-03-11T07:23:56.488Z",
+  "started_at": "2026-03-12T04:03:15.941Z",
   "layers_completed": [
     "SWEEP",
     "CONTEXTUALIZE",
@@ -39,86 +39,184 @@
     "layer1": {
       "violations": [
         {
-          "finding": "Gravity reserves significantly depleted - 'reserves are finite and slow to replenish'",
+          "finding": "Demand draw decreasing",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "Confidence rated 'medium' despite evidence being a single narrative operator log statement without quantitative trend data. The finding itself acknowledges 'this is a narrative/logged observation, not a confirmed quantitative measurement with trend data,' yet medium confidence is assigned. Given the evidence is secondhand narrative without measurement confirmation, confidence should be lower or the gap should be more clearly acknowledged as insufficient for medium confidence.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "No contamination advisory triggered",
+          "rule_violated": "LZ-RC-003",
+          "violation": "Absence of evidence (no advisory mentioned in operator log) is treated as evidence of absence (threshold was never breached). The finding explicitly states 'Confidence medium because we lack minimum pressure readings during the event trough' — this is exactly the case where absence of evidence should not support a conclusion. The finding should flag insufficient data rather than make an inference from missing information.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "SCADA automated failover sequence validated",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The finding observes correlation (cavitation normal, surge valve closed, pumps restarted, reserves deployed, pressure above thresholds) and infers causation (system executed 'as designed'). While the inference is reasonable, the finding does not acknowledge this is correlation-based. Multiple coincident normal states do not prove the automated sequence caused the outcome without direct SCADA event logs showing automated triggers. The evidence cited shows outcomes, not causal mechanisms.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Post-event pipe network integrity unverified",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "Confidence is rated 'low' appropriately, but the finding is built on two unproven assumptions: (1) that rapid pressure swings occurred, which is 'implied' but not directly measured, and (2) that such swings would cause micro-fractures. The evidence cited is 'Pressure transient event implied by pump trip and restart cycle' — 'implied' means not verified. This should be flagged as speculative or confidence should be even lower than 'low' given the evidence is inference-on-inference.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "System total flow remains elevated at 14,000 GPM",
           "rule_violated": "LZ-RC-002",
-          "violation": "The claim that reserves are 'slow to replenish' is stated as fact without any evidence of refill rate, historical refill time, or multiple observations of refill operations. This treats an assumption about refill speed as an established characteristic without measurement.",
+          "violation": "The finding states 'At 14,000 GPM the system is pushing substantial volume' and uses the single data point of 14,000 GPM as evidence the system 'remains elevated.' The word 'remains' implies a trend, but only one measurement is cited. A single data point cannot establish that flow 'remains' at a level — that requires multiple observations. The finding should state 'flow is currently at 14,000 GPM' without implying persistence.",
           "severity": "MODERATE"
         },
         {
-          "finding": "System total flow elevated at 14,000 GPM - marked AMBIGUOUS with medium confidence",
+          "finding": "Demand source status unconfirmed",
           "rule_violated": "LZ-EPH-002",
-          "violation": "The finding explicitly acknowledges 'Without historical baseline flow data, it is unclear whether 14,000 GPM represents near-normal operations or a still-elevated state' yet assigns 'medium' confidence rather than 'low'. The evidence gap described justifies lower confidence or an 'I don't know' stance.",
-          "severity": "MINOR"
-        },
-        {
-          "finding": "Demand source draw is decreasing - assigned medium confidence",
-          "rule_violated": "LZ-EPH-002",
-          "violation": "The evidence is strong: operator log directly states 'Draw is decreasing' and is corroborated by flow data at 14,000 GPM. The confidence downgrade to 'medium' appears arbitrary given the direct evidence cited. Confidence should be proportional to evidence quality.",
-          "severity": "MINOR"
-        },
-        {
-          "finding": "Sector 4 pressure gap suggests possible infrastructure constraint - uses 'could indicate', 'suggests', then assigns low confidence",
-          "rule_violated": "LZ-EPH-003",
-          "violation": "This inference relies on at least three unproven assumptions: (1) the gap is not a transient recovery artifact, (2) a structural bottleneck exists, (3) the bottleneck pre-existed the event. The finding acknowledges 'no pre-event baseline comparison available' yet still constructs a causal explanation. This should be flagged as speculative or the assumptions should be counted explicitly.",
-          "severity": "MODERATE"
-        },
-        {
-          "finding": "Reduced pump load creates vulnerability to secondary event",
-          "rule_violated": "LZ-RC-005",
-          "violation": "The finding predicts future system behavior under a hypothetical 'second major draw' event that has not occurred. It assigns 'moderate' severity to a forward-looking vulnerability assessment based on speculation about 'untested variable' ramp-up speed. This conflates prediction with measurement and assigns severity to a hypothetical scenario.",
-          "severity": "MODERATE"
-        },
-        {
-          "finding": "Operator protocol adherence confirmed - assigned medium confidence",
-          "rule_violated": "LZ-EPH-002",
-          "violation": "The evidence cited is direct: operator log explicitly documents actions consistent with stated protocols, with no deviations noted. This is primary source verification of adherence. The confidence should be 'high' given the directness of the evidence, not downgraded to 'medium' without justification.",
+          "violation": "Confidence rated 'low' is appropriate, but the finding makes a definitive claim that 'the external demand source (presumed fire department operations) is inferred to be winding down' when the evidence is a single operator log narrative statement. The confidence should reflect that both the identity of the demand source AND its status are unconfirmed. 'Low' may be appropriate, but the certainty with which the finding describes what is happening (winding down vs. pausing) exceeds what 'low confidence' typically permits.",
           "severity": "MINOR"
         }
       ],
       "compliance": "MODERATE_ISSUES",
       "model_used": "claude-sonnet-4-5-20250929",
       "gate_failed": false,
-      "findings_reviewed": 15,
-      "clean_findings": 9,
-      "reviewer_notes": "Multiple findings show appropriate epistemic discipline (marking blind spots, acknowledging data gaps, distinguishing ambiguous from confirmed signals). However, there is inconsistent confidence calibration across findings - some with strong direct evidence are downgraded, while speculative multi-assumption inferences are treated as substantive findings rather than being flagged under LZ-EPH-003. The 'reduced pump load vulnerability' finding is particularly problematic as it assigns concrete severity to a purely hypothetical future scenario."
+      "findings_reviewed": 14,
+      "clean_findings": 8,
+      "reviewer_notes": "The output shows generally strong epistemological discipline with explicit blind spot flagging and honest confidence calibration in most cases. The violations cluster around three patterns: (1) treating absence of evidence as weak evidence of absence (contamination advisory), (2) subtle conflation of correlation with validation of causal mechanism (SCADA sequence), and (3) single-point measurements being described with language implying trends ('remains elevated'). None are egregious, but the SCADA finding in particular shows the classic Plausibility Trap — a coherent explanation of system behavior that feels validated by outcomes but lacks direct causal evidence."
     },
     "layer2": {
       "violations": [
         {
-          "finding": "Signal 20260311-0725-SIG-008: Reserve refill strategy unstated - severity upgraded from 5 to 6 because corrections ledger prevents crediting assumed background operations",
+          "finding": "SIG-012 severity increased from 5 to 6 based on corrections ledger showing 'chronic structural blind spot'",
           "rule_violated": "LZ-EPH-002",
-          "violation": "The severity increase is based on the absence of evidence (no refill strategy stated). The corrections ledger prevents assuming a capability exists, but the absence of a statement about refill strategy does not itself constitute evidence of increased threat. Confidence should be proportional to evidence. The lack of evidence about refill strategy is a gap (already identified), not evidence that makes the situation worse. The severity inflation treats absence of evidence as evidence of deterioration.",
-          "severity": "MODERATE"
+          "violation": "Severity was increased based on meta-analysis of historical correction patterns rather than evidence from the current event. The corrections ledger documents past inference failures, not current evidence quality. Confidence proportional to evidence requires that severity reflect the current data gap (single-source narrative claim), not the historical frequency of similar gaps. The gap's impact is measurable from current data alone; historical pattern adds no evidentiary weight to the current finding.",
+          "severity": "MINOR"
         },
         {
-          "finding": "Signal 20260311-0725-SIG-010: Unknown demand source status - severity upgraded from 6 to 7 because corrections ledger confirms this class of gap has been systematically underweighted in prior assessments",
-          "rule_violated": "LZ-EPH-002",
-          "violation": "Severity is being adjusted based on meta-reasoning about past assessment patterns rather than evidence about the current situation. The evidentiary basis for the gap has not changed. Confidence must be proportional to evidence about the current state, not about historical scoring patterns. Correcting for past errors by inflating current scores violates proportionality.",
-          "severity": "MODERATE"
-        },
-        {
-          "finding": "Signal 20260311-0725-SIG-011: Reduced pump load creates vulnerability to secondary event - compound effect assessment of both redundancy legs simultaneously diminished",
+          "finding": "Bear pressure reasoning states 'if any one [unknown] resolves badly, it cascades into the others'",
           "rule_violated": "LZ-EPH-003",
-          "violation": "The vulnerability assessment rests on multiple unproven assumptions: (1) that a secondary event will occur, (2) that if it occurs it will be of comparable magnitude, (3) that the system will not have recovered capacity before such an event, (4) that SCADA ramp-up speed is insufficient (unknown ≠ insufficient). This is a speculative chain. The finding acknowledges 70% pump headroom exists but scores vulnerability as if headroom is inadequate without evidence that it is inadequate.",
+          "violation": "This cascade claim requires at least three unproven assumptions: (1) that a bad resolution of drain rate specifically causes pump ceiling constraint or demand re-surge, (2) that the causal mechanism linking these three variables operates in the claimed direction, and (3) that the cascade effect would be severe enough to materially affect bear pressure. The three unknowns are correlated (they all affect recovery timeline) but the directional cascade claim is speculative. The finding correctly identifies them as 'interconnected' but goes further to claim cascade dynamics without evidence.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "SIG-005 mass balance reasoning: 'if pumps at 30% cannot account for all 14,000 GPM, gravity reserves must be supplying the difference'",
+          "rule_violated": "LZ-RC-004",
+          "violation": "The null hypothesis (pumps at 30% load ARE sufficient to supply 14,000 GPM) was not tested before concluding reserves are still draining. Without pump capacity data, we cannot determine which hypothesis is correct. The reasoning assumes pump capacity at 30% is insufficient, but this is unverified. The finding correctly flags pump capacity as unknown (SIG-010) but then uses the untested assumption to drive the severity assessment of SIG-005. The simpler sufficient explanation (pumps at 30% may be adequate for current flow) must be tested first.",
           "severity": "MODERATE"
         },
         {
-          "finding": "Bear pressure reasoning states 'Sector 4 pressure gap of 9.5 PSI below grid average — cause unknown, could be structural' as a negative factor maintaining bear pressure",
+          "finding": "SIG-003 knowledge audit states 'typical municipal range is 50-60+ PSI; this aligns with general municipal water engineering knowledge but is not stated in thesis context' yet still scores the 9.5 PSI differential as meaningful",
+          "rule_violated": "LZ-CC-001",
+          "violation": "The significance of the 9.5 PSI differential relies on an external reference range (50-60 PSI nominal) that is acknowledged as domain knowledge inference, not thesis-specified or measured data. The finding is internally consistent (38.5 vs 48.0 is a real differential) but the interpretation that this differential represents a 'weak point' depends on an unanchored assumption about what nominal Sector 4 pressure should be. The thesis specifies only the 20 PSI kill switch threshold. The differential could be normal or abnormal — we lack the anchor point. The audit correctly identifies this as a THRESHOLD_CALIBRATION_GAP but then scores severity 4 based on the differential's 'meaningfulness' without the calibration.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Layer2_summary states 'the system is in a depleted state that is more vulnerable to a secondary event than its pre-event baseline'",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "This vulnerability claim requires multiple unproven assumptions: (1) that a secondary demand event is possible within the recovery window, (2) that such an event would resemble the first in magnitude, (3) that the current depleted state (65% reserves, 30% pumps, 38.5 PSI Sector 4) has materially less capacity to handle such an event than the pre-event baseline, and (4) that the difference in capacity is significant enough to constitute 'disproportionate vulnerability'. While each assumption is individually plausible, the chain exceeds three unproven links. The finding could have stated 'reserves are at 65% vs presumed nominal ~100%, pumps at 30% vs unknown normal load' without the comparative vulnerability inference.",
+          "severity": "MINOR"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 42,
+      "reviewer_notes": "The SIG-005 mass balance violation is the most consequential — it affects the reasoning chain connecting flow elevation → reserve drain → KS#3 assessment. The analyst correctly identified pump capacity as unknown (SIG-010) but then assumed pump insufficiency to score SIG-005 severity, bypassing LZ-RC-004. The SIG-003 differential interpretation demonstrates awareness of the calibration gap but scores severity anyway, which is borderline LZ-CC-001 — the differential is real but its significance depends on an unanchored reference. The other three violations are minor inference chain issues that don't materially affect the core findings. The SCADA validation finding (SIG-013) and the reserve drain rate gap (SIG-009) are epistemologically clean and represent the strongest and most critical signals respectively. Overall: sound structure with a few assumption-chain violations that should be tightened but do not undermine the primary conclusions."
+    },
+    "layer3": {
+      "violations": [
+        {
+          "finding": "Strategic Inference #1 (SCADA automated failover sequence validated) - assumption_count: 0",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The finding states 'The event was within design parameters' as part of its null hypothesis explanation, but this is an unproven assumption. We do not have independent evidence of what the design parameters ARE - we only know the system did not fail. The assumption that 'stress event fell within design parameters' is unacknowledged. The assumption count should be at least 1.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Strategic Inference #3 (Demand draw decreasing) - classification: VALID with assumption_count: 1",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The finding makes multiple unproven assumptions: (1) operator has access to trend data not in snapshot, (2) the decrease is from fire being controlled rather than temporary repositioning, (3) the operator's statement represents a genuine observation rather than hopeful interpretation. The reasoning acknowledges assumption #1 but treats #2 and #3 as 'alternatives' rather than counting them. When the 'alternative explanation' represents genuine uncertainty about what the data means, those are assumptions in the primary reasoning chain. Should be at least 2 assumptions.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Strategic Inference #6 (Sector 4 pressure differential) - classification: NULL_HYPOTHESIS_HOLDS with assumption_count: 0",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The null hypothesis explanation states 'The 9.5 PSI differential may be partly structural (normal for this sector)' but we have no baseline data showing what normal pressure differential is for Sector 4. This is an assumption presented as fact. The reasoning assumes the differential has a normal/structural component without evidence. Should count at least 1 assumption.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Hidden Moves - SCADA Automated Logic (likely action: ramp-up sequence)",
+          "rule_violated": "LZ-CC-001",
+          "violation": "The finding constructs a logically coherent narrative about programmed ramp-up sequences and states '30% is a round number suggesting a programmed step' as evidence. This is pure pattern-matching without physical anchoring. A 'round number' is not evidence of programming - it could be operator manual setting, display rounding, or coincidence. The narrative is internally consistent but lacks verifiable real-world anchoring. The classification as SPECULATIVE is correct, but the reasoning still exhibits the Plausibility Trap by treating narrative coherence as supporting evidence.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Thesis Confirmed probability: 55%",
           "rule_violated": "LZ-EPH-002",
-          "violation": "The signal itself (20260311-0725-SIG-013) was correctly scored at severity 3 with LOW confidence due to lack of pre-event baseline and multiple unproven assumptions. But in the bear pressure reasoning, this same low-confidence, speculative signal is used as evidence to maintain bear pressure. Confidence must be proportional to evidence. A LOW confidence, severity 3 signal should not materially influence a composite score without being weighted by its low confidence.",
-          "severity": "MINOR"
-        },
-        {
-          "finding": "Bear pressure reasoning states 'System total flow at 14,000 GPM with no baseline for comparison' as a negative factor maintaining bear pressure",
-          "rule_violated": "LZ-RC-003",
-          "violation": "The absence of a baseline is treated as evidence supporting bear pressure. Absence of evidence is not evidence of presence. Not knowing whether 14,000 GPM is elevated does not constitute evidence that it is elevated or that it represents a problem. The gap should reduce confidence in ability to assess, not be counted as evidence of deterioration.",
+          "violation": "The finding assigns 55% confidence to thesis confirmation while simultaneously acknowledging critical unknowns: reserve drain rate unknown, pump ceiling reason unstated, demand trajectory unverified, mass balance unsolved. The statement 'but the architecture's validity is demonstrated' contradicts the uncertainty in the evidence base. High confidence (>50% is thesis-positive territory) is disproportionate to the evidence when multiple critical variables remain unknown. The confidence should be lower OR the unknowns should be weighted less heavily OR the finding should acknowledge this is confidence in partial validation (failover worked) not full thesis confirmation (recovery will complete).",
           "severity": "MODERATE"
         },
         {
-          "finding": "Knowledge audit for SIG-001 states 'pre_audit_assessment: Would have scored as strong positive (severity 7 acceleration)' and 'post_audit_assessment: Scored as moderate positive (severity 6 acceleration) — restart confirmed but operating capacity is limited and ramp trajectory unknown' but the actual scored signal shows severity 6 as a deterioration/concern score, not an acceleration score",
-          "rule_violated": "Internal consistency requirement (no specific rule violated, but reasoning is incoherent)",
-          "violation": "The knowledge audit describes severity 6 as 'acceleration' (positive) but the scored signal describes the same severity 6 as representing concern about 'limited active capacity' with ambiguous language that reads as negative. The directional interpretation of the score is contradictory between the audit and the scoring. This is not an epistemological rule violation but an internal coherence failure.",
+          "finding": "Feedback Loop #3 (Mass Balance Gap ↔ Data Blindness ↔ Decision Quality) - trigger_to_next_state description",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The finding states 'This is an epistemic loop, not a physical one' but then describes it as having states (active_orderly) and triggers that cause escalation, treating the epistemic gap as if it causally produces deteriorating situations. The reasoning conflates 'we cannot see if it's deteriorating' with 'the not-seeing causes deterioration.' Data blindness does not cause physical deterioration - it only prevents detection. This is correlation (both could be present) presented as causation (one causes the other).",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "X402 Paper Trade #4 (demand source status) - confidence_data_exists: medium",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The finding assigns 'medium' confidence that fire department data exists and is accessible, immediately after stating 'lower confidence the data is accessible to this analysis system' and describing 'structural lack of demand source intelligence' as a chronic blind spot. These statements contradict each other. If there is structural lack of intelligence and low confidence in access, the confidence_data_exists should be low, not medium.",
           "severity": "MINOR"
+        },
+        {
+          "finding": "Compound Stress Inference - pre_load_assessment: 'Both legs are elevated'",
+          "rule_violated": "LZ-RC-002",
+          "violation": "The finding states reserves at 65% represent elevated pre-load compared to 'pre-event baseline ~95-100%' but we have no actual measurement of the pre-event reserve level. The 95-100% figure is assumed, not measured. Comparing a measured value (65%) to an assumed baseline and calling it a 'reduction' treats the assumed baseline as if it were a measured trend. This is deriving a directional change from a single data point plus an assumption.",
+          "severity": "MODERATE"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 39,
+      "reviewer_notes": "The output demonstrates strong adherence to most epistemological rules, particularly LZ-RC-004 (null hypothesis testing), LZ-EH-003 (actions over statements), and LZ-EPH-001 (willingness to declare unknowns). The violations are primarily in assumption counting (LZ-EPH-003) and confidence calibration (LZ-EPH-002). The most substantive issues are: (1) Hidden Moves section falls into the Plausibility Trap despite correct SPECULATIVE classification, and (2) Thesis Confirmed probability is high relative to acknowledged unknowns. The Compound Stress section makes a single-data-point trend inference on reserve depletion that violates LZ-RC-002. Overall, the reasoning structure is sound but confidence levels and assumption counts need tightening in approximately 8 of 47 findings reviewed."
+    },
+    "layer4": {
+      "violations": [
+        {
+          "finding": "Operator 'draw is decreasing' reflects genuine observation from broader telemetry view — final_weight reduced_50",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The reasoning applies a 50% weight reduction due to partial data support, resulting in 'effectively 25% weight' (50% from classification × 50% from data). However, the final_weight is recorded as 'reduced_50' rather than 'reduced_75' or a more precise representation of the compounded reduction. The confidence is marked 'medium' when the actual evidential weight after compounding is only 25%. Confidence ('medium') is not proportional to the actual evidence weight (25%).",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Compound stress level override from MONITORING to ELEVATED",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The override reasoning states 'dual pre-loading (reserves depleted to 65% AND pumps at 30%)' but treats 65% reserves as a depletion depth requiring elevated status. 65% remaining capacity is not 'significantly depleted' in absolute terms — it is 65% of full capacity still available. The reasoning inflates the severity of 65% by framing it as a 30-35% capacity consumption rather than acknowledging 65% remaining. High concern (ELEVATED) is not proportional to having 65% of gravity reserves still available and all kill switches with adequate buffers.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Thesis status: CONTESTED with medium confidence",
+          "rule_violated": "LZ-EPH-001",
+          "violation": "The reasoning explicitly states that 'forcing resolution toward either STRENGTHENING or WEAKENING would require ignoring half the data' — but this is precisely the situation where 'I don't know' (or equivalent: INSUFFICIENT_DATA) should be the output. Instead, CONTESTED is chosen as a middle-ground classification. The framework's own logic acknowledges the evidence is insufficient to resolve the status, but provides a resolved status anyway rather than declaring insufficient evidence to classify.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Bear pressure holds at 5 because the event simultaneously depleted the system's resilience margins",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The reasoning treats the co-occurrence of 'system validated' and 'margins depleted' as evidence that one caused the other ('the event simultaneously depleted the margins AND validated the architecture'). The validation (failover worked) and the depletion (reserves at 65%, pumps at 30%) occurred during the same event, but this correlation is presented as a necessary causal relationship ('the system must consume its safety margins to demonstrate that those margins exist'). The depletion was a consequence of the demand event, not of the validation. Correlation between validation and depletion is presented as causal connection.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Reserve depletion is performing as designed (bridge function) but the depletion depth is notable — composite score 5",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The signal is scored at severity 5 (mid-range concern) for reserves at 65%, but the reasoning states reserves are 'performing as designed' and providing their intended 'bridge function.' If the system is performing as designed, severity 5 suggests higher concern than the evidence supports. The 'notable' depletion is asserted without a threshold definition for what depth would NOT be notable. Confidence is 'high' but the severity score appears inflated relative to 'performing as designed' assessment.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Thesis paradox: the event validated the architecture but consumed the resilience margins the architecture depends on",
+          "rule_violated": "LZ-CC-001",
+          "violation": "The 'thesis paradox' is presented as a logically coherent narrative explaining why validation and vulnerability are 'inseparable.' However, there is no real-world anchoring for the claim that validation REQUIRES margin consumption in a way that creates a paradox. The system consumed margins because demand exceeded pump capacity — that's physics, not paradox. The narrative coherence of 'the system must consume margins to prove they exist' is internally consistent but not anchored to any verifiable principle that makes validation and depletion inherently linked rather than simply coincident.",
+          "severity": "MODERATE"
         }
       ],
       "compliance": "MODERATE_ISSUES",
@@ -126,156 +224,33 @@
       "gate_failed": false,
       "findings_reviewed": 47,
       "clean_findings": 41,
-      "reviewer_notes": "The output demonstrates strong application of corrections ledger constraints and generally high-quality reasoning. The violations are concentrated in two patterns: (1) treating absence of evidence as evidence (LZ-RC-003 violations on flow baseline and refill strategy), and (2) confidence inflation through meta-reasoning rather than direct evidence (LZ-EPH-002 violations on severity adjustments). The core signal assessments are largely sound, but the composite bear pressure reasoning incorporates low-confidence signals without appropriate weighting. The vulnerability-to-secondary-event reasoning (SIG-011) crosses into speculation territory per LZ-EPH-003. No LZ-CC-001 (plausibility trap) violations detected — all narratives are anchored to telemetry. No LZ-EH-005 contradictions improperly resolved. The analyst is appropriately cautious and applies 'I don't know' correctly in most cases, but then undermines that caution by allowing gaps to function as evidence in composite scoring."
-    },
-    "layer3": {
-      "violations": [
-        {
-          "finding": "Strategic inference: 'SCADA automated logic validated under real stress' - confidence rating HIGH",
-          "rule_violated": "LZ-EPH-002",
-          "violation": "Confidence is rated HIGH but the finding acknowledges it cannot assess whether 'the event was severe enough to truly test the system's limits' without knowing actual demand volume. The alternative explanation directly questions the evidentiary basis for high confidence. If the severity of the test is unknown, confidence that the system was 'validated under real stress' cannot be HIGH - it should be MEDIUM at most.",
-          "severity": "MODERATE"
-        },
-        {
-          "finding": "Strategic inference: 'Gravity reserves significantly depleted (65%)' - classification NULL_HYPOTHESIS_HOLDS with confidence HIGH, but expected timeline is 'hours' and materialization signal describes future conditions that would challenge the null",
-          "rule_violated": "LZ-RC-005",
-          "violation": "The finding conflates a current measurement (reserve level at 65%) with a forward-looking prediction (reserves will be replenished). The NULL_HYPOTHESIS_HOLDS classification is about a past event (why reserves depleted), but the confidence assessment and materialization signal treat future refill as part of the finding. The measurement 'reserves are at 65%' has HIGH confidence. The prediction 'this is normal and will resolve' requires lower confidence because it depends on future SCADA actions.",
-          "severity": "MINOR"
-        },
-        {
-          "finding": "Strategic inference: 'Demand source draw is decreasing' - assumption count listed as 1, but reasoning states 'One assumption is required: that the demand follows typical fire suppression patterns'",
-          "rule_violated": "LZ-EPH-003",
-          "violation": "The assumption count accurately reflects one explicit assumption, but the null hypothesis itself contains an embedded unproven assumption: 'The demand event (fire suppression) is naturally diminishing as the fire is brought under control.' This assumes (1) the demand source is fire suppression, AND (2) it follows typical operational patterns. These are two distinct assumptions, not one. Assumption count should be 2.",
-          "severity": "MINOR"
-        },
-        {
-          "finding": "Strategic inference: 'Reserve refill strategy unstated' - classified VALID with 1 assumption, but reasoning contains at least 2 unproven assumptions",
-          "rule_violated": "LZ-EPH-003",
-          "violation": "The stated assumption is 'Refill is a sequenced recovery action that follows pump ramp-up.' But the reasoning also assumes: (1) the system follows sequential recovery priorities as listed, and (2) 30% load is insufficient for concurrent refill. The first is an assumption about SCADA's operational protocol (unverified). The second is an engineering assumption about pump capacity allocation (unverified). Assumption count should be 3, which would trigger SPECULATIVE classification per LZ-EPH-003.",
-          "severity": "SERIOUS"
-        },
-        {
-          "finding": "Hidden move: SCADA running staged ramp-up protocol - assumption count 2, classified FLAGGED",
-          "rule_violated": "LZ-EPH-003",
-          "violation": "The reasoning contains at least 3 unproven assumptions: (1) SCADA has a programmed staged ramp-up protocol (not verified), (2) 30% represents a programmed checkpoint rather than an organic load level (not verified), (3) the incentive basis assumes SCADA's 'protect infrastructure first' philosophy translates into staged ramp-up specifically (design philosophy does not verify implementation). Three assumptions should trigger SPECULATIVE classification.",
-          "severity": "MODERATE"
-        },
-        {
-          "finding": "Hidden move: Demand source transitioning from attack to overhaul - assumption count 2, classified FLAGGED",
-          "rule_violated": "LZ-EPH-003",
-          "violation": "The reasoning contains at least 3 unproven assumptions: (1) the demand source is a fire department (stated in thesis context but not verified by telemetry), (2) they are following standard operating procedures, (3) the decreasing draw is caused by operational phase transition rather than other factors (source depletion, equipment failure, shift to alternate supply). Three assumptions should trigger SPECULATIVE classification.",
-          "severity": "MODERATE"
-        },
-        {
-          "finding": "Feedback loop: 'Pump Load ↔ Reserve Depletion Feedback' trigger to next state describes a multi-step causal chain (demand increases → pumps can't ramp → reserves deplete → reduced head pressure → flow drops → pressure drops → approaching kill switches)",
-          "rule_violated": "LZ-RC-001",
-          "violation": "The trigger description presents a causal chain without acknowledging these are predicted causal relationships, not established ones. Step (d) 'reduced reserve head pressure means less passive flow contribution' assumes a causal mechanism. Step (e) 'system total flow drops' assumes causation from (d). The chain conflates correlation with causation in a forward-looking scenario. The trigger should describe conditions, not assert causal mechanisms.",
-          "severity": "MINOR"
-        },
-        {
-          "finding": "Player analysis: Grid Operators - say_do_gap assessment states 'the gap is in the DEPTH of observable action' and discusses what 'could mean' without resolving the gap",
-          "rule_violated": "LZ-EPH-001",
-          "violation": "The analysis correctly identifies insufficient evidence to determine whether operators are performing off-log actions, but then constructs an elaborate explanation for why sparse logging is 'consistent with' passive monitoring. The honest answer is 'I don't know whether the sparse log represents complete documentation or incomplete documentation of operator activity.' The finding avoided saying 'I don't know' and instead built a justification narrative around insufficient evidence.",
-          "severity": "MINOR"
-        },
-        {
-          "finding": "Behavioral pattern: 'Opacity of demand source creates asymmetric information disadvantage' - rated HIGH significance",
-          "rule_violated": "LZ-RC-002",
-          "violation": "This pattern is observed from a single event snapshot. One data point does not establish that opacity 'creates' (ongoing, repeated) asymmetric information disadvantage - it establishes that asymmetric information EXISTS in this snapshot. The significance of the pattern as a structural characteristic cannot be rated HIGH from a single observation without historical data showing this is persistent across multiple events.",
-          "severity": "MINOR"
-        },
-        {
-          "finding": "Compound stress inference: 'thesis paradox' section states 'the stronger the validation event, the deeper the recovery deficit' as a general principle",
-          "rule_violated": "LZ-RC-002",
-          "violation": "This principle is extrapolated from a single event. One event does not establish a proportional relationship between validation strength and recovery deficit depth. This could be true, but it is presented as an established pattern ('the stronger... the deeper...') when it is actually an inference from a single data point. Should be framed as 'this event suggests' or 'if this relationship holds generally' rather than as a confirmed pattern.",
-          "severity": "MINOR"
-        },
-        {
-          "finding": "X402 paper trades: 'What is the pre-event baseline pressure for Sector 4?' - confidence data exists rated HIGH, estimated value rated HIGH",
-          "rule_violated": "LZ-EPH-002",
-          "violation": "The confidence that this data EXISTS is rated HIGH, but there is no evidence cited that SCADA retains 30-day rolling historical telemetry for sector-specific pressure. This is a reasonable assumption for modern SCADA systems, but it is an assumption. Confidence that data exists should be MEDIUM without verification that the specific data retention policy includes this parameter and timeframe.",
-          "severity": "MINOR"
-        }
-      ],
-      "compliance": "MODERATE_ISSUES",
-      "model_used": "claude-sonnet-4-5-20250929",
-      "gate_failed": false,
-      "findings_reviewed": 47,
-      "clean_findings": 36,
-      "reviewer_notes": "One SERIOUS violation on assumption counting (reserve refill inference) that would change classification from VALID to SPECULATIVE. Multiple MODERATE violations on assumption counting for hidden moves. The output demonstrates strong epistemological discipline overall - corrections ledger is properly applied, null hypotheses are consistently tested, and the system correctly avoids most plausibility traps. The violations are primarily in assumption counting and future/past conflation, not in fundamental reasoning structure. The SERIOUS violation on SIG-008 refill strategy is significant because it affects a key strategic inference about recovery timeline."
-    },
-    "layer4": {
-      "violations": [
-        {
-          "finding": "Demand source draw is decreasing — natural diminishment of fire suppression event",
-          "rule_violated": "LZ-EPH-002",
-          "violation": "The inference is assigned 50% weight due to 1 assumption and partial data, but the reasoning text states 'confidence in its stability and permanence is limited' while the final_signal_matrix lists this signal with 'confidence: medium'. Medium confidence (typically 60-75%) is inconsistent with 50% weight and acknowledged stability uncertainty. Confidence should be proportional to evidence weight.",
-          "severity": "MINOR"
-        },
-        {
-          "finding": "30% load is standard SCADA post-shutdown restart protocol",
-          "rule_violated": "LZ-EPH-002",
-          "violation": "The burden_of_proof assessment assigns this 'full' weight and states 'requires zero assumptions', but the later assessment of the hidden move inference 'SCADA running a staged ramp-up protocol' acknowledges that the 30% round number is 'consistent with a programmed checkpoint, but consistency is not confirmation'. If the ramp-up protocol is unverified (requiring assumptions), then the claim that '30% is standard protocol' also requires an assumption about what 'standard' means for this specific system. The confidence (high) appears disproportionate given that SCADA configuration is listed as a DATA_GAP.",
-          "severity": "MODERATE"
-        },
-        {
-          "finding": "Sector 4 pressure gap is transient artifact of localized demand event",
-          "rule_violated": "LZ-RC-004",
-          "violation": "The reasoning correctly states the null hypothesis is tested first and accepts the simplest explanation, but then assigns 'confidence: medium' in the final_signal_matrix. If the null hypothesis genuinely holds with 'full' data support as claimed in burden_of_proof, confidence should be higher than medium. The medium confidence suggests uncertainty that contradicts the 'full data support' classification, indicating the null hypothesis may not actually be as well-supported as claimed.",
-          "severity": "MINOR"
-        },
-        {
-          "finding": "SCADA running a staged ramp-up protocol (hidden move)",
-          "rule_violated": "LZ-CC-001",
-          "violation": "The inference is classified as having 'partial' data support based on '30% round number and cavitation NORMAL are consistent with a programmed checkpoint'. Consistency with a narrative is not evidence. The 30% could be a round number for many reasons (operator manual setting, temporary equilibrium, arbitrary checkpoint). The inference constructs a logically coherent explanation (staged protocol) from pattern-matching (round number) without verifiable anchoring to actual SCADA configuration data. This is the plausibility trap — internal coherence treated as evidence.",
-          "severity": "MODERATE"
-        },
-        {
-          "finding": "Fire department transitioning to overhaul/mop-up phase (hidden move)",
-          "rule_violated": "LZ-CC-001",
-          "violation": "The inference is given 'partial' data support based on 'decreasing draw is consistent with this inference'. Consistency with a fire suppression lifecycle narrative does not constitute data support. The decreasing draw could result from many causes (incident control, water source depletion, tactical repositioning, equipment failure). The fire department lifecycle is a coherent story that fits the observed pattern, but the output has no verifiable anchor to actual fire department operations. This is exactly the type of narrative coherence that LZ-CC-001 warns against.",
-          "severity": "MODERATE"
-        },
-        {
-          "finding": "Reserve refill strategy unstated because it is too early in recovery sequence",
-          "rule_violated": "LZ-EPH-003",
-          "violation": "The assessment states this inference has '1 assumption: refill is sequenced after ramp-up' and gives it 50% weight. However, the reasoning actually contains at least 2 unproven assumptions: (1) that a refill protocol exists and is programmed, and (2) that it is sequenced after ramp-up rather than being absent, disabled, or deprioritized for other reasons. The assumption count appears underestimated.",
-          "severity": "MINOR"
-        },
-        {
-          "finding": "Compound stress level: ELEVATED (override from MONITORING)",
-          "rule_violated": "LZ-EPH-002",
-          "violation": "The override reasoning acknowledges a self-challenge that presents substantial evidence against ELEVATED ('All five kill switches have comfortable margin, nearest threshold is nearly 2x the trigger, every indicator is moving in the positive direction'), but dismisses this with 'SUPPORTS ELEVATED' arguments about 'both redundancy legs simultaneously below full capacity'. The evidence for MONITORING (all kill switches GREEN with large margins, positive trajectory on all indicators) appears stronger than the evidence for ELEVATED (which relies on a conceptual 'margin narrowing' rather than proximity to any defined threshold). The confidence level (implicit high, given the override was executed) appears disproportionate to the acknowledged counterevidence.",
-          "severity": "MODERATE"
-        },
-        {
-          "finding": "Contradiction resolution: 'SCADA automated logic validated under real stress' vs. 'SCADA ramp-up speed is an untested variable and refill capability is unobserved'",
-          "rule_violated": "LZ-EH-005",
-          "violation": "The resolution claims 'data_wins' by separating acute event validation from recovery phase uncertainty. However, the original inference that is given 'full weight' states 'SCADA automated logic validated under real stress' without temporal qualification. If the validation only applies to acute event response and NOT to recovery phase logic, then the inference should be bounded accordingly, not given full weight as a general SCADA validation. The resolution artificially separates what was presented as a unified claim. This may be resolving a genuine contradiction by redefining one side rather than by independent evidence.",
-          "severity": "MODERATE"
-        },
-        {
-          "finding": "Final bear pressure: 43 (vs Layer 2: 45, delta -2)",
-          "rule_violated": "LZ-EPH-002",
-          "violation": "The pressure_reasoning explains a -2 point adjustment from two downgrades (severity 7→6 and 6→5), but states this is 'partially offset by overriding compound stress to ELEVATED' while claiming 'the override reflects appropriate caution rather than increased bear pressure — it is a framing adjustment, not a data-driven increase'. This is internally contradictory: if compound stress was escalated from MONITORING to ELEVATED, that represents increased assessment of risk/pressure. Claiming an escalation in stress level doesn't affect bear pressure is inconsistent. Either the ELEVATED override should increase bear pressure (making the -2 net adjustment inconsistent), or the override is not actually an escalation (making the override itself questionable).",
-          "severity": "MODERATE"
-        }
-      ],
-      "compliance": "MODERATE_ISSUES",
-      "model_used": "claude-sonnet-4-5-20250929",
-      "gate_failed": false,
-      "findings_reviewed": 47,
-      "clean_findings": 38,
-      "reviewer_notes": "The output demonstrates strong epistemological discipline in most areas — particularly in rejecting speculative hidden moves, applying the null hypothesis framework, and explicitly counting assumptions. However, there is a systematic issue with the 'partial data support' classification being granted to inferences that rely on narrative consistency rather than verifiable data anchors (LZ-CC-001 violations). Additionally, several findings show confidence levels that appear inconsistent with the acknowledged evidence limitations (LZ-EPH-002). The compound stress override contains the most significant reasoning tension: substantial counterevidence is acknowledged but dismissed, and the escalation is claimed not to affect bear pressure despite representing an increase in assessed risk. Most violations are MODERATE rather than SERIOUS — the reasoning process is largely sound but shows some drift toward crediting plausible narratives and inconsistent confidence calibration."
+      "reviewer_notes": "The output demonstrates strong adherence to evidentiary hierarchy rules (LZ-EH series) and assumption-counting discipline (LZ-EPH-003). Speculative inferences were correctly identified and stripped. The violations cluster around two patterns: (1) confidence calibration not fully proportional to compounded evidential weight, and (2) construction of coherent narratives ('thesis paradox,' 'dual pre-loading') that slightly exceed what the data directly anchors. The CONTESTED thesis status and ELEVATED compound stress classifications both show reasoning that acknowledges uncertainty but then provides resolved classifications anyway. The core data handling is sound — the epistemological issues are in synthesis and severity calibration. No violations affect kill switch assessments or tactical recommendation, which remain anchored to direct measurements."
     }
   },
   "errors": [],
-  "thesis_status": null,
+  "thesis_status": "CONTESTED",
   "corrections_promoted": 0,
-  "confidence_in_status": null,
+  "confidence_in_status": "medium",
   "action_recommendation": "INCREASE_MONITORING",
-  "final_bear_pressure": 43,
-  "unresolved_tensions": [],
-  "rejection_count": 1,
-  "completed_at": "2026-03-11T07:36:14.929Z"
+  "final_bear_pressure": 5,
+  "unresolved_tensions": [
+    {
+      "description": "The reserve trajectory is unknowable from a single 65% snapshot. The system could be recovering (reserves stabilizing as pump output + decreasing demand exceeds system requirements) or still depleting (pump output at 30% insufficient to meet demand, reserves continuing to drain). Both are equally consistent with current data.",
+      "watch_for": "Second reserve level reading. Rising → recovery confirmed, bear pressure drops to 3-4. Flat → equilibrium, pump ramp-up needed. Falling → system still depleting, bear pressure increases to 6-7, reassess thesis status toward WEAKENING."
+    },
+    {
+      "description": "Pump load ceiling is unknown. 30% could be a temporary conservative restart step (null hypothesis, most likely) or a hard ceiling (mechanical or SCADA constraint). These have fundamentally different implications for recovery.",
+      "watch_for": "Pump load reading above 30% in next 1-4 hours confirms standard ramp-up. Pump load remaining at exactly 30% for >4 hours post-restart suggests a hard ceiling requiring investigation."
+    },
+    {
+      "description": "Demand trajectory is unverified. The operator's claim that 'draw is decreasing' is a single-source narrative observation without independent confirmation. The entire recovery narrative depends on this being true.",
+      "watch_for": "System total flow reading below 14,000 GPM in next reading confirms demand decrease. Flow at or above 14,000 GPM contradicts the operator's claim and indicates ongoing stress."
+    },
+    {
+      "description": "Thesis paradox: the event validated the architecture but consumed the resilience margins the architecture depends on. The system proved it works, but it is now less capable of handling a repeat event than it was before the first one.",
+      "watch_for": "Reserve level returning above 80% and pump load above 60% would indicate sufficient margin restoration. Until then, the system is in a vulnerability window where a second event of similar magnitude could approach kill switch thresholds the first event did not."
+    }
+  ],
+  "rejection_count": 3,
+  "completed_at": "2026-03-12T04:16:01.347Z"
 }

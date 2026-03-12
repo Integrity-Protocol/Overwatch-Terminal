@@ -1,27 +1,36 @@
 [
   {
-    "layer3_inference": "Grid Operators hidden moves — off-log contingency coordination",
-    "signal_ids": [
-      "20260311-0737-SIG-006",
-      "20260311-0737-SIG-014"
-    ],
-    "rejection_reason": "Layer 3 correctly self-identified this as SPECULATIVE (3+ assumptions) with no supporting data, and the corrections ledger has rejected this inference class 5 times across the assessment chain (CL-002, CL-003, CL-005, CL-007, CL-008). Stripped from scoring per burden of proof Step 1 (SPECULATIVE = 75% discount) and Step 2 (no data = strip entirely). Layer 4 concurs with Layer 3's self-assessment. This is not an overrule — it is a confirmation that the inference was correctly identified and discarded.",
-    "root_cause": "INSUFFICIENT_EVIDENCE",
+    "layer3_inference": "Layer 3 did not produce any inferences requiring rejection. All SPECULATIVE classifications were correctly identified by Layer 3 itself and assigned INSUFFICIENT_EVIDENCE. The corrections ledger chain (20 entries) was thoroughly applied at Layer 3, eliminating speculative inference classes before they reached Layer 4.",
+    "signal_ids": [],
+    "rejection_reason": "N/A — nothing to reject. Layer 3's self-discipline was exemplary.",
+    "root_cause": "N/A",
     "confidence_in_rejection": "high",
     "corrections_ledger_action": "auto_commit",
-    "timestamp": "2026-03-11T07:47:21.812Z",
+    "timestamp": "2026-03-12T04:27:52.873Z",
     "source": "layer4_reconcile"
   },
   {
-    "layer3_inference": "SCADA Automated Logic hidden moves — background diagnostics or sequence preparation",
+    "layer3_inference": "SIG-007 final composite adjusted upward from 4 to 5 by Layer 4",
     "signal_ids": [
-      "20260311-0737-SIG-009"
+      "20260312-0417-SIG-007"
     ],
-    "rejection_reason": "Layer 3 correctly self-identified as SPECULATIVE (3 assumptions) with no supporting data. CL-001 and CL-004 have previously stripped this inference. Stripped per burden of proof.",
+    "rejection_reason": "Not a rejection of Layer 3 — a Layer 4 scoring adjustment. Layer 3 correctly identified the SIG-007 contradiction as unresolvable. Layer 4 increased severity by 1 point because the thesis's core claim (automated resilience) being unverifiable from this data architecture is a more significant strategic concern than Layer 2's score of 4 reflected. The thesis cannot be validated through the available data feed — this is a permanent analytical limitation, not a transient gap.",
     "root_cause": "INSUFFICIENT_EVIDENCE",
-    "confidence_in_rejection": "high",
-    "corrections_ledger_action": "auto_commit",
-    "timestamp": "2026-03-11T07:47:21.812Z",
+    "confidence_in_rejection": "medium",
+    "corrections_ledger_action": "flag_for_review",
+    "timestamp": "2026-03-12T04:27:52.873Z",
+    "source": "layer4_reconcile"
+  },
+  {
+    "layer3_inference": "SIG-015 final composite adjusted upward from 4 to 5 by Layer 4",
+    "signal_ids": [
+      "20260312-0417-SIG-015"
+    ],
+    "rejection_reason": "Not a rejection — a scoring adjustment. Layer 3's null hypothesis (readings consistent with multiple explanations) weakens the 'thesis validated' claim. Layer 4 assigned +1 severity because the gap between claimed validation and actual evidentiary support is wider than the Layer 2 score of 4 captured. The thesis needs process data to be validated, and the data architecture may not provide it.",
+    "root_cause": "INSUFFICIENT_EVIDENCE",
+    "confidence_in_rejection": "medium",
+    "corrections_ledger_action": "flag_for_review",
+    "timestamp": "2026-03-12T04:27:52.873Z",
     "source": "layer4_reconcile"
   }
 ]

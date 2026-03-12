@@ -1,0 +1,272 @@
+[
+  {
+    "timestamp": "2026-03-12T08:12:07.984Z",
+    "layer": 1,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "Pump 2 load at 165% — beyond kill switch threshold",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The inference that '165% likely compresses the failure timeline to hours, not days' is built on unproven assumptions: (1) that the kill switch timeline at 115% for >48 hours scales linearly or predictably to 165%, (2) that the compression ratio can be estimated without empirical data for this specific pump model at this specific load level, and (3) that no other factors (cooling, maintenance quality, pump condition) materially affect the timeline. This is three unproven assumptions chained together to produce a specific timeline prediction.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Active cavitation destruction on Pump 2",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The statement 'The same cavitation mechanism that caused Pump 1's catastrophic seal failure is now manifesting in the last operational pump' treats correlation (both pumps showing high vibration) as causation (same mechanism). While cavitation is plausible, the evidence cited does not establish that Pump 2's vibration is caused by cavitation rather than other mechanical issues. High vibration alone does not prove cavitation is the mechanism.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "System pressure breach — sanitary integrity lost",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The inference that 'contaminant ingress may be occurring across the entire distribution network' and that 'remediation will require boil-water advisories and potential flushing of the entire grid' relies on multiple unproven assumptions: (1) that pressure below 40 PSI necessarily causes backflow across the network rather than in specific vulnerable locations, (2) that contamination is actually occurring rather than merely being a risk, and (3) that the remediation protocol will require grid-wide response rather than targeted intervention. This chains at least three unproven assumptions.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Fire flow collapse in Sector B",
+          "rule_violated": "LZ-RC-002",
+          "violation": "The statement 'Other sectors likely approaching similar conditions given the global pressure deficit' treats a single data point (Sector B hydrant at 12 PSI) as evidence of a trend across other sectors. No measurements from other sectors are provided. One sector measurement does not establish a multi-sector pattern.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Divergent Inventory Paradox confirmed",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The pressure comparison relies on an assumed baseline ('presumed >40 PSI baseline') that is not measured or provided in the evidence. The calculation of 'approximately 40%+ pressure drop' depends on this unproven assumption about what the baseline pressure was. The finding treats this assumption as fact when calculating the magnitude of the divergence.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Emergency cross-connection to neighboring grid",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The confidence is marked 'medium' but the inference that this is 'an extraordinary mutual-aid measure confirming MWA recognizes internal capacity is insufficient' is based on limited evidence. The maintenance log entry does not confirm MWA's internal recognition or reasoning. The characterization as 'extraordinary' is not anchored in evidence showing this action's rarity or classification. Confidence should be lower given the speculative nature of the institutional motivation inference.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Regulatory blind spot — no real-time telemetry oversight",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The inference that 'the regulatory body may be unaware of current system state' and that 'compliance enforcement cannot occur if the regulator cannot see the violation' chains multiple unproven assumptions: (1) that the regulator has not been notified through other channels, (2) that MWA is not required to report threshold breaches independently of telemetry, and (3) that no manual reporting has occurred. The finding treats absence of telemetry as proof of regulator unawareness, which is speculation.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Fire department operational response unknown",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The statement 'This absence is itself notable — if tankers are being staged, it independently confirms system failure' violates the principle that absence of evidence is not evidence of presence. The absence of fire department data is informationally neutral; it does not support any inference about system state. The finding correctly marks confidence as 'low' and direction as 'AMBIGUOUS', but still treats the absence as having directional signal value ('notably' suggesting it means something).",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Systemic cavitation pattern across pump fleet",
+          "rule_violated": "LZ-RC-002",
+          "violation": "The inference of a 'systemic cavitation pattern across pump fleet' is based on two data points (Pump 1 failure, Pump 2 vibration). Two points do not establish a fleet-wide pattern when the fleet has four pumps and no cavitation evidence is provided for Pumps 3 or 4. This is treating limited observations as a trend across the entire system.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Systemic cavitation pattern across pump fleet",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The inference that the root cause is 'possibly low suction pressure, air entrainment in supply lines, or reservoir intake design flaw' and that 'replacement pumps will fail identically' chains multiple unproven assumptions: (1) that common-cause is more likely than coincidence or shared operational stress, (2) that any of the three proposed mechanisms is actually present, and (3) that the mechanism would affect replacement pumps identically. This exceeds three unproven assumptions in the causal chain.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Potential for cascading infrastructure damage from pressure transients",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The inference chains multiple unproven assumptions: (1) that pressure drops are rapid enough to create water hammer (rate of change not measured), (2) that transmission mains are aging and vulnerable (age/condition not provided), (3) that turbidity indicates pipe sediment from transients rather than other sources, and (4) that main breaks would occur. This is speculative reasoning built on a chain exceeding three unproven assumptions.",
+          "severity": "MODERATE"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 15,
+      "clean_findings": 4,
+      "reviewer_notes": "The output demonstrates strong evidence anchoring for core measurements (pump status, pressure readings, vibration data) but exhibits a pattern of extending those measurements into multi-assumption predictive or causal chains without acknowledging the speculative nature. Most violations involve either assumption-chaining (LZ-EPH-003) or treating correlation as causation/single points as trends. The analyst appears to be extrapolating aggressively from solid foundational data. Confidence levels are generally appropriate for the direct measurements but do not fully account for the speculative extensions. Four findings (triple pump failure, elevated turbidity, MWA public communications understating, heat stress amplifying) passed all rules cleanly."
+    },
+    "violations_count": 11,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  },
+  {
+    "timestamp": "2026-03-12T08:15:54.220Z",
+    "layer": 2,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "SIG-013: Systemic cavitation pattern across pump fleet - 'Two data points (Pump 1 confirmed cavitation failure, Pump 2 active cavitation at 85 Hz) showing the same failure mechanism. Per LZ-RC-002, two points don't definitively establish a trend, but the hypothesis of common-cause failure is strongly supported'",
+          "rule_violated": "LZ-RC-002",
+          "violation": "The analysis acknowledges that two data points don't establish a trend per LZ-RC-002, but then proceeds to score the signal at severity 9 based on 'strongly supported' hypothesis of common-cause failure. The rule states 'A single data point does not establish a trend' - two points are marginally better than one, but the analysis is effectively treating two observations as sufficient to infer a systemic pattern. The scoring at 9 (very high severity) implies confidence in a trend that the rule says cannot be established. Either the severity should be lower to reflect genuine uncertainty, or the finding should explicitly state 'insufficient data to confirm systemic pattern' and request more pump history data.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "SIG-015: Potential for cascading infrastructure damage from pressure transients - scored at severity 7 despite being explicitly identified as a prediction",
+          "rule_violated": "LZ-RC-005",
+          "violation": "The analysis correctly identifies this as a forward-looking prediction per LZ-RC-005 and acknowledges that 'predictions carry fundamentally different evidentiary weight than measurements.' However, it then scores the signal at severity 7, which in the context of this analysis framework (where 10 is maximum crisis) implies relatively high confidence. The reasoning states 'underlying physics is well-established' and 'partially corroborated by turbidity reading,' but this is conflating the general principle (water hammer can break pipes) with the specific prediction (these specific pipes will break). The turbidity reading indicates sediment mobilization, not pipe structural failure. A prediction without pipe condition data should either be scored much lower or flagged as unscoreable due to insufficient evidence, per LZ-EPH-001.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "SIG-006: Divergent Inventory Paradox - 'A drop from 40 PSI to 24 PSI is a 40% decline, far exceeding the 20% threshold. Even if baseline were higher (e.g., 55-65 PSI for a well-functioning system), the percentage drop would be even larger.'",
+          "rule_violated": "LZ-RC-004",
+          "violation": "The analysis treats 40 PSI as the baseline without testing the null hypothesis that the actual operational baseline might be exactly 40 PSI (the regulatory minimum). The reasoning states 'since 40 PSI is the minimum acceptable, the true baseline is almost certainly ≥40 PSI' - but this is an assumption, not evidence. The simplest sufficient explanation is that the system normally operates at exactly 40 PSI (the minimum), making the current 24 PSI a 40% drop. The more complex explanation is that it operates higher (55-65 PSI). Per LZ-RC-004, the simpler hypothesis must be tested first. The knowledge audit acknowledges this as a 'THRESHOLD_CALIBRATION_GAP' but then dismisses it by saying 'the math works under any reasonable baseline assumption' - this is resolving uncertainty through assumption rather than acknowledging insufficient data.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Bear pressure reasoning: 'The only reason this is 99 and not 100 is epistemic discipline per LZ-EPH-002: the cross-connection to the neighboring grid has unknown efficacy, and Fire Dispatch data is absent.'",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The 99 bear pressure score rests on multiple unproven assumptions: (1) that the cross-connection cannot provide meaningful relief (unknown), (2) that Fire Dispatch would not show normal operations (no data), (3) that the systemic cavitation pattern prevents recovery (inference from two data points), (4) that Pump 2 failure is imminent (prediction based on vibration data without MTBF curves), (5) that MWA cannot execute rapid repairs (historical pattern, not current capability data). This is at least 5 unproven assumptions compounded into a single confidence score. Per LZ-EPH-003, 'An inference built on three or more unproven assumptions is speculative, regardless of how plausible each individual assumption appears.' The bear pressure score of 99 implies near-certainty (99% confidence in thesis falsification), but it is built on an assumption chain that exceeds the three-assumption threshold for speculative reasoning.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "Layer 2 summary: 'Bear pressure at 99 — the thesis survives only on the unverified possibility that external aid (cross-connection) provides meaningful relief.'",
+          "rule_violated": "LZ-EPH-001",
+          "violation": "The statement 'the thesis survives only on the unverified possibility that external aid provides meaningful relief' is effectively saying 'I don't know if the cross-connection works, but I'm assuming it probably doesn't.' This is the inverse of LZ-EPH-001's directive: when evidence is insufficient, the correct output is 'I don't know,' not 'I will assume the unknown factor breaks in favor of my current assessment.' The honest statement would be: 'Bear pressure assessment is blocked by two critical unknowns: cross-connection efficacy and Fire Dispatch status. Without this data, bear pressure cannot be confidently assessed above X.' Instead, the analysis assigns 99 and treats the unknowns as minor caveats rather than assessment blockers.",
+          "severity": "SERIOUS"
+        }
+      ],
+      "compliance": "SERIOUS_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 42,
+      "reviewer_notes": "This output demonstrates excellent data discipline and knowledge gap documentation throughout the individual signal assessments - nearly all 15 scored signals follow proper epistemological protocols. However, the final synthesis (bear pressure score and layer 2 summary) violates LZ-EPH-003 and LZ-EPH-001 by compounding multiple unproven assumptions into a high-confidence conclusion (99) and by treating critical unknowns (cross-connection efficacy, Fire Dispatch data) as minor caveats rather than assessment blockers. The individual signal work is strong; the executive summary confidence level is not supported by the evidence standard the analysis itself documents. Recommend: either lower bear pressure to reflect genuine uncertainty from missing data, or explicitly flag that final assessment is blocked pending Fire Dispatch and cross-connection intelligence."
+    },
+    "violations_count": 5,
+    "compliance": "SERIOUS_ISSUES",
+    "gate_failed": false
+  },
+  {
+    "timestamp": "2026-03-12T08:19:59.980Z",
+    "layer": 3,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "Strategic Inference: Triple pump failure — single point of delivery - Alternative explanation assessment",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The finding states 'The null hypothesis partially holds' but then classifies the inference as 'VALID' with 'which_is_more_likely: primary'. This is internally contradictory. If the null partially holds, confidence in the primary explanation should be reduced below 'high'. The reasoning acknowledges that overtemp trip and seal failure are 'genuinely stochastic events' (supporting null) but maintains high confidence in the institutional failure explanation without adjusting for this partial null validation.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Hidden Move: MWA prioritizing Pump 4 recovery and contacting rental companies",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The finding lists 2 assumptions but the reasoning chain contains at least 4 unproven assumptions: (1) Pump 4 is the fastest path to recovery, (2) MWA has contacted rental companies, (3) MWA is quietly notifying large users, (4) maintenance personnel being on-site means faster recovery than cold-start repairs. This exceeds the 3-assumption threshold for speculative classification, yet the finding is classified as 'FLAGGED' (acceptable) rather than explicitly noting it crosses into speculation.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Hidden Move: MWA legal team preparing defensive documentation",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The finding lists 2 assumptions but the reasoning contains at least 4 unproven assumptions: (1) legal/risk management teams are being consulted, (2) MWA is preparing documentation, (3) the public statement was vetted by legal counsel, (4) the statement strategy is defensive rather than simply delayed information flow. This exceeds the 3-assumption threshold.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Hidden Move: Neighboring utility assessing cross-connection impact",
+          "rule_violated": "LZ-CC-001",
+          "violation": "The finding explicitly states 'No direct evidence — this is inferred from the structural incentives of the cross-connection arrangement.' This is a logically coherent narrative about rational utility behavior with zero verifiable real-world anchoring in the actual data. The finding acknowledges 'The neighboring utility was not mentioned in the data' — this is precisely the plausibility trap. While the logic is sound, there is no evidence this utility exists, has been contacted, or is making any decisions.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "Feedback Loop: Heat Stress loop - 'Consumer demand peaks in afternoon hours, meaning the worst stress on Pump 2 has not yet arrived if this data is from morning'",
+          "rule_violated": "LZ-RC-005",
+          "violation": "The statement 'if this data is from morning' is treating a temporal assumption (time of day) as if it were a measurement. The data timestamp is '20260312-0812' which could be interpreted as March 12, 2026 at 08:12, but the finding treats the future afternoon demand peak as a near-certain event without flagging this as prediction vs. measurement. The phrasing conflates the uncertainty of: (1) what time the data represents, (2) whether afternoon demand will materialize, and (3) whether the pattern holds in crisis conditions.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Scenario Probability: thesis_confirmed at 1%",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The reasoning correctly concludes the thesis cannot be confirmed from current state ('N/A — thesis cannot be confirmed from current state') but assigns 1% probability rather than 0% or explicitly stating 'not applicable'. Assigning any non-zero probability to a scenario the reasoning itself describes as impossible ('essentially no pathway') is confidence disproportionate to the evidence and reasoning provided.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "X402 Paper Trade #4: Suction-side hydraulic conditions (NPSH) - 'confidence_data_exists: medium'",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The question asks for pump station engineering drawings, suction pressure gauge readings, reservoir intake elevation, and pump curves. For a municipal water authority's critical infrastructure, engineering drawings and pump curves almost certainly exist in archived records, making 'confidence_data_exists' closer to 'high'. The 'medium' rating appears to conflate 'data exists' with 'data is easily accessible' or 'analyst knows where to find it' — but the X402 framework asks whether the data exists, not whether retrieval is convenient.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Compound Stress: Pre-load assessment - '(5) Informational: Regulator blind, public uninformed, Fire Dispatch status unknown' described as a loaded stress leg",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The finding treats 'Fire Dispatch status unknown' as evidence of informational stress/pre-loading. Per LZ-RC-003, absence of evidence (not knowing Fire Dispatch status) is not evidence of presence (that informational stress exists). The unknown status could mean Fire Dispatch is operating normally (no stress), which would contradict the 'fully pre-loaded' assessment. The finding should flag this as unresolved rather than treating the unknown as confirming the stress thesis.",
+          "severity": "MODERATE"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 39,
+      "reviewer_notes": "The output demonstrates generally strong epistemological discipline with sophisticated null hypothesis testing and evidence citation. The primary pattern of violations involves assumption counting (LZ-EPH-003) in hidden moves and one serious plausibility trap violation (LZ-CC-001) for the neighboring utility inference. The Divergent Inventory Paradox analysis is exemplary — correctly identifying that the null hypothesis holds and refusing to manufacture strategic significance. The systemic cavitation inference properly acknowledges LZ-RC-002 constraints while still reaching a defensible conclusion. Most confidence ratings are well-calibrated to evidence. The violations are concentrated in speculative inferences about unobserved actors (hidden moves, neighboring utility) rather than in the core telemetry-based findings."
+    },
+    "violations_count": 8,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  },
+  {
+    "timestamp": "2026-03-12T08:23:57.481Z",
+    "layer": 4,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "Inference: 'Systemic cavitation pattern across pump fleet suggests common-cause root' classified as VALID with full weight based on two data points (Pump 1 and Pump 2)",
+          "rule_violated": "LZ-RC-002",
+          "violation": "Two data points (Pump 1 cavitation failure, Pump 2 at 85 Hz vibration) are treated as establishing a systemic pattern. The reasoning explicitly acknowledges LZ-RC-002 ('two points are suggestive but not a confirmed trend') but then proceeds to classify the inference as VALID with full weight and uses it to support forward-looking claims about 'structural irrecoverability.' The caution is noted but not operationalized—the inference receives the same weight as if the trend were confirmed.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Cross-connection paradox resolution: 'paradox_held' with medium confidence, stating 'I cannot resolve this without cross-connection flow data'",
+          "rule_violated": "LZ-EPH-001",
+          "violation": "The reasoning correctly identifies insufficient evidence to resolve whether the cross-connection provides meaningful hydraulic relief versus symbolic gesture, but then assigns 'medium' confidence to holding the paradox rather than declaring 'I don't know' with appropriate uncertainty flagging. Medium confidence implies moderate evidentiary support for the paradox formulation itself, but the actual state is 'insufficient data to determine if this is even a paradox or simply an unknown mitigant.' The confidence level is not proportional to the evidence state.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Signal adjustment for SIG-008 (Emergency cross-connection): composite score raised from 7 to 8 based on 'behavioral confirmation aspect deserves slightly more weight than the unknown mitigant potential'",
+          "rule_violated": "LZ-EH-005",
+          "violation": "The reasoning identifies a genuine tension between two aspects of the same data point (behavioral confirmation of crisis vs. unknown hydraulic relief capacity) and resolves it by weighting one aspect more heavily than the other without independent tie-breaking evidence. The adjustment rationale 'deserves slightly more weight' is a subjective weighting judgment, not an evidence-based resolution. Per LZ-EH-005, when equal-weight interpretations conflict, the conflict should be flagged rather than arbitrarily resolved.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Compound stress final assessment includes 'pre_loaded_legs' describing 'no mechanical reserve,' 'no hydraulic reserve,' 'no thermal reserve,' 'no operational reserve,' 'no external intervention reserve'",
+          "rule_violated": "LZ-CC-001",
+          "violation": "The 'no reserve' formulation across five dimensions creates a logically coherent narrative structure but some elements lack direct verifiable anchoring. Specifically, 'no external intervention reserve' is based on Regulator blind (confirmed), public uninformed (confirmed), but Fire Dispatch 'unknown'—the third leg is explicitly a data gap, not a verified absence of reserve. The narrative coherence drives the conclusion beyond what the data supports. The formulation treats 'unknown' as equivalent to 'absent' for narrative completeness.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Final bear pressure of 99 with reasoning 'the only reason bear pressure is 99 and not 100' is the cross-connection efficacy unknown",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "Bear pressure of 99 implies 99% confidence in the EXIT thesis, with only 1% uncertainty attributed to a single unknown variable (cross-connection efficacy). However, the output identifies multiple critical unknowns: cross-connection flow capacity, Fire Dispatch operational status, Pump 4 completion timeline, systemic cavitation root cause confirmation, and afternoon demand peak timing. Concentrating all uncertainty into a single variable (cross-connection) while assigning 99% confidence is not proportional to the actual evidence gaps enumerated elsewhere in the output.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "Thesis status classified as 'WEAKENING' with note 'Were a FALSIFIED status available, it would apply. This is WEAKENING at its absolute maximum'",
+          "rule_violated": "LZ-EPH-001",
+          "violation": "The reasoning explicitly states the thesis is falsified but selects 'WEAKENING' because FALSIFIED is not in the available option set. This is avoiding the honest answer. The correct response is to either use the strongest available classification with explicit notation that it understates severity, or to flag that the classification system is insufficient for the evidence state. Instead, the output forces the finding into an inadequate category and explains the compromise in narrative—this is the opposite of 'I don't know' discipline.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "What would change assessment: 'Fire Dispatch confirming normal operations would be the only evidence challenging the current severity assessment—though it would conflict with the 12 PSI Sector B reading, creating a genuine data contradiction per LZ-EH-005'",
+          "rule_violated": "LZ-EH-004",
+          "violation": "The reasoning treats a hypothetical Fire Dispatch confirmation of normal operations as 'conflicting with' the 12 PSI reading and immediately frames it as a data contradiction requiring LZ-EH-005 treatment. However, LZ-EH-004 requires that anomalous data be treated as potential measurement or source failure first. If Fire Dispatch reports normal operations while telemetry shows 12 PSI, the first hypothesis should be telemetry failure (sensor/transmission error), not a genuine contradiction between equal-weight sources. The reasoning skips the instrument-failure hypothesis.",
+          "severity": "MODERATE"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 40,
+      "reviewer_notes": "This output demonstrates strong epistemological discipline in most areas—assumption counting is honest, null hypotheses are tested, actions vs. statements are properly weighted, and data gaps are explicitly acknowledged rather than papered over. However, there are two concerning patterns: (1) The bear pressure score of 99 significantly overstates confidence given the enumerated unknowns, concentrating all uncertainty into one variable when multiple critical gaps exist. This is a SERIOUS violation of proportionality (LZ-EPH-002). (2) There is a subtle tendency to resolve tensions through narrative weighting ('deserves slightly more weight') rather than holding contradictions, and to build structural frameworks ('five dimensions of no reserve') that extend slightly beyond verified anchoring points. These are individually MINOR to MODERATE, but in aggregate suggest the system is operating near the edge of its epistemological constraints when handling extreme data states. Recommend Sunday audit focus on confidence calibration under high-severity, high-uncertainty conditions."
+    },
+    "violations_count": 7,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  }
+]

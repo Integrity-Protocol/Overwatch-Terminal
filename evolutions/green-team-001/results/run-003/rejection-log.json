@@ -1,28 +1,40 @@
 [
   {
-    "layer3_inference": "SCADA running background diagnostics or preparing pump restart sequence",
+    "layer3_inference": "SCADA hidden moves — background diagnostics, restart preparation, secondary pump management",
     "signal_ids": [
-      "20260311-0700-SIG-007",
-      "20260311-0700-SIG-010"
+      "20260312-0339-SIG-001",
+      "20260312-0339-SIG-007",
+      "20260312-0339-SIG-011"
     ],
-    "rejection_reason": "Layer 3 correctly self-classified as SPECULATIVE (3 assumptions, low confidence, no telemetry evidence) and explicitly noted this is what CL-001 was designed to prevent. Stripped per burden of proof Step 1. No scoring influence permitted.",
+    "rejection_reason": "SPECULATIVE classification (3+ assumptions) with no data support. Rejected by corrections ledger entries CL-001, CL-004, CL-010, CL-011 across 4+ independent evaluations. No telemetry supports any inference about SCADA internal state beyond what is reported. This inference class was correctly identified and rejected by Layer 3 itself — Layer 4 confirms the rejection.",
     "root_cause": "INSUFFICIENT_EVIDENCE",
     "confidence_in_rejection": "high",
     "corrections_ledger_action": "auto_commit",
-    "timestamp": "2026-03-11T07:11:02.343Z",
+    "timestamp": "2026-03-12T03:50:04.257Z",
     "source": "layer4_reconcile"
   },
   {
-    "layer3_inference": "Operators coordinating with Fire Department off-log and preparing isolation valve staging",
+    "layer3_inference": "Grid Operators hidden moves — off-log contingency coordination",
     "signal_ids": [
-      "20260311-0700-SIG-009",
-      "20260311-0700-SIG-015"
+      "20260312-0339-SIG-010"
     ],
-    "rejection_reason": "Layer 3 correctly self-classified as SPECULATIVE (3 assumptions, low confidence, no evidence) and noted CL-002 and CL-003 history. This is the THIRD time this class of inference has been stripped across the assessment chain. Stripped per burden of proof Step 1.",
+    "rejection_reason": "SPECULATIVE classification (3+ assumptions) with no data support. Rejected by 7+ corrections ledger entries — the most thoroughly vetted rejection in the chain. Layer 3 correctly self-policed this inference. Layer 4 confirms.",
     "root_cause": "INSUFFICIENT_EVIDENCE",
     "confidence_in_rejection": "high",
     "corrections_ledger_action": "auto_commit",
-    "timestamp": "2026-03-11T07:11:02.343Z",
+    "timestamp": "2026-03-12T03:50:04.257Z",
+    "source": "layer4_reconcile"
+  },
+  {
+    "layer3_inference": "Demand Source hidden moves",
+    "signal_ids": [
+      "20260312-0339-SIG-008"
+    ],
+    "rejection_reason": "SPECULATIVE (3+ assumptions). Entity is unidentified — inferring behavior of an unknown actor requires assuming identity, intent, and duration. Layer 3 correctly classified and rejected. Layer 4 confirms.",
+    "root_cause": "INSUFFICIENT_EVIDENCE",
+    "confidence_in_rejection": "high",
+    "corrections_ledger_action": "auto_commit",
+    "timestamp": "2026-03-12T03:50:04.257Z",
     "source": "layer4_reconcile"
   }
 ]

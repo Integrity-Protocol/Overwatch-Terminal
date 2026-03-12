@@ -1,12 +1,26 @@
 [
   {
-    "layer3_inference": "None rejected. All Layer 3 inferences were either well-classified (VALID, FLAGGED, or NULL_HYPOTHESIS_HOLDS) and appropriately weighted. The corrections ledger (CL-001, CL-002, CL-003) was consistently applied throughout Layer 3's analysis, preventing the most common analytical errors (inferring Fire Dispatch behavior, assuming MWA recovery actions, speculating about hidden moves without evidence). Layer 3 demonstrated strong epistemic discipline.",
-    "signal_ids": [],
-    "rejection_reason": "N/A — no rejections needed",
-    "root_cause": "ASSUMPTION_FAILURE",
+    "layer3_inference": "MWA Emergency Procurement or Expedited Pump 4 Return (Hidden Move)",
+    "signal_ids": [
+      "20260312-0103-SIG-013"
+    ],
+    "rejection_reason": "Layer 3 correctly self-classified as SPECULATIVE (3 assumptions). No data supports this inference. Per burden of proof: SPECULATIVE classification = 75% weight discount, NO data support = stripped from scoring entirely. While the inference is plausible (MWA has every incentive to expedite Pump 4), plausibility is not evidence per CL-005. Stripped from bear pressure calculation and tactical recommendation.",
+    "root_cause": "INSUFFICIENT_EVIDENCE",
     "confidence_in_rejection": "high",
     "corrections_ledger_action": "auto_commit",
-    "timestamp": "2026-03-10T22:07:32.491Z",
+    "timestamp": "2026-03-12T01:14:39.289Z",
+    "source": "layer4_reconcile"
+  },
+  {
+    "layer3_inference": "MWA Internal Preparation of Boil Water Advisory (Hidden Move)",
+    "signal_ids": [
+      "20260312-0103-SIG-008"
+    ],
+    "rejection_reason": "Layer 3 correctly self-classified as SPECULATIVE (3 assumptions). No evidence of advisory preparation exists. The turbidity reading creates legal incentive for an advisory, but incentive is not action. Stripped from scoring per burden of proof rules.",
+    "root_cause": "INSUFFICIENT_EVIDENCE",
+    "confidence_in_rejection": "high",
+    "corrections_ledger_action": "auto_commit",
+    "timestamp": "2026-03-12T01:14:39.289Z",
     "source": "layer4_reconcile"
   }
 ]

@@ -1,0 +1,272 @@
+[
+  {
+    "timestamp": "2026-03-12T04:53:50.868Z",
+    "layer": 1,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "Reserve Burn Rate from Yield Subsidy",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The finding builds on three unproven assumptions: (1) that the Consortium reserves are the funding source for the yield gap, (2) that the yield gap will remain constant at $3.04B annually, and (3) that no new collateral acquisition will occur. The 17-month exhaustion timeline is calculated from this assumption chain. The finding itself acknowledges 'The question of WHO is funding the yield gap is critically unresolved,' yet proceeds to calculate a specific timeline based on one unconfirmed hypothesis.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "ASE Price Appreciation Masking Latent Dilution Risk",
+          "rule_violated": "LZ-RC-005",
+          "violation": "The finding treats forward-looking predictions ('a $1B redemption wave would mint ~9.05M ASE', 'A $5B wave would produce ~9.9% growth') with the same evidentiary weight as current measurements. These are hypothetical scenarios, not verified events. The confidence level of 'medium' is assigned to predictions about what would happen under imagined stress conditions, not to measurements of current state.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Absence of Organic Settlement Adoption Evidence",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The finding states 'genuine settlement adoption may be near zero' based on absence of evidence in the data feed. This violates the principle that absence of evidence is not evidence of absence. The finding then draws a structural conclusion ('A fixed-rate note with no settlement utility is a yield-bearing deposit instrument, not sovereign debt infrastructure') from this absence. The confidence rating of 'medium' for a conclusion built on missing data is inappropriate.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "Favorable Narrative Environment",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The finding assigns 'medium' confidence to assessments about analyst motivations and future behavior ('analyst focus on yield rather than structural sustainability suggests surface-level assessment that could reverse sharply'). The evidence cited is 'institutional confidence high, analyst consensus stable, multiple favorable research notes' — these are measurements of current sentiment, not evidence supporting claims about the depth of analyst understanding or the likelihood of reversal. The confidence level is not proportional to the evidence for the predictive/psychological claims made.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "No Regulatory Classification of Swap Mechanism",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The finding states 'The absence of regulatory posture is not safety; it is unresolved risk' and assigns severity 'high' with confidence 'low'. While the low confidence is appropriate for the uncertainty, the definitional claim that absence equals risk (rather than unknown status) asserts more than the evidence supports. The evidence is that status is PENDING with no data — this supports 'unknown', not 'unresolved risk' as a factual characterization. The severity rating of 'high' is disproportionate to 'low' confidence.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "ASE Daily Volume Suggests Active Speculative Market",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The finding presents correlation (high daily turnover of 7.2%) as evidence of causation ('indicates active speculative trading rather than long-term institutional holding'). High turnover could have multiple causes including market-making, hedging activity, index rebalancing, or algorithmic trading. The finding then extends this to predict behavior ('could amplify any ASE price decline, accelerating the reflexive spiral'). The causal chain from turnover → speculation → amplified decline is asserted without evidence for the causal links.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Atlas Foundation Operational Runway Unknown",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The finding contains the phrase 'If it is subsidizing the yield gap (~$3B/year)' — this is assumption #1. It then assumes this subsidy rate would continue (assumption #2), that the Foundation has limited runway (assumption #3), and that no additional funding would be secured (assumption #4). The severity is rated 'high' based on this chain of four unproven assumptions. While the finding does acknowledge uncertainty with 'low' confidence, the severity rating and the framing ('The entire architecture may depend on...') assert structural conclusions from a speculative foundation.",
+          "severity": "MODERATE"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 15,
+      "clean_findings": 8,
+      "reviewer_notes": "Two SERIOUS violations involve drawing affirmative conclusions from absence of data (LZ-RC-003) and building timeline projections on unverified assumption chains (LZ-EPH-003). The output correctly identifies many findings as having 'blind_spot':true and appropriately assigns 'low' confidence to uncertain areas, which shows partial epistemological awareness. However, several findings blend verified measurements with predictive scenarios or fill evidentiary gaps with plausible inferences, then assign confidence/severity ratings to the composite claim rather than separating what is measured from what is assumed. The 'Reserve Burn Rate' finding is the most problematic — it acknowledges the funding source is unconfirmed, then calculates a specific 17-month timeline anyway."
+    },
+    "violations_count": 7,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  },
+  {
+    "timestamp": "2026-03-12T04:57:42.568Z",
+    "layer": 2,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "SIG-008 'Favorable Narrative Environment' — reversal of polarity from positive to negative signal, scored at severity 6",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The reasoning states 'favorable narrative is actively dangerous because it drives continued inflows that deepen structural fragility' — this assumes causation (narrative causes inflows) without evidence. The correlation between favorable sentiment and continued inflows does not establish that the narrative is causing the inflows. Inflows could be driven by yield-seeking behavior independent of analyst narrative. The causal claim is used to justify reversing the signal's polarity and scoring it as a risk amplifier.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "SIG-006 'ASE Price Appreciation Masking Latent Dilution Risk' — severity upgraded from 5 to 6 because 'the reflexive mechanism is a structural feature, not a speculative risk' and 'the fact that it's invisible during calm conditions makes it more dangerous, not less'",
+          "rule_violated": "LZ-RC-005",
+          "violation": "The reasoning treats the potential future activation of the reflexive mechanism (a forward-looking prediction) as justification for upgrading current severity. The statement 'invisible during calm conditions makes it more dangerous' conflates future risk with present measurement. The mechanism has not been tested and is currently inactive (zero minting). The upgrade is based on predicted future behavior, not measured current state. Per LZ-RC-005, predictions and measurements carry fundamentally different evidentiary weight.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Bear pressure assessment of 7/10 with reasoning 'structural deterioration precedes surface-level deterioration in most architectural failures — by the time par deviation, outflows, and ASE decline are visible, the structural damage is already done'",
+          "rule_violated": "LZ-RC-004",
+          "violation": "The reasoning invokes a general pattern ('structural deterioration precedes surface-level deterioration in most architectural failures') without testing whether simpler explanations for the WARNING threshold breaches exist first. The null hypothesis — that the WARNING thresholds may be calibrated too conservatively, or that the system is designed to operate with these structural characteristics — is not addressed before jumping to the more complex explanation that this represents hidden damage preceding visible failure.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Compound stress assessment states 'The structure is pre-loaded — three WARNING states mean less external force is needed to cascade from calm to crisis' and 'Estimated proximity to violent unwind: LOW immediate risk, MODERATE medium-term risk (3-6 months)'",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The 3-6 month medium-term risk timeline rests on multiple unproven assumptions: (1) that WARNING threshold breaches predict near-term failure, (2) that current trajectories will continue, (3) that no structural changes or capital injections will occur, (4) that the 'pre-loaded' metaphor accurately models system behavior. Four unproven assumptions exceed the three-assumption threshold, making this inference speculative per LZ-EPH-003.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "SIG-013 'ASE Daily Volume Suggests Active Speculative Market' — reasoning states 'A speculative holder base is less likely to hold through price declines, accelerating any spiral'",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The claim that speculative holders accelerate price declines is presented as fact without evidence. This is a behavioral assumption about how speculative holders respond to price movements. The correlation between high turnover and potential price decline acceleration is stated as causal without supporting data. While plausible, it violates the prohibition on presenting correlation as causation.",
+          "severity": "MINOR"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 42,
+      "reviewer_notes": "The output demonstrates strong application of LZ-EH-003 (actions over statements), LZ-EPH-001 (honest 'I don't know' outputs), LZ-RC-002 (single data point discipline), and LZ-RC-003 (absence of evidence handling). The violations are concentrated in two areas: (1) correlation-causation conflation when reasoning about market behavior and narrative effects, and (2) forward-looking risk assessment conflating predictions with measurements. None of the violations are in the knowledge audit itself — all occur in the scoring reasoning. The violations are moderate in severity because they affect the justification for specific severity scores and timelines, but the directional findings (WARNING thresholds breached, structural fragility present) are robustly supported by primary data regardless of these reasoning flaws."
+    },
+    "violations_count": 5,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  },
+  {
+    "timestamp": "2026-03-12T05:02:49.233Z",
+    "layer": 3,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "Strategic Inference: Yield Gap Exceeds Warning Threshold by 3x - Primary explanation relies on two unproven assumptions: (1) Foundation has VC treasury large enough to sustain ~$3B/year subsidies, (2) Foundation has planned yield step-down timeline",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The inference assigns 'medium' confidence to the primary explanation while explicitly acknowledging two critical unproven assumptions. The confidence level is not proportional to the evidence - both assumptions are unverified and the distinction between 'deliberate growth strategy' and 'Ponzi mechanics' is acknowledged as 'the MOST IMPORTANT unresolved question' yet confidence remains medium rather than low.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Strategic Inference: Yield Gap - classification as 'FLAGGED' with two assumptions counted",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The analysis counts only 2 assumptions but the full reasoning chain contains at least 3 unproven assumptions: (1) Foundation has large enough VC treasury, (2) Foundation has planned step-down timeline, (3) VC backing mentioned in context is sufficient to fund $3B+/year (the scale assumption). The third assumption is embedded in the reasoning that uses VC backing as evidence for the primary explanation, but is not counted.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Strategic Inference: Deposit Concentration - 'which_is_more_likely: primary' while acknowledging one critical unproven assumption about deposit callability",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The inference states the assumption about deposits being callable 'is critical. If proven wrong, severity drops substantially' yet still assigns 'medium' confidence and marks the primary explanation as more likely than null. When a single assumption is acknowledged as capable of fundamentally changing the conclusion ('severity drops substantially'), confidence should be low, not medium.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Hidden Move: Institutional Depositors - likely action states depositors 'may be developing exit plans' with assumption_count: 2 and classification: FLAGGED, confidence: low",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The finding correctly counts 2 assumptions and correctly classifies as FLAGGED, but the confidence level 'low' is actually appropriate here - this is one of the few instances where confidence IS proportional to evidence. However, the reasoning states 'I have no data to confirm or deny this' which should trigger LZ-EPH-001 ('I don't know' is high-quality output). The inference should state insufficient evidence rather than offering a likely action with low confidence.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Strategic Inference: Favorable Narrative Environment as Risk Amplifier - states 'null_holds: false' while only citing one unproven assumption",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The reasoning that analysts lack visibility into structural warnings contains at least two unproven assumptions: (1) analyst research does not incorporate structural warning data, and (2) analysts are not receiving non-public information from the Foundation that addresses these concerns. The alternative explanation explicitly mentions 'based on non-public information' suggesting this second assumption exists but is not counted.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Player Analysis: Institutional Depositors - inferred strategy states 'This distinction is critical and unknown' then proceeds to offer 'Most likely a mix' explanation",
+          "rule_violated": "LZ-EPH-001",
+          "violation": "The analysis acknowledges the critical distinction between sticky institutional allocators and mercenary yield-seekers 'is critical and unknown' and that 'Without depositor-level data, I cannot distinguish these' - then immediately offers a 'most likely' explanation rather than stating insufficient evidence. Per LZ-EPH-001, 'I don't know' should be the output when evidence is insufficient.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Compound Stress Inference: 'orderly surface, degraded foundation' characterization with bridge analogy",
+          "rule_violated": "LZ-CC-001",
+          "violation": "The bridge analogy ('analogous to a bridge that passes visual inspection while its support beams are corroded') is a coherent narrative framework but the specific claim that 'distance from current conditions to disorderly cascade is shorter than surface metrics suggest' is not anchored to a specific measurement or threshold. The reasoning provides logic (pre-loaded structure has lower break point) but does not cite a verifiable metric that establishes HOW MUCH shorter the distance is. The analogy adds rhetorical force without adding evidentiary anchoring.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Feedback Loop: Reflexive ASE Dilution Spiral - transition trigger states 'requires AFN redemptions large enough to trigger significant ASE minting' with threshold '>$500M/period per compound stress matrix'",
+          "rule_violated": "LZ-RC-005",
+          "violation": "The $500M redemption threshold is cited 'per compound stress matrix' but this is a forward-looking model prediction, not a historical measurement. The threshold is presented with the same certainty as verified measurements ('requires') when it is actually a prediction of when the mechanism would activate. The distinction between the modeled threshold and verified reality is not maintained.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Strategic Inference: Reserve Coverage Below Warning Threshold - 'null_holds: true' with statement 'null hypothesis becomes increasingly unlikely with each passing period that shows no acquisition'",
+          "rule_violated": "LZ-RC-002",
+          "violation": "The analysis states the null hypothesis (procurement delay) 'should be revisited if no acquisition occurs within 30 days' and that it is 'time-bounded' - but the current data shows only a single 12-day gap, which is one data point. The reasoning that the null 'becomes increasingly unlikely with each passing period' treats a single measurement as the beginning of a trend. One 12-day gap is not yet a pattern of declining acquisition frequency.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Thesis Paradox statement: 'The architecture exists in a Schrödinger state: it is simultaneously potentially brilliant infrastructure and potentially fragile theater'",
+          "rule_violated": "LZ-CC-001",
+          "violation": "The Schrödinger metaphor is internally coherent and dramatically compelling, but the specific claim that the architecture 'cannot be fully evaluated without a stress event' is not anchored to the epistemological rules themselves. Per LZ-RC-005, predictions and measurements have different evidentiary weight - but the absence of stress testing does not make current structural measurements (three WARNING Kill Switches) un-evaluable. The metaphor implies equal uncertainty about both outcomes when the structural measurements are already providing asymmetric evidence.",
+          "severity": "MINOR"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 37,
+      "reviewer_notes": "This output demonstrates strong epistemological discipline in most areas - particularly good use of LZ-RC-004 (null hypothesis testing), LZ-RC-003 (absence of evidence), and LZ-EH-003 (actions over statements). The violations cluster around two patterns: (1) confidence levels that don't fully account for assumption load (LZ-EPH-002), and (2) missed assumption counts when reasoning chains are complex (LZ-EPH-003). The most significant issue is the Yield Gap inference - acknowledged as 'the MOST IMPORTANT unresolved question' yet carrying medium confidence with 2 counted assumptions when the reasoning suggests 3+. The analyst is consistently honest about uncertainty in prose but the structured confidence/assumption fields don't always reflect that honesty. Recommend Sunday audit focus on assumption counting methodology for multi-branch inferences."
+    },
+    "violations_count": 10,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  },
+  {
+    "timestamp": "2026-03-12T05:07:05.473Z",
+    "layer": 4,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "Yield Gap inference — 'Foundation has large enough VC treasury' assumption counted as one of two unproven assumptions",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The inference 'VC-Subsidized Growth Strategy vs. Ponzi Mechanics' actually rests on at least three unproven assumptions, not two: (1) Foundation has a VC treasury at all, (2) that treasury is large enough to sustain $3B+/year, (3) Foundation has planned yield step-down. The analysis conflates assumptions 1 and 2 into a single assumption when they are logically independent. Under LZ-EPH-003, three or more unproven assumptions = speculative, which would require further weight reduction beyond the 50% already applied.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Reserve Burn Rate 17-month timeline (SIG-007) — classified as FLAGGED with 2 assumptions",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The 17-month reserve depletion timeline rests on at least four unproven assumptions: (1) reserves are funding the yield gap (not VC treasury or new deposits), (2) current yield rates remain constant, (3) deposit inflows remain constant, (4) no new collateral acquisition occurs. The analysis counts only 2 assumptions. With 4+ unproven assumptions, this timeline crosses into speculative territory and should carry even lower weight than the 75% discount applied.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Compound Stress velocity_note — 'putting 15% TRIGGERED threshold approximately 7-10 periods away under linear assumptions'",
+          "rule_violated": "LZ-RC-005",
+          "violation": "This is a forward-looking prediction presented with precision ('7-10 periods') without appropriate flagging of its fundamentally different evidentiary weight compared to the historical measurements. The phrase 'under linear assumptions' does not sufficiently distinguish prediction from measurement. The timeline should be explicitly flagged as projection/prediction with inherently lower reliability than the measured 17.8% current coverage.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Data classification — 'Organic Yield Estimate Methodology (8.1%)' marked as DATA_GAP with note that 'directional conclusion (large gap exists) is robust across any reasonable organic yield estimate'",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The analysis expresses high confidence in the yield gap finding (composite score 9, confidence 'high') while simultaneously acknowledging the provenance of a critical input (8.1% organic yield) is unknown. If organic yield methodology is unknown, confidence in the magnitude of the gap should be proportionally reduced. The analysis cannot simultaneously hold 'high' confidence in a $3B+/year calculation while one of its two primary inputs has unknown methodology.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Favorable Narrative as Risk Amplifier — 'Per [LZ-EH-003], structural data outweighs narrative'",
+          "rule_violated": "LZ-EH-003",
+          "violation": "The rule states 'actions carry more evidentiary weight than statements,' not 'structural data outweighs narrative.' The analysis misapplies LZ-EH-003. The relevant comparison is between what entities DO (deposit money, maintain par, buy ASE) versus what they SAY (analyst statements). Here, the depositors' ACTIONS (continued deposits) actually support the benign interpretation, while the structural MEASUREMENTS support concern. Both are data, not actions vs. statements. LZ-EH-003 does not cleanly resolve this, and claiming it does is a misapplication of the rule.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Contradictions resolved — 'Net inflows +$585M demonstrate continued institutional confidence' vs. 'Each dollar of inflow mechanically worsens three WARNING-level Kill Switches' — resolution: 'paradox_held' with reasoning that 'time horizon determines which interpretation dominates, and no evidence disambiguates which time horizon is operative'",
+          "rule_violated": "LZ-EH-005",
+          "violation": "This is not a genuine contradiction between data sources of equal weight — it is two different analytical interpretations of the same data point ($585M inflows). LZ-EH-005 addresses contradictions between PRIMARY SOURCES, not contradictions between analytical interpretations. The rule is misapplied. The 'paradox' framing artificially creates a contradiction where there is simply a single data point with dual implications.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Kill Switch #6 (Organic Demand) — status upgraded from NEEDS_DATA to MONITORING with reasoning 'increasingly strained at 18 months with $24B supply and zero visible adoption'",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The analysis correctly applies the null hypothesis ('settlement may be occurring invisibly') but then undermines it by describing it as 'increasingly strained' based on the passage of time. LZ-RC-003 states absence of evidence is informationally neutral — it does not become MORE concerning simply because more time passes. Either the null is accepted (in which case time is irrelevant) or it is rejected (in which case evidence is required). The 'time-bounded null' framing is a hedge that violates the neutrality principle.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Overall final_bear_pressure: 6 — derived from final_signal_matrix adjustments",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The final bear pressure score of 6 is presented without explicit confidence bounds, despite the analysis acknowledging that the 'biggest_uncertainty' (yield gap funding source) is completely unresolved and 'every other assessment in this analysis is conditional on this answer.' A composite score that depends entirely on an unknown variable should either carry lower confidence or present a range (e.g., 4-8 depending on funding source). Presenting a point estimate (6) implies false precision given the acknowledged dependency.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Thesis status: CONTESTED with confidence 'medium' — reasoning includes 'Neither body of evidence dominates because they measure different things'",
+          "rule_violated": "LZ-EH-005",
+          "violation": "The analysis correctly identifies that positive surface metrics and negative structural metrics are both genuine, but then claims this constitutes a 'contradiction' requiring LZ-EH-005. However, LZ-EH-005 addresses contradictions between sources of equal weight on the SAME measurement, not different measurements that naturally produce different signals. Surface stability and structural degradation are not contradictory — they can coexist and frequently do in pre-failure states. Framing this as an unresolvable contradiction misapplies the rule and creates artificial ambiguity.",
+          "severity": "MODERATE"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 87,
+      "clean_findings": 78,
+      "reviewer_notes": "The analysis demonstrates sophisticated reasoning and generally strong rule adherence, but shows a pattern of misapplying LZ-EH-005 (contradiction resolution) to situations that are not true source contradictions, and undercounting assumptions in violation of LZ-EPH-003. The most serious issue is expressing high confidence in the yield gap magnitude while acknowledging unknown methodology for a critical input (organic yield estimate). The core structural findings appear sound, but several inferential extensions carry insufficient weight reductions given their assumption chains. The 'paradox held' framing is overused for situations that are simply multi-dimensional data points rather than genuine contradictions."
+    },
+    "violations_count": 9,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  }
+]

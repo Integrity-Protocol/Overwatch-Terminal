@@ -1,0 +1,1925 @@
+{
+  "commander_summary": "Kill Switch #2 (cavitation) is TRIGGERED — confirmed by primary telemetry and maintenance log. The RWDN thesis of robust structural integrity and sufficient mechanical redundancy is in active falsification: zero redundancy exists, remaining pumps are being destroyed by a self-reinforcing cavitation-load spiral, and system pressure is 2 PSI from regulatory breach with no identified mechanism to arrest decline. The fire department — the highest-fidelity independent actor — is behaving as if the system has failed its life-safety mandate. EXIT_SIGNAL. The central paradox: the reservoir at 96% masks a distribution system in collapse, and the single variable that could change this assessment — whether Pump 4 is hours or days from returning — is genuinely unknown.",
+  "bear_pressure_score": 96,
+  "score_delta": 6,
+  "score_reasoning": "One kill switch is TRIGGERED, three more are at WARNING with thin margins and actively deteriorating trajectory, and the foundational thesis assumption (mechanical redundancy) is empirically false. The system is in a self-reinforcing degradation cascade with an operator action window measured in hours, not days. EXIT_SIGNAL is the only recommendation consistent with a WEAKENING thesis where the primary falsification criterion has already been met and the remaining criteria are approaching trigger with no identified mechanism to arrest their progression. Waiting for additional kill switches to trigger before exiting adds risk without adding information — the direction of travel is clear even if the exact timeline is not.",
+  "tactical_recommendation": "EXIT_SIGNAL",
+  "recommendation_reasoning": "One kill switch is TRIGGERED, three more are at WARNING with thin margins and actively deteriorating trajectory, and the foundational thesis assumption (mechanical redundancy) is empirically false. The system is in a self-reinforcing degradation cascade with an operator action window measured in hours, not days. EXIT_SIGNAL is the only recommendation consistent with a WEAKENING thesis where the primary falsification criterion has already been met and the remaining criteria are approaching trigger with no identified mechanism to arrest their progression. Waiting for additional kill switches to trigger before exiting adds risk without adding information — the direction of travel is clear even if the exact timeline is not.",
+  "signal_matrix": [
+    {
+      "signal": "Active cavitation in Pumps 1 and 2",
+      "description": "Layer 3 confirmed as straightforward physics finding. Null hypothesis rejected with high confidence. Two independent sources corroborate. No behavioral ambiguity.",
+      "impact": null,
+      "probability": null,
+      "time_weight": null,
+      "composite": 10,
+      "severity": "critical",
+      "proximity": null,
+      "blind_spot": false,
+      "is_new": null,
+      "category": null
+    },
+    {
+      "signal": "Aggregate pump load exceeds 115% rated capacity",
+      "description": "Layer 3 analysis of the cavitation-load death spiral confirms the trajectory is self-reinforcing. Duration component remains unverified but trajectory makes breach inevitable absent intervention. No behavioral evidence changes the assessment.",
+      "impact": null,
+      "probability": null,
+      "time_weight": null,
+      "composite": 9,
+      "severity": "critical",
+      "proximity": null,
+      "blind_spot": false,
+      "is_new": null,
+      "category": null
+    },
+    {
+      "signal": "Divergent Inventory Paradox emerging",
+      "description": "Layer 3 provided a physically rigorous explanation for the paradox (cavitation reducing hydraulic efficiency while pumps consume energy). This strengthens the qualitative finding. However, the formal criterion still cannot be assessed without baseline pressure. Upgraded slightly because the causal mechanism is now well-explained.",
+      "impact": null,
+      "probability": null,
+      "time_weight": null,
+      "composite": 8,
+      "severity": "high",
+      "proximity": null,
+      "blind_spot": false,
+      "is_new": null,
+      "category": null
+    },
+    {
+      "signal": "Fire department independently confirming hydraulic degradation",
+      "description": "Layer 3 analysis of fire department as highest-fidelity independent actor with zero say-do gap elevates the evidentiary weight. Per LZ-EH-003, their actions carry more weight than any verbal reassurance. The Independent Actor Contradiction pattern (fire dept vs. MWA) further validates this signal.",
+      "impact": null,
+      "probability": null,
+      "time_weight": null,
+      "composite": 10,
+      "severity": "critical",
+      "proximity": null,
+      "blind_spot": false,
+      "is_new": null,
+      "category": null
+    },
+    {
+      "signal": "Sector B hydrant pressure approaching fire flow collapse",
+      "description": "Layer 3 analysis of unmonitored sectors and the suspicious absence of broader hydrant data suggests the reported Sector B reading may represent a BEST case among sectors. This cannot be confirmed but raises the effective risk assessment.",
+      "impact": null,
+      "probability": null,
+      "time_weight": null,
+      "composite": 9,
+      "severity": "high",
+      "proximity": null,
+      "blind_spot": false,
+      "is_new": null,
+      "category": null
+    },
+    {
+      "signal": "System pressure 2 PSI above regulatory breach",
+      "description": "Layer 3 confirmed the null hypothesis of a stable operating point fails — the mechanisms driving decline are active and self-reinforcing. The Information Asymmetry Delay Loop means no external circuit breaker is likely before breach. Layer 3 analysis increases confidence in the trajectory assessment.",
+      "impact": null,
+      "probability": null,
+      "time_weight": null,
+      "composite": 9,
+      "severity": "critical",
+      "proximity": null,
+      "blind_spot": false,
+      "is_new": null,
+      "category": null
+    },
+    {
+      "signal": "Zero mechanical redundancy in pumping system",
+      "description": "Layer 3 confirmed the null hypothesis fails — this is not a normal maintenance window but a cascading failure with no clear restoration path. The empirical state is zero redundancy regardless of Pump 4 timeline.",
+      "impact": null,
+      "probability": null,
+      "time_weight": null,
+      "composite": 10,
+      "severity": "critical",
+      "proximity": null,
+      "blind_spot": false,
+      "is_new": null,
+      "category": null
+    },
+    {
+      "signal": "Extreme ambient temperature compounding thermal stress",
+      "description": "Layer 3 thermal-mechanical cascade analysis strengthens this signal by demonstrating the feedback loop: same conditions that tripped Pump 3 apply to Pumps 1 and 2 under greater load. The dual-vector impact (supply degradation + demand amplification) is well-reasoned.",
+      "impact": null,
+      "probability": null,
+      "time_weight": null,
+      "composite": 8,
+      "severity": "high",
+      "proximity": null,
+      "blind_spot": false,
+      "is_new": null,
+      "category": null
+    },
+    {
+      "signal": "Elevated water turbidity",
+      "description": "Null hypothesis holds per Layer 3 — causal link to hydraulic crisis is unestablished. However, the regulatory breach (4.5 > 4.0 NTU MCL) stands as independent fact. Downgraded slightly because the strategic interpretation is stripped; only the regulatory fact remains.",
+      "impact": null,
+      "probability": null,
+      "time_weight": null,
+      "composite": 6,
+      "severity": "high",
+      "proximity": null,
+      "blind_spot": false,
+      "is_new": null,
+      "category": null
+    },
+    {
+      "signal": "MWA historical pattern of delayed emergency repairs",
+      "description": "Null hypothesis holds — cannot determine whether MWA is delaying or actively working. Stripped from scoring per burden of proof rules. Retained as logged context only.",
+      "impact": null,
+      "probability": null,
+      "time_weight": null,
+      "composite": 0,
+      "severity": "moderate",
+      "proximity": null,
+      "blind_spot": false,
+      "is_new": null,
+      "category": null
+    },
+    {
+      "signal": "State regulator lacks real-time visibility",
+      "description": "Layer 3 information asymmetry delay loop provides useful structural context. However, this is a static characteristic, not a dynamic signal. Retained at Layer 2 score as contextual information.",
+      "impact": null,
+      "probability": null,
+      "time_weight": null,
+      "composite": 3.5,
+      "severity": "high",
+      "proximity": null,
+      "blind_spot": false,
+      "is_new": null,
+      "category": null
+    },
+    {
+      "signal": "Pump 3 overtemp trip as leading indicator",
+      "description": "Layer 3 thermal-mechanical cascade analysis confirms this as a demonstrated failure mode with direct applicability to Pumps 1 and 2. The simplest explanation (LZ-RC-004) is that the same conditions will produce the same failure. Full weight.",
+      "impact": null,
+      "probability": null,
+      "time_weight": null,
+      "composite": 9,
+      "severity": "critical",
+      "proximity": null,
+      "blind_spot": false,
+      "is_new": null,
+      "category": null
+    },
+    {
+      "signal": "Reservoir fullness masking crisis severity",
+      "description": "Layer 3 supply metric masking pattern validates this as a second-order risk to response speed. The fire department's independent actions suggest at least one actor sees through the masking effect. Retained as context.",
+      "impact": null,
+      "probability": null,
+      "time_weight": null,
+      "composite": 4.2,
+      "severity": "high",
+      "proximity": null,
+      "blind_spot": false,
+      "is_new": null,
+      "category": null
+    },
+    {
+      "signal": "No competing water supply infrastructure available",
+      "description": "Behavioral inference from fire department is suggestive but data gap is acknowledged. Conservative scoring maintained.",
+      "impact": null,
+      "probability": null,
+      "time_weight": null,
+      "composite": 3.5,
+      "severity": "moderate",
+      "proximity": null,
+      "blind_spot": false,
+      "is_new": null,
+      "category": null
+    },
+    {
+      "signal": "Unmonitored sectors may have worse conditions than Sector B",
+      "description": "Upgraded based on the suspicious absence classification of multi-sector hydrant data. The engineering logic is sound — 11 PSI distribution loss to Sector B implies greater losses to more distant sectors. Kill Switch #3 may already be triggered in unseen locations. However, this remains an inference without measurement.",
+      "impact": null,
+      "probability": null,
+      "time_weight": null,
+      "composite": 6,
+      "severity": "high",
+      "proximity": null,
+      "blind_spot": false,
+      "is_new": null,
+      "category": null
+    }
+  ],
+  "compounding_risks": [
+    {
+      "chain": [
+        "MECHANICAL: Zero redundancy with active cavitation destroying remaining capacity — pre-loaded to breaking point",
+        "THERMAL: 95°F ambient in environment that already tripped Pump 3; Pumps 1 and 2 under greater load generating more waste heat — pre-loaded",
+        "HYDRAULIC: 2 PSI buffer on 40 PSI regulatory threshold with actively declining pump capacity and no mechanism to arrest decline — pre-loaded"
+      ],
+      "outcome": "A successful emergency intervention (Pump 4 return) simultaneously reduces immediate catastrophe risk AND retroactively validates the thesis's claim of system resilience, because the 'redundancy' would appear to have worked — even though the system reached a state where a single additional perturbation (thermal trip of Pump 1 or 2) would have caused total collapse. The paradox: survival through emergency scramble is not the same as the 'robust structural integrity' the thesis claims, but it would look the same in retrospective metrics.",
+      "severity": "critical"
+    },
+    {
+      "chain": [
+        "Data",
+        "Behavior",
+        "Paradox"
+      ],
+      "outcome": "This is not a contradiction to resolve — it IS the finding. The Divergent Inventory Paradox is exactly what the thesis defined as Kill Switch #5: supply and distribution have decoupled. The reservoir level is accurate AND the distribution failure is real. Both data points are correct. The paradox itself is the diagnostic signal. Per LZ-EH-005, I hold the paradox rather than resolving it, because both measurements are from primary sources and neither contradicts the other — they jointly describe a system where supply is adequate but distribution is failing. This is the central physical reality of the crisis.",
+      "severity": "high"
+    },
+    {
+      "chain": [
+        "Data",
+        "Behavior",
+        "Paradox"
+      ],
+      "outcome": "Per the null hypothesis finding (accepted above), we genuinely cannot determine whether OFFLINE_MAINTENANCE reflects routine delay or active emergency repair not yet reflected in status fields. Per LZ-RC-003, absence of emergency designation is not evidence of absence of emergency action. Per LZ-EPH-001, the honest answer is 'I don't know.' The paradox is held: the most consequential variable in this entire assessment (Pump 4 return timeline) is genuinely unknown.",
+      "severity": "moderate"
+    }
+  ],
+  "blind_spots": [
+    {
+      "signal": "What is MWA's current status on returning Pump 4 to service? Is emergency mobilization underway?",
+      "importance": "high",
+      "suggested_source": "MWA internal work order system, maintenance dispatch logs, or direct query to MWA operations center.",
+      "x402_opportunity": true,
+      "recommend_permanent_monitoring": false
+    },
+    {
+      "signal": "What is the baseline system pressure from which the 20% drop in Criterion #5 should be measured?",
+      "importance": "high",
+      "suggested_source": "RWDN design specifications, historical telemetry records, or MWA operational standards documentation.",
+      "x402_opportunity": true,
+      "recommend_permanent_monitoring": false
+    },
+    {
+      "signal": "What are the hydrant pressure readings in sectors OTHER than Sector B, particularly those at higher elevation or greater distance from the pumping station?",
+      "importance": "moderate",
+      "suggested_source": "Fire department or MWA hydrant flow test data from other sectors, or portable pressure gauge readings.",
+      "x402_opportunity": true,
+      "recommend_permanent_monitoring": false
+    },
+    {
+      "signal": "Are there emergency interconnections with adjacent water systems or backup well fields that could provide alternative supply?",
+      "importance": "moderate",
+      "suggested_source": "MWA emergency operations plan, regional mutual aid agreements, state water infrastructure maps.",
+      "x402_opportunity": true,
+      "recommend_permanent_monitoring": false
+    },
+    {
+      "signal": "What are the current thermal readings (bearing temperature, motor winding temperature) on Pumps 1 and 2?",
+      "importance": "high",
+      "suggested_source": "Pump SCADA system thermal monitoring, or maintenance team field measurements.",
+      "x402_opportunity": true,
+      "recommend_permanent_monitoring": false
+    }
+  ],
+  "bias_check": {
+    "bull_indicators": 8,
+    "bear_indicators": 3,
+    "ratio": "8:3",
+    "assessment": "Kill Switch #2 (cavitation) is TRIGGERED — this alone constitutes active falsification of the thesis's claim of 'robust structural integrity.' The core thesis assumption of 'sufficient mechanical redundancy' is empirically false with 50% of pump capacity offline and the remaining 50% under self-destructive conditions. I declare WEAKENING rather than outright falsification because: (1) three kill switches remain at WARNING rather than TRIGGERED, (2) the Pump 4 return timeline is genuinely unknown and represents a potential (if narrow) recovery path, and (3) overnight demand reduction could provide temporary stabilization. However, the trajectory is unambiguously toward full falsification — the question is timeline, not direction.",
+    "recommended_additions": null
+  },
+  "kill_switches": [
+    {
+      "name": "#2 Cavitation Threshold (vibration >35 Hz while load >95%)",
+      "status": "triggered",
+      "detail": "THIS IS THE PRIMARY FINDING. Kill Switch #2 is TRIGGERED on the strongest possible evidentiary basis: primary telemetry exceeding defined thresholds, independently confirmed by maintenance log. Per the thesis's own framework, 'irreversible cavitation damage is ACTIVELY OCCURRING.' This alone falsifies the thesis's claim of robust structural integrity."
+    },
+    {
+      "name": "#1 Redundant Load Threshold (>115% for >48 hours)",
+      "status": "danger",
+      "detail": "The load component is unambiguously breached. The duration component cannot be confirmed or denied with available data (DATA_GAP). Per LZ-EPH-001, I cannot declare TRIGGERED without confirming the duration element. However, the trajectory makes trigger inevitable absent intervention. Maintained at WARNING with escalate action because the load margin is so far beyond threshold that the duration element is likely the only remaining barrier, and it erodes with every passing hour."
+    },
+    {
+      "name": "#3 Fire Flow Collapse (Sector hydrant <20 PSI)",
+      "status": "danger",
+      "detail": "The measured Sector B reading is above threshold. Per LZ-EPH-002, I cannot declare TRIGGERED on inferred data from unmonitored sectors — that would require measurement, not inference. However, the suspicious absence of multi-sector data and the fire department's systemic response (ALL box alarms in Sector B) suggest the measured 31 PSI may not represent the worst conditions in the network. Maintained at WARNING with urgent escalation to obtain multi-sector hydrant readings."
+    },
+    {
+      "name": "#4 Regulatory Pressure Breach (system <40 PSI)",
+      "status": "danger",
+      "detail": "The 40 PSI threshold is not yet breached. But 2 PSI margin with actively degrading capacity and zero redundancy represents the thinnest possible buffer. The measurement is current and reliable (primary telemetry). Any further capacity loss — including the continuing cavitation damage occurring right now — will close this margin. This is the next kill switch most likely to transition to TRIGGERED."
+    },
+    {
+      "name": "#5 Divergent Inventory Paradox (reservoir >90% AND pressure drop >20% from baseline)",
+      "status": "no_data",
+      "detail": "The reservoir component (96% > 90%) is confirmed. The pressure drop component requires a baseline denominator that is absent from available data. Per LZ-EPH-001, I will not fabricate a baseline to force a determination. The physical phenomenon described by this criterion (supply-distribution decoupling) is demonstrably occurring — the formal quantitative threshold assessment is unresolved. Escalation needed to obtain baseline pressure from system documentation."
+    }
+  ],
+  "new_kill_switches_recommended": [],
+  "_layer4_raw": {
+    "burden_of_proof_applied": [
+      {
+        "inference": "Active cavitation in Pumps 1 and 2 (Kill Switch #2 TRIGGERED)",
+        "signal_ids": [
+          "20260312-0706-SIG-001"
+        ],
+        "layer3_classification": "VALID",
+        "data_support": "full",
+        "contradicts_data": false,
+        "final_weight": "full",
+        "reasoning": "VALID classification (0 assumptions). Full data support from two independent sources: primary telemetry (45 Hz, 48.5 Hz both > 35 Hz threshold; 128.5%, 131% both > 95% load) AND maintenance log explicitly confirming cavitation. Per LZ-EH-001, multiple independent sources corroborate. No contradictions. Full weight."
+      },
+      {
+        "inference": "Zero mechanical redundancy in pumping system",
+        "signal_ids": [
+          "20260312-0706-SIG-007"
+        ],
+        "layer3_classification": "VALID",
+        "data_support": "full",
+        "contradicts_data": false,
+        "final_weight": "full",
+        "reasoning": "VALID classification (1 assumption: Pump 4 not imminently returning). Full data support: Pump 3 TRIPPED_OVERTEMP, Pump 4 OFFLINE_MAINTENANCE — both from primary telemetry. The single assumption is supported by behavioral evidence (no emergency mobilization visible) though not conclusive. The observation that zero redundancy exists RIGHT NOW is empirical fact regardless of Pump 4 timeline. Full weight on the current state; the Pump 4 assumption affects trajectory assessment, not present-state assessment."
+      },
+      {
+        "inference": "Fire department independently confirming hydraulic degradation",
+        "signal_ids": [
+          "20260312-0706-SIG-004"
+        ],
+        "layer3_classification": "VALID",
+        "data_support": "full",
+        "contradicts_data": false,
+        "final_weight": "full",
+        "reasoning": "VALID classification (0 assumptions). Full data support: primary source memo in market data explicitly states 'critically low' hydrant pressure and orders tanker task forces. Sector B telemetry at 31 PSI independently corroborates. Per LZ-EH-003, fire department actions (costly resource deployment) carry high evidentiary weight. Per LZ-EH-001, independent source corroboration. Full weight."
+      },
+      {
+        "inference": "System pressure 2 PSI above regulatory breach",
+        "signal_ids": [
+          "20260312-0706-SIG-006"
+        ],
+        "layer3_classification": "VALID",
+        "data_support": "full",
+        "contradicts_data": false,
+        "final_weight": "full",
+        "reasoning": "VALID classification (1 assumption: demand won't decrease sufficiently). Full data support: 42 PSI from primary telemetry, 40 PSI threshold from thesis. The assumption is reasonable given 95°F ambient but overnight demand reduction is a genuine counter-scenario. The current-state assessment (2 PSI buffer) is empirical fact. The trajectory inference carries the assumption. Full weight on current state; trajectory assessment carries one acknowledged uncertainty."
+      },
+      {
+        "inference": "Pump 3 overtemp trip as leading indicator for Pumps 1 and 2",
+        "signal_ids": [
+          "20260312-0706-SIG-012"
+        ],
+        "layer3_classification": "VALID",
+        "data_support": "full",
+        "contradicts_data": false,
+        "final_weight": "full",
+        "reasoning": "VALID classification (1 assumption: similar thermal specs across pump fleet). Assumption is supported by thesis description of 'four high-capacity parallel centrifugal pumps' suggesting similar or identical units. Full data support: Pump 3 TRIPPED_OVERTEMP confirmed, 95°F ambient confirmed, Pumps 1 and 2 loads confirmed at higher levels than Pump 3 would have experienced. Per LZ-RC-004, simplest explanation tested first: same conditions → same failure mode. Full weight."
+      },
+      {
+        "inference": "Divergent Inventory Paradox — reservoir full while distribution failing",
+        "signal_ids": [
+          "20260312-0706-SIG-003"
+        ],
+        "layer3_classification": "VALID",
+        "data_support": "full",
+        "contradicts_data": false,
+        "final_weight": "full",
+        "reasoning": "VALID classification (1 assumption: no anomalous inflow). Full data support: reservoir 96% and system pressure 42 PSI both from primary telemetry, pump loads 128-131% confirmed. The physical paradox (high load + high reservoir + low pressure = efficiency loss from cavitation) is mechanistically sound. The formal Kill Switch #5 threshold remains unresolved due to missing baseline pressure, but the qualitative finding is well-supported. Full weight on the physical phenomenon; formal criterion status remains NEEDS_DATA."
+      },
+      {
+        "inference": "MWA historical pattern of delayed emergency repairs",
+        "signal_ids": [
+          "20260312-0706-SIG-010"
+        ],
+        "layer3_classification": "NULL_HYPOTHESIS_HOLDS",
+        "data_support": "partial",
+        "contradicts_data": false,
+        "final_weight": "stripped",
+        "reasoning": "Layer 3 correctly declared the null hypothesis holds — we cannot distinguish between 'MWA is delaying' and 'MWA is working on it but data doesn't show it.' Per Step 1 rules, NULL_HYPOTHESIS_HOLDS means I accept the null. Layer 3's honest assessment stands. This inference does not contribute to bear pressure scoring. The behavioral pattern is logged as context but does not drive any scoring or tactical decision."
+      },
+      {
+        "inference": "Elevated water turbidity causal link to hydraulic crisis",
+        "signal_ids": [
+          "20260312-0706-SIG-009"
+        ],
+        "layer3_classification": "NULL_HYPOTHESIS_HOLDS",
+        "data_support": "partial",
+        "contradicts_data": false,
+        "final_weight": "stripped",
+        "reasoning": "Layer 3 correctly declared the null hypothesis holds — causation between hydraulic stress and turbidity is unestablished per LZ-RC-001. The regulatory breach (4.5 NTU > 4.0 NTU MCL) stands as an independent fact, but the strategic inference linking it to the pump crisis is stripped from bear pressure scoring. The MCL exceedance is retained as an independent factual signal."
+      },
+      {
+        "inference": "MWA preparing minimizing public communications",
+        "signal_ids": [
+          "20260312-0706-SIG-010",
+          "20260312-0706-SIG-007"
+        ],
+        "layer3_classification": "FLAGGED",
+        "data_support": "partial",
+        "contradicts_data": false,
+        "final_weight": "reduced_50",
+        "reasoning": "FLAGGED classification (2 assumptions). Partial data support: the absence of emergency advisories and Pump 4's routine maintenance listing are observable, but interpreting them as narrative control involves assumptions about MWA intent. Per Step 1, FLAGGED = 50% weight. Per Step 2, partial data support = additional 50% reduction. Net: 25% weight. This appears as context in the report but with heavy discount. It does not materially move the assessment."
+      },
+      {
+        "inference": "MWA contacting emergency pump rental services",
+        "signal_ids": [
+          "20260312-0706-SIG-007",
+          "20260312-0706-SIG-010"
+        ],
+        "layer3_classification": "FLAGGED",
+        "data_support": "none",
+        "contradicts_data": false,
+        "final_weight": "stripped",
+        "reasoning": "FLAGGED classification (2 assumptions) AND no supporting data. Per Step 2, no supporting data = stripped from bear pressure score entirely. Layer 3 itself assigned low confidence. This is pure conjecture about what MWA might be doing. Logged for awareness but carries zero scoring weight."
+      },
+      {
+        "inference": "Fire department notifying emergency management independently",
+        "signal_ids": [
+          "20260312-0706-SIG-004"
+        ],
+        "layer3_classification": "VALID",
+        "data_support": "partial",
+        "contradicts_data": false,
+        "final_weight": "reduced_50",
+        "reasoning": "VALID classification (1 assumption: fire departments with life-safety concerns routinely escalate). Partial data support: the memo itself is an escalation document, but no evidence of external notification. The assumption is reasonable but the action is inferred, not observed. Per Step 2, partial data = 50% weight. Reasonable contextual inference but not confirmed."
+      }
+    ],
+    "contradictions_resolved": [
+      {
+        "data_says": "System telemetry shows active cavitation, zero redundancy, 2 PSI regulatory buffer, and accelerating degradation in all measurable parameters.",
+        "behavior_suggests": "MWA shows no observable emergency response — Pump 4 remains in routine maintenance status, no conservation orders, no emergency advisories. MWA is behaving as if the system is in a manageable state.",
+        "resolution": "data_wins",
+        "confidence": "high",
+        "reasoning": "Per LZ-EH-002, primary telemetry data from the originating source outweighs any interpretation of MWA's behavior. Per LZ-EH-003, MWA's INACTION is itself a behavioral data point, but it tells us about MWA's response posture, not about the physical state of the system. The pumps do not care whether MWA has initiated emergency procedures — cavitation is destroying them regardless. The data about the physical system wins over any inference about the operator's response. However, the behavioral signal about MWA's response posture is retained as context for the Information Asymmetry Delay Loop.",
+        "score_impact": 0
+      },
+      {
+        "data_says": "Reservoir at 96% — supply is abundant.",
+        "behavior_suggests": "Fire department deploying tankers, system pressure at 42 PSI, pumps in cavitation — distribution is failing despite abundant supply.",
+        "resolution": "paradox_held",
+        "confidence": "high",
+        "reasoning": "This is not a contradiction to resolve — it IS the finding. The Divergent Inventory Paradox is exactly what the thesis defined as Kill Switch #5: supply and distribution have decoupled. The reservoir level is accurate AND the distribution failure is real. Both data points are correct. The paradox itself is the diagnostic signal. Per LZ-EH-005, I hold the paradox rather than resolving it, because both measurements are from primary sources and neither contradicts the other — they jointly describe a system where supply is adequate but distribution is failing. This is the central physical reality of the crisis.",
+        "score_impact": 0
+      },
+      {
+        "data_says": "Pump 4 status listed as OFFLINE_MAINTENANCE — a routine designation.",
+        "behavior_suggests": "Layer 3 infers MWA may be delaying emergency mobilization based on historical behavioral pattern.",
+        "resolution": "paradox_held",
+        "confidence": "medium",
+        "reasoning": "Per the null hypothesis finding (accepted above), we genuinely cannot determine whether OFFLINE_MAINTENANCE reflects routine delay or active emergency repair not yet reflected in status fields. Per LZ-RC-003, absence of emergency designation is not evidence of absence of emergency action. Per LZ-EPH-001, the honest answer is 'I don't know.' The paradox is held: the most consequential variable in this entire assessment (Pump 4 return timeline) is genuinely unknown.",
+        "score_impact": 0
+      }
+    ],
+    "data_classifications": [
+      {
+        "data_point": "Pump 4 emergency mobilization status",
+        "layer2_classification": "DATA_AVAILABILITY_GAP",
+        "layer3_context": "Layer 3 attempted to infer from MWA historical behavior but correctly declared null hypothesis holds. The Pump 4 return timeline is the single most consequential unknown.",
+        "layer3_inference_valid": "n/a",
+        "final_classification": "DATA_GAP",
+        "reasoning": "This is a genuine gap in available data, not a suspicious absence. There is no reason to expect emergency mobilization status to appear in the telemetry feed we are monitoring. The data feed contains pump status codes, not work order management system data. The gap is real and consequential but not evidence of concealment."
+      },
+      {
+        "data_point": "Baseline system pressure for Criterion #5",
+        "layer2_classification": "THRESHOLD_CALIBRATION_GAP",
+        "layer3_context": "Layer 3 assessed the Divergent Inventory Paradox as physically valid regardless of baseline, but the formal criterion requires the baseline for percentage calculation.",
+        "layer3_inference_valid": "true",
+        "final_classification": "DATA_GAP",
+        "reasoning": "The baseline pressure is a design or historical parameter that should be available in system documentation but is not present in the current data feed. This is a calibration gap, not a strategic absence. The qualitative finding stands without it, but the formal Kill Switch #5 status cannot be determined."
+      },
+      {
+        "data_point": "Hydrant pressure readings in sectors other than Sector B",
+        "layer2_classification": "DATA_AVAILABILITY_GAP",
+        "layer3_context": "Layer 3 correctly noted that basic hydraulic engineering suggests more distant sectors likely have lower pressure, and Kill Switch #3 may already be TRIGGERED in unmonitored sectors.",
+        "layer3_inference_valid": "true",
+        "final_classification": "SUSPICIOUS_ABSENCE",
+        "reasoning": "Elevated to SUSPICIOUS_ABSENCE from DATA_GAP because: (1) the thesis explicitly covers 'all municipal sectors,' (2) the fire department is already deploying tankers to Sector B specifically, suggesting Sector B may not be the worst-affected area, (3) with system pressure at 42 PSI and 11 PSI distribution loss to Sector B, sectors at greater hydraulic distance could already be below the 20 PSI kill switch threshold. The absence of this data is not just a gap — it may be concealing an already-triggered kill switch."
+      },
+      {
+        "data_point": "MWA emergency advisories or conservation orders",
+        "layer2_classification": "Not explicitly classified",
+        "layer3_context": "Layer 3 flagged absence of emergency response as a behavioral signal, inferring either delay or narrative control.",
+        "layer3_inference_valid": "n/a",
+        "final_classification": "STRATEGICALLY_EXPLAINED",
+        "reasoning": "The absence of emergency advisories is consistent with the thesis characterization of MWA as focused on 'continuity of service and public reassurance' and 'historically prone to delaying capital-intensive emergency repairs.' The behavioral explanation (institutional preference for minimizing public alarm) is more parsimonious than the alternative (advisories exist but aren't in our data feed). However, per LZ-RC-003, absence of advisories is not proof they haven't been issued through channels we don't monitor. Classification is STRATEGICALLY_EXPLAINED with medium confidence."
+      },
+      {
+        "data_point": "Regulator emergency orders or inspection notices",
+        "layer2_classification": "DATA_AVAILABILITY_GAP",
+        "layer3_context": "Layer 3 inferred the regulator is operating on lagged data and likely unaware of the crisis severity, which is structurally explained by their lack of real-time telemetry.",
+        "layer3_inference_valid": "true",
+        "final_classification": "STRATEGICALLY_EXPLAINED",
+        "reasoning": "The absence of regulatory action is fully explained by the structural characteristic described in the thesis: the regulator 'lacks real-time telemetry oversight.' They would be monitoring reservoir levels (96% — appears healthy) and receiving periodic pressure reports (which may not yet reflect current conditions). Their inaction is the expected behavior of an actor with an information deficit, not evidence of concealment or collusion."
+      },
+      {
+        "data_point": "Thermal readings on Pumps 1 and 2",
+        "layer2_classification": "Not explicitly classified",
+        "layer3_context": "Layer 3 identified this as a critical unknown for estimating cascade timeline, included in x402 paper trades.",
+        "layer3_inference_valid": "n/a",
+        "final_classification": "DATA_GAP",
+        "reasoning": "Thermal readings for individual pumps are standard SCADA parameters that likely exist but are not included in our data feed. This is a straightforward data gap. Having these readings would allow direct quantification of the most acute near-term risk (thermal trip of Pump 1 or 2)."
+      },
+      {
+        "data_point": "Emergency interconnections or mutual aid water supply agreements",
+        "layer2_classification": "COMPETITIVE_KNOWLEDGE_GAP",
+        "layer3_context": "Fire department's use of tankers rather than interconnections suggests none exist, but this is indirect evidence.",
+        "layer3_inference_valid": "true",
+        "final_classification": "DATA_GAP",
+        "reasoning": "The behavioral inference from fire department tanker use is suggestive but not conclusive per LZ-RC-003. Emergency interconnections are infrastructure-level data that would appear in system design documents, not in operational telemetry feeds. This is a genuine knowledge gap that affects the assessment of available circuit breakers."
+      }
+    ],
+    "final_signal_matrix": [
+      {
+        "signal": "Active cavitation in Pumps 1 and 2",
+        "signal_ids": [
+          "20260312-0706-SIG-001"
+        ],
+        "layer2_composite": 10,
+        "layer3_adjustment": "Layer 3 confirmed as straightforward physics finding. Null hypothesis rejected with high confidence. Two independent sources corroborate. No behavioral ambiguity.",
+        "adjustment_direction": "unchanged",
+        "final_composite": 10,
+        "confidence": "high"
+      },
+      {
+        "signal": "Aggregate pump load exceeds 115% rated capacity",
+        "signal_ids": [
+          "20260312-0706-SIG-002"
+        ],
+        "layer2_composite": 9,
+        "layer3_adjustment": "Layer 3 analysis of the cavitation-load death spiral confirms the trajectory is self-reinforcing. Duration component remains unverified but trajectory makes breach inevitable absent intervention. No behavioral evidence changes the assessment.",
+        "adjustment_direction": "unchanged",
+        "final_composite": 9,
+        "confidence": "high"
+      },
+      {
+        "signal": "Divergent Inventory Paradox emerging",
+        "signal_ids": [
+          "20260312-0706-SIG-003"
+        ],
+        "layer2_composite": 7,
+        "layer3_adjustment": "Layer 3 provided a physically rigorous explanation for the paradox (cavitation reducing hydraulic efficiency while pumps consume energy). This strengthens the qualitative finding. However, the formal criterion still cannot be assessed without baseline pressure. Upgraded slightly because the causal mechanism is now well-explained.",
+        "adjustment_direction": "up",
+        "final_composite": 8,
+        "confidence": "medium"
+      },
+      {
+        "signal": "Fire department independently confirming hydraulic degradation",
+        "signal_ids": [
+          "20260312-0706-SIG-004"
+        ],
+        "layer2_composite": 9,
+        "layer3_adjustment": "Layer 3 analysis of fire department as highest-fidelity independent actor with zero say-do gap elevates the evidentiary weight. Per LZ-EH-003, their actions carry more weight than any verbal reassurance. The Independent Actor Contradiction pattern (fire dept vs. MWA) further validates this signal.",
+        "adjustment_direction": "up",
+        "final_composite": 10,
+        "confidence": "high"
+      },
+      {
+        "signal": "Sector B hydrant pressure approaching fire flow collapse",
+        "signal_ids": [
+          "20260312-0706-SIG-005"
+        ],
+        "layer2_composite": 8,
+        "layer3_adjustment": "Layer 3 analysis of unmonitored sectors and the suspicious absence of broader hydrant data suggests the reported Sector B reading may represent a BEST case among sectors. This cannot be confirmed but raises the effective risk assessment.",
+        "adjustment_direction": "up",
+        "final_composite": 9,
+        "confidence": "medium"
+      },
+      {
+        "signal": "System pressure 2 PSI above regulatory breach",
+        "signal_ids": [
+          "20260312-0706-SIG-006"
+        ],
+        "layer2_composite": 9,
+        "layer3_adjustment": "Layer 3 confirmed the null hypothesis of a stable operating point fails — the mechanisms driving decline are active and self-reinforcing. The Information Asymmetry Delay Loop means no external circuit breaker is likely before breach. Layer 3 analysis increases confidence in the trajectory assessment.",
+        "adjustment_direction": "unchanged",
+        "final_composite": 9,
+        "confidence": "high"
+      },
+      {
+        "signal": "Zero mechanical redundancy in pumping system",
+        "signal_ids": [
+          "20260312-0706-SIG-007"
+        ],
+        "layer2_composite": 10,
+        "layer3_adjustment": "Layer 3 confirmed the null hypothesis fails — this is not a normal maintenance window but a cascading failure with no clear restoration path. The empirical state is zero redundancy regardless of Pump 4 timeline.",
+        "adjustment_direction": "unchanged",
+        "final_composite": 10,
+        "confidence": "high"
+      },
+      {
+        "signal": "Extreme ambient temperature compounding thermal stress",
+        "signal_ids": [
+          "20260312-0706-SIG-008"
+        ],
+        "layer2_composite": 8,
+        "layer3_adjustment": "Layer 3 thermal-mechanical cascade analysis strengthens this signal by demonstrating the feedback loop: same conditions that tripped Pump 3 apply to Pumps 1 and 2 under greater load. The dual-vector impact (supply degradation + demand amplification) is well-reasoned.",
+        "adjustment_direction": "unchanged",
+        "final_composite": 8,
+        "confidence": "medium"
+      },
+      {
+        "signal": "Elevated water turbidity",
+        "signal_ids": [
+          "20260312-0706-SIG-009"
+        ],
+        "layer2_composite": 7,
+        "layer3_adjustment": "Null hypothesis holds per Layer 3 — causal link to hydraulic crisis is unestablished. However, the regulatory breach (4.5 > 4.0 NTU MCL) stands as independent fact. Downgraded slightly because the strategic interpretation is stripped; only the regulatory fact remains.",
+        "adjustment_direction": "down",
+        "final_composite": 6,
+        "confidence": "medium"
+      },
+      {
+        "signal": "MWA historical pattern of delayed emergency repairs",
+        "signal_ids": [
+          "20260312-0706-SIG-010"
+        ],
+        "layer2_composite": 4.2,
+        "layer3_adjustment": "Null hypothesis holds — cannot determine whether MWA is delaying or actively working. Stripped from scoring per burden of proof rules. Retained as logged context only.",
+        "adjustment_direction": "down",
+        "final_composite": 0,
+        "confidence": "low"
+      },
+      {
+        "signal": "State regulator lacks real-time visibility",
+        "signal_ids": [
+          "20260312-0706-SIG-011"
+        ],
+        "layer2_composite": 3.5,
+        "layer3_adjustment": "Layer 3 information asymmetry delay loop provides useful structural context. However, this is a static characteristic, not a dynamic signal. Retained at Layer 2 score as contextual information.",
+        "adjustment_direction": "unchanged",
+        "final_composite": 3.5,
+        "confidence": "medium"
+      },
+      {
+        "signal": "Pump 3 overtemp trip as leading indicator",
+        "signal_ids": [
+          "20260312-0706-SIG-012"
+        ],
+        "layer2_composite": 9,
+        "layer3_adjustment": "Layer 3 thermal-mechanical cascade analysis confirms this as a demonstrated failure mode with direct applicability to Pumps 1 and 2. The simplest explanation (LZ-RC-004) is that the same conditions will produce the same failure. Full weight.",
+        "adjustment_direction": "unchanged",
+        "final_composite": 9,
+        "confidence": "high"
+      },
+      {
+        "signal": "Reservoir fullness masking crisis severity",
+        "signal_ids": [
+          "20260312-0706-SIG-013"
+        ],
+        "layer2_composite": 4.2,
+        "layer3_adjustment": "Layer 3 supply metric masking pattern validates this as a second-order risk to response speed. The fire department's independent actions suggest at least one actor sees through the masking effect. Retained as context.",
+        "adjustment_direction": "unchanged",
+        "final_composite": 4.2,
+        "confidence": "medium"
+      },
+      {
+        "signal": "No competing water supply infrastructure available",
+        "signal_ids": [
+          "20260312-0706-SIG-014"
+        ],
+        "layer2_composite": 3.5,
+        "layer3_adjustment": "Behavioral inference from fire department is suggestive but data gap is acknowledged. Conservative scoring maintained.",
+        "adjustment_direction": "unchanged",
+        "final_composite": 3.5,
+        "confidence": "low"
+      },
+      {
+        "signal": "Unmonitored sectors may have worse conditions than Sector B",
+        "signal_ids": [
+          "20260312-0706-SIG-015"
+        ],
+        "layer2_composite": 4.9,
+        "layer3_adjustment": "Upgraded based on the suspicious absence classification of multi-sector hydrant data. The engineering logic is sound — 11 PSI distribution loss to Sector B implies greater losses to more distant sectors. Kill Switch #3 may already be triggered in unseen locations. However, this remains an inference without measurement.",
+        "adjustment_direction": "up",
+        "final_composite": 6,
+        "confidence": "medium"
+      }
+    ],
+    "compound_stress_final": {
+      "level": "EMERGENCY",
+      "layer2_level": "N/A — Layer 2 correctly noted the compound stress matrix (USD/JPY, JGB 10Y, Brent) is not applicable to this thesis domain. However, the equivalent compound stress assessment for this domain is that all three stress dimensions (mechanical, thermal, hydraulic) are simultaneously at or beyond critical thresholds.",
+      "layer3_assessment": "System is at the boundary between orderly and disorderly stress. Current degradation follows a predictable physical path (orderly) but the system has no remaining buffer, no circuit breaker, and multiple reinforcing feedback loops. Transition to disorderly collapse is triggered by loss of either remaining pump or system pressure crossing 40 PSI.",
+      "override": false,
+      "override_reasoning": "No override needed. Layer 3's assessment of approaching-critical-to-imminent cascade is consistent with the data and is upheld.",
+      "self_challenge": "SUPPORTS: Three simultaneous self-reinforcing feedback loops (cavitation-load spiral, thermal-mechanical cascade, information asymmetry delay) with zero redundancy and 2 PSI buffer constitutes textbook emergency conditions. CHALLENGES: We do not have thermal readings on Pumps 1 and 2. It is possible they have greater thermal margin than Pump 3 had. Also, overnight demand reduction could temporarily stabilize pressure, providing a window for intervention. The emergency classification rests partly on trajectory projections, not only on current-state measurements.",
+      "pre_loaded": true,
+      "pre_loaded_legs": [
+        "MECHANICAL: Zero redundancy with active cavitation destroying remaining capacity — pre-loaded to breaking point",
+        "THERMAL: 95°F ambient in environment that already tripped Pump 3; Pumps 1 and 2 under greater load generating more waste heat — pre-loaded",
+        "HYDRAULIC: 2 PSI buffer on 40 PSI regulatory threshold with actively declining pump capacity and no mechanism to arrest decline — pre-loaded"
+      ],
+      "cascade_proximity": "imminent",
+      "delta_since_last": "escalating",
+      "cycles_at_current_level": 1,
+      "velocity_note": "The system has moved from stressed to actively failing within a single monitoring cycle, with Kill Switch #2 transitioning from WARNING to TRIGGERED. The rate of deterioration is accelerating due to self-reinforcing feedback loops — each increment of cavitation damage increases the rate of further damage.",
+      "operator_action_window": "hours",
+      "thesis_paradox": "A successful emergency intervention (Pump 4 return) simultaneously reduces immediate catastrophe risk AND retroactively validates the thesis's claim of system resilience, because the 'redundancy' would appear to have worked — even though the system reached a state where a single additional perturbation (thermal trip of Pump 1 or 2) would have caused total collapse. The paradox: survival through emergency scramble is not the same as the 'robust structural integrity' the thesis claims, but it would look the same in retrospective metrics."
+    },
+    "kill_switch_review": [
+      {
+        "criterion": "#2 Cavitation Threshold (vibration >35 Hz while load >95%)",
+        "current_status": "TRIGGERED",
+        "layer3_context": "Layer 3 rejected the null hypothesis (sensor calibration drift) with high confidence. Even with 20% sensor miscalibration, both pumps still exceed threshold. Two independent sources confirm (telemetry + maintenance log). Cavitation-load death spiral is actively accelerating with no circuit breaker.",
+        "final_status": "TRIGGERED",
+        "action": "escalate",
+        "reasoning": "THIS IS THE PRIMARY FINDING. Kill Switch #2 is TRIGGERED on the strongest possible evidentiary basis: primary telemetry exceeding defined thresholds, independently confirmed by maintenance log. Per the thesis's own framework, 'irreversible cavitation damage is ACTIVELY OCCURRING.' This alone falsifies the thesis's claim of robust structural integrity."
+      },
+      {
+        "criterion": "#1 Redundant Load Threshold (>115% for >48 hours)",
+        "current_status": "WARNING",
+        "layer3_context": "Load threshold is massively breached (128.5%, 131%). Duration component is unverified — no data on when overload began. However, with zero spare capacity and self-reinforcing cavitation loop, duration breach is mechanically inevitable without intervention.",
+        "final_status": "WARNING",
+        "action": "escalate",
+        "reasoning": "The load component is unambiguously breached. The duration component cannot be confirmed or denied with available data (DATA_GAP). Per LZ-EPH-001, I cannot declare TRIGGERED without confirming the duration element. However, the trajectory makes trigger inevitable absent intervention. Maintained at WARNING with escalate action because the load margin is so far beyond threshold that the duration element is likely the only remaining barrier, and it erodes with every passing hour."
+      },
+      {
+        "criterion": "#3 Fire Flow Collapse (Sector hydrant <20 PSI)",
+        "current_status": "WARNING",
+        "layer3_context": "Sector B at 31 PSI — 11 PSI above threshold. However, unmonitored sectors at greater hydraulic distance may already be below 20 PSI. This is classified as SUSPICIOUS_ABSENCE. Fire department behavior (tanker deployment) suggests operational fire flow inadequacy even above 20 PSI static residual.",
+        "final_status": "WARNING",
+        "action": "escalate",
+        "reasoning": "The measured Sector B reading is above threshold. Per LZ-EPH-002, I cannot declare TRIGGERED on inferred data from unmonitored sectors — that would require measurement, not inference. However, the suspicious absence of multi-sector data and the fire department's systemic response (ALL box alarms in Sector B) suggest the measured 31 PSI may not represent the worst conditions in the network. Maintained at WARNING with urgent escalation to obtain multi-sector hydrant readings."
+      },
+      {
+        "criterion": "#4 Regulatory Pressure Breach (system <40 PSI)",
+        "current_status": "WARNING",
+        "layer3_context": "42 PSI with 2 PSI buffer. Layer 3 confirmed the null hypothesis of stable operating point fails — active, self-reinforcing degradation mechanisms with no mechanism to arrest decline. The pressure-turbidity-health spiral is a dormant amplifier that activates upon breach.",
+        "final_status": "WARNING",
+        "action": "escalate",
+        "reasoning": "The 40 PSI threshold is not yet breached. But 2 PSI margin with actively degrading capacity and zero redundancy represents the thinnest possible buffer. The measurement is current and reliable (primary telemetry). Any further capacity loss — including the continuing cavitation damage occurring right now — will close this margin. This is the next kill switch most likely to transition to TRIGGERED."
+      },
+      {
+        "criterion": "#5 Divergent Inventory Paradox (reservoir >90% AND pressure drop >20% from baseline)",
+        "current_status": "NEEDS_DATA",
+        "layer3_context": "Layer 3 provided a physically rigorous explanation for the paradox (cavitation reduces hydraulic efficiency; pumps consume energy but produce less flow). The qualitative phenomenon is confirmed. The formal threshold cannot be assessed without baseline pressure.",
+        "final_status": "NEEDS_DATA",
+        "action": "escalate",
+        "reasoning": "The reservoir component (96% > 90%) is confirmed. The pressure drop component requires a baseline denominator that is absent from available data. Per LZ-EPH-001, I will not fabricate a baseline to force a determination. The physical phenomenon described by this criterion (supply-distribution decoupling) is demonstrably occurring — the formal quantitative threshold assessment is unresolved. Escalation needed to obtain baseline pressure from system documentation."
+      }
+    ],
+    "rejection_log": [
+      {
+        "layer3_inference": "MWA contacting emergency pump rental services",
+        "signal_ids": [
+          "20260312-0706-SIG-007",
+          "20260312-0706-SIG-010"
+        ],
+        "rejection_reason": "FLAGGED classification (2 assumptions) with zero supporting data. Per burden of proof Step 2, no supporting data = stripped entirely. Layer 3 itself assigned low confidence. This is reasonable speculation about what a rational operator would do, but speculation without evidence cannot influence scoring or tactical recommendations.",
+        "root_cause": "INSUFFICIENT_EVIDENCE",
+        "confidence_in_rejection": "high",
+        "corrections_ledger_action": "auto_commit"
+      }
+    ],
+    "thesis_status": "WEAKENING",
+    "confidence_in_status": "high",
+    "thesis_status_reasoning": "Kill Switch #2 (cavitation) is TRIGGERED — this alone constitutes active falsification of the thesis's claim of 'robust structural integrity.' The core thesis assumption of 'sufficient mechanical redundancy' is empirically false with 50% of pump capacity offline and the remaining 50% under self-destructive conditions. I declare WEAKENING rather than outright falsification because: (1) three kill switches remain at WARNING rather than TRIGGERED, (2) the Pump 4 return timeline is genuinely unknown and represents a potential (if narrow) recovery path, and (3) overnight demand reduction could provide temporary stabilization. However, the trajectory is unambiguously toward full falsification — the question is timeline, not direction.",
+    "action_recommendation": "EXIT_SIGNAL",
+    "action_reasoning": "One kill switch is TRIGGERED, three more are at WARNING with thin margins and actively deteriorating trajectory, and the foundational thesis assumption (mechanical redundancy) is empirically false. The system is in a self-reinforcing degradation cascade with an operator action window measured in hours, not days. EXIT_SIGNAL is the only recommendation consistent with a WEAKENING thesis where the primary falsification criterion has already been met and the remaining criteria are approaching trigger with no identified mechanism to arrest their progression. Waiting for additional kill switches to trigger before exiting adds risk without adding information — the direction of travel is clear even if the exact timeline is not.",
+    "unresolved_tensions": [
+      {
+        "description": "Pump 4 return timeline is unknown and is the single variable that could arrest the degradation cascade. MWA may or may not have initiated emergency mobilization — the null hypothesis holds and we genuinely cannot determine this.",
+        "watch_for": "Pump 4 status change from OFFLINE_MAINTENANCE to any active status. This would be the first evidence of a potential circuit breaker for the cascade."
+      },
+      {
+        "description": "Hydrant pressure in sectors other than Sector B is unmeasured. Kill Switch #3 may already be TRIGGERED in unmonitored areas based on sound hydraulic engineering inference, but we have no measurement.",
+        "watch_for": "Any hydrant pressure reading from sectors other than Sector B, particularly those at higher elevation or greater distance from the pumping station. A reading below 20 PSI would immediately trigger Kill Switch #3."
+      },
+      {
+        "description": "Baseline system pressure for Kill Switch #5 assessment is undefined. The qualitative phenomenon (supply-distribution decoupling) is confirmed but the formal criterion cannot be scored.",
+        "watch_for": "Historical system pressure data or design specifications establishing the baseline operating pressure. This would allow formal determination of Kill Switch #5 status."
+      },
+      {
+        "description": "Thermal readings on Pumps 1 and 2 are unavailable. The most acute near-term risk (thermal trip causing total system failure) cannot be quantified without knowing how close these pumps are to their thermal limits.",
+        "watch_for": "Bearing temperature or motor winding temperature readings on Pumps 1 and 2. Alternatively, an overtemp trip on either pump would be the catastrophic confirmation."
+      },
+      {
+        "description": "The turbidity exceedance (4.5 NTU vs 4.0 NTU MCL) is a confirmed regulatory breach but its cause is unresolved. If caused by incipient backflow, it is a leading indicator of sanitary integrity failure. If caused by sediment disturbance, it is a separate but less critical issue.",
+        "watch_for": "Turbidity trend correlated with pressure changes. If turbidity increases as pressure decreases, the backflow mechanism is supported. If turbidity is independent of pressure changes, the routine cause is more likely."
+      }
+    ],
+    "final_bear_pressure": 96,
+    "tactical_recommendation": "EXIT_SIGNAL",
+    "monitoring_triggers": [
+      "System pressure reading below 40 PSI → Kill Switch #4 TRIGGERED → confirms regulatory breach and sanitary integrity failure",
+      "Pump 1 or Pump 2 status change to TRIPPED → total system failure → all remaining kill switches trigger simultaneously",
+      "Sector B hydrant pressure below 20 PSI → Kill Switch #3 TRIGGERED → fire flow collapse confirmed",
+      "Pump 4 status change to ONLINE or EMERGENCY_REPAIR → first evidence of potential cascade arrest → reassess degradation timeline",
+      "Any hydrant reading from non-Sector-B sector below 20 PSI → Kill Switch #3 TRIGGERED in broader network",
+      "MWA issues conservation order or emergency advisory → indicates internal acknowledgment of crisis → assess whether response is proportional to threat",
+      "Turbidity reading above 6 NTU or boil-water advisory issued → public health dimension activated → demand-amplifying feedback loop engaged",
+      "Ambient temperature forecast below 85°F → reduces thermal stress vector and demand pressure → may extend timeline for intervention"
+    ],
+    "overall_confidence": "high",
+    "biggest_uncertainty": "The Pump 4 return timeline. This single unknown determines whether the system has any path to stabilization before cascading failure. If Pump 4 returns within hours, the crisis is severe but potentially manageable. If Pump 4 is days away, total system failure is near-certain. We have no data to resolve this question, and the null hypothesis (we cannot determine MWA's emergency response status) has been correctly held.",
+    "what_would_change_assessment": "Pump 4 returning to service would be the most impactful single event — it would restore partial redundancy, allow load reduction on Pumps 1 and 2 (potentially arresting cavitation progression), and create space for emergency repair planning. This would reduce bear pressure by 20-25 points and move the tactical recommendation from EXIT_SIGNAL to REDUCE_EXPOSURE pending assessment of cavitation damage to Pumps 1 and 2. Conversely, an overtemp trip on either remaining pump would move bear pressure to 100 and confirm total system failure.",
+    "final_report": "Kill Switch #2 (cavitation) is TRIGGERED — confirmed by primary telemetry and maintenance log. The RWDN thesis of robust structural integrity and sufficient mechanical redundancy is in active falsification: zero redundancy exists, remaining pumps are being destroyed by a self-reinforcing cavitation-load spiral, and system pressure is 2 PSI from regulatory breach with no identified mechanism to arrest decline. The fire department — the highest-fidelity independent actor — is behaving as if the system has failed its life-safety mandate. EXIT_SIGNAL. The central paradox: the reservoir at 96% masks a distribution system in collapse, and the single variable that could change this assessment — whether Pump 4 is hours or days from returning — is genuinely unknown."
+  },
+  "_layer3_raw": {
+    "corrections_referenced": [],
+    "player_analysis": [
+      {
+        "player": "Municipal Water Authority (MWA)",
+        "stated_position": "The thesis, which represents MWA's operational posture, states the system has 'robust structural integrity and sufficient mechanical redundancy' and that 'high reservoir volume guarantees long-term hydraulic stability.'",
+        "observed_actions": "Pump 4 remains listed as OFFLINE_MAINTENANCE with no observable emergency mobilization. Pump 3 is TRIPPED_OVERTEMP and no restart or cooling intervention is evident. Pumps 1 and 2 are being run at 128.5% and 131% load respectively, well beyond rated capacity, with confirmed cavitation. The maintenance log acknowledges cavitation but does not describe corrective action. There is no evidence of demand-side interventions (conservation orders, sector isolation, pressure zone management).",
+        "say_do_gap": "CRITICAL DIVERGENCE. The thesis claims redundancy; the actions reveal a system with zero redundancy running remaining assets to destruction. The thesis claims reservoir volume guarantees stability; the actions (or inaction) ignore the distribution-side collapse that reservoir volume cannot address. Per LZ-EH-003, MWA's actions — allowing two pumps to operate under conditions causing irreversible cavitation damage while taking no observable emergency measures to restore offline capacity — carry more evidentiary weight than any statement of system robustness.",
+        "inferred_strategy": "MWA is in a reactive survival mode, not executing a strategic plan. The most rational explanation consistent with their described behavioral pattern (historically prone to delaying capital-intensive emergency repairs) is that they are attempting to ride through the crisis by maximizing output from remaining pumps, hoping conditions change (temperature drops, demand decreases) before catastrophic failure occurs. This is a bet on time, not a repair strategy. The 96% reservoir level may be reinforcing institutional complacency — decision-makers may be anchoring on supply availability rather than distribution capability. Per LZ-EH-003, the absence of observable emergency action is the most important behavioral signal from this player.",
+        "confidence": "high"
+      },
+      {
+        "player": "State Public Utility Commission (Regulator)",
+        "stated_position": "No direct statements in the data. Thesis characterizes them as monitoring macro-level compliance (reservoir levels, basic PSI mandates) without real-time telemetry.",
+        "observed_actions": "No observable actions. No emergency orders, no public advisories, no inspection announcements in the data.",
+        "say_do_gap": "Cannot assess a gap between statements and actions because neither is present. However, the absence of regulatory action while the system is 2 PSI from a regulatory threshold breach (40 PSI) is itself a behavioral signal — it is consistent with the thesis characterization that the regulator lacks real-time visibility. Per LZ-RC-003, absence of regulatory action is not evidence they are unaware, but combined with the thesis's structural description of their monitoring limitations, the most parsimonious explanation is that they do not yet know the severity of the situation.",
+        "inferred_strategy": "The regulator is most likely operating on lagged compliance data. If they are monitoring reservoir levels (96% — appears healthy) and receiving periodic rather than real-time pressure reports, they would have no basis for intervention. Their structural information disadvantage means they are the least informed actor in this scenario. Their rational behavior is fully explained by their information deficit — no strategic inference beyond this is required.",
+        "confidence": "medium"
+      },
+      {
+        "player": "Regional Fire Dispatch",
+        "stated_position": "Internal memo: 'Sector B hydrant pressure critically low. Upgrade all box alarms in Sector B to include water tanker task forces.'",
+        "observed_actions": "Deploying water tanker task forces to Sector B. Upgrading alarm protocols — this is a resource commitment (tankers cost money to deploy, require logistical coordination, and represent a public acknowledgment of system inadequacy). The fire department is spending operational resources and reconfiguring protocols.",
+        "say_do_gap": "NO GAP. Statements and actions are perfectly aligned. The fire department is saying the system is failing and acting as if the system is failing. Per LZ-EH-003, this alignment between words and actions makes their assessment the highest-fidelity external indicator. Per LZ-EH-001, they represent an independent source corroborating the telemetry data through entirely different measurement methodology (operational experience at the hydrant).",
+        "inferred_strategy": "The fire department is executing contingency operations for a system they have independently assessed as unable to meet life-safety flow requirements. Their shift to tanker-based water supply represents a de facto declaration that the fixed infrastructure is unreliable. This is not a precautionary measure — upgrading ALL box alarms in a sector is a systemic response indicating they expect the condition to persist or worsen. They are planning for the system as it IS, not as MWA says it should be.",
+        "confidence": "high"
+      }
+    ],
+    "feedback_loops": [
+      {
+        "loop": "Cavitation-Load Death Spiral: Active cavitation reduces pump hydraulic efficiency → same demand requires higher pump speed/load to maintain output → higher load generates more cavitation → efficiency drops further → load increases further. This is a thermodynamically irreversible positive feedback loop.",
+        "components": [
+          "Pump 1 cavitation (45 Hz)",
+          "Pump 2 cavitation (48.5 Hz)",
+          "Pump 1 load (128.5%)",
+          "Pump 2 load (131%)",
+          "System pressure (42 PSI)"
+        ],
+        "current_state": "active_accelerating",
+        "trigger_to_next_state": "Critical state is reached when cavitation damage reduces effective pump output below the minimum required to maintain 40 PSI system pressure. Given 2 PSI buffer and accelerating degradation, the trigger is temporal — continued operation under current conditions IS the trigger. No external event is needed.",
+        "thesis_implication": "This loop directly falsifies the thesis. The thesis assumes stable pump capacity; the loop demonstrates capacity is being actively destroyed in a self-reinforcing manner. The loop has no internal circuit breaker — only external intervention (returning Pump 4, reducing demand, or emergency pump replacement) can arrest it."
+      },
+      {
+        "loop": "Thermal-Mechanical Cascade: High ambient temperature (95°F) → increases cooling system demand on pumps AND increases municipal water demand → higher demand forces higher pump load → higher load generates more waste heat → combined with ambient heat, exceeds thermal tolerance → pump trips (as demonstrated by Pump 3) → remaining pumps absorb additional load → loop restarts at higher baseline.",
+        "components": [
+          "Ambient temperature (95°F)",
+          "Pump 3 overtemp trip",
+          "Pump 1 and 2 load",
+          "Municipal water demand"
+        ],
+        "current_state": "active_accelerating",
+        "trigger_to_next_state": "Either Pump 1 or Pump 2 trips on overtemperature. Pump 3 empirically demonstrated this failure mode at 95°F under high load. Pumps 1 and 2 are operating under equal or greater load in the same thermal environment. If either trips, the remaining single pump would need to carry 100% of system demand — an impossibility that represents immediate total system failure.",
+        "thesis_implication": "The thesis assumes the system can handle 'localized equipment maintenance.' Pump 3's trip demonstrates the thermal environment actively removes pumps from service. This is not maintenance — it is environmentally-driven cascading failure. The thesis has no provision for simultaneous thermal and mechanical stress on multiple pumps."
+      },
+      {
+        "loop": "Information Asymmetry Delay Loop: MWA has real-time telemetry showing crisis → MWA's institutional tendency is to delay action → Regulator lacks real-time visibility → Regulator cannot intervene → Full reservoir (96%) creates false confidence signal → Public/political pressure for action is absent → MWA delay continues → System continues degrading → By the time regulator discovers breach, damage is irreversible.",
+        "components": [
+          "MWA operational behavior",
+          "State regulator information deficit",
+          "Reservoir level (96%) as false confidence signal"
+        ],
+        "current_state": "active_orderly",
+        "trigger_to_next_state": "This becomes critical when system pressure crosses 40 PSI (regulatory breach) or when a visible public impact occurs (loss of water service, fire flow failure during an actual fire, boil-water advisory). At that point, the information asymmetry collapses and the regulator is forced into emergency intervention — but by then, the physical system may have already crossed irreversible thresholds.",
+        "thesis_implication": "This loop explains HOW a system can progress from stressed to failed without intervention. It is the institutional mechanism that allows the physical feedback loops (cavitation spiral, thermal cascade) to run unchecked. The thesis assumes the system is managed and maintained; this loop shows the management response itself is failing."
+      },
+      {
+        "loop": "Pressure-Turbidity-Health Spiral: System pressure drops → flow velocity increases in constricted areas → turbidity rises above regulatory limits (currently 4.5 NTU vs 4.0 NTU MCL) → if pressure drops below 40 PSI, backflow risk creates contamination potential → contamination triggers boil-water advisory → boil-water advisory dramatically increases demand (people run taps, stockpile water) → increased demand further drops pressure.",
+        "components": [
+          "System pressure (42 PSI)",
+          "Water turbidity (4.5 NTU)",
+          "Public health response",
+          "Demand spike"
+        ],
+        "current_state": "active_orderly",
+        "trigger_to_next_state": "System pressure crossing 40 PSI. At that point, backflow risk becomes real, turbidity likely spikes further, and the regulatory/public health response would paradoxically increase demand. This is a dormant amplifier that activates at the exact moment the system crosses a regulatory threshold.",
+        "thesis_implication": "This loop is not yet active as a cascade, but it represents the mechanism by which a regulatory breach (40 PSI) could accelerate into a public health emergency. The thesis does not account for demand-side amplification during a crisis."
+      }
+    ],
+    "behavioral_patterns": [
+      {
+        "pattern": "Independent Actor Contradiction: MWA's operational posture (continued operation without emergency measures) directly contradicts the fire department's operational posture (emergency protocol upgrades, tanker deployment). Two entities with direct operational knowledge of the same system are behaving as if they have reached opposite conclusions about system reliability.",
+        "players_involved": [
+          "Municipal Water Authority",
+          "Regional Fire Dispatch"
+        ],
+        "thesis_implication": "challenges",
+        "significance": "high"
+      },
+      {
+        "pattern": "Regulator Blind Spot During Crisis: The regulator is structurally incapable of fulfilling its oversight role during the most critical period. The system is 2 PSI from a regulatory breach, yet the regulator shows no awareness. This is not a failure of the regulator's intent but a structural gap in the regulatory architecture.",
+        "players_involved": [
+          "State Public Utility Commission",
+          "Municipal Water Authority"
+        ],
+        "thesis_implication": "challenges",
+        "significance": "high"
+      },
+      {
+        "pattern": "Supply Metric Masking Distribution Failure: The highest-visibility metric (reservoir at 96%) sends the strongest 'all clear' signal, while the actual crisis (distribution-side pump failure) is invisible to any observer who lacks real-time telemetry. This creates a systematic perception bias toward complacency.",
+        "players_involved": [
+          "Municipal Water Authority",
+          "State Public Utility Commission"
+        ],
+        "thesis_implication": "challenges",
+        "significance": "medium"
+      }
+    ],
+    "strategic_inferences": [
+      {
+        "finding_from_layer2": "Active cavitation in Pumps 1 and 2 (Kill Switch #2 TRIGGERED)",
+        "signal_ids": [
+          "20260312-0706-SIG-001"
+        ],
+        "null_hypothesis": "The vibration readings are measurement artifacts or sensor calibration drift, not actual cavitation.",
+        "null_holds": false,
+        "rational_explanation": "The cavitation is real and is the direct mechanical consequence of operating centrifugal pumps at 128-131% rated load. The maintenance log independently confirms cavitation, providing a second verification source. Per LZ-EH-001, two independent sources (telemetry + maintenance log) corroborate. The null hypothesis fails because two independent measurement methodologies (automated vibration sensors and human maintenance inspection) agree.",
+        "alternative_explanation": "Cavitation could be present but less severe than readings suggest if sensors are partially miscalibrated. However, even if readings are 20% high, both pumps still exceed the 35 Hz threshold (36 Hz and 38.8 Hz respectively).",
+        "which_is_more_likely": "primary",
+        "assumptions": [],
+        "assumption_count": 0,
+        "classification": "VALID",
+        "evidence_citations": [
+          "Pump 1 vibration: 45 Hz at 128.5% load (primary telemetry)",
+          "Pump 2 vibration: 48.5 Hz at 131% load (primary telemetry)",
+          "Maintenance log: 'Cavitation detected in Pumps 1 and 2 due to extreme flow velocity requirements' (primary source)"
+        ],
+        "expected_timeline": "days",
+        "materialization_signal": "Observable next: pump efficiency decline measurable as increasing load required to maintain same pressure, or sudden pump trip/failure. If cavitation is real, system pressure will continue declining without intervention within hours to days.",
+        "reasoning": "This is a straightforward physics finding, not a strategic inference. Pumps operating far above rated capacity in high-temperature conditions with confirmed cavitation are being destroyed. The kill switch is triggered on primary evidence from multiple independent sources. No strategic interpretation is needed — the mechanism is mechanical.",
+        "confidence": "high"
+      },
+      {
+        "finding_from_layer2": "Zero mechanical redundancy in pumping system",
+        "signal_ids": [
+          "20260312-0706-SIG-007"
+        ],
+        "null_hypothesis": "The current state is a normal, temporary maintenance window and redundancy will be restored when Pump 4 returns to service.",
+        "null_holds": false,
+        "rational_explanation": "The null hypothesis fails because the situation is not 'localized equipment maintenance' as the thesis envisions. Pump 3 tripped due to operational conditions (overtemp), not scheduled maintenance. The same conditions threatening Pump 3 are actively degrading Pumps 1 and 2. This is not a planned maintenance window — it is a cascading failure with no clear restoration path. Even if Pump 4's maintenance were complete, returning it to an environment that has already tripped Pump 3 and is destroying Pumps 1 and 2 raises the question of whether Pump 4 would survive the same conditions.",
+        "alternative_explanation": "Pump 4 is nearly ready to return to service and will restore partial redundancy within hours.",
+        "which_is_more_likely": "primary",
+        "assumptions": [
+          "Pump 4 is not imminently returning to service (supported by: no emergency mobilization visible in data, MWA pattern of delayed repairs, but not definitively confirmed)"
+        ],
+        "assumption_count": 1,
+        "classification": "VALID",
+        "evidence_citations": [
+          "Pump 3 status: TRIPPED_OVERTEMP (primary telemetry)",
+          "Pump 4 status: OFFLINE_MAINTENANCE (primary telemetry)",
+          "Pump 1 and 2: operating at 128.5-131% load with active cavitation (primary telemetry + maintenance log)"
+        ],
+        "expected_timeline": "days",
+        "materialization_signal": "Either Pump 4 returns to service (falsifies this inference) or Pump 1 or 2 fails (confirms cascading collapse). Observable within hours to days.",
+        "reasoning": "The thesis's foundational claim of 'sufficient mechanical redundancy' is empirically false at this moment. Two of four pumps are offline, and the remaining two are operating under conditions that are actively destroying them. The single assumption — that Pump 4 is not about to return — is supported by behavioral evidence (MWA's historical pattern of delayed repairs, no emergency mobilization visible) but cannot be confirmed. Even with this assumption, the observed state is one of zero redundancy RIGHT NOW, regardless of what happens next.",
+        "confidence": "high"
+      },
+      {
+        "finding_from_layer2": "Fire department independently confirming hydraulic degradation",
+        "signal_ids": [
+          "20260312-0706-SIG-004"
+        ],
+        "null_hypothesis": "The fire department is executing a routine protocol upgrade unrelated to current system conditions.",
+        "null_holds": false,
+        "rational_explanation": "The null hypothesis fails because the fire department memo explicitly references 'critically low' Sector B hydrant pressure as the cause. The actions (deploying tanker task forces, upgrading alarm protocols) are costly, operationally disruptive measures that fire departments do not undertake routinely. Per LZ-EH-003, the resource commitment (deploying tankers) is a high-weight behavioral signal. The fire department has no institutional incentive to overstate the problem — if anything, deploying tankers is an admission that the fixed infrastructure they depend on is failing.",
+        "alternative_explanation": "The fire department is overreacting to a temporary pressure dip during peak demand hours.",
+        "which_is_more_likely": "primary",
+        "assumptions": [],
+        "assumption_count": 0,
+        "classification": "VALID",
+        "evidence_citations": [
+          "Fire department internal memo: 'Sector B hydrant pressure critically low. Upgrade all box alarms in Sector B to include water tanker task forces.' (primary source)",
+          "Sector B hydrant pressure: 31 PSI (primary telemetry, corroborating the fire department's assessment)"
+        ],
+        "expected_timeline": "days",
+        "materialization_signal": "If the fire department's assessment is correct, Sector B hydrant pressure will continue declining. If other sectors are similarly affected, fire departments in those sectors will issue similar protocols. Observable within hours to days.",
+        "reasoning": "The fire department is an independent actor with no stake in MWA's operational narrative. Their actions are costly and publicly visible. The alignment between their stated assessment ('critically low') and their resource commitment (tanker deployment) makes this the highest-fidelity external confirmation of system failure. Zero assumptions required — the memo and the telemetry independently agree.",
+        "confidence": "high"
+      },
+      {
+        "finding_from_layer2": "MWA historical pattern of delayed emergency repairs",
+        "signal_ids": [
+          "20260312-0706-SIG-010"
+        ],
+        "null_hypothesis": "MWA may have already initiated emergency procedures to return Pump 4 to service, and the absence of evidence in the data feed simply reflects a reporting lag.",
+        "null_holds": true,
+        "rational_explanation": "Per LZ-RC-003, absence of evidence of emergency mobilization is not evidence of absence. We cannot confirm or deny whether MWA has initiated emergency repairs. The thesis characterizes MWA as prone to delays, but this is analyst context, not current primary evidence. The Pump 4 status listing ('OFFLINE_MAINTENANCE' rather than 'EMERGENCY_REPAIR' or similar) is suggestive but not conclusive — status field naming conventions are unknown.",
+        "alternative_explanation": "MWA is actively working to return Pump 4 but this is not reflected in the telemetry feed.",
+        "which_is_more_likely": "null",
+        "assumptions": [],
+        "assumption_count": 0,
+        "classification": "NULL_HYPOTHESIS_HOLDS",
+        "evidence_citations": [
+          "Pump 4 status: OFFLINE_MAINTENANCE (primary telemetry)",
+          "Thesis context: MWA 'historically prone to delaying capital-intensive emergency repairs' (analyst characterization, Tier 2)"
+        ],
+        "expected_timeline": "days",
+        "materialization_signal": "Pump 4 status changes to ONLINE or an emergency repair notice appears. If no change within 24-48 hours while other conditions worsen, the delay pattern inference strengthens considerably.",
+        "reasoning": "I cannot distinguish between 'MWA is delaying' and 'MWA is working on it but data doesn't show it' with available evidence. Per LZ-EPH-001, this is genuinely unknown. The thesis characterization provides a prior but is Tier 2 evidence. Declaring this null is the honest finding.",
+        "confidence": "low"
+      },
+      {
+        "finding_from_layer2": "System pressure 2 PSI above regulatory breach",
+        "signal_ids": [
+          "20260312-0706-SIG-006"
+        ],
+        "null_hypothesis": "42 PSI represents a stable operating point and the system will hold at this level.",
+        "null_holds": false,
+        "rational_explanation": "The null hypothesis of a stable operating point fails because the mechanisms driving pressure decline are active, confirmed, and self-reinforcing. Active cavitation is progressively destroying pump capacity. No mechanism to arrest cavitation exists in the data (no load reduction, no pump restoration, no demand management). The pressure level is not in equilibrium — it is a snapshot of a declining trajectory. The question is not IF it will cross 40 PSI but WHEN, absent intervention.",
+        "alternative_explanation": "Demand could decrease (e.g., nighttime low-demand period, temperature drop) providing temporary relief and allowing pressure to stabilize or recover slightly.",
+        "which_is_more_likely": "primary",
+        "assumptions": [
+          "Demand will not decrease sufficiently to offset ongoing pump capacity loss from cavitation"
+        ],
+        "assumption_count": 1,
+        "classification": "VALID",
+        "evidence_citations": [
+          "System pressure: 42 PSI (primary telemetry)",
+          "Active cavitation confirmed in both operating pumps (primary telemetry + maintenance log)",
+          "Zero spare pump capacity available (Pumps 3 and 4 offline)"
+        ],
+        "expected_timeline": "days",
+        "materialization_signal": "System pressure reading below 40 PSI. Alternatively, if a nighttime demand trough allows temporary recovery above 42 PSI, the inference is weakened but not invalidated — the daytime peak demand cycle would resume the decline.",
+        "reasoning": "A system with 2 PSI buffer, zero redundancy, and actively self-destructing capacity is not at a stable operating point. The one assumption — that demand won't sufficiently decrease — is reasonable given 95°F ambient temperature (high cooling/irrigation demand) and active fire department tanker operations (additional demand). However, overnight demand reduction is a genuine possibility for temporary relief.",
+        "confidence": "high"
+      },
+      {
+        "finding_from_layer2": "Pump 3 overtemp trip as leading indicator for Pumps 1 and 2",
+        "signal_ids": [
+          "20260312-0706-SIG-012"
+        ],
+        "null_hypothesis": "Pump 3 had a unique vulnerability (bearing wear, cooling system deficiency) that doesn't apply to Pumps 1 and 2.",
+        "null_holds": false,
+        "rational_explanation": "The thesis describes the system as 'four high-capacity parallel centrifugal pumps,' implying similar or identical specifications. Pump 3 tripped under the same environmental conditions (95°F ambient) currently affecting Pumps 1 and 2. Per LZ-RC-004, the simplest explanation is that the operating conditions exceed the thermal tolerance common to all pumps. Pumps 1 and 2 are under GREATER load than Pump 3 was (since they are now carrying Pump 3's share), generating MORE waste heat. The null hypothesis requires Pump 3 to be uniquely deficient — a more complex explanation that requires an assumption not supported by any evidence.",
+        "alternative_explanation": "Pumps 1 and 2 may have been more recently maintained or have slightly different thermal margins, buying additional time before thermal trip.",
+        "which_is_more_likely": "primary",
+        "assumptions": [
+          "Pumps 1-4 have similar thermal specifications as implied by the thesis description of parallel pumps"
+        ],
+        "assumption_count": 1,
+        "classification": "VALID",
+        "evidence_citations": [
+          "Pump 3 status: TRIPPED_OVERTEMP (primary telemetry)",
+          "Thesis description: 'four high-capacity parallel centrifugal pumps' (thesis context)",
+          "Ambient temperature: 95°F (primary data)",
+          "Pump 1 load: 128.5%, Pump 2 load: 131% — both higher than Pump 3 would have experienced at 4-pump or 3-pump operation (primary telemetry)"
+        ],
+        "expected_timeline": "days",
+        "materialization_signal": "Pump 1 or Pump 2 trips on overtemperature. This would confirm the systemic nature of the thermal failure mode. If neither trips within 24-48 hours under the same conditions, the inference weakens (suggesting Pump 3 may have had a unique vulnerability).",
+        "reasoning": "Pump 3's failure is a natural experiment that demonstrates the thermal limits of the pump fleet. Pumps 1 and 2 are now operating under worse conditions. The simplest explanation per LZ-RC-004 is that they will fail the same way. The one assumption (similar thermal specs) is supported by the thesis's description of the pumps as a parallel set.",
+        "confidence": "high"
+      },
+      {
+        "finding_from_layer2": "Divergent Inventory Paradox — reservoir full while distribution failing",
+        "signal_ids": [
+          "20260312-0706-SIG-003"
+        ],
+        "null_hypothesis": "The reservoir being at 96% simply reflects normal inflow rates relative to demand, and the coexistence of high reservoir and low pressure is a normal configuration during pump maintenance.",
+        "null_holds": false,
+        "rational_explanation": "The null hypothesis fails on physics. In a normally functioning system, high demand that drives pump load to 128-131% would be DRAWING DOWN the reservoir. Instead, the reservoir is at 96% — near capacity. This can only mean one of two things: (1) inflow to the reservoir exceeds outflow (the pumps cannot push water out fast enough despite running at maximum), or (2) demand is lower than it appears and the pumps are overloaded for a different reason. Option (2) is contradicted by the 95°F ambient temperature and fire department's observations. Option (1) is consistent with cavitation reducing effective pump throughput — the pumps are spinning fast (high load) but moving less water due to cavitation-induced efficiency loss. The paradox IS the signal: the system cannot distribute the water it has.",
+        "alternative_explanation": "Reservoir inflow recently increased (e.g., upstream release) coincidentally timing with the pump failures.",
+        "which_is_more_likely": "primary",
+        "assumptions": [
+          "Reservoir inflow has not dramatically increased from an external source independent of normal operations"
+        ],
+        "assumption_count": 1,
+        "classification": "VALID",
+        "evidence_citations": [
+          "Reservoir level: 96% (primary telemetry)",
+          "Pump loads: 128.5-131% (primary telemetry)",
+          "System pressure: 42 PSI — inconsistent with high pump load if pumps were efficiently converting energy to flow (primary telemetry)",
+          "Cavitation confirmed — known to reduce pump hydraulic efficiency dramatically (maintenance log)"
+        ],
+        "expected_timeline": "days",
+        "materialization_signal": "If the paradox reflects distribution failure: reservoir level will remain high or increase while pressure continues declining. If it reflects temporary inflow spike: reservoir would begin drawing down as inflow normalizes.",
+        "reasoning": "The coexistence of a full reservoir and failing pressure with overloaded pumps is physically diagnostic. In a healthy system, overloaded pumps would draw the reservoir down. Cavitation provides the mechanical explanation: the pumps are consuming energy (high load) but converting less of it to useful flow (low pressure) because cavitation bubbles collapse and absorb hydraulic energy. The reservoir remains full because the distribution bottleneck prevents water from leaving it efficiently. This is the most physically consistent explanation and requires only one assumption (no anomalous inflow).",
+        "confidence": "high"
+      },
+      {
+        "finding_from_layer2": "Elevated water turbidity (4.5 NTU vs 4.0 NTU MCL)",
+        "signal_ids": [
+          "20260312-0706-SIG-009"
+        ],
+        "null_hypothesis": "Turbidity is elevated due to a routine cause (sediment disturbance from seasonal inflow, filter maintenance cycle) unrelated to the hydraulic crisis.",
+        "null_holds": true,
+        "rational_explanation": "While there is a plausible mechanism linking pump overloading to elevated turbidity (extreme flow velocities resuspending sediment, or incipient backflow at near-40 PSI), per LZ-RC-001, correlation between the pump crisis and turbidity does not establish causation. The data provides no evidence ruling out routine causes. The regulatory breach (4.5 > 4.0 NTU MCL) is independently factual, but its causal connection to the hydraulic crisis is unconfirmed.",
+        "alternative_explanation": "Turbidity is caused by the hydraulic stress — extreme flow velocities in mains are resuspending sediment deposits.",
+        "which_is_more_likely": "null",
+        "assumptions": [],
+        "assumption_count": 0,
+        "classification": "NULL_HYPOTHESIS_HOLDS",
+        "evidence_citations": [
+          "Turbidity: 4.5 NTU (primary telemetry)",
+          "EPA MCL: 4.0 NTU (regulatory standard)"
+        ],
+        "expected_timeline": "days",
+        "materialization_signal": "If turbidity is hydraulic-crisis-related: it will worsen in proportion to pressure decline. If routine: it will normalize independently of pressure changes.",
+        "reasoning": "The turbidity reading is a regulatory fact (MCL exceedance). However, attributing it to the pump crisis requires a causal mechanism that is plausible but unverified. Declaring null is honest — the regulatory breach stands as an independent finding, but the strategic connection to the hydraulic crisis is insufficiently evidenced.",
+        "confidence": "low"
+      }
+    ],
+    "hidden_moves": [
+      {
+        "player": "Municipal Water Authority",
+        "signal_ids": [
+          "20260312-0706-SIG-010",
+          "20260312-0706-SIG-007"
+        ],
+        "likely_action": "Preparing public communications and regulatory notifications that minimize the severity of the situation, framing it as routine maintenance rather than cascading failure.",
+        "incentive_basis": "MWA's described institutional incentive is 'continuity of service and public reassurance.' With an empirically failing system, the rational behavior for an organization focused on reassurance is to control the narrative before external actors (fire department, media, regulator) define it. The reservoir at 96% provides convenient cover — 'our water supply is at near-full capacity' is technically true and deeply misleading.",
+        "evidence_hints": "No emergency advisories in the data despite a system 2 PSI from regulatory breach. Pump 4 still listed as routine OFFLINE_MAINTENANCE rather than emergency status. The fire department is acting independently rather than in coordination with MWA, suggesting MWA has not proactively shared the severity of the situation.",
+        "assumption_count": 2,
+        "classification": "FLAGGED",
+        "expected_timeline": "days",
+        "materialization_signal": "MWA issues a public statement referencing 'routine maintenance' or 'seasonal pressure variations' while fire department actions tell a different story. Alternatively, MWA issues conservation orders, which would indicate they have acknowledged the crisis internally even if not publicly.",
+        "confidence": "medium"
+      },
+      {
+        "player": "Municipal Water Authority",
+        "signal_ids": [
+          "20260312-0706-SIG-007",
+          "20260312-0706-SIG-010"
+        ],
+        "likely_action": "Contacting emergency pump rental services or mutual aid agreements for portable pumping capacity.",
+        "incentive_basis": "Even an organization prone to delays must recognize that two pumps with active cavitation and zero redundancy is an existential operational threat. Emergency portable pumps are a standard water utility contingency measure. The rational action for any operator — even one prone to delay — would be to at least explore emergency capacity.",
+        "evidence_hints": "No direct evidence. This is a reasonable inference from rational self-interest. However, per LZ-RC-003, absence of evidence is not evidence this is or is not happening.",
+        "assumption_count": 2,
+        "classification": "FLAGGED",
+        "expected_timeline": "days",
+        "materialization_signal": "Portable pumping equipment appears at the pumping station, or Pump 4 returns to service unexpectedly quickly.",
+        "confidence": "low"
+      },
+      {
+        "player": "Regional Fire Dispatch",
+        "signal_ids": [
+          "20260312-0706-SIG-004"
+        ],
+        "likely_action": "Notifying municipal emergency management and possibly the state regulator about hydraulic inadequacy, independently of MWA's reporting.",
+        "incentive_basis": "The fire department has a direct life-safety mandate. If hydrant pressure is 'critically low,' their operational and legal liability exposure requires them to escalate beyond internal protocol changes. Fire departments typically have direct channels to emergency management that bypass utility reporting chains.",
+        "evidence_hints": "The fire department memo itself is an internal escalation document. The upgrade of ALL box alarms in Sector B is a systemic response indicating institutional concern beyond individual incident management. Fire departments with life-safety concerns routinely notify emergency management.",
+        "assumption_count": 1,
+        "classification": "VALID",
+        "expected_timeline": "days",
+        "materialization_signal": "Municipal emergency management activates water emergency protocols, or state regulator initiates inquiry based on fire department report rather than MWA self-reporting.",
+        "confidence": "medium"
+      }
+    ],
+    "scenario_probabilities": {
+      "thesis_confirmed": {
+        "probability": "2%",
+        "key_evidence": "Would require: Pump 4 returns to service imminently AND ambient temperature drops significantly AND cavitation damage to Pumps 1 and 2 proves less severe than telemetry indicates. All three conditions would need to materialize simultaneously. Per LZ-EPH-003, relying on three conditions all materializing favorably is speculative in the other direction — but even one (Pump 4 return) only partially addresses the crisis since Pumps 1 and 2 are already damaged.",
+        "timeline": "24-48 hours for any confirmation pathway to begin manifesting"
+      },
+      "thesis_modified": {
+        "probability": "13%",
+        "modification": "The thesis could survive in modified form IF: emergency intervention restores partial capacity (Pump 4 or portable pumps) within hours, AND demand-side measures (conservation orders, sector isolation) reduce load below cavitation thresholds, AND damaged Pumps 1 and 2 are taken offline for repair with replacement capacity running. The modified thesis would state: 'The system has sufficient resilience to recover from multi-pump failure IF emergency measures are activated within [X] hours.' This is a fundamentally weaker thesis than the original.",
+        "key_evidence": "Any sign of emergency mobilization — Pump 4 status change, conservation orders, sector isolation protocols, or portable pump deployment. No such evidence exists currently."
+      },
+      "thesis_falsified": {
+        "probability": "85%",
+        "key_evidence": "Kill Switch #2 (cavitation) is TRIGGERED — confirmed by two independent sources. Core thesis assumption of mechanical redundancy is empirically false. Self-reinforcing degradation cascade is active with no circuit breaker visible. Independent actor (fire department) is behaving as if system has failed its life-safety mandate. System is 2 PSI from regulatory breach with actively declining capacity. The thesis is not approaching falsification — it is in active falsification with one kill switch already triggered and three more at WARNING with thin margins.",
+        "confirming_signal": "Next observable confirmations in order of likelihood: (1) System pressure drops below 40 PSI (Criterion #4 triggers), (2) Pump 1 or 2 fails (total system collapse), (3) Sector B hydrant drops below 20 PSI (Criterion #3 triggers), (4) Boil-water advisory issued (public health consequence of regulatory breach). Any ONE of these would convert the remaining WARNING-status criteria to TRIGGERED."
+      }
+    },
+    "x402_paper_trades": [
+      {
+        "question": "What is MWA's current status on returning Pump 4 to service? Is emergency mobilization underway?",
+        "data_source": "MWA internal work order system, maintenance dispatch logs, or direct query to MWA operations center.",
+        "impact_on_analysis": "This is the single most consequential unknown. If Pump 4 is hours from returning, the 2-pump death spiral has an exit. If Pump 4 is days away, total system failure is near-certain. This data point alone could swing the thesis_falsified probability by 20+ percentage points.",
+        "confidence_data_exists": "high",
+        "estimated_value": "Extremely high — this is the primary variable determining whether the system has ANY path to stabilization."
+      },
+      {
+        "question": "What is the baseline system pressure from which the 20% drop in Criterion #5 should be measured?",
+        "data_source": "RWDN design specifications, historical telemetry records, or MWA operational standards documentation.",
+        "impact_on_analysis": "Would allow formal assessment of Kill Switch #5 (Divergent Inventory Paradox). If baseline is ~55-60 PSI, the criterion is already triggered. If baseline is <50 PSI, it may not be. This resolves a NEEDS_DATA status on a kill switch.",
+        "confidence_data_exists": "high",
+        "estimated_value": "High — resolves formal kill switch status. However, the qualitative finding (full reservoir + failing distribution) is already clear regardless."
+      },
+      {
+        "question": "What are the hydrant pressure readings in sectors OTHER than Sector B, particularly those at higher elevation or greater distance from the pumping station?",
+        "data_source": "Fire department or MWA hydrant flow test data from other sectors, or portable pressure gauge readings.",
+        "impact_on_analysis": "Could reveal that Kill Switch #3 (fire flow collapse <20 PSI) is ALREADY TRIGGERED in sectors we can't see. With 42 PSI system pressure and 31 PSI at Sector B (11 PSI distribution loss), more distant sectors could be at or below 20 PSI. This would convert a WARNING to TRIGGERED for an additional kill switch.",
+        "confidence_data_exists": "medium",
+        "estimated_value": "High — could immediately trigger an additional kill switch and elevate bear pressure toward 100."
+      },
+      {
+        "question": "Are there emergency interconnections with adjacent water systems or backup well fields that could provide alternative supply?",
+        "data_source": "MWA emergency operations plan, regional mutual aid agreements, state water infrastructure maps.",
+        "impact_on_analysis": "Would determine whether any external circuit breaker exists for the cascading failure. If emergency interconnections exist, the system has an escape valve not visible in current data. If they don't, the system's only path to stabilization is internal (Pump 4 return or demand reduction).",
+        "confidence_data_exists": "medium",
+        "estimated_value": "Medium-high — existence of interconnections would modify the falsification timeline and probability."
+      },
+      {
+        "question": "What are the current thermal readings (bearing temperature, motor winding temperature) on Pumps 1 and 2?",
+        "data_source": "Pump SCADA system thermal monitoring, or maintenance team field measurements.",
+        "impact_on_analysis": "Would allow quantitative assessment of how close Pumps 1 and 2 are to thermal trip — the failure mode that already took out Pump 3. If temperatures are approaching trip thresholds, the timeline to total system failure could be measured in hours rather than days.",
+        "confidence_data_exists": "high",
+        "estimated_value": "High — directly quantifies the most acute risk (cascade of thermal trips leading to total pump loss)."
+      }
+    ],
+    "compound_stress_inference": {
+      "current_chain_state": "approaching_critical",
+      "orderly_vs_disorderly": "The system is currently at the boundary between orderly and disorderly stress. The degradation is following a predictable physical path (cavitation → efficiency loss → load increase → more cavitation), which is 'orderly' in the sense that it is mechanistically understandable. However, the system has no remaining buffer capacity, no circuit breaker, and multiple reinforcing feedback loops. The transition to disorderly stress — where the rate of degradation accelerates beyond any operator's ability to respond — is likely triggered by either: (a) system pressure crossing 40 PSI (activating the pressure-turbidity-health spiral and regulatory response chain), or (b) loss of either remaining pump (instant transition to total failure). The current 2 PSI buffer represents the thin membrane between orderly and disorderly.",
+      "catalyst_proximity": "The most proximate catalyst is thermal trip of Pump 1 or Pump 2. Pump 3 demonstrated this failure mode occurs under current conditions. If either remaining pump trips, the single surviving pump cannot maintain any meaningful system pressure, and the cascade becomes instantaneous. Secondary catalyst: system pressure crossing 40 PSI, which triggers regulatory consequences, potential backflow contamination, and demand-amplifying public health responses. Both catalysts are within hours to days at current trajectory.",
+      "pre_load_assessment": "All three legs of the system stress chain are pre-loaded: (1) MECHANICAL: Zero redundancy with active cavitation destroying remaining capacity. (2) THERMAL: Ambient 95°F in an environment that has already tripped one pump. (3) HYDRAULIC: 2 PSI buffer on regulatory pressure threshold with no mechanism to arrest decline. Each leg independently represents high stress; their simultaneous presence means any single deterioration triggers cascading failure across all three dimensions. The system is one perturbation away from disorderly collapse.",
+      "thesis_paradox": "The thesis posits that the RWDN's structural integrity and redundancy ensure stability. The paradox is that the very conditions testing the thesis — extreme demand, equipment failure, thermal stress — are conditions the thesis claims the system can withstand. The system's actual behavior under these conditions is the definitive test, and it is failing that test. The most acute paradox: if intervention DOES save the system (Pump 4 returns, demand drops), the thesis would appear superficially validated ('the system survived'), but the fundamental finding — that the system reached a state where a single additional perturbation would cause total failure — would remain true. The thesis claims robustness; the data shows a system that survived only by luck and margin, not by design redundancy."
+    },
+    "inference_summary": "Player behavior reveals a critical information asymmetry: the fire department — the only independent actor with direct operational contact with the system's output — is behaving as if the system has already failed its life-safety mandate, while the operator (MWA) shows no observable emergency response and the regulator appears unaware. The gap between the fire department's costly, visible actions and MWA's apparent inaction is the single most important behavioral signal. It indicates that the actors closest to the consequences have already concluded what the telemetry confirms: the distribution system is in cascading failure. Layer 4 should focus on resolving the Pump 4 return timeline, which is the only identified mechanism that could arrest the degradation cascade, and on determining whether hydrant pressures in unmonitored sectors have already breached Kill Switch #3."
+  },
+  "_layer2_raw": {
+    "corrections_referenced": [],
+    "knowledge_audit": [
+      {
+        "signal_ids": [
+          "20260312-0706-SIG-001"
+        ],
+        "signal": "Active cavitation in Pumps 1 and 2",
+        "knowledge_check": "Thesis specifies Falsification Criterion #2: sustained vibration >35 Hz while load >95% = irreversible cavitation ACTIVELY OCCURRING. Current data from MARKET DATA confirms Pump 1 at 45 Hz / 128.5% load, Pump 2 at 48.5 Hz / 131% load. Maintenance log explicitly confirms cavitation. I have verified both the threshold definition and the measurement against it from primary source data.",
+        "gap_identified": "NONE — the thesis defines the threshold clearly and the primary telemetry data plus maintenance log confirm the breach unambiguously.",
+        "gap_type": "NONE",
+        "pre_audit_assessment": "Severity 10 — thesis kill switch directly triggered",
+        "post_audit_assessment": "Severity 10 — confirmed. Kill switch #2 is TRIGGERED by primary data.",
+        "audit_impact": "No change. The audit confirmed the pre-audit assessment with high confidence.",
+        "lesson_applied": "NONE",
+        "status": "SCORED"
+      },
+      {
+        "signal_ids": [
+          "20260312-0706-SIG-002"
+        ],
+        "signal": "Aggregate pump load exceeds 115% rated capacity",
+        "knowledge_check": "Thesis Criterion #1 requires aggregate load >115% for >48 hours. Both pumps individually exceed 115% (128.5%, 131%). The aggregate is far above 115%. However, the 48-hour duration requirement has NOT been confirmed. I do not have data on when this overload condition began. The criterion explicitly requires duration >48 hours. Without that, the criterion is approaching but not yet formally triggered.",
+        "gap_identified": "DATA_AVAILABILITY_GAP: I do not know when the overload condition started. The 48-hour duration element of Criterion #1 cannot be verified or falsified with available data.",
+        "gap_type": "DATA_AVAILABILITY_GAP",
+        "pre_audit_assessment": "Severity 10 — appeared to be triggered",
+        "post_audit_assessment": "Severity 9 — the load threshold is massively breached but the duration component is unverified. However, with zero spare capacity and active cavitation, the trajectory makes duration breach inevitable absent intervention. Scored at 9 rather than 10 to honestly reflect the unverified duration element.",
+        "audit_impact": "Reduced from 10 to 9. The duration requirement is a real constraint on declaring the criterion formally triggered vs. WARNING status.",
+        "lesson_applied": "NONE",
+        "status": "SCORED"
+      },
+      {
+        "signal_ids": [
+          "20260312-0706-SIG-003"
+        ],
+        "signal": "Divergent Inventory Paradox emerging",
+        "knowledge_check": "Thesis Criterion #5: Reservoir >90% AND System Pressure drops >20% from baseline. Reservoir is at 96% (confirmed, >90%). System pressure is 42 PSI. The critical question is: what is the baseline pressure? The thesis does NOT specify a baseline pressure value. Layer 1 estimates 'if baseline was ~60 PSI' but this is an assumption. If baseline were 55 PSI, the drop is ~24% (triggers). If baseline were 50 PSI, the drop is 16% (does not trigger). Without confirmed baseline, this criterion cannot be definitively assessed.",
+        "gap_identified": "THRESHOLD_CALIBRATION_GAP: Baseline system pressure is not specified in the thesis or current data. The 20% drop calculation requires a denominator we don't have.",
+        "gap_type": "THRESHOLD_CALIBRATION_GAP",
+        "pre_audit_assessment": "Severity 9 — appeared to be triggering",
+        "post_audit_assessment": "Severity 7 — the qualitative pattern is clearly present (full reservoir, failing distribution), but the quantitative threshold cannot be confirmed without baseline pressure. The signal is directionally alarming but the formal criterion trigger is unresolved per LZ-EPH-001.",
+        "audit_impact": "Reduced from 9 to 7. Cannot confirm kill switch trigger without baseline data. The phenomenon is real but the formal threshold assessment is incomplete.",
+        "lesson_applied": "NONE",
+        "status": "SCORED"
+      },
+      {
+        "signal_ids": [
+          "20260312-0706-SIG-004"
+        ],
+        "signal": "Fire department independently confirming hydraulic degradation",
+        "knowledge_check": "Thesis explicitly identifies fire department operational adjustments as 'an independent, high-fidelity indicator of actual system capability.' The fire department memo is present in the MARKET DATA feed as primary source evidence. Per LZ-EH-003, the fire department's ACTIONS (deploying water tankers, upgrading protocols) carry more weight than any verbal reassurance from MWA. Per LZ-EH-001, this constitutes an independent source corroborating the pump/pressure telemetry.",
+        "gap_identified": "NONE — the thesis explicitly defines how to interpret this signal and the primary source data confirms it.",
+        "gap_type": "NONE",
+        "pre_audit_assessment": "Severity 9",
+        "post_audit_assessment": "Severity 9 — confirmed. Independent actor validation of system failure. This is a Tier 1 signal per the thesis's own framework.",
+        "audit_impact": "No change. Audit confirmed the signal's high value as an independent corroborator.",
+        "lesson_applied": "NONE",
+        "status": "SCORED"
+      },
+      {
+        "signal_ids": [
+          "20260312-0706-SIG-005"
+        ],
+        "signal": "Sector B hydrant pressure approaching fire flow collapse",
+        "knowledge_check": "Criterion #3: Sector hydrant pressure <20 PSI = fire flow collapse. Sector B is at 31 PSI. This is above the threshold. The signal is a WARNING, not a trigger. However, the trajectory matters: with active cavitation destroying remaining pump capacity, the direction is unambiguously toward the threshold. The margin is 11 PSI with no mechanism to arrest the decline.",
+        "gap_identified": "DATA_AVAILABILITY_GAP: I do not know the rate of pressure decline. Without historical pressure readings over time, I cannot estimate time-to-breach.",
+        "gap_type": "DATA_AVAILABILITY_GAP",
+        "pre_audit_assessment": "Severity 8",
+        "post_audit_assessment": "Severity 8 — confirmed. The threshold is not yet breached but the trajectory is clear and the margin is thin. The rate of decline is unknown but the mechanism driving decline (cavitation, no redundancy) is confirmed and irreversible without intervention.",
+        "audit_impact": "No change. The gap in rate-of-decline data is noted but doesn't change the directional assessment.",
+        "lesson_applied": "NONE",
+        "status": "SCORED"
+      },
+      {
+        "signal_ids": [
+          "20260312-0706-SIG-006"
+        ],
+        "signal": "System pressure 2 PSI above regulatory breach",
+        "knowledge_check": "Criterion #4: System pressure <40 PSI = loss of sanitary integrity, structural failure IMMINENT. Current: 42 PSI. Buffer: 2 PSI. The threshold is clearly defined in the thesis and the current measurement is from primary telemetry. This is not yet triggered but is at WARNING with extreme proximity.",
+        "gap_identified": "DATA_AVAILABILITY_GAP: Rate of pressure decline unknown. Time-to-breach cannot be calculated.",
+        "gap_type": "DATA_AVAILABILITY_GAP",
+        "pre_audit_assessment": "Severity 9",
+        "post_audit_assessment": "Severity 9 — the 2 PSI buffer with actively degrading pump capacity and zero redundancy makes this an imminent threat. The criterion is not triggered but the proximity is extreme.",
+        "audit_impact": "No change.",
+        "lesson_applied": "NONE",
+        "status": "SCORED"
+      },
+      {
+        "signal_ids": [
+          "20260312-0706-SIG-007"
+        ],
+        "signal": "Zero mechanical redundancy in pumping system",
+        "knowledge_check": "The core thesis states the system has 'sufficient mechanical redundancy to maintain positive system pressure even during periods of localized equipment maintenance.' With Pump 3 tripped and Pump 4 offline for maintenance, 50% of capacity is unavailable. The remaining two pumps are operating far above rated capacity with active cavitation. The thesis assumption of redundancy is empirically falsified by primary telemetry data.",
+        "gap_identified": "NONE — the thesis assumption and the data disproving it are both clearly defined.",
+        "gap_type": "NONE",
+        "pre_audit_assessment": "Severity 10",
+        "post_audit_assessment": "Severity 10 — this is the structural underpinning of the entire thesis and it is empirically falsified. The system has zero redundancy; the thesis claims sufficient redundancy.",
+        "audit_impact": "No change.",
+        "lesson_applied": "NONE",
+        "status": "SCORED"
+      },
+      {
+        "signal_ids": [
+          "20260312-0706-SIG-008"
+        ],
+        "signal": "Extreme ambient temperature compounding thermal stress",
+        "knowledge_check": "Ambient temperature is not a thesis-defined kill switch, but it provides causal context for Pump 3's overtemp trip and compounds risk to Pumps 1 and 2. The thesis does not specify thermal operating limits for the pumps. However, the empirical evidence (Pump 3 tripped on overtemp in this environment) provides a real-world demonstration that 95°F + extreme load exceeds thermal tolerance.",
+        "gap_identified": "THESIS_CAPABILITY_GAP: I do not know the specific thermal ratings of Pumps 1-4, so I cannot quantify how close they are to thermal trip. I only know Pump 3 already crossed that threshold.",
+        "gap_type": "THESIS_CAPABILITY_GAP",
+        "pre_audit_assessment": "Severity 7",
+        "post_audit_assessment": "Severity 8 — elevated from 7 because Pump 3's overtemp trip at 95°F empirically demonstrates the thermal environment exceeds pump tolerance under load, making it a proven failure vector rather than a theoretical one.",
+        "audit_impact": "Increased from 7 to 8 based on empirical evidence from Pump 3 trip.",
+        "lesson_applied": "NONE",
+        "status": "SCORED"
+      },
+      {
+        "signal_ids": [
+          "20260312-0706-SIG-009"
+        ],
+        "signal": "Elevated water turbidity",
+        "knowledge_check": "Turbidity at 4.5 NTU exceeds EPA MCL of 4 NTU. This is from primary telemetry. The thesis does not include turbidity as a kill switch, but it is a regulatory compliance metric and a potential indicator of system stress (abnormal flow velocities, incipient backflow). The causal link between pump overloading → extreme flow velocity → turbidity is mechanically plausible but not directly confirmed in the data. Per LZ-RC-001, correlation between pump stress and turbidity does not establish causation.",
+        "gap_identified": "THESIS_CAPABILITY_GAP: The cause of elevated turbidity is not confirmed. It could be flow velocity, compromised filtration, or incipient backflow. Each has different implications.",
+        "gap_type": "THESIS_CAPABILITY_GAP",
+        "pre_audit_assessment": "Severity 7",
+        "post_audit_assessment": "Severity 7 — maintained. The reading exceeds regulatory limits, which is independently significant. The causal mechanism is uncertain but the regulatory fact stands.",
+        "audit_impact": "No change, but flagged the causal uncertainty.",
+        "lesson_applied": "NONE",
+        "status": "SCORED"
+      },
+      {
+        "signal_ids": [
+          "20260312-0706-SIG-010"
+        ],
+        "signal": "MWA historical pattern of delayed emergency repairs",
+        "knowledge_check": "The thesis states MWA is 'historically prone to delaying capital-intensive emergency repairs.' This is thesis context, not current telemetry. Per LZ-EH-003, actions outweigh statements. The current observable action is: Pump 4 remains listed as OFFLINE_MAINTENANCE with no indication of emergency mobilization. This is consistent with the thesis characterization but represents a single data point. Per LZ-RC-002, a single data point does not establish a trend — however, the thesis context itself claims this IS a historical pattern.",
+        "gap_identified": "DATA_AVAILABILITY_GAP: I do not know whether MWA has initiated emergency procedures to return Pump 4 to service. The absence of data about mobilization is not evidence it isn't happening (LZ-RC-003), but the default status listing suggests no change.",
+        "gap_type": "DATA_AVAILABILITY_GAP",
+        "pre_audit_assessment": "Severity 6",
+        "post_audit_assessment": "Severity 6 — maintained. The signal is directionally concerning and consistent with thesis characterization, but the absence of emergency mobilization data is ambiguous per LZ-RC-003.",
+        "audit_impact": "No change. Acknowledged the epistemic limitation of absent data.",
+        "lesson_applied": "NONE",
+        "status": "SCORED"
+      },
+      {
+        "signal_ids": [
+          "20260312-0706-SIG-011"
+        ],
+        "signal": "State regulator lacks real-time visibility",
+        "knowledge_check": "Thesis explicitly states the regulator 'lacks real-time telemetry oversight.' This is a structural characteristic of the regulatory environment, not a new signal. Its relevance is that it introduces a lag between system crisis and regulatory response. This is contextual — it affects the speed of potential intervention but is not itself a deterioration signal.",
+        "gap_identified": "DATA_AVAILABILITY_GAP: I do not know whether MWA has proactively notified the regulator, or whether the regulator has any other information channel.",
+        "gap_type": "DATA_AVAILABILITY_GAP",
+        "pre_audit_assessment": "Severity 5",
+        "post_audit_assessment": "Severity 5 — maintained. Structural information gap in regulatory oversight. Important context but not a direct threat signal.",
+        "audit_impact": "No change.",
+        "lesson_applied": "NONE",
+        "status": "SCORED"
+      },
+      {
+        "signal_ids": [
+          "20260312-0706-SIG-012"
+        ],
+        "signal": "Pump 3 overtemp trip as leading indicator",
+        "knowledge_check": "Pump 3 tripped on overtemperature. Pumps 1 and 2 are operating under the same or worse conditions (same ambient temp, same or higher load, plus confirmed cavitation which generates additional heat). The failure mode is systemic — same thermal + load stress profile. Per LZ-RC-004, the simplest explanation for Pump 3's trip is that the operating conditions exceeded thermal tolerance. The same conditions apply to Pumps 1 and 2. This is a genuine leading indicator, not speculative projection.",
+        "gap_identified": "THESIS_CAPABILITY_GAP: I do not know whether Pumps 1 and 2 have different thermal specifications than Pump 3. If they are identical units, the risk is symmetric. If they differ, the timeline may vary.",
+        "gap_type": "THESIS_CAPABILITY_GAP",
+        "pre_audit_assessment": "Severity 9",
+        "post_audit_assessment": "Severity 9 — confirmed. Even with the gap about pump specifications, the systemic nature of the failure conditions makes this a high-confidence leading indicator. The thesis describes them as 'four high-capacity parallel centrifugal pumps' suggesting similar or identical specifications.",
+        "audit_impact": "No change. Minor specification gap doesn't materially alter the assessment.",
+        "lesson_applied": "NONE",
+        "status": "SCORED"
+      },
+      {
+        "signal_ids": [
+          "20260312-0706-SIG-013"
+        ],
+        "signal": "Reservoir fullness masking crisis severity",
+        "knowledge_check": "This is a narrative/perception signal. The reservoir at 96% could create false confidence for observers who focus on supply rather than distribution. Per LZ-CC-001, a narrative that 'we have plenty of water' is internally consistent but fails real-world correspondence when distribution is failing. This is important for understanding why intervention may be delayed, but it is a second-order effect.",
+        "gap_identified": "NONE — this is a well-reasoned inference from observable data, not an assumption.",
+        "gap_type": "NONE",
+        "pre_audit_assessment": "Severity 6",
+        "post_audit_assessment": "Severity 6 — maintained. Valid second-order risk signal about delayed response recognition.",
+        "audit_impact": "No change.",
+        "lesson_applied": "NONE",
+        "status": "SCORED"
+      },
+      {
+        "signal_ids": [
+          "20260312-0706-SIG-014"
+        ],
+        "signal": "No competing water supply infrastructure available",
+        "knowledge_check": "The fire department's use of water tankers rather than interconnections suggests no alternative pressurized supply exists. However, per LZ-RC-003, absence of evidence of interconnections is not evidence they don't exist. The fire department's actions (LZ-EH-003) do suggest they have no better option, which is a meaningful behavioral indicator. But this inference involves an assumption: that the fire department would use interconnections if available.",
+        "gap_identified": "COMPETITIVE_KNOWLEDGE_GAP: I do not know whether mutual aid water system agreements, emergency interconnections, or backup well fields exist. The fire department behavior suggests they don't, but this is indirect evidence.",
+        "gap_type": "COMPETITIVE_KNOWLEDGE_GAP",
+        "pre_audit_assessment": "Severity 6",
+        "post_audit_assessment": "Severity 5 — reduced slightly. The behavioral inference is reasonable but the underlying data gap about alternative infrastructure is real. Cannot confirm no alternatives exist.",
+        "audit_impact": "Reduced from 6 to 5 due to competitive knowledge gap.",
+        "lesson_applied": "NONE",
+        "status": "SCORED"
+      },
+      {
+        "signal_ids": [
+          "20260312-0706-SIG-015"
+        ],
+        "signal": "Unmonitored sectors may have worse conditions than Sector B",
+        "knowledge_check": "Only Sector B hydrant data is provided. The thesis covers 'all municipal sectors.' Sectors at higher elevation or greater hydraulic distance from the pumping station would logically experience lower pressure — this is basic hydraulic physics. However, I have no data for these sectors. Per LZ-RC-003, absence of data for other sectors is not evidence they are better OR worse. However, the physical reality that 42 PSI system pressure with 31 PSI at Sector B suggests further losses at more distant points is a sound engineering inference, not speculation.",
+        "gap_identified": "DATA_AVAILABILITY_GAP: No telemetry from sectors other than Sector B. The full extent of hydraulic degradation across the network is unknown.",
+        "gap_type": "DATA_AVAILABILITY_GAP",
+        "pre_audit_assessment": "Severity 7",
+        "post_audit_assessment": "Severity 7 — maintained. The engineering logic is sound but the specific data is absent. This is an important unknown that could mean Criterion #3 (fire flow collapse at 20 PSI) is already triggered in unmeasured sectors.",
+        "audit_impact": "No change, but flagged the possibility that kill switch #3 may already be triggered in unmonitored areas.",
+        "lesson_applied": "NONE",
+        "status": "SCORED"
+      }
+    ],
+    "scored_signals": [
+      {
+        "signal_ids": [
+          "20260312-0706-SIG-001"
+        ],
+        "signal": "Active cavitation in Pumps 1 and 2",
+        "severity": 10,
+        "source_tier": "1",
+        "weighted_severity": 10,
+        "thesis_relevance": "DIRECT",
+        "confidence": "HIGH",
+        "reasoning": "Falsification Criterion #2 is TRIGGERED. Primary telemetry (45 Hz, 48.5 Hz) exceeds 35 Hz threshold while loads (128.5%, 131%) exceed 95%. Maintenance log independently confirms cavitation. Two independent data sources (telemetry + maintenance log) corroborate per LZ-EH-001. Irreversible damage is actively occurring.",
+        "knowledge_verified": true
+      },
+      {
+        "signal_ids": [
+          "20260312-0706-SIG-002"
+        ],
+        "signal": "Aggregate pump load exceeds 115% rated capacity",
+        "severity": 9,
+        "source_tier": "1",
+        "weighted_severity": 9,
+        "thesis_relevance": "DIRECT",
+        "confidence": "HIGH",
+        "reasoning": "Criterion #1 load threshold is massively breached (both pumps >128%). Duration component (>48 hours) is unverified — DATA_AVAILABILITY_GAP. Scored at 9 rather than 10 to reflect unverified duration. However, with zero spare capacity and no mechanism to relieve load, duration breach is mechanically inevitable without intervention. WARNING status, not TRIGGERED.",
+        "knowledge_verified": true
+      },
+      {
+        "signal_ids": [
+          "20260312-0706-SIG-003"
+        ],
+        "signal": "Divergent Inventory Paradox emerging",
+        "severity": 7,
+        "source_tier": "1",
+        "weighted_severity": 7,
+        "thesis_relevance": "DIRECT",
+        "confidence": "MEDIUM",
+        "reasoning": "Reservoir at 96% (>90% confirmed) and system pressure at 42 PSI clearly show supply-distribution decoupling. However, Criterion #5 requires >20% pressure drop from baseline, and baseline pressure is not defined in thesis or data. Per LZ-EPH-002, cannot assign high confidence without the baseline denominator. The qualitative phenomenon is real and alarming; the quantitative threshold assessment is UNRESOLVED per LZ-EH-005 (insufficient data to resolve, not a contradiction).",
+        "knowledge_verified": true
+      },
+      {
+        "signal_ids": [
+          "20260312-0706-SIG-004"
+        ],
+        "signal": "Fire department independently confirming hydraulic degradation",
+        "severity": 9,
+        "source_tier": "1",
+        "weighted_severity": 9,
+        "thesis_relevance": "DIRECT",
+        "confidence": "HIGH",
+        "reasoning": "Thesis explicitly defines fire department operational adjustments as independent high-fidelity indicators. Per LZ-EH-003, their actions (deploying tankers, upgrading alarm protocols) outweigh any verbal assessments. Per LZ-EH-001, this is an independent source corroborating telemetry data. The fire department is behaving as if the system cannot meet life-safety flow requirements. Primary source memo is in the market data feed.",
+        "knowledge_verified": true
+      },
+      {
+        "signal_ids": [
+          "20260312-0706-SIG-005"
+        ],
+        "signal": "Sector B hydrant pressure approaching fire flow collapse",
+        "severity": 8,
+        "source_tier": "1",
+        "weighted_severity": 8,
+        "thesis_relevance": "DIRECT",
+        "confidence": "HIGH",
+        "reasoning": "31 PSI vs. 20 PSI threshold. Not yet triggered but trajectory is unambiguously toward threshold with no mechanism to arrest decline. 11 PSI margin with actively degrading pump capacity. Criterion #3 is at WARNING status. Fire department behavior independently corroborates the severity.",
+        "knowledge_verified": true
+      },
+      {
+        "signal_ids": [
+          "20260312-0706-SIG-006"
+        ],
+        "signal": "System pressure 2 PSI above regulatory breach",
+        "severity": 9,
+        "source_tier": "1",
+        "weighted_severity": 9,
+        "thesis_relevance": "DIRECT",
+        "confidence": "HIGH",
+        "reasoning": "42 PSI vs. 40 PSI regulatory floor. 2 PSI buffer with zero redundancy and actively degrading capacity. Criterion #4 breach would mean loss of sanitary integrity and potential backflow contamination. WARNING status with extreme proximity to TRIGGERED. The rate of decline is unknown but the direction is confirmed by all available data.",
+        "knowledge_verified": true
+      },
+      {
+        "signal_ids": [
+          "20260312-0706-SIG-007"
+        ],
+        "signal": "Zero mechanical redundancy in pumping system",
+        "severity": 10,
+        "source_tier": "1",
+        "weighted_severity": 10,
+        "thesis_relevance": "DIRECT",
+        "confidence": "HIGH",
+        "reasoning": "The core thesis claims 'sufficient mechanical redundancy.' This is empirically falsified: 2 of 4 pumps are non-operational, and the 2 remaining are being destroyed by cavitation. The foundational assumption of the thesis is contradicted by primary telemetry data. This is not a threshold approaching — the thesis assumption is already false.",
+        "knowledge_verified": true
+      },
+      {
+        "signal_ids": [
+          "20260312-0706-SIG-008"
+        ],
+        "signal": "Extreme ambient temperature compounding thermal stress",
+        "severity": 8,
+        "source_tier": "1",
+        "weighted_severity": 8,
+        "thesis_relevance": "INDIRECT",
+        "confidence": "MEDIUM",
+        "reasoning": "95°F ambient empirically demonstrated to cause pump failure (Pump 3 overtemp trip). Same thermal environment applies to Pumps 1 and 2 under equal or greater load. Additionally drives demand-side stress (cooling, irrigation). Dual-vector impact: simultaneously degrades supply capability and elevates consumption. Confidence MEDIUM because specific thermal ratings of remaining pumps are unknown.",
+        "knowledge_verified": true
+      },
+      {
+        "signal_ids": [
+          "20260312-0706-SIG-009"
+        ],
+        "signal": "Elevated water turbidity",
+        "severity": 7,
+        "source_tier": "1",
+        "weighted_severity": 7,
+        "thesis_relevance": "INDIRECT",
+        "confidence": "MEDIUM",
+        "reasoning": "4.5 NTU exceeds EPA MCL (4 NTU) — this is an independent regulatory breach. The causal mechanism (flow velocity, filtration failure, or backflow) is uncertain per LZ-RC-001. However, the regulatory fact is independent of cause. This adds a public health dimension to the hydraulic crisis. If caused by incipient backflow (which would correlate with near-40 PSI pressure), it is a leading indicator of Criterion #4 consequences.",
+        "knowledge_verified": true
+      },
+      {
+        "signal_ids": [
+          "20260312-0706-SIG-010"
+        ],
+        "signal": "MWA historical pattern of delayed emergency repairs",
+        "severity": 6,
+        "source_tier": "2",
+        "weighted_severity": 4.2,
+        "thesis_relevance": "INDIRECT",
+        "confidence": "MEDIUM",
+        "reasoning": "Thesis context establishes the pattern. Current data shows Pump 4 still listed as OFFLINE_MAINTENANCE with no emergency mobilization noted. Consistent with thesis characterization but per LZ-RC-003, absence of mobilization data doesn't confirm mobilization isn't happening. Scored as Tier 2 because this is thesis analyst characterization, not primary telemetry.",
+        "knowledge_verified": true
+      },
+      {
+        "signal_ids": [
+          "20260312-0706-SIG-011"
+        ],
+        "signal": "State regulator lacks real-time visibility",
+        "severity": 5,
+        "source_tier": "2",
+        "weighted_severity": 3.5,
+        "thesis_relevance": "CONTEXTUAL",
+        "confidence": "MEDIUM",
+        "reasoning": "Structural characteristic of the regulatory environment per thesis context. Not a new deterioration signal but affects the speed of potential intervention. Important context for understanding why the system may continue deteriorating before external intervention occurs. Whether MWA has proactively notified the regulator is unknown.",
+        "knowledge_verified": true
+      },
+      {
+        "signal_ids": [
+          "20260312-0706-SIG-012"
+        ],
+        "signal": "Pump 3 overtemp trip as leading indicator",
+        "severity": 9,
+        "source_tier": "1",
+        "weighted_severity": 9,
+        "thesis_relevance": "DIRECT",
+        "confidence": "HIGH",
+        "reasoning": "Pump 3 tripped under the same thermal+load stress profile now affecting Pumps 1 and 2. Per LZ-RC-004, the simplest explanation is that operating conditions exceed thermal tolerance — and those conditions are unchanged or worse for the remaining pumps. Thesis describes them as parallel pumps of the same type, suggesting similar specifications. This is a demonstrated failure mode, not theoretical, making cascade to Pumps 1-2 a high-probability event.",
+        "knowledge_verified": true
+      },
+      {
+        "signal_ids": [
+          "20260312-0706-SIG-013"
+        ],
+        "signal": "Reservoir fullness masking crisis severity",
+        "severity": 6,
+        "source_tier": "2",
+        "weighted_severity": 4.2,
+        "thesis_relevance": "CONTEXTUAL",
+        "confidence": "MEDIUM",
+        "reasoning": "Valid second-order risk about delayed crisis recognition. Per LZ-CC-001, the narrative 'we have plenty of water' is internally consistent but fails real-world correspondence when distribution is collapsing. Important for understanding why MWA and regulator response may be delayed. The thesis itself falls into this trap: 'high reservoir volume guarantees long-term hydraulic stability' — reservoir volume is irrelevant when the distribution mechanism is failing.",
+        "knowledge_verified": true
+      },
+      {
+        "signal_ids": [
+          "20260312-0706-SIG-014"
+        ],
+        "signal": "No competing water supply infrastructure available",
+        "severity": 5,
+        "source_tier": "2",
+        "weighted_severity": 3.5,
+        "thesis_relevance": "CONTEXTUAL",
+        "confidence": "MEDIUM",
+        "reasoning": "Fire department behavior (resorting to tankers) suggests no alternative pressurized supply. Per LZ-EH-003, their actions are meaningful behavioral evidence. However, per LZ-RC-003, absence of references to alternatives doesn't prove they don't exist. The competitive knowledge gap is real. Scored conservatively.",
+        "knowledge_verified": true
+      },
+      {
+        "signal_ids": [
+          "20260312-0706-SIG-015"
+        ],
+        "signal": "Unmonitored sectors may have worse conditions than Sector B",
+        "severity": 7,
+        "source_tier": "2",
+        "weighted_severity": 4.9,
+        "thesis_relevance": "DIRECT",
+        "confidence": "MEDIUM",
+        "reasoning": "Only Sector B has reported hydrant pressure data. Basic hydraulic engineering indicates sectors at greater distance or elevation would experience lower pressure. With system pressure at 42 PSI and Sector B at 31 PSI (11 PSI loss through distribution), more distant sectors could already be below 20 PSI — meaning Criterion #3 may already be TRIGGERED in unmonitored areas. This is a sound engineering inference but unverified by measurement. Per LZ-RC-003, this remains an unknown, not a conclusion.",
+        "knowledge_verified": true
+      }
+    ],
+    "unscored_signals": [],
+    "kill_switch_status": [
+      {
+        "criterion": "#1 Redundant Load Threshold (>115% for >48 hours)",
+        "status": "WARNING",
+        "current_value": "Pump 1: 128.5%, Pump 2: 131%. Both individually >115%. Aggregate massively exceeded.",
+        "target": "Aggregate <115% or duration <48 hours",
+        "movement_since_last": "deteriorated"
+      },
+      {
+        "criterion": "#2 Cavitation Threshold (vibration >35 Hz while load >95%)",
+        "status": "TRIGGERED",
+        "current_value": "Pump 1: 45 Hz at 128.5% load. Pump 2: 48.5 Hz at 131% load. Maintenance log confirms cavitation.",
+        "target": "Vibration <35 Hz or load <95%",
+        "movement_since_last": "deteriorated"
+      },
+      {
+        "criterion": "#3 Fire Flow Collapse (Sector hydrant <20 PSI)",
+        "status": "WARNING",
+        "current_value": "Sector B: 31 PSI. Other sectors: NO DATA.",
+        "target": ">20 PSI all sectors",
+        "movement_since_last": "deteriorated"
+      },
+      {
+        "criterion": "#4 Regulatory Pressure Breach (system <40 PSI)",
+        "status": "WARNING",
+        "current_value": "42 PSI. 2 PSI buffer.",
+        "target": ">40 PSI",
+        "movement_since_last": "deteriorated"
+      },
+      {
+        "criterion": "#5 Divergent Inventory Paradox (reservoir >90% and pressure drop >20% from baseline)",
+        "status": "NEEDS_DATA",
+        "current_value": "Reservoir 96% (>90% confirmed). System pressure 42 PSI. Baseline pressure UNKNOWN — cannot calculate percentage drop.",
+        "target": "Pressure drop <20% from baseline with reservoir >90%",
+        "movement_since_last": "unknown"
+      }
+    ],
+    "compound_stress": {
+      "level": "N/A",
+      "usd_jpy": {
+        "current": "N/A",
+        "threshold_status": "N/A",
+        "trajectory": "N/A"
+      },
+      "jgb_10y": {
+        "current": "N/A",
+        "threshold_status": "N/A",
+        "trajectory": "N/A"
+      },
+      "brent": {
+        "current": "N/A",
+        "threshold_status": "N/A",
+        "trajectory": "N/A"
+      },
+      "pre_loaded": false,
+      "pre_loaded_detail": "The compound stress matrix (USD/JPY, JGB 10Y, Brent Crude) is not applicable to this thesis context. This is a municipal water distribution system integrity analysis, not a financial markets thesis. No compound stress matrix thresholds are defined in the thesis. Per LZ-EPH-001, reporting N/A rather than fabricating applicability.",
+      "stress_chain_proximity": "N/A — framework not applicable to this thesis domain."
+    },
+    "bear_pressure": 97,
+    "bear_pressure_reasoning": "The thesis — that the RWDN possesses robust structural integrity and sufficient mechanical redundancy — is in a state of active empirical falsification. Kill Switch #2 (Cavitation) is TRIGGERED, confirmed by primary telemetry AND maintenance log. Kill Switch #1 (Load) is at WARNING with inevitable trajectory toward trigger absent intervention. Kill Switches #3 and #4 are at WARNING with thin margins (11 PSI and 2 PSI respectively) and no mechanism to arrest decline. Kill Switch #5 cannot be formally assessed due to missing baseline data, but the qualitative pattern is present. The core thesis assumption of 'sufficient mechanical redundancy' is empirically falsified — zero redundancy exists and remaining capacity is being actively destroyed. An independent high-fidelity actor (fire department) is behaving as if system failure is real. Multiple signals compound: cavitation destroys pump efficiency → pressure drops → remaining pumps work harder → more cavitation → faster degradation. This is a self-reinforcing cascade with no circuit breaker in the data. Previous bear pressure was 90; the situation has materially deteriorated with Criterion #2 now formally TRIGGERED and Criterion #4 within 2 PSI of breach. Scored at 97 rather than 100 because: (a) Criteria #1, #3, #4 are not yet formally triggered (thresholds not crossed), (b) Pump 4 could theoretically be returned to service on emergency basis (no data confirming this is impossible), and (c) demand-side measures (conservation orders, sector isolation) could theoretically extend timelines. However, the trajectory is unambiguously toward total system failure without intervention.",
+    "layer2_summary": "The RWDN thesis is in active falsification. Kill Switch #2 (cavitation) is TRIGGERED with primary telemetry and maintenance log confirmation. Kill Switch #4 (regulatory pressure) is 2 PSI from breach with no mechanism to arrest decline. The core thesis assumption of mechanical redundancy is empirically false — zero redundancy exists and a self-reinforcing degradation cascade is underway. Layer 3 must urgently determine: (1) Has MWA initiated emergency mobilization to return Pump 4? (2) What is the baseline system pressure for Criterion #5 assessment? (3) Are any sector hydrant pressures already below 20 PSI in unmonitored areas? The fire department is independently behaving as if the system has failed its life-safety mandate. Bear pressure has increased from 90 to 97. The unresolved question is not WHETHER the system is failing but whether intervention arrives before cascading failure becomes total failure."
+  },
+  "_pipeline_version": "4-layer-v1",
+  "_generated_at": "2026-03-12T08:10:25.324Z",
+  "thesis_status": "WEAKENING",
+  "confidence_in_status": "high",
+  "action_recommendation": "EXIT_SIGNAL",
+  "action_reasoning": "One kill switch is TRIGGERED, three more are at WARNING with thin margins and actively deteriorating trajectory, and the foundational thesis assumption (mechanical redundancy) is empirically false. The system is in a self-reinforcing degradation cascade with an operator action window measured in hours, not days. EXIT_SIGNAL is the only recommendation consistent with a WEAKENING thesis where the primary falsification criterion has already been met and the remaining criteria are approaching trigger with no identified mechanism to arrest their progression. Waiting for additional kill switches to trigger before exiting adds risk without adding information — the direction of travel is clear even if the exact timeline is not.",
+  "unresolved_tensions": [
+    {
+      "description": "Pump 4 return timeline is unknown and is the single variable that could arrest the degradation cascade. MWA may or may not have initiated emergency mobilization — the null hypothesis holds and we genuinely cannot determine this.",
+      "watch_for": "Pump 4 status change from OFFLINE_MAINTENANCE to any active status. This would be the first evidence of a potential circuit breaker for the cascade."
+    },
+    {
+      "description": "Hydrant pressure in sectors other than Sector B is unmeasured. Kill Switch #3 may already be TRIGGERED in unmonitored areas based on sound hydraulic engineering inference, but we have no measurement.",
+      "watch_for": "Any hydrant pressure reading from sectors other than Sector B, particularly those at higher elevation or greater distance from the pumping station. A reading below 20 PSI would immediately trigger Kill Switch #3."
+    },
+    {
+      "description": "Baseline system pressure for Kill Switch #5 assessment is undefined. The qualitative phenomenon (supply-distribution decoupling) is confirmed but the formal criterion cannot be scored.",
+      "watch_for": "Historical system pressure data or design specifications establishing the baseline operating pressure. This would allow formal determination of Kill Switch #5 status."
+    },
+    {
+      "description": "Thermal readings on Pumps 1 and 2 are unavailable. The most acute near-term risk (thermal trip causing total system failure) cannot be quantified without knowing how close these pumps are to their thermal limits.",
+      "watch_for": "Bearing temperature or motor winding temperature readings on Pumps 1 and 2. Alternatively, an overtemp trip on either pump would be the catastrophic confirmation."
+    },
+    {
+      "description": "The turbidity exceedance (4.5 NTU vs 4.0 NTU MCL) is a confirmed regulatory breach but its cause is unresolved. If caused by incipient backflow, it is a leading indicator of sanitary integrity failure. If caused by sediment disturbance, it is a separate but less critical issue.",
+      "watch_for": "Turbidity trend correlated with pressure changes. If turbidity increases as pressure decreases, the backflow mechanism is supported. If turbidity is independent of pressure changes, the routine cause is more likely."
+    }
+  ],
+  "_layer1_raw": [
+    {
+      "signal": "Active cavitation in Pumps 1 and 2",
+      "description": "Both remaining operational pumps show vibration readings of 45 Hz and 48.5 Hz respectively, far exceeding the 35 Hz cavitation threshold. Maintenance log explicitly confirms cavitation due to extreme flow velocity requirements. With both pumps also running above 95% load (128.5% and 131%), this directly triggers Falsification Criterion #2: irreversible cavitation damage is ACTIVELY OCCURRING. Pump lifespan is being consumed in real-time.",
+      "direction": "DETERIORATION",
+      "severity": "critical",
+      "proximity": "immediate",
+      "confidence": "high",
+      "evidence": "Pump 1 vibration 45 Hz, Pump 2 vibration 48.5 Hz; both exceed 35 Hz threshold while loads exceed 95%. Maintenance log confirms cavitation.",
+      "blind_spot": false,
+      "category": "technology",
+      "signal_ids": [
+        "20260312-0706-SIG-001"
+      ]
+    },
+    {
+      "signal": "Aggregate pump load exceeds 115% rated capacity",
+      "description": "With only Pumps 1 and 2 operational, they run at 128.5% and 131% respectively — both individually exceeding 115% rated capacity. The aggregate active load is catastrophically above design limits. This directly engages Falsification Criterion #1 (redundant load threshold). Duration is not yet confirmed at 48 hours, but the trajectory with no pumps available to relieve load makes breach inevitable without intervention.",
+      "direction": "DETERIORATION",
+      "severity": "critical",
+      "proximity": "immediate",
+      "confidence": "high",
+      "evidence": "Pump 1 at 128.5%, Pump 2 at 131%. Pump 3 tripped, Pump 4 offline for maintenance. No spare capacity exists.",
+      "blind_spot": false,
+      "category": "structure",
+      "signal_ids": [
+        "20260312-0706-SIG-002"
+      ]
+    },
+    {
+      "signal": "Divergent Inventory Paradox emerging",
+      "description": "Reservoir Alpha sits at 96% (abundant supply) while system pressure at 42 PSI is tracking dangerously close to the 40 PSI regulatory floor. If baseline pressure was ~60 PSI (typical for municipal systems), the current 42 PSI represents a ~30% drop — exceeding the 20% threshold in Criterion #5. Water supply is available but the distribution mechanism is decoupling from inventory, signaling cascading mechanical failure.",
+      "direction": "DETERIORATION",
+      "severity": "critical",
+      "proximity": "immediate",
+      "confidence": "medium",
+      "evidence": "Reservoir at 96%, system pressure at 42 PSI. If baseline ≥55 PSI, a 20%+ pressure drop with high reservoir triggers Criterion #5.",
+      "blind_spot": true,
+      "category": "assumption_decay",
+      "signal_ids": [
+        "20260312-0706-SIG-003"
+      ]
+    },
+    {
+      "signal": "Fire department independently confirming hydraulic degradation",
+      "description": "Regional Fire Dispatch issued an internal memo upgrading all Sector B box alarms to include water tanker task forces due to critically low hydrant pressure. Per thesis context, fire department operational adjustments are 'an independent, high-fidelity indicator of actual system capability.' This independent actor is behaving as if the system cannot meet life-safety flow requirements.",
+      "direction": "DETERIORATION",
+      "severity": "critical",
+      "proximity": "immediate",
+      "confidence": "high",
+      "evidence": "Fire department memo: 'Sector B hydrant pressure critically low. Upgrade all box alarms in Sector B to include water tanker task forces.'",
+      "blind_spot": false,
+      "category": "integration",
+      "signal_ids": [
+        "20260312-0706-SIG-004"
+      ]
+    },
+    {
+      "signal": "Sector B hydrant pressure approaching fire flow collapse",
+      "description": "Sector B hydrant pressure reads 31 PSI — above the 20 PSI fire flow collapse threshold (Criterion #3) but trending in a dangerous direction given accelerating pump degradation. With cavitation actively destroying pump capacity, further pressure drops are mechanically inevitable. The 11 PSI margin to life-safety failure is thin given the rate of system deterioration.",
+      "direction": "DETERIORATION",
+      "severity": "high",
+      "proximity": "immediate",
+      "confidence": "high",
+      "evidence": "Sector B hydrant at 31 PSI vs. 20 PSI minimum. Cavitation in both active pumps guarantees continued capacity loss.",
+      "blind_spot": false,
+      "category": "structure",
+      "signal_ids": [
+        "20260312-0706-SIG-005"
+      ]
+    },
+    {
+      "signal": "System pressure 2 PSI above regulatory breach",
+      "description": "Global system pressure at 42 PSI is only 2 PSI above the 40 PSI regulatory sanitary integrity threshold (Criterion #4). With no reserve pump capacity and active cavitation degrading the two remaining pumps, a breach of 40 PSI appears imminent. Crossing this threshold means loss of sanitary integrity and potential backflow contamination across the entire distribution network.",
+      "direction": "DETERIORATION",
+      "severity": "critical",
+      "proximity": "immediate",
+      "confidence": "high",
+      "evidence": "System pressure 42 PSI; regulatory floor 40 PSI. Only 2 PSI buffer with degrading pump capacity and zero redundancy.",
+      "blind_spot": false,
+      "category": "regulatory",
+      "signal_ids": [
+        "20260312-0706-SIG-006"
+      ]
+    },
+    {
+      "signal": "Zero mechanical redundancy in pumping system",
+      "description": "The system was designed with four parallel pumps for redundancy. Pump 3 has tripped on overtemperature and Pump 4 is offline for maintenance. 50% of pumping capacity is unavailable, and the remaining two pumps are being destroyed by cavitation. The core thesis assumption of 'sufficient mechanical redundancy' is empirically falsified — there is no redundancy remaining, and the path to total pump failure is open.",
+      "direction": "DETERIORATION",
+      "severity": "critical",
+      "proximity": "immediate",
+      "confidence": "high",
+      "evidence": "Pump 3: TRIPPED_OVERTEMP. Pump 4: OFFLINE_MAINTENANCE. Only Pumps 1 and 2 operational, both in cavitation.",
+      "blind_spot": false,
+      "category": "agent_capacity",
+      "signal_ids": [
+        "20260312-0706-SIG-007"
+      ]
+    },
+    {
+      "signal": "Extreme ambient temperature compounding thermal stress",
+      "description": "Ambient temperature at 95°F likely contributed to Pump 3's overtemperature trip and is increasing thermal load on Pumps 1 and 2, which are already operating far above rated capacity. High ambient temperature also correlates with peak water demand (cooling, irrigation), meaning demand-side relief is unlikely. This macro condition is simultaneously degrading supply capability and elevating consumption.",
+      "direction": "DETERIORATION",
+      "severity": "high",
+      "proximity": "immediate",
+      "confidence": "medium",
+      "evidence": "Ambient temp 95°F. Pump 3 tripped on overtemp. Pumps 1-2 running at 128-131% in same thermal environment.",
+      "blind_spot": false,
+      "category": "macro",
+      "signal_ids": [
+        "20260312-0706-SIG-008"
+      ]
+    },
+    {
+      "signal": "Elevated water turbidity",
+      "description": "Turbidity reading at 4.5 NTU exceeds the EPA maximum contaminant level of 4 NTU for surface water systems (and significantly exceeds the 1 NTU treatment technique trigger). This could indicate sediment disturbance from abnormal flow velocities, compromised filtration, or incipient backflow. This is a water quality signal that may compound the pressure/hydraulic crisis with a public health dimension.",
+      "direction": "DETERIORATION",
+      "severity": "high",
+      "proximity": "immediate",
+      "confidence": "medium",
+      "evidence": "Turbidity at 4.5 NTU. EPA MCL is 4 NTU; treatment technique trigger is 1 NTU. Extreme flow velocities from overloaded pumps likely contributing.",
+      "blind_spot": true,
+      "category": "regulatory",
+      "signal_ids": [
+        "20260312-0706-SIG-009"
+      ]
+    },
+    {
+      "signal": "MWA historical pattern of delayed emergency repairs",
+      "description": "Thesis context identifies MWA as 'historically prone to delaying capital-intensive emergency repairs.' Pump 4 remains offline for scheduled maintenance during a period where its capacity is desperately needed. The question of whether MWA can or will expedite Pump 4's return — or has the institutional bias to delay acknowledging crisis severity — is a material operator risk. No data indicates emergency mobilization has begun.",
+      "direction": "AMBIGUOUS",
+      "severity": "high",
+      "proximity": "immediate",
+      "confidence": "medium",
+      "evidence": "Thesis context on MWA delay patterns. Pump 4 still listed as OFFLINE_MAINTENANCE with no noted expedited return timeline.",
+      "blind_spot": true,
+      "category": "agent_capacity",
+      "signal_ids": [
+        "20260312-0706-SIG-010"
+      ]
+    },
+    {
+      "signal": "State regulator lacks real-time visibility",
+      "description": "The State Public Utility Commission monitors macro-level compliance but 'lacks real-time telemetry oversight.' The regulator may not yet be aware that system pressure is 2 PSI from breach, that cavitation is destroying active pumps, or that fire services have independently escalated protocols. Regulatory intervention or emergency orders that could force MWA action may be delayed by this information gap.",
+      "direction": "DETERIORATION",
+      "severity": "moderate",
+      "proximity": "near-term",
+      "confidence": "medium",
+      "evidence": "Thesis context: regulator lacks real-time telemetry. System is 2 PSI from regulatory threshold with no indication regulator has been notified.",
+      "blind_spot": true,
+      "category": "regulatory",
+      "signal_ids": [
+        "20260312-0706-SIG-011"
+      ]
+    },
+    {
+      "signal": "Pump 3 overtemp trip as leading indicator",
+      "description": "Pump 3 did not fail from age or wear — it tripped on overtemperature, likely from the same extreme loading conditions now affecting Pumps 1 and 2. This is a leading indicator that the same failure mode (thermal trip or seizure) could cascade to the remaining pumps. The failure mechanism is systemic, not isolated, meaning Pump 3's trip predicts rather than just reduces capacity.",
+      "direction": "DETERIORATION",
+      "severity": "critical",
+      "proximity": "immediate",
+      "confidence": "high",
+      "evidence": "Pump 3 status: TRIPPED_OVERTEMP. Pumps 1 and 2 operating at 128-131% load in 95°F ambient with active cavitation — same stress profile.",
+      "blind_spot": false,
+      "category": "technology",
+      "signal_ids": [
+        "20260312-0706-SIG-012"
+      ]
+    },
+    {
+      "signal": "Reservoir fullness masking crisis severity",
+      "description": "Reservoir Alpha at 96% creates a potentially misleading narrative signal. Observers focused on supply metrics (including the State regulator) may perceive the system as healthy because water is abundantly available. This masks the reality that the distribution mechanism is failing. The high reservoir level could delay emergency recognition and response by creating false confidence.",
+      "direction": "CONTRADICTORY",
+      "severity": "high",
+      "proximity": "immediate",
+      "confidence": "medium",
+      "evidence": "Reservoir at 96% while system pressure at 42 PSI and declining. Supply abundance contradicts distribution failure reality.",
+      "blind_spot": true,
+      "category": "narrative",
+      "signal_ids": [
+        "20260312-0706-SIG-013"
+      ]
+    },
+    {
+      "signal": "No competing water supply infrastructure available",
+      "description": "The fire department's resort to water tanker task forces — essentially truck-based water delivery — signals there is no alternative pressurized water infrastructure available to Sector B. No interconnections with adjacent municipal systems, no backup well fields, and no emergency supply arrangements are mentioned. The system has no competitive alternative or backup grid to fail over to.",
+      "direction": "DETERIORATION",
+      "severity": "moderate",
+      "proximity": "near-term",
+      "confidence": "medium",
+      "evidence": "Fire dispatch resorting to water tankers rather than activating any alternative supply interconnection. No mutual aid water system referenced.",
+      "blind_spot": true,
+      "category": "competitive",
+      "signal_ids": [
+        "20260312-0706-SIG-014"
+      ]
+    },
+    {
+      "signal": "Unmonitored sectors may have worse conditions than Sector B",
+      "description": "Data only reports hydrant pressure for Sector B (31 PSI). Other sectors are unmonitored in this data feed. Sectors at greater hydraulic distance from the pumping station, at higher elevation, or with smaller transmission mains could already be below 20 PSI fire flow thresholds. The absence of data for other sectors is itself a signal — the full extent of hydraulic degradation is unknown.",
+      "direction": "AMBIGUOUS",
+      "severity": "high",
+      "proximity": "immediate",
+      "confidence": "medium",
+      "evidence": "Only Sector B hydrant data provided. No readings for Sectors A, C, D, etc. System pressure at 42 PSI suggests broad degradation.",
+      "blind_spot": true,
+      "category": "assumption_decay",
+      "signal_ids": [
+        "20260312-0706-SIG-015"
+      ]
+    }
+  ]
+}

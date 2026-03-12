@@ -1,0 +1,14 @@
+[
+  {
+    "layer3_inference": "Fire Dispatch silence as even minimal positive indicator (Layer 2 assigned -0.7 weighted severity, Layer 3 identified it as uninformative)",
+    "signal_ids": [
+      "20260312-0640-SIG-012"
+    ],
+    "rejection_reason": "Per LZ-RC-003, absence of evidence is not evidence of absence. Layer 2 initially scored this as a slight positive (-2 pre-audit, reduced to -0.7 post-weighting). Layer 3 correctly challenged this. Layer 4 strips all positive weight — the absence of Fire Dispatch data is uninformative, not positive. Scored at 0.0 in final signal matrix.",
+    "root_cause": "ASSUMPTION_FAILURE",
+    "confidence_in_rejection": "high",
+    "corrections_ledger_action": "auto_commit",
+    "timestamp": "2026-03-12T06:51:20.030Z",
+    "source": "layer4_reconcile"
+  }
+]

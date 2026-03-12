@@ -2,7 +2,7 @@
   "step": 1,
   "label": "Baseline Operations",
   "simulated_date": "08:00:00",
-  "started_at": "2026-03-11T06:35:59.031Z",
+  "started_at": "2026-03-12T03:11:21.587Z",
   "layers_completed": [
     "SWEEP",
     "CONTEXTUALIZE",
@@ -39,195 +39,212 @@
     "layer1": {
       "violations": [
         {
-          "finding": "Primary pump load at 42% — substantial headroom / description: suggests the system can absorb a demand spike of roughly 2.4x current load before reaching mechanical limits",
-          "rule_violated": "LZ-EPH-003",
-          "violation": "Calculates a specific multiplier (2.4x) for capacity headroom based on multiple unproven assumptions: (1) that 100% pump capacity equals system mechanical limit, (2) that demand scales linearly with pump load, (3) that no other constraints bind before pump capacity, (4) that current efficiency curve applies at higher loads. Four unproven assumptions to reach the 2.4x figure.",
-          "severity": "MODERATE"
-        },
-        {
-          "finding": "Reserve tank not at 100% — minor unverified deficit / description: During a nominal, low-demand period this gap is unexplained",
+          "finding": "Gravity reserves near full - description states 'The 2% deficit from 100% could indicate minor overnight draw or measurement tolerance, but the reserve is effectively at ceiling.'",
           "rule_violated": "LZ-RC-004",
-          "violation": "Lists complex potential causes (evaporation, leak, sensor drift, micro-draw) without first testing the simplest sufficient explanation: that 98% may be normal operating level for this system, or that tanks were simply not yet refilled after morning peak. The null hypothesis (98% is normal) is not tested before exploring failure modes.",
-          "severity": "MODERATE"
+          "violation": "Multiple explanations (overnight draw, measurement tolerance) are offered for the 2% deficit without testing the simplest sufficient explanation first. The finding should either identify which is most likely based on evidence, or acknowledge insufficient data to determine cause.",
+          "severity": "MINOR"
         },
         {
-          "finding": "No fire department or industrial draw events reported / confidence: medium",
+          "finding": "Cavitation sensors report normal - description states 'Combined with 42% load, mechanical failure risk is minimal'",
+          "rule_violated": "LZ-RC-001",
+          "violation": "Correlation between normal sensor reading plus low load is presented as establishing causation (minimal failure risk). The normal sensor reading indicates no current cavitation; the low load is a separate observation. The causal inference that these two together produce 'minimal mechanical failure risk' conflates correlation with causation.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Flow rate consistent with post-peak normal - description states 'Combined with stable reserves, there is no indication of unmetered loss, main breaks, or unauthorized high-volume draw'",
           "rule_violated": "LZ-RC-003",
-          "violation": "Treats absence of evidence (no fire events in current data) as having evidentiary weight about future risk, when absence of evidence is informationally neutral. The finding correctly notes this is a blind spot but then assigns medium confidence to an AMBIGUOUS direction based solely on what is not present.",
-          "severity": "MINOR"
-        },
-        {
-          "finding": "SCADA automated protection logic untested in this cycle / confidence: medium, severity: moderate",
-          "rule_violated": "LZ-EPH-002",
-          "violation": "Assigns medium confidence and moderate severity to a claim about system degradation ('Dormant safety systems can degrade silently') without any evidence that degradation has occurred or that testing is overdue. The evidence cited is absence of data on last test date, which per LZ-RC-003 is informationally neutral. Confidence should be lower given zero positive evidence of the claimed risk.",
+          "violation": "Absence of evidence (no indication of unmetered loss/breaks) is being treated as evidence of absence (that these problems do not exist). The finding should state that current data shows no anomalies, not that anomalies are proven absent.",
           "severity": "MODERATE"
         },
         {
-          "finding": "Operator staffing and alertness during low-stress period / confidence: low",
+          "finding": "Untested SCADA failover logic during calm period - assigns 'medium' confidence",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The evidence cited is absence of data ('No failover events in current data; all systems nominal means protective logic is dormant and unverified'). Confidence is based on absence of evidence rather than presence of verifying data. This is an inference built on what is NOT present. Medium confidence is disproportionate to the evidentiary base.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Gravity reserve 2% deficit from full — replenishment rate unknown - assigns 'low' confidence while acknowledging 'cannot be assessed from this single reading'",
+          "rule_violated": "LZ-EPH-001",
+          "violation": "The finding explicitly states the replenishment rate and cause 'cannot be assessed' from available data, yet still assigns a confidence level and offers speculation ('reflects active refilling... minor overnight consumption... or a slow leak'). The honest output is 'I don't know' - insufficient data to assess. Assigning any confidence level when assessment is impossible violates the principle.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Operator staffing and alertness during calm - assigns 'low' confidence based on 'Extended periods of nominal operation can reduce operator vigilance'",
           "rule_violated": "LZ-CC-001",
-          "violation": "Constructs a coherent narrative about complacency risk and human factors degradation during low-stimulus periods, but this narrative has no verifiable real-world anchor in the provided data. Operator log brevity is the only cited evidence, but brevity during nominal conditions is not evidence of degraded vigilance. The psychological claim is plausible but unverified.",
+          "violation": "This is a logically coherent narrative (calm periods reduce vigilance) with no verifiable real-world anchoring to THIS operator, THIS shift, or THIS system. The reasoning is plausible but entirely theoretical. No evidence of actual reduced vigilance, slow response, or staffing issues is cited - only the general principle that calm can cause complacency.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "Regulatory compliance posture undetermined - assigns 'low' confidence",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "Confidence level assigned to a finding that explicitly identifies the posture as 'undetermined' with 'absent' data. When something is undetermined due to absent data, confidence should reflect that the finding itself (that status is unknown) is certain, but the confidence phrasing suggests assessment of the regulatory risk, which cannot be done. Structural mismatch between evidence and confidence.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Aging infrastructure risk unquantified - assigns 'low' confidence with 'No data on pipe age, material composition, recent main break history'",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The finding correctly identifies missing data but assigns confidence to a risk assessment ('Older cast iron or asbestos-cement pipes can fail catastrophically') that has no evidentiary anchor in the current system. This is speculation about what COULD happen if pipes are old, with no evidence about actual pipe conditions. Confidence is disproportionate to complete absence of infrastructure data.",
           "severity": "MODERATE"
-        },
-        {
-          "finding": "Unknown condition of backup/redundant pump systems / confidence: low, severity: moderate",
-          "rule_violated": "LZ-EPH-002",
-          "violation": "Assigns moderate severity to a risk based entirely on absence of data about backup systems. Per LZ-RC-003, absence of evidence is not evidence of absence. The finding cannot simultaneously assign low confidence (acknowledging uncertainty) and moderate severity (claiming meaningful risk) when the evidence base is zero. Either severity should be lower or this should invoke LZ-EPH-001 ('I don't know').",
-          "severity": "MINOR"
-        },
-        {
-          "finding": "Seasonal and weather context absent / confidence: medium, severity: moderate",
-          "rule_violated": "LZ-EPH-002",
-          "violation": "Assigns medium confidence to claims about blind spots created by missing weather data, but confidence in the existence of a blind spot should be proportional to evidence that weather/season actually matters for this specific system at this specific time. The finding assumes weather is decision-relevant without evidence that it is. Confidence is disproportionate to the speculative nature of the claim.",
-          "severity": "MINOR"
         }
       ],
       "compliance": "MODERATE_ISSUES",
       "model_used": "claude-sonnet-4-5-20250929",
       "gate_failed": false,
       "findings_reviewed": 15,
-      "clean_findings": 8,
-      "reviewer_notes": "Multiple findings demonstrate solid epistemological discipline (sensor dependency analysis, flow rate assessment, regulatory compliance check). However, several blind-spot findings fall into the Plausibility Trap (LZ-CC-001): constructing coherent risk narratives without verifiable anchors. The backup pump and SCADA testing findings particularly struggle with LZ-RC-003 (absence of evidence) and LZ-EPH-002 (confidence proportionality). The 2.4x capacity calculation is the most serious violation due to compounding unproven assumptions. Overall: analyst shows strong structure but needs tighter discipline when evidence is absent or indirect."
+      "clean_findings": 7,
+      "reviewer_notes": "The output shows strong discipline in flagging blind spots and unknown factors, which is commendable. However, several findings violated LZ-EPH-002 by assigning confidence levels to assessments where data was explicitly acknowledged as absent or insufficient. One SERIOUS violation (operator alertness) manufactured a plausible narrative without any real-world verification. The system correctly identifies what it doesn't know but then sometimes proceeds to assess it anyway with assigned confidence - this is the core pattern of violation."
     },
     "layer2": {
       "violations": [
         {
-          "finding": "SIG-002: '2.4x headroom estimate assumes linear scalability of pump capacity, which is a reasonable first-order approximation but not verified — pump efficiency curves are non-linear and cavitation risk increases non-linearly at high loads.'",
-          "rule_violated": "LZ-EPH-003",
-          "violation": "The reasoning acknowledges that the 2.4x headroom claim rests on an unverified assumption (linear scalability), then adds a second unverified assumption ('reasonable first-order approximation'), then adds a third inferential step ('at 42%, we are far from any danger zone' without knowing where the danger zone actually is). This is three unproven assumptions in a chain. The finding then maintains 'high confidence' despite explicitly identifying the assumption chain.",
-          "severity": "MINOR"
-        },
-        {
-          "finding": "SIG-003 post-audit: 'Scored at 2 rather than 1 because the absolute capacity (hours of supply) is unknown, creating slight uncertainty about the TRUE depth of the margin.'",
+          "finding": "SIG-007 severity assessment: 'Severity 4 reflects: (a) high importance to thesis integrity, (b) medium confidence because we genuinely don't know if it works, (c) not higher because the gap is latent, not acute — all measured indicators are nominal so the failover is not being demanded.'",
           "rule_violated": "LZ-EPH-002",
-          "violation": "The reasoning penalizes confidence (moves from severity 1 to 2) based on missing information about absolute capacity, but 98% is 98% regardless of absolute volume. The percentage itself is the measurement. Not knowing gallons-per-minute draw rate affects forward-looking duration estimates (LZ-RC-005), but does not affect the accuracy of the current 98% reading. Recency/relevance conflation may also apply (LZ-MR-002) — the current reading is accurate; its predictive power is separate.",
+          "violation": "Confidence is stated as MEDIUM but the reasoning explicitly acknowledges 'we genuinely don't know if it works' regarding the thesis's core resilience mechanism. Zero evidence of failover functionality should yield LOW confidence, not MEDIUM. The justification 'medium confidence because we don't know' inverts the rule — lack of knowledge reduces confidence, it does not sustain it at a medium level.",
           "severity": "MODERATE"
         },
         {
-          "finding": "SIG-007: 'The blind spot itself is the finding, not a threat' combined with severity assignment of 2",
-          "rule_violated": "LZ-RC-003",
-          "violation": "The reasoning correctly identifies that absence of evidence is informationally neutral per LZ-RC-003, then assigns a severity score to the absence. Per LZ-RC-003, absence of evidence 'is not evidence of absence, nor is it evidence of presence. The absence is informationally neutral.' Assigning severity to an absence contradicts the rule's requirement that absence cannot be scored as signal.",
+          "finding": "SIG-011 severity assessment: 'Not higher because this is a latent gap, not an active threat — pumps are running, implying power is present.'",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The reasoning treats the correlation 'pumps running' as weak evidence that 'power is present and therefore power infrastructure has some baseline reliability.' While the first inference (power is currently present) is valid, using current pump operation to limit the severity of the power redundancy gap assumes correlation between current power availability and future power reliability. The gap is about redundancy and failover capability, not current power status. Current pump operation provides zero information about backup systems, transfer switches, or grid redundancy. The severity limitation is justified by a correlation that does not address the actual risk being assessed.",
           "severity": "MODERATE"
         },
         {
-          "finding": "SIG-010: Inference chain from 'terse operator log' to reduced system safety",
-          "rule_violated": "LZ-EPH-003",
-          "violation": "The reasoning correctly identifies and flags this as a violation ('built on three or more unproven assumptions') and downgrades severity accordingly. However, the finding is still included in scored_signals with severity 1 and weighted_severity 0.4, which means it's being treated as having some evidentiary weight. Per LZ-EPH-003, an inference built on three or more unproven assumptions 'is speculative, regardless of how plausible each individual assumption appears.' Speculative inferences should not be scored as signals — they should be flagged as insufficient evidence.",
+          "finding": "Bear pressure reasoning: 'Bear pressure of 2 (out of 10) reflects: overwhelmingly positive measured state with no deterioration, offset by legitimate structural blind spots in unmeasured domains.'",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The bear pressure score of 2 is justified by combining 'overwhelmingly positive measured state' with 'legitimate structural blind spots.' However, the analysis identifies a severity 5 gap (power redundancy — direct kill switch pathway, complete data absence) and a severity 4 gap (untested SCADA failover — thesis core mechanism unverified). A bear pressure of 2/10 implies 'minimal concern.' The evidence cited (two high-severity blind spots on direct kill switch pathways, one of which undermines the thesis's central claim) does not support 'minimal concern' — it supports moderate to substantial concern about unmeasured risk. The confidence in low bear pressure is not proportional to the severity of the identified gaps. The score appears anchored to the positive measured data while underweighting the structural blind spots that could mask thesis-falsifying conditions.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "SIG-015 severity reduction: 'Severity reduced from 3 to 2 based on this partial mitigation' (grid average pressure being close to Sector 4 pressure)",
+          "rule_violated": "LZ-RC-004",
+          "violation": "The reasoning reduces severity because grid_average_pressure (65.2 PSI) is close to Sector 4 pressure (68.5 PSI), interpreting this as 'no major cross-sector differential currently.' However, the simpler explanation for a small difference between one sector and a grid average is not tested: if Sector 4 is itself a large portion of the grid, or if the grid average calculation method is unknown, the small differential could be a mathematical artifact rather than evidence of cross-sector hydraulic equilibrium. The analysis jumps to 'this provides partial mitigation' without establishing what the grid average represents, how many sectors it includes, or whether the 3.3 PSI difference is actually meaningful. The null hypothesis — that the proximity is uninformative without knowing the grid composition — is not tested before concluding the gap is partially mitigated.",
           "severity": "MINOR"
-        },
-        {
-          "finding": "SIG-013 scored_signals: 'This is a visibility gap in the monitoring system, not necessarily a system capability gap. But for monitoring purposes, what I can't see I can't assess.'",
-          "rule_violated": "LZ-RC-003",
-          "violation": "The reasoning explicitly states 'I don't know' whether backup pumps exist or are ready, which per LZ-EPH-001 should be the output. However, it then assigns severity 3 and weighted_severity 2.1 to this absence. Per LZ-RC-003, absence of evidence is informationally neutral and cannot be scored as a signal. The honest output 'I don't know' was reached, but then contradicted by assigning severity to the unknown.",
-          "severity": "MODERATE"
-        },
-        {
-          "finding": "Bear pressure reasoning: 'Previous bear pressure was 0; the move to 2 reflects identification of standing blind spots that were presumably present before but not articulated.'",
-          "rule_violated": "LZ-MR-002",
-          "violation": "The reasoning states that blind spots 'were presumably present before but not articulated,' acknowledging these are standing conditions, not new developments. Changing bear pressure from 0 to 2 based on newly articulated standing conditions conflates the timing of discovery with the timing of the condition. Per LZ-MR-002, 'Recency affects relevance but not accuracy. A recent data point is more relevant than an older one, but neither is more accurate because of its age.' The inverse applies here: recently discovering a standing gap does not make the gap a new development.",
-          "severity": "MODERATE"
-        },
-        {
-          "finding": "Kill switch status: all five criteria show 'movement_since_last: unknown'",
-          "rule_violated": "LZ-EPH-001",
-          "violation": "The output correctly identifies that movement since last reading is unknown. However, this is the first reading in the analytical output, making 'movement_since_last' a category error. There is no 'last' reading to compare against. The honest output per LZ-EPH-001 would be 'N/A — first reading' or similar. 'Unknown' implies the data should exist but is unavailable, which is not the case.",
-          "severity": "MINOR"
-        },
-        {
-          "finding": "SIG-008 knowledge audit: 'Many SCADA systems perform periodic automated self-tests that wouldn't appear as operational events.'",
-          "rule_violated": "LZ-CC-001",
-          "violation": "This statement introduces a plausible narrative about what SCADA systems typically do, without verifying whether THIS system does it. The reasoning is internally coherent and based on general domain knowledge, but lacks real-world anchoring to the specific system being monitored. Per LZ-CC-001, 'A logically coherent narrative that lacks verifiable real-world anchoring is not evidence.' The statement is used to partially justify not escalating severity, making the lack of anchoring material to the assessment.",
-          "severity": "MODERATE"
         }
       ],
-      "compliance": "MODERATE_ISSUES",
+      "compliance": "SERIOUS_ISSUES",
       "model_used": "claude-sonnet-4-5-20250929",
       "gate_failed": false,
-      "findings_reviewed": 32,
-      "clean_findings": 24,
-      "reviewer_notes": "The output demonstrates strong epistemic discipline in most areas, particularly in identifying knowledge gaps and applying LZ-EPH-001 ('I don't know'). However, there is a systematic issue with scoring absences and unknowns as if they were signals. Multiple findings correctly identify that certain information is unknown or absent, then assign severity scores to those absences, which violates LZ-RC-003. The SIG-003 severity adjustment appears to conflate measurement accuracy with predictive utility (LZ-MR-002/LZ-RC-005 boundary case). The bear pressure increase from 0 to 2 based on articulating pre-existing blind spots conflates discovery timing with condition timing (LZ-MR-002). Most violations are in the MODERATE range, indicating reasoning flaws that could affect conclusions but do not represent fundamental epistemological failures. The core operational findings (SIG-001, 006, 011, 012) are clean and well-anchored."
+      "findings_reviewed": 47,
+      "clean_findings": 43,
+      "reviewer_notes": "The analysis demonstrates strong adherence to the corrections ledger and properly refuses to assume unverified capabilities (SCADA diagnostics, operator preparedness, etc.). The violations are concentrated in confidence calibration and severity weighting, not in fabrication or assumption-inflation. The bear pressure violation is marked SERIOUS because it directly affects the final risk assessment: the score of 2/10 is not justified by the evidence cited (severity 5 + severity 4 blind spots on direct kill switch pathways). The analyst correctly identifies the gaps but underweights them in the aggregate score, creating a mismatch between the detailed findings and the summary judgment. This is a calibration error, not a reasoning fabrication — but it undermines the output's reliability as a risk signal."
     },
     "layer3": {
       "violations": [
         {
-          "finding": "Hidden move: SCADA Automated Logic running continuous background self-diagnostic routines",
+          "finding": "Scenario probability thesis_confirmed: 72%",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "Confidence is stated as proportional to evidence, but the probability assignment of 72% is precise without mathematical basis. The evidence supports 'system is currently nominal with substantial headroom' with high confidence, but translating this to a 72% probability that the thesis is confirmed requires assumptions about how current nominal conditions predict stress response capability. The text itself states 'the evidence strongly supports current viability but says nothing about stress response' — which contradicts assigning a 72% confirmation probability when the thesis is explicitly about stress resilience. Either the probability should be lower to match the acknowledged evidence limitation, or it should acknowledge that it's measuring 'current viability' not 'thesis confirmed.'",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Scenario probability thesis_falsified: 8%",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The 8% probability is presented as if it's evidence-derived, but the text admits it's based on 'base rate of disruptive events' (not provided or cited) combined with subjective weighting of blind spot severity. This is mathematical precision without mathematical foundation. The honest output per LZ-EPH-001 would be 'insufficient evidence to quantify falsification probability — depends entirely on external shock frequency which is unmonitored.' The 8% creates false precision.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Scenario probability thesis_modified: 20%",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "Same issue as the other two probabilities — precise percentage without mathematical derivation. The modification scenario is clearly articulated and evidence-based, but assigning it exactly 20% probability (implying the three scenarios sum to 100%) is false precision. These are not mutually exclusive, time-bounded probabilities derived from a probability model — they're qualitative scenario assessments given numerical clothing.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Hidden moves inference for SCADA: classification as SPECULATIVE with assumption_count: 3",
           "rule_violated": "LZ-EPH-003",
-          "violation": "The inference relies on three unproven assumptions: (1) SCADA systems are designed with self-diagnostic routines, (2) this specific system has such routines, (3) the coherent sensor data is evidence of functioning diagnostics rather than simply functioning sensors. The output counts only 2 assumptions but the third (that coherent data implies diagnostic success rather than just sensor success) is implicit in the reasoning chain. Even at 2 counted assumptions, the inference then treats 'coherent nominal data' as evidence of diagnostic health, which adds a third interpretive layer.",
-          "severity": "MODERATE"
-        },
-        {
-          "finding": "Hidden move: Grid Operators performing routine readiness checks not captured in visible logs",
-          "rule_violated": "LZ-RC-003",
-          "violation": "The reasoning states 'Absence of detailed activity in a summary field does not mean absence of activity' — this is correct application of LZ-RC-003. However, the output then proceeds to classify this as a 'likely_action' with 'low' confidence. This creates an internal contradiction: if absence of evidence is informationally neutral (LZ-RC-003), then inferring the action is 'likely' (even with low confidence) violates the neutrality principle. The correct classification per LZ-EPH-001 would be 'UNKNOWN' or the inference should not be made at all.",
-          "severity": "MODERATE"
-        },
-        {
-          "finding": "Thesis paradox explanation in compound_stress_inference section",
-          "rule_violated": "LZ-CC-001",
-          "violation": "The 'thesis paradox' narrative is internally coherent and intellectually compelling, but it lacks verifiable real-world anchoring. It is a philosophical observation about the nature of resilience testing, not an evidence-based finding. The output presents it as an analytical finding ('This thesis has an interesting structural feature...') when it is actually meta-commentary. While not harmful, it blurs the line between evidence-grounded analysis and conceptual reflection. The reasoning is sound as philosophy but is not anchored to specific data points that would make it a verifiable finding.",
+          "violation": "The finding correctly refuses to infer hidden moves and correctly applies LZ-EPH-003 by counting assumptions. However, the three assumptions listed are not independent unproven assumptions in a chain — they are three aspects of a single unknown (does SCADA have relevant internal state we can't see?). The rule is about assumption CHAINS where each assumption is a necessary link to reach the conclusion. Here, the analysis is correctly refusing to make the inference, but the assumption count may be overcounting to justify the refusal rather than honestly counting chain links. This is a minor technical violation — the right conclusion (SPECULATIVE / insufficient evidence) is reached, but the assumption counting framework may be slightly misapplied. However, given the corrections ledger context showing this inference has been stripped 3 times, the conservative approach is defensible.",
           "severity": "MINOR"
         },
         {
-          "finding": "Strategic inference: Reserve tank 2% gap - null hypothesis classification",
-          "rule_violated": "LZ-EPH-002",
-          "violation": "The output assigns 'high' confidence to the null hypothesis holding for the 2% reserve gap. However, the evidence basis is entirely inferential: the output argues that 98% is 'within normal sensor precision tolerance, normal operational float, or minor evaporation' but provides NO cited evidence for what normal precision tolerance IS, what normal operational float IS, or whether evaporation is significant. The high confidence is based on reasoning about what is plausible, not on cited evidence. The correct confidence level should be 'medium' at most, or the output should cite actual sensor specifications or operational baselines.",
-          "severity": "MODERATE"
-        },
-        {
-          "finding": "X402 paper trade #3: absolute volume of gravity reserve tanks impact assessment",
-          "rule_violated": "LZ-RC-005",
-          "violation": "The output states this data would allow calculation of 'how long reserves would last under stress' and 'directly affects the severity window for Kill Switch 4.' This conflates a measurable historical fact (tank volume) with forward-looking predictions (depletion rates under future stress scenarios). The impact assessment treats predictive modeling ('how long reserves would last') as equivalent in evidentiary weight to the measurement itself. The data would provide the measurement (volume), but the predictive utility requires assumptions about future demand scenarios, which are inherently uncertain per LZ-RC-005.",
+          "finding": "Hidden moves inference for Grid Operators: classification as SPECULATIVE with assumption_count: 3",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "Same issue as SCADA hidden moves — the three 'assumptions' listed are not a causal chain but three descriptions of the same unknown (are operators doing things we can't see?). The conclusion (SPECULATIVE, insufficient evidence) is correct and well-supported by the corrections ledger showing 7 prior rejections. The assumption counting may be technically misapplied, but the outcome is epistemologically sound.",
           "severity": "MINOR"
-        }
-      ],
-      "compliance": "MODERATE_ISSUES",
-      "model_used": "claude-sonnet-4-5-20250929",
-      "gate_failed": false,
-      "findings_reviewed": 23,
-      "clean_findings": 18,
-      "reviewer_notes": "The output demonstrates strong epistemological discipline overall, with particularly good application of LZ-RC-002, LZ-RC-004, and LZ-EH-004 throughout the strategic inferences section. The violations identified are substantive but contained: two MODERATE issues involve assumption counting and evidence-confidence calibration errors; one MODERATE issue involves misapplication of the absence-of-evidence principle; two MINOR issues involve blurring between evidence-grounded findings and conceptual frameworks. Notably, the output correctly avoided several common traps (the 98% reserve was not treated as a trend from a single point; the SCADA inaction was not treated as evidence of malfunction; cross-indicator coherence was appropriately weighted as multi-source verification). The 'hidden moves' section is the weakest link structurally — it attempts to infer unobservable behaviors from absence, which is inherently difficult to do within the epistemological rules. Recommend the hidden moves framework be reviewed for whether it can be made rule-compliant or should be retired."
-    },
-    "layer4": {
-      "violations": [
-        {
-          "finding": "Bear pressure increased from 2 to 3 with reasoning that 'gaps remain real even though the null hypotheses hold' and citing 'thesis paradox (untested resilience during calm) is a legitimate epistemological concern'",
-          "rule_violated": "LZ-EPH-002",
-          "violation": "Confidence (expressed as bear pressure score) is not proportional to evidence. The output confirms all null hypotheses held, all directly measurable indicators show maximum margin, no active threats exist, and no behavioral anomalies detected. The increase in bear pressure is based on standing monitoring gaps and untested hypotheses rather than evidence of actual risk. The reasoning explicitly states the gaps are 'about monitoring confidence, not system health' yet increases the risk score based on them.",
-          "severity": "MODERATE"
         },
         {
-          "finding": "Final report states 'the calmer things are, the less we know about whether the resilience mechanisms that constitute the core thesis would actually perform under stress' and treats this as a source of bear pressure",
-          "rule_violated": "LZ-RC-003",
-          "violation": "Absence of evidence (no stress testing visible) is being treated as evidence of risk rather than as informationally neutral. The rule explicitly states 'absence of evidence is not evidence of absence, nor is it evidence of presence. The absence is informationally neutral.' The reasoning converts the absence of failover testing into a pressure signal, violating the neutrality principle.",
-          "severity": "MODERATE"
-        },
-        {
-          "finding": "Thesis paradox statement: 'A major demand event simultaneously THREATENS the system AND VALIDATES the thesis by exercising mechanisms... The healthier the system looks, the less we know about whether its resilience mechanisms actually work.'",
+          "finding": "Feedback loop 4: 'Calm Period Complacency → Degraded Readiness → Delayed Response When Stress Arrives' identified as dormant but unscoreable",
           "rule_violated": "LZ-CC-001",
-          "violation": "This is a logically coherent narrative that lacks verifiable real-world anchoring in the current data. The paradox is internally consistent but is purely theoretical reasoning not tied to any measurement or observation in the telemetry. It's presented as a finding despite having zero empirical anchor points. This is the plausibility trap: a coherent story substituting for evidence.",
-          "severity": "SERIOUS"
+          "violation": "This feedback loop is a coherent narrative (complacency during calm leads to degraded readiness) that has zero real-world anchoring in the available data. The analysis correctly flags it as 'inherently unobservable from telemetry' and 'unscoreable' — but then includes it as a finding anyway. Per LZ-CC-001, 'a logically coherent narrative that lacks verifiable real-world anchoring is not evidence.' If it's unscoreable and unobservable, it should not be presented as a feedback loop finding — it's speculation about a possible dynamic with no empirical basis. The correct output per LZ-EPH-001 would be to omit this loop entirely or explicitly classify it as 'SPECULATIVE CONCERN - NO DATA.'",
+          "severity": "MODERATE"
         },
         {
-          "finding": "What would change assessment includes: 'Confirmation that backup pumps are offline or nonexistent would escalate bear pressure to 8-10'",
-          "rule_violated": "LZ-EPH-002",
-          "violation": "The magnitude of the proposed response (8-10 bear pressure, which is 8-10x the current score) is disproportionate to the evidence state. The current null hypothesis is that backup pumps exist but are silent (standby equipment doesn't generate telemetry), which was accepted at 50% weight. Learning they don't exist would invalidate one null hypothesis but wouldn't change any of the five Tier 1 measurements showing wide safety margins. The proposed 8-10 score suggests high confidence in a threat that contradicts all direct measurements.",
-          "severity": "MODERATE"
+          "finding": "Compound stress inference - thesis paradox: 'the system's designed response to acute stress will temporarily look identical to system failure'",
+          "rule_violated": "LZ-CC-001",
+          "violation": "This is an insightful logical observation about the thesis architecture, but it is presented as a 'finding' when it is actually a logical deduction about system design with no empirical grounding in current data. The paradox is coherent and may be true, but it's not anchored to any verifiable observation — it's a thought experiment about what WOULD happen during stress. The analysis correctly places this in 'compound_stress_inference' rather than 'strategic_inferences,' which partially mitigates the issue, but it's still presented with analytical weight when it's purely theoretical. This should be flagged as 'DESIGN IMPLICATION - NOT EMPIRICALLY VERIFIED.'",
+          "severity": "MINOR"
         }
       ],
       "compliance": "MODERATE_ISSUES",
       "model_used": "claude-sonnet-4-5-20250929",
       "gate_failed": false,
       "findings_reviewed": 47,
-      "clean_findings": 43,
-      "reviewer_notes": "This output demonstrates strong epistemological discipline in most areas—burden of proof rigorously applied, null hypotheses consistently tested, hidden moves properly stripped, assumptions counted honestly. However, it commits a category error in the final synthesis: it converts acknowledged ignorance (untested failover, unknown backup status) into bear pressure, violating the neutrality principle of LZ-RC-003 and the evidence-proportionality requirement of LZ-EPH-002. The 'thesis paradox' is particularly problematic as pure theoretical reasoning presented as a finding (LZ-CC-001 violation). The output correctly identifies what it doesn't know but then penalizes the position for that uncertainty despite all measurable indicators being maximally favorable. The individual signal assessments are nearly all clean; the violations concentrate in the final synthesis layer where uncertainty is reframed as risk."
+      "clean_findings": 40,
+      "reviewer_notes": "The analysis demonstrates exceptionally strong discipline in refusing to infer hidden moves and in applying the corrections ledger rigorously. The violations are concentrated in two areas: (1) false precision in probability assignments (presenting qualitative scenario assessments as quantified probabilities without mathematical basis), and (2) including coherent-but-unanchored narratives (feedback loop 4, thesis paradox) as findings when they lack empirical grounding. The core player analysis, null hypothesis testing, and data gap assessments are epistemologically sound. The probability violations are moderate severity because they could mislead downstream decision-making by implying quantitative precision where only qualitative assessment exists. Recommendation: replace precise probabilities with qualitative confidence bands (e.g., 'high confidence in current viability, low confidence in stress response') or explicitly state the probabilities are subjective scenario weights, not calculated likelihoods."
+    },
+    "layer4": {
+      "violations": [
+        {
+          "finding": "Gravity reserve replenishment rate - final_classification: DATA_GAP with reasoning 'A single reading of 98% provides no trajectory information. Per LZ-RC-002, one data point does not establish a trend. The fill/drain rate is calculable from sequential readings but we have only one. This is a genuine data gap that would resolve with time-series data.'",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The reasoning treats absence of trajectory data as evidence that trajectory data exists but is missing (DATA_GAP classification). Per LZ-RC-003, absence of evidence is not evidence of absence nor evidence of presence. The absence of time-series data does not prove that time-series data exists in the source system and is merely unavailable to this feed. The classification should acknowledge uncertainty about whether the gap is in data availability or data existence.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "SCADA failover test history - final_classification: DATA_GAP with reasoning 'Unlike the power supply gap, there is no clear architectural reason why failover test data wouldn't be included in the SCADA feed if it existed. SCADA systems can log their own test results. The absence of test data is not explained by institutional siloing — it's a gap within the same system.'",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The reasoning assumes that because SCADA systems CAN log test results, the absence of such logs in the feed means tests are not conducted or records exist but are not shared. This treats absence of evidence (no test logs in feed) as weak evidence of absence (tests not happening) or presence (tests happening but unshared). Per LZ-RC-003, the absence is informationally neutral - we cannot infer from missing logs whether tests occur, whether they're logged, or whether logs exist but aren't transmitted.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Confidence in status: MEDIUM with reasoning 'Confidence is MEDIUM, not HIGH, because the thesis makes two core claims — primary capacity AND automated failover resilience — and only the first is verified by current data.'",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The confidence level appears misaligned with evidence cited. For the claim being evaluated (thesis status = STABLE, meaning current viability), all six independent primary telemetry indicators provide full corroborating evidence with massive headroom. The unverified failover capability affects future stress scenarios, not current stability assessment. The reasoning conflates confidence in 'system is stable now' (high evidence) with confidence in 'system will remain stable under stress' (low evidence). If the thesis_status finding is about current state, confidence should be proportional to current-state evidence (high). If it's about future resilience, it should explicitly be a prediction and carry LZ-RC-005 weight accordingly.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Overall_confidence: medium with biggest_uncertainty being backup power status, stating 'This single unknown determines whether a routine power outage is a manageable event (backup generator maintains pumps) or an immediate crisis'",
+          "rule_violated": "LZ-RC-005",
+          "violation": "The reasoning conflates current measured state (which has high evidentiary support - all systems nominal) with predictive scenarios about future power outages (which are inherently uncertain). The 'biggest uncertainty' described is about a forward-looking prediction (what happens IF power fails), not about measurement of current state. Per LZ-RC-005, predictions and measurements carry fundamentally different evidentiary weight. The medium confidence rating appears to apply prediction uncertainty to current-state assessment.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "What_would_change_assessment: 'Confirmation that backup power exists and is functional at the pump station — this would drop bear pressure from 2 to approximately 1 and raise confidence from medium to high. Conversely, confirmation that NO backup power exists would raise bear pressure to 3-4'",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The reasoning assumes that discovering backup power DOES exist would materially change the assessment, and discovering it DOES NOT exist would also materially change the assessment in opposite directions. This treats the current absence of evidence as occupying a middle position between two evidence states, implicitly treating absence as weak evidence of a 50/50 state. Per LZ-RC-003, absence of evidence is informationally neutral - the current state of not knowing should not be positioned as a probabilistic midpoint that can be moved in either direction by evidence.",
+          "severity": "MINOR"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 42,
+      "reviewer_notes": "Three LZ-RC-003 violations around absence of evidence, two LZ-EPH-002/LZ-RC-005 violations around confidence calibration and measurement vs. prediction conflation. The analysis demonstrates strong discipline in stripping speculative inferences and applying the null hypothesis, but struggles with the epistemic status of data gaps and with separating current-state confidence from scenario-prediction confidence. The violations are structural rather than motivated - the reasoning is not cherry-picking to support a thesis, but rather treating 'unknown' as a scoreable position on a known spectrum rather than as genuine uncertainty. None of the violations appear to directionally bias the output toward bull or bear - they affect precision of confidence calibration rather than direction of findings."
     }
   },
   "errors": [],
-  "thesis_status": null,
+  "thesis_status": "STABLE",
   "corrections_promoted": 0,
-  "confidence_in_status": null,
-  "action_recommendation": "HOLD_POSITION",
-  "final_bear_pressure": 3,
-  "unresolved_tensions": [],
-  "rejection_count": 2,
-  "completed_at": "2026-03-11T06:46:02.880Z"
+  "confidence_in_status": "medium",
+  "action_recommendation": "MAINTAIN_OPERATIONS",
+  "final_bear_pressure": 2,
+  "unresolved_tensions": [
+    {
+      "description": "The thesis claims automated failover resilience, but the failover mechanism has never been observed operating. Current data verifies primary system health but cannot verify the resilience claim that distinguishes this thesis from a simpler 'the system works right now' observation.",
+      "watch_for": "Any event that activates the failover pathway — pump shutdown followed by gravity reserve deployment and pressure stabilization. Alternatively, acquisition of SCADA failover test records resolving the gap without requiring a live event."
+    },
+    {
+      "description": "Power supply redundancy is the single most dangerous unknown. A power outage is the most probable path to thesis falsification (KS-4), and we have zero visibility into power infrastructure status.",
+      "watch_for": "Any pump station anomaly (unexpected load change, intermittent readings, partial shutdown) that could indicate power instability. Alternatively, acquisition of power infrastructure data (backup generator status, dual-feed configuration) resolving the gap directly."
+    },
+    {
+      "description": "The thesis paradox: designed protective response (pump shutdown → gravity switchover) is observationally identical to early-stage system failure. When stress arrives, the first minutes will be maximally ambiguous.",
+      "watch_for": "If a stress event occurs: distinguish between 'pump shutdown + pressure drop + gravity reserves deploying + pressure stabilizing above 20 PSI' (thesis working) versus 'pump shutdown + pressure drop + continued pressure decline toward kill switch thresholds' (thesis failing). The distinguishing signal is whether gravity reserves arrest the pressure decline."
+    },
+    {
+      "description": "Single data point for all readings (first assessment cycle). No trajectory or trend can be established. Per LZ-RC-002, the current snapshot cannot tell us direction of travel.",
+      "watch_for": "Second consecutive reading. Any delta in any parameter between readings establishes the first trajectory data point. Particular attention to Sector 4 pressure, pump load, and gravity reserve level."
+    }
+  ],
+  "rejection_count": 4,
+  "completed_at": "2026-03-12T03:23:28.013Z"
 }

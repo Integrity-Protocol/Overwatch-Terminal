@@ -1,14 +1,28 @@
 [
   {
-    "layer3_inference": "Regional Fire Dispatch — Inferred Strategy (INSUFFICIENT_EVIDENCE)",
+    "layer3_inference": "MWA hidden moves — emergency procurement, mutual aid, contractor engagement",
     "signal_ids": [
-      "20260310-2103-SIG-009"
+      "20260312-0009-SIG-007",
+      "20260312-0009-SIG-008",
+      "20260312-0009-SIG-013"
     ],
-    "rejection_reason": "Layer 3 correctly classified as INSUFFICIENT_EVIDENCE. No data from this entity exists in the current dataset. Per burden of proof Step 1, INSUFFICIENT_EVIDENCE classifications are stripped entirely from scoring. The data gap itself is retained as a monitoring limitation but no strategic inference about fire dispatch can be drawn.",
+    "rejection_reason": "Layer 3 correctly self-classified as INSUFFICIENT_EVIDENCE. Zero data points support any specific hidden action. Per corrections ledger (CL-002, CL-003, CL-005), this inference class has been a recurrent analytical error. Layer 4 confirms: stripped from all scoring. This is not a rejection of Layer 3 — Layer 3 properly identified and self-corrected. This entry documents the confirmation.",
     "root_cause": "INSUFFICIENT_EVIDENCE",
     "confidence_in_rejection": "high",
     "corrections_ledger_action": "auto_commit",
-    "timestamp": "2026-03-10T21:13:26.188Z",
+    "timestamp": "2026-03-12T00:19:13.827Z",
+    "source": "layer4_reconcile"
+  },
+  {
+    "layer3_inference": "State Public Utility Commission hidden moves — regulatory notification or response",
+    "signal_ids": [
+      "20260312-0009-SIG-010"
+    ],
+    "rejection_reason": "Layer 3 correctly self-classified as INSUFFICIENT_EVIDENCE. Per CL-006, no inference about regulatory actions is permitted. All macro metrics are in compliance, providing no trigger through normal channels. Layer 4 confirms: stripped from all scoring.",
+    "root_cause": "INSUFFICIENT_EVIDENCE",
+    "confidence_in_rejection": "high",
+    "corrections_ledger_action": "auto_commit",
+    "timestamp": "2026-03-12T00:19:13.827Z",
     "source": "layer4_reconcile"
   }
 ]

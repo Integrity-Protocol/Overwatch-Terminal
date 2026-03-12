@@ -1,0 +1,354 @@
+{
+  "step": 5,
+  "label": "Cascade",
+  "simulated_date": "Day 26",
+  "started_at": "2026-03-12T05:58:17.526Z",
+  "layers_completed": [
+    "SWEEP",
+    "CONTEXTUALIZE",
+    "INFER",
+    "RECONCILE"
+  ],
+  "tier1_results": {
+    "layer1": {
+      "flags": [],
+      "hard_fails": 0,
+      "total_flags": 0,
+      "layer": 1
+    },
+    "layer2": {
+      "flags": [],
+      "hard_fails": 0,
+      "total_flags": 0,
+      "layer": 2
+    },
+    "layer3": {
+      "flags": [],
+      "hard_fails": 0,
+      "total_flags": 0,
+      "layer": 3
+    },
+    "layer4": {
+      "flags": [],
+      "hard_fails": 0,
+      "total_flags": 0,
+      "layer": 4
+    }
+  },
+  "gate_results": {
+    "layer1": {
+      "violations": [
+        {
+          "finding": "Atlas Foundation Communication Blackout",
+          "rule_violated": "LZ-EH-003",
+          "violation": "The finding assigns high confidence to the interpretation that 48-hour silence 'may indicate internal disarray, legal counsel intervention, or preparation for wind-down' based solely on the absence of public statements. While the rule states actions carry more weight than statements, absence of statements is not an action. The inference about what the silence means requires multiple unproven assumptions about internal state, yet confidence remains 'high' when the only hard evidence is the silence itself, not its cause.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Atlas Foundation Communication Blackout",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The causal interpretation relies on at least three unproven assumptions: (1) that 48 hours is an abnormal silence period for this entity during crises, (2) that silence indicates internal problems rather than other causes (legal holds, strategic deliberation, etc.), and (3) that the specific interpretations offered (disarray/legal/wind-down) are the likely explanations rather than alternatives. This is speculative under the three-assumption threshold.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Regulatory Intervention Risk Elevated",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The finding assigns 'high' severity and 'medium' confidence to regulatory intervention risk while explicitly stating 'No regulatory signals in current data.' The confidence level is not proportional to evidence — it is based entirely on historical pattern-matching and assumed regulatory behavior without any direct evidence of regulatory movement, investigation, or signaling.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "Regulatory Intervention Risk Elevated",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The inference chain involves multiple unproven assumptions: (1) that regulators are monitoring this situation, (2) that the current conditions meet regulatory intervention thresholds, (3) that historical patterns apply to this specific case, (4) that the PENDING status is anomalous rather than standard, and (5) that intervention is 'plausible near-term' rather than distant or unlikely. This exceeds the three-assumption limit.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "Competitive Alternatives Uncontested",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The finding assigns 'moderate' severity and 'medium' confidence while explicitly stating 'No data on competing fixed-rate instruments in current sweep.' The entire finding is inferential — about institutional migration, stakeholder explanation requirements, and competitive landscape resolution — without any direct evidence of actual competitive movement, migration, or alternative adoption.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "Competitive Alternatives Uncontested",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The reasoning requires multiple unproven assumptions: (1) that institutions held AFN in meaningful amounts, (2) that they will require stakeholder explanation, (3) that they will 'default to established instruments' rather than other responses, (4) that migration is occurring or will occur, and (5) that competitive landscape has been 'resolved by failure.' No evidence supports any of these claims.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "Competitive Alternatives Uncontested",
+          "rule_violated": "LZ-EPH-001",
+          "violation": "The finding should output 'I don't know' regarding competitive dynamics, institutional migration, or market resolution when no data exists on these dimensions. Instead, it constructs a plausible narrative without evidentiary anchoring. This violates the principle that declaring insufficient evidence is preferable to speculation.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "Foundation Runway and Solvency Unknown",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The finding assigns 'critical' severity and 'medium' confidence to Foundation insolvency risk while the title explicitly states the condition is 'Unknown.' The evidence cited (posted yield, facility deposits, consortium reserves, VC backing age) does not directly measure Foundation solvency or runway — these are indirect indicators that require assumption-laden interpretation to connect to the insolvency claim.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Foundation Runway and Solvency Unknown",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The connection between observed data and Foundation insolvency requires multiple assumptions: (1) that Foundation revenue/runway is dependent on these specific data points, (2) that 18-month-old VC backing is insufficient without knowing original amount or burn rate, (3) that no additional funding exists, (4) that the 48-hour silence is causally related to financial distress rather than other causes, and (5) that insolvency or legal consultation are the primary explanations.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Remaining 87 Depositors Face Total Loss Risk",
+          "rule_violated": "LZ-RC-005",
+          "violation": "The finding treats forward-looking predictions ('near-total loss if facility cannot honor redemptions', 'their behavior in the next period will determine whether residual value is preserved or destroyed') with the same evidentiary treatment as current measurements. The confidence level of 'medium' appears to apply equally to the measured state (87 depositors, $3.25B) and the predictive claims about their future losses and behavioral impact.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Exchange Trading Halts on ASE - causal chain section",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The finding states 'This removes the only remaining pressure valve for ASE holders and may compound redemption pressure on AFN' — presenting a causal mechanism (trading halts → removal of pressure valve → compounded redemption pressure) based on correlation and theoretical linkage rather than evidence that this causal chain is occurring. The 'may compound' hedge does not eliminate the correlation-as-causation structure.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Daily Volume Exceeding Outstanding Supply in ASE",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The finding assigns 'high' severity but 'medium' confidence, yet the interpretation layer ('indicates extreme panic selling, forced liquidation, and potentially leveraged short activity... suggests complete holder capitulation and no natural buying interest at any price level') makes strong claims about market participant psychology and behavior based solely on volume metrics. The confidence should be lower given that volume alone does not prove the attributed motivations.",
+          "severity": "MINOR"
+        }
+      ],
+      "compliance": "SERIOUS_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 15,
+      "clean_findings": 3,
+      "reviewer_notes": "Three findings (Regulatory Intervention Risk, Competitive Alternatives, Foundation Runway/Solvency) construct high-confidence assessments explicitly in the absence of direct evidence, violating core epistemic principles. The output demonstrates strong empirical grounding on primary financial metrics but crosses into speculation when addressing second-order effects (regulatory response, competitive dynamics, entity solvency) without maintaining proportional confidence discipline. The 'blind_spot: true' flags on several speculative findings suggest the system recognized the evidence gap but proceeded with confident interpretation anyway."
+    },
+    "layer2": {
+      "violations": [
+        {
+          "finding": "SIG-005 (Atlas Foundation Communication Blackout) - Assessment that 'All explanations are consistent with severe distress. None are benign.'",
+          "rule_violated": "LZ-RC-004",
+          "violation": "The reasoning lists multiple possible explanations for the Foundation's silence (internal disarray, legal counsel, preparation for wind-down, technical inability) but then concludes that none are benign without testing the simplest sufficient explanation first. 'Legal counsel advising silence during crisis' is a standard, procedurally rational response that is not inherently evidence of distress beyond what is already known from other signals. The reasoning jumps to 'all explanations indicate distress' without establishing that simpler explanations (standard legal protocol) are insufficient.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "SIG-009 (Daily Volume Exceeding Outstanding Supply) - Downgrade from 8/10 to 7/10 based on LZ-EH-004 application",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The reasoning correctly identifies measurement uncertainty per LZ-EH-004, but then states 'even at 50% of reported volume, the signal would still indicate extreme distress' without actually calculating what the severity score would be at 50% reported volume. The downgrade from 8 to 7 appears arbitrary rather than proportional to the quantified impact of the measurement uncertainty. If the signal 'would still indicate extreme distress' at half the reported value, the confidence or severity adjustment is not proportionally justified.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "SIG-011 (Regulatory Intervention Risk) - Characterization as involving 'three or more unproven assumptions' per LZ-EPH-003",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The reasoning states the inference chain is '(conditions exist → regulators will notice → they will act → action type will be X)' and claims this involves 'multiple unproven assumptions' triggering LZ-EPH-003. However, the signal does not actually specify 'action type will be X' — it only assesses elevated risk of intervention, not the form of intervention. The reasoning appears to have added an assumption that wasn't in the original signal in order to trigger the three-assumption threshold. The actual chain is shorter: conditions exist → regulators may intervene (two steps, not four).",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "SIG-012 (Competitive Alternatives) - Scored at 3/10 severity with reasoning that 'the thesis has already been falsified on primary criteria, making competitive dynamics a post-mortem consideration'",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The severity score is being adjusted based on the conclusion that other signals have already falsified the thesis, rather than being scored on its own evidentiary weight. This creates a circular dependency where the severity of one signal depends on the interpretation of other signals. Per LZ-EPH-002, confidence and severity should be proportional to the evidence for that specific finding, not to the aggregate conclusion. The competitive landscape gap is either severe or not based on its own relevance to the thesis, independent of whether other mechanisms have failed.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Bear Pressure score of 10 with reasoning that includes 'There is no identified pathway to thesis recovery absent extraordinary external intervention... none of which have any evidence of occurring'",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The reasoning treats absence of evidence of intervention pathways as evidence that no pathways exist. Per LZ-RC-003, absence of evidence is informationally neutral. The fact that no rescue intervention is visible in the data does not mean no rescue is being prepared (as the reasoning itself notes regarding the Foundation's 48-hour silence potentially involving private communications). The bear pressure score may be justified by the positive evidence of mechanism failure, but the reasoning chain explicitly relies on 'no evidence of X therefore X is not happening' which violates LZ-RC-003.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Layer 2 Summary characterization as 'post-mortem documentation' rather than 'thesis monitoring'",
+          "rule_violated": "LZ-RC-005",
+          "violation": "The characterization that this is 'no longer thesis monitoring — it is post-mortem documentation' is a forward-looking prediction about the irreversibility of the thesis failure. While the current state is catastrophic and measured, the claim that recovery is impossible is predictive. The reasoning conflates measurement (current state is catastrophic) with prediction (future recovery is impossible). Per LZ-RC-005, these carry fundamentally different evidentiary weight and should not be presented with equal confidence.",
+          "severity": "MINOR"
+        }
+      ],
+      "compliance": "MINOR_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 41,
+      "reviewer_notes": "The output demonstrates strong epistemological discipline overall. The knowledge audit process is rigorous and correctly identifies and flags its own data gaps. The violations identified are all MINOR except for one MODERATE issue regarding circular severity scoring in SIG-012. Most findings correctly apply evidence hierarchy, distinguish measurement from prediction, and maintain proportional confidence. The analyst appropriately applies LZ-EH-004 skepticism to anomalous volume data and correctly refuses to infer insolvency from silence per LZ-RC-003 in SIG-014. The primary concern is occasional slippage where absence of evidence is treated as weak evidence of absence, and where one finding's severity is scored relative to the aggregate conclusion rather than its own evidentiary weight. None of the violations appear to materially undermine the core findings, which are anchored in strong Tier 1 primary data."
+    },
+    "layer3": {
+      "violations": [
+        {
+          "finding": "Institutional Depositors inferred_strategy: 'Most likely: a mix of contractually locked depositors and those pursuing coordinated legal/recovery action.'",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "Confidence marked 'medium' but the inference makes definitive probabilistic claim ('most likely') about unobserved motivations without direct evidence. The evidence cited (remaining in facility despite adverse conditions) is behavioral anomaly that could have multiple explanations of similar likelihood. The confidence should be lower or the language should acknowledge equal probability across explanations.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Strategic inference: 'AFN Trading at $52 Despite 1% Swap Recovery — Implied Non-Swap Recovery Pricing' - Classification VALID with 1 assumption",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The inference actually rests on at least 2 unproven assumptions: (1) Some AFN buyers at $52 are making rational recovery calculations rather than buying uninformed, AND (2) Recovery mechanisms beyond the swap exist and are accessible to AFN holders. The assumption count understates the inference chain length.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Strategic inference: '87 Depositors Remaining Despite Catastrophic Conditions' - reasoning states 'The clustering suggests at least some coordination or shared strategic calculus' to distinguish from pure contractual explanation",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The inference treats the correlation (87 depositors all remaining) as evidence of causation (coordination). The clustering could equally result from independent actors all facing similar contractual constraints with staggered expiration dates not yet reached, or shared psychological biases (sunk cost fallacy, denial), or institutional reporting cycle constraints. Co-occurrence of similar behavior does not establish coordination without direct evidence of communication or collective action.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Hidden move: Atlas Foundation 'Engaging legal counsel to prepare for wind-down proceedings' - marked VALID with 1 assumption and medium confidence",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The inference is marked VALID (implying sufficient evidence) and medium confidence, but rests entirely on interpreting absence of communication as evidence of a specific action (legal counsel engagement). This is a stronger claim than the evidence supports. The 48-hour silence is consistent with legal-advised silence, but also consistent with organizational paralysis, key personnel departure, or simple indecision. Medium confidence for a specific hidden action based solely on communication absence overstates evidentiary support.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Hidden move: Institutional Depositors 'Coordinating among themselves to form a creditor committee' - Classification VALID with 1 assumption",
+          "rule_violated": "LZ-CC-001",
+          "violation": "The narrative is internally coherent (institutional creditors with shared exposure typically coordinate), but the real-world anchoring is weak. The evidence cited is 'clustering of 87 depositors who remain' - but this is observation of inaction, not observation of coordination. The inference builds a plausible story (creditor committee formation is standard practice) without verifiable anchoring to actual coordination signals (communications, joint filings, common counsel appointments). The plausibility of the narrative is doing the evidentiary work rather than observed facts.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Hidden move: Exchanges 'Preparing permanent delisting of ASE and potentially AFN' - marked FLAGGED with 2 assumptions but also states 'rational move is to proceed to permanent delisting'",
+          "rule_violated": "LZ-RC-005",
+          "violation": "The finding conflates prediction (exchanges will delist) with current state assessment. The language 'preparing permanent delisting' and 'rational move is to proceed' treats a forward-looking prediction as if it carries similar evidentiary weight to observed exchange halts. The exchange halts are measurements (verifiable, present). The delisting is prediction (uncertain, future). These should be more clearly distinguished in confidence and framing.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Scenario probability: thesis_confirmed at 0% with statement 'There is no scenario in which the thesis as originally stated... can be confirmed'",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "Assigning exactly 0% probability to any empirical outcome overstates certainty. The evidence overwhelmingly indicates thesis failure, but 0% probability is a logical impossibility claim (no conceivable scenario exists), not an empirical assessment. Even with overwhelming contrary evidence, empirical probabilities should reserve non-zero probability for unknown unknowns, measurement errors, or unobserved factors. The appropriate framing would be '<1%' or '~0%' rather than precisely 0%.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Compound stress inference: 'The thesis paradox... has resolved. The violent unwind has occurred, and it has FALSIFIED the thesis, not validated it.'",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The confidence in categorical falsification ('FALSIFIED') appears appropriate given the evidence cited, but the logical structure conflates two different claims: (1) the swap mechanism failed to maintain par (strongly evidenced), and (2) the mechanism 'FACILITATED the unwind by creating a hyperinflationary death spiral' (causal claim). The first is well-supported measurement. The second is causal inference that, while plausible, makes a stronger claim than purely observational evidence supports. The mechanism could have failed to prevent the unwind (inadequate defense) without actively facilitating it (causal acceleration). The language overstates the causal evidence.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Feedback loop: 'Foundation Silence → Market Uncertainty → Accelerated Selling → Greater Crisis → More Pressure on Foundation' described as 'active_accelerating' with 'This loop accelerates with each additional hour of silence'",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The loop structure assumes causation (Foundation silence causes accelerated selling) based on temporal sequence and correlation. While the mechanism is plausible, the evidence cited does not establish that the silence is causing the selling acceleration versus both being independent responses to the underlying crisis. The 48-hour silence and the price collapse could both be effects of the same cause (reserve exhaustion, mechanism failure) rather than the silence causing the acceleration. The loop may be directionally correct but the causal arrows are asserted rather than evidenced.",
+          "severity": "MINOR"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 38,
+      "reviewer_notes": "The output demonstrates strong epistemological discipline overall - null hypotheses are consistently tested, assumption counting is mostly rigorous, and 'insufficient evidence' is appropriately declared in multiple places. The violations cluster around three patterns: (1) slight overconfidence in inferring specific hidden actions from behavioral signals (legal counsel, creditor coordination), (2) occasional correlation-causation conflation in feedback loop mechanics, and (3) understating assumption counts in complex inferences. None of the violations undermine the core findings (mechanism failure, reserve exhaustion, thesis falsification), which are well-evidenced. The moderate issues are primarily in secondary inferences about player motivations and forward-looking predictions. The 0% probability assignment is a minor philosophical overreach but doesn't affect practical conclusions. Recommend tightening language around hidden moves and causal mechanisms in feedback loops."
+    },
+    "layer4": {
+      "violations": [
+        {
+          "finding": "AFN at $52 vs $1 Swap Recovery — Market Pricing Non-Swap Resolution (VALID classification with 1 assumption)",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The inference 'some AFN buyers are making rational recovery calculations' is presented as a single assumption, but actually contains at least 3 unproven assumptions: (1) buyers are rational actors, (2) buyers have access to information about non-swap recovery pathways, (3) buyers can accurately estimate recovery value from undisclosed Foundation assets. The assumption chain is understated.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Foundation Engaging Legal Counsel for Wind-Down (Hidden Move) — VALID with 1 assumption",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The inference chain 'Foundation is acting rationally by retaining counsel' actually requires multiple unproven links: (1) Foundation is acting rationally, (2) silence indicates counsel involvement (not other causes like operational paralysis or abandonment), (3) counsel is for wind-down specifically (not rescue negotiations or other purposes). This is at least 3 assumptions presented as 1.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Institutional Depositors Forming Creditor Committee (Hidden Move) — VALID with 1 assumption",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The inference contains multiple unproven assumptions presented as one: (1) institutional depositors will act collectively rather than individually, (2) they have sufficient coordination capability, (3) they perceive collective action as more valuable than individual action, (4) a creditor committee is the specific form coordination will take. This is 3-4 assumptions, not 1.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Exchanges Preparing Permanent ASE Delisting (Hidden Move) — partial data support classification",
+          "rule_violated": "LZ-EH-002",
+          "violation": "The reasoning states 'exchange halts are reported via Tier 2 sources, not confirmed directly from exchanges' but then does NOT apply the appropriate evidentiary discount per LZ-EH-002 (primary source data outweighs intermediary reporting). The finding acknowledges the data quality issue but fails to apply the corresponding weight reduction. The '50% weight from FLAGGED classification' doesn't address the Tier 2 source problem.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Regulatory Intervention Risk — INSUFFICIENT_EVIDENCE classification and stripping from scoring",
+          "rule_violated": "NONE",
+          "violation": "PASS - correctly identified as speculative and stripped per LZ-EPH-003 and LZ-RC-005",
+          "severity": "PASS"
+        },
+        {
+          "finding": "Competitive Alternatives Uncontested — INSUFFICIENT_EVIDENCE classification and stripping from scoring",
+          "rule_violated": "NONE",
+          "violation": "PASS - correctly applied LZ-RC-003",
+          "severity": "PASS"
+        },
+        {
+          "finding": "Contradiction Resolution: AFN at $52 vs swap recovery at $1 — 'paradox_held' with medium confidence",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The reasoning states it lacks 'tie-breaking data (Foundation's actual financial position) needed to resolve it per LZ-EH-005' and correctly holds the paradox. However, it then assigns 'medium' confidence to this position. When explicitly acknowledging insufficient evidence to resolve a contradiction, confidence should be proportional to that uncertainty. The proper confidence level when holding an unresolvable paradox is 'low' (we are confident the paradox exists, but cannot be medium-confidence about which explanation is correct when we've just stated we lack the data to choose). The confidence rating contradicts the epistemic position taken.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Contradiction Resolution: 87 depositors remaining — 'behavior_wins' with medium confidence",
+          "rule_violated": "LZ-RC-004",
+          "violation": "The reasoning states 'the behavioral explanation (constraints or coordination) is the most parsimonious per LZ-RC-004' but LZ-RC-004 requires testing the SIMPLEST explanation first, not choosing between two complex explanations. The null hypothesis is 'depositors attempted to exit but could not due to processing limitations during crisis' (simplest mechanical explanation). The analysis jumped to behavioral explanations (constraints, coordination, rational collective action) without testing whether simple operational explanations (system unable to process exits during crisis) suffice. This is exactly the mistake LZ-RC-004 is designed to prevent.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Atlas Foundation Financial Position classified as SUSPICIOUS_ABSENCE",
+          "rule_violated": "LZ-EH-003",
+          "violation": "The classification correctly applies LZ-EH-003 (actions outweigh statements), but the reasoning conflates 'withholding information' with 'deliberate negative action serving legal interests.' The Foundation's silence is absence of action, not action itself. Per LZ-RC-003, absence of evidence is informationally neutral. The upgrade from DATA_GAP to SUSPICIOUS_ABSENCE requires proving the absence is deliberate rather than due to other causes (operational incapacity, lack of prepared information, etc.). The reasoning assumes deliberate withholding without evidence distinguishing it from other causes of silence.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Organic AFN Demand reclassified from NEEDS_DATA to TRUE_NEGATIVE",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The reasoning states 'After 18 months of operation, the absence of any evidence of organic AFN adoption outside the High-Yield Facility is most likely a true negative.' This directly violates LZ-RC-003: 'Absence of evidence is not evidence of absence.' The reasoning then tries to justify this by adding contextual factors (facility was sole demand driver, 18 months passed, etc.), but these additions don't change the fundamental epistemological error. Even with contextual support, absence of adoption evidence cannot be reclassified as TRUE_NEGATIVE without positive evidence that adoption was tested and failed, or that market conditions would have produced visible adoption if demand existed. The monitoring system may not have been looking in the right places or at the right metrics.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "Kill Switch #6 Organic Demand escalated from NEEDS_DATA to TRIGGERED",
+          "rule_violated": "LZ-RC-003",
+          "violation": "Same violation as the data classification above. Escalating a kill switch from NEEDS_DATA to TRIGGERED based on absence of evidence violates LZ-RC-003. The reasoning is identical to the TRUE_NEGATIVE classification and suffers from the same fundamental epistemological error.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "Thesis Status: WEAKENING with high confidence",
+          "rule_violated": "NONE",
+          "violation": "PASS - confidence is proportional to evidence, and the reasoning explicitly acknowledges the framework limitation (no FALSIFIED status available) while being clear about what the evidence actually shows",
+          "severity": "PASS"
+        },
+        {
+          "finding": "Compound Stress Final Assessment: EMERGENCY with no override",
+          "rule_violated": "NONE",
+          "violation": "PASS - quantitative thresholds are exceeded by orders of magnitude, self-challenge addresses the only potential counter-argument",
+          "severity": "PASS"
+        },
+        {
+          "finding": "All burden_of_proof_applied entries for NULL_HYPOTHESIS_HOLDS classifications",
+          "rule_violated": "NONE",
+          "violation": "PASS - correctly applied LZ-RC-004 throughout, tested simplest explanations first",
+          "severity": "PASS"
+        },
+        {
+          "finding": "Final signal matrix adjustments maintaining Layer 2 composites where Layer 3 added only context",
+          "rule_violated": "NONE",
+          "violation": "PASS - correctly distinguished between new evidence (adjusts severity) and explanatory context (doesn't adjust severity)",
+          "severity": "PASS"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 35,
+      "reviewer_notes": "Two SERIOUS violations both stem from the same root error: reclassifying 'absence of evidence' as 'evidence of absence' for organic demand, in direct violation of LZ-RC-003. This is particularly concerning because the reasoning explicitly acknowledges LZ-RC-003 in the data classification section, then violates it. The MODERATE violations primarily involve understating assumption counts in inference chains (presenting 3+ assumptions as '1 assumption'). Several findings that could have been violations were handled correctly — the system properly applied null hypothesis testing, held contradictions where appropriate, and stripped speculative inferences from scoring. The organic demand reclassification is the most significant flaw and should be reversed to DATA_GAP / NEEDS_DATA status."
+    }
+  },
+  "errors": [],
+  "thesis_status": "WEAKENING",
+  "corrections_promoted": 0,
+  "confidence_in_status": "high",
+  "action_recommendation": "EXIT_SIGNAL",
+  "final_bear_pressure": 10,
+  "unresolved_tensions": [
+    {
+      "description": "AFN trades at $52 while the swap mechanism delivers only $1.00 per $100 par — a $51 gap that implies the market prices non-swap recovery pathways (asset liquidation, legal claims, rescue) at approximately 51% probability-weighted value. Without knowing the Foundation's actual financial position, this gap cannot be resolved.",
+      "watch_for": "Foundation financial disclosure, insolvency filing, acquisition announcement, or AFN price convergence toward $1 (confirming no non-swap recovery) or stabilization above $40 (confirming market's recovery pricing)."
+    },
+    {
+      "description": "87 institutional depositors remain in the facility under catastrophic conditions. Whether this reflects contractual lock-up, coordinated legal positioning, or administrative inertia is unknown. Their collective behavior will determine whether residual value is preserved or destroyed.",
+      "watch_for": "Announcement of creditor committee formation, coordinated legal filing, sudden wave of further outflows (suggesting lock-up expiration), or facility operator announcement of wind-down terms."
+    },
+    {
+      "description": "The Foundation's 48-hour silence has been classified as SUSPICIOUS_ABSENCE. The Foundation's actual status — operational, in negotiations, or functionally defunct — is the single highest-value unknown in the system.",
+      "watch_for": "Any Foundation communication (content and channel will be diagnostic — through legal counsel suggests wind-down, through operational leadership suggests rescue attempt, through third party suggests acquisition)."
+    }
+  ],
+  "rejection_count": 0,
+  "completed_at": "2026-03-12T06:11:22.775Z"
+}
