@@ -262,11 +262,21 @@ function detectSustainedMismatch(trajectory, domainConfig) {
  * @returns {object|null}
  */
 function detectAccumulatingTensions(trajectory) {
-  if (trajectory.length < 2) return null;
+  if (trajectory.length < 3) return null;
 
-  // Check if tensions are growing or staying high
   const tensionCounts = trajectory.map(t => t.tensions_count);
   const latest = tensionCounts[tensionCounts.length - 1];
+
+  // Check if tensions are declining — if so, the system is resolving, not stagnating
+  let declining = true;
+  for (let i = 1; i < tensionCounts.length; i++) {
+    if (tensionCounts[i] >= tensionCounts[i - 1]) {
+      declining = false;
+      break;
+    }
+  }
+  if (declining) return null;
+
   const allHigh = tensionCounts.every(c => c >= 3);
   const growing = tensionCounts.length >= 3 &&
     tensionCounts[tensionCounts.length - 1] > tensionCounts[0];
@@ -490,8 +500,8 @@ function runBlindAuditor(options) {
   }
 
   // ── Validate inputs ───────────────────────────────────────────────────
-  if (!Array.isArray(history) || history.length < 2) {
-    log('Insufficient history for trajectory review (need >= 2 entries). Skipping.');
+  if (!Array.isArray(history) || history.length < 3) {
+    log('Insufficient history for trajectory review (need >= 3 entries). Skipping.');
     return result;
   }
 
