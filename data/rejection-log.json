@@ -540,5 +540,60 @@
     "source": "layer4_reconcile",
     "promoted": true,
     "promoted_at": "2026-03-12T02:41:45.422Z"
+  },
+  {
+    "layer3_inference": "Ripple is likely conducting private institutional demonstrations of PermissionedDEX capabilities",
+    "signal_ids": [
+      "20260313-0225-SIG-004",
+      "20260313-0225-SIG-007",
+      "20260313-0225-SIG-010"
+    ],
+    "rejection_reason": "FLAGGED classification (2 assumptions) with zero data support. Per burden of proof Step 2, FLAGGED + no supporting data = stripped. The inference is plausible but entirely unsupported by any observable evidence. Retaining it in scoring would violate LZ-EPH-002 (confidence must be proportional to evidence).",
+    "root_cause": "INSUFFICIENT_EVIDENCE",
+    "confidence_in_rejection": "high",
+    "corrections_ledger_action": "auto_commit",
+    "timestamp": "2026-03-13T02:40:45.499Z",
+    "source": "layer4_reconcile",
+    "promoted": true,
+    "promoted_at": "2026-03-13T02:40:45.501Z"
+  },
+  {
+    "layer3_inference": "BOJ is likely coordinating with MOF on intervention trigger levels behind the scenes",
+    "signal_ids": [
+      "20260313-0225-SIG-001",
+      "20260313-0225-SIG-002"
+    ],
+    "rejection_reason": "FLAGGED classification with partial data support, but per CL-035 and LZ-RC-005, forward-looking predictions about central bank behavior carry inherently reduced evidentiary weight. Per LZ-RC-003, absence of intervention is not evidence of coordination OR of a higher threshold. The inference is reasonable but unfalsifiable from available data, making it unsuitable for scoring.",
+    "root_cause": "INSUFFICIENT_EVIDENCE",
+    "confidence_in_rejection": "medium",
+    "corrections_ledger_action": "flag_for_review",
+    "timestamp": "2026-03-13T02:40:45.499Z",
+    "source": "layer4_reconcile"
+  },
+  {
+    "layer3_inference": "ETF issuers are likely reducing marketing spend while maintaining products as live shells",
+    "signal_ids": [
+      "20260313-0225-SIG-004",
+      "20260313-0225-SIG-013"
+    ],
+    "rejection_reason": "FLAGGED classification (2 assumptions) with partial data support. Zero inflows is consistent with reduced marketing but also consistent with exhausted demand regardless of marketing effort. Cannot distinguish causes. Stripped from scoring per burden of proof.",
+    "root_cause": "INSUFFICIENT_EVIDENCE",
+    "confidence_in_rejection": "medium",
+    "corrections_ledger_action": "flag_for_review",
+    "timestamp": "2026-03-13T02:40:45.499Z",
+    "source": "layer4_reconcile"
+  },
+  {
+    "layer3_inference": "BOJ non-intervention at 158.86 reveals a trapped policy position (deliberate tolerance of yen weakness)",
+    "signal_ids": [
+      "20260313-0225-SIG-001",
+      "20260313-0225-SIG-002"
+    ],
+    "rejection_reason": "Requires two assumptions: (1) non-action is deliberate policy, (2) BOJ intervention threshold has not simply not been reached. Per LZ-RC-003, absence of evidence (intervention) is not evidence of absence (desire to intervene) or evidence of presence (trapped position). The analytical framing of the trapped position is based on sound monetary policy mechanics but the specific conclusion about BOJ's revealed preference exceeds what the evidence supports.",
+    "root_cause": "ASSUMPTION_FAILURE",
+    "confidence_in_rejection": "medium",
+    "corrections_ledger_action": "flag_for_review",
+    "timestamp": "2026-03-13T02:40:45.499Z",
+    "source": "layer4_reconcile"
   }
 ]

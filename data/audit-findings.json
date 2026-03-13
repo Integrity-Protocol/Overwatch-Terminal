@@ -1,0 +1,61 @@
+[
+  {
+    "phase": 1,
+    "status": "UNRESOLVED",
+    "timestamp": "2026-03-13T02:41:39.233Z",
+    "run_index": 56,
+    "mismatches": [
+      {
+        "type": "GROWING_UNRESOLVED_TENSIONS",
+        "detail": "Unresolved tensions growing: 0 → 0 → 5 → 5 → 5. The system is accumulating questions faster than resolving them.",
+        "severity": "MEDIUM",
+        "tension_trajectory": [
+          0,
+          0,
+          5,
+          5,
+          5
+        ]
+      },
+      {
+        "type": "STAGNANT_ACTION_CHANGING_STATUS",
+        "detail": "Action has been INCREASE_MONITORING for 5 consecutive entries while thesis_status changed:  →  → CONTESTED → CONTESTED → CONTESTED. Action is not responding to evidence changes.",
+        "severity": "MEDIUM",
+        "direction": "unknown"
+      }
+    ],
+    "advisory_text": "The Blind Auditor has flagged a mismatch between your evidence trajectory and your action trajectory. Address this finding: either commit to acting on your assessment or justify the hold with specific, verifiable evidence that warrants continued restraint. A justification must name what specific new information you are waiting for and what observable outcome would resolve the question.",
+    "trajectory_summary": [
+      {
+        "status": null,
+        "action": "INCREASE_MONITORING",
+        "tensions": 0,
+        "pressure": 60
+      },
+      {
+        "status": null,
+        "action": "INCREASE_MONITORING",
+        "tensions": 0,
+        "pressure": 60
+      },
+      {
+        "status": "CONTESTED",
+        "action": "INCREASE_MONITORING",
+        "tensions": 5,
+        "pressure": 62
+      },
+      {
+        "status": "CONTESTED",
+        "action": "INCREASE_MONITORING",
+        "tensions": 5,
+        "pressure": 62
+      },
+      {
+        "status": "CONTESTED",
+        "action": "INCREASE_MONITORING",
+        "tensions": 5,
+        "pressure": 68
+      }
+    ]
+  }
+]
