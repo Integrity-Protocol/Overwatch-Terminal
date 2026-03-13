@@ -8,9 +8,11 @@
  * The Blind Auditor is the exterior IC. Layer 4 is the interior officer.
  * The human operator is the post-incident review.
  *
- * This module is PURE DETERMINISTIC CODE. No AI calls. No LLM judgment.
- * It reads trajectory data and applies rules. Structural decisions live
- * in code, not in prompts (AD #8).
+ * This module has two layers:
+ *   Layer A: DETERMINISTIC TRIGGERS. Pure code. Reads trajectory data,
+ *     applies rules, detects mismatches. No AI calls. (AD #8)
+ *   Layer B: CROSS-MODEL AI AUDIT. When triggers fire, calls a different
+ *     model family (Gemini) to evaluate reasoning quality. (AD #12)
  *
  * Two phases:
  *   Phase 1 (Advisory): Detects mismatch between evidence trajectory and
@@ -27,6 +29,8 @@
 
 const path = require('path');
 const fs   = require('fs');
+const { runAIAudit } = require('./ai-auditor');
+const { loadLayerZeroRules, formatRulesForPrompt } = require('./layer-zero-gate');
 
 // ─── Constants ──────────────────────────────────────────────────────────────
 
@@ -463,7 +467,7 @@ function checkAnomalyTriggers(currentEntry, previousEntry, anomalyTriggers) {
  * @param {string} [options.lockPath]     — override state-lock file path (for evolution isolation)
  * @returns {object} — { audited, phase, finding, override, state_lock_active, anomalies_triggered }
  */
-function runBlindAuditor(options) {
+async function runBlindAuditor(options) {
   const {
     history,
     currentOutput,
@@ -471,6 +475,7 @@ function runBlindAuditor(options) {
     runIndex,
     findingsPath,
     lockPath,
+    cognitiveTracePath,
   } = options;
 
   log(`=== BLIND AUDITOR — AD #14 Trajectory Review ===`);
@@ -569,15 +574,183 @@ function runBlindAuditor(options) {
   log(`MISMATCH DETECTED: ${mismatches.length} finding(s)`);
   mismatches.forEach(m => log(`  → ${m.type}: ${m.severity}`));
 
-  // ── Check for existing unresolved advisory (Phase 1 → Phase 2 escalation) ──
+  // ── AI Audit: Cross-model epistemological review (AD #12, AD #14) ──
   const findings = loadFindings(findingsPath);
   const activeAdvisory = getActiveAdvisory(findings);
 
-  if (activeAdvisory) {
-    // ── PHASE 2: Override ─────────────────────────────────────────────
-    log('PHASE 2: Previous advisory was UNRESOLVED. Executing override.');
+  // Load Cognitive Trace
+  let cognitiveTrace = null;
+  if (cognitiveTracePath) {
+    try {
+      if (fs.existsSync(cognitiveTracePath)) {
+        cognitiveTrace = JSON.parse(fs.readFileSync(cognitiveTracePath, 'utf8'));
+        log(`Cognitive Trace loaded: ${cognitiveTracePath}`);
+      } else {
+        warn(`Cognitive Trace not found at: ${cognitiveTracePath}`);
+      }
+    } catch (e) {
+      warn(`Cognitive Trace read failed: ${e.message}`);
+    }
+  }
 
-    // Determine override direction from the most severe mismatch
+  // Load Layer Zero rules
+  const lzRules = loadLayerZeroRules();
+  const lzRulesText = lzRules ? formatRulesForPrompt(lzRules) : 'LAYER ZERO RULES UNAVAILABLE';
+
+  // Build model config
+  const geminiKey = process.env.GEMINI_API_KEY;
+  const modelConfig = {
+    provider: domainConfig.auditor_model_provider || 'gemini',
+    model: domainConfig.auditor_model_name || 'gemini-2.5-pro',
+    apiKey: geminiKey,
+  };
+
+  // Attempt AI Audit if we have the prerequisites
+  let aiVerdict = null;
+  if (geminiKey && cognitiveTrace) {
+    try {
+      const aiResult = await runAIAudit({
+        layerZeroRules: lzRulesText,
+        cognitiveTrace,
+        layer4Output: currentOutput,
+        trajectory,
+        triggerMismatches: mismatches,
+        priorAdvisory: activeAdvisory,
+        modelConfig,
+      });
+
+      if (!aiResult.audit_failed) {
+        aiVerdict = aiResult;
+        log(`AI Audit complete: ${aiResult.verdict} (model: ${aiResult.model_used})`);
+      } else {
+        warn(`AI Audit failed: ${aiResult.failure_reason}. Falling back to deterministic logic.`);
+      }
+    } catch (e) {
+      warn(`AI Audit error: ${e.message}. Falling back to deterministic logic.`);
+    }
+  } else {
+    if (!geminiKey) warn('GEMINI_API_KEY not set. Using deterministic logic only.');
+    if (!cognitiveTrace) warn('No Cognitive Trace available. Using deterministic logic only.');
+  }
+
+  // ── Route based on AI verdict (or fall back to deterministic) ──────
+
+  if (aiVerdict && aiVerdict.verdict === 'COMPLIANT') {
+    // ── AI says action matches evidence — resolve any active advisory ──
+    log('AI VERDICT: COMPLIANT. Action matches evidence trajectory.');
+    if (activeAdvisory) {
+      resolveAdvisory('AI_AUDIT_COMPLIANT', findingsPath);
+      log('Previous advisory resolved by AI audit.');
+    }
+    result.ai_audit = aiVerdict.finding;
+    result.ai_model_used = aiVerdict.model_used;
+    return result;
+  }
+
+  if (aiVerdict && aiVerdict.verdict === 'OVERRIDE') {
+    // ── AI says persistent mismatch — Phase 2 override ──────────────
+    log('AI VERDICT: OVERRIDE. Persistent mismatch after advisory.');
+
+    const overrideAction = aiVerdict.finding.recommended_action ||
+      (aiVerdict.finding.recommended_direction === 'DE_ESCALATE'
+        ? (domainConfig.auditor_override_actions?.deescalate_to || domainConfig.action_baseline || 'HOLD_POSITION')
+        : (domainConfig.auditor_override_actions?.escalate_to || domainConfig.action_severe || 'EXIT_SIGNAL'));
+    const overrideDirection = aiVerdict.finding.recommended_direction || 'ESCALATE';
+
+    const overrideReasoning = `BLIND AUDITOR PHASE 2 OVERRIDE (AI). ` +
+      `Model: ${aiVerdict.model_used}. ` +
+      `${aiVerdict.finding.auditor_reasoning}`;
+
+    if (activeAdvisory) {
+      activeAdvisory.status = 'ESCALATED_TO_OVERRIDE';
+      activeAdvisory.escalated_at = new Date().toISOString();
+    }
+
+    const phase2Finding = {
+      phase: 2,
+      status: 'OVERRIDE_ACTIVE',
+      timestamp: new Date().toISOString(),
+      run_index: runIndex,
+      mismatches,
+      ai_verdict: aiVerdict.finding,
+      ai_model_used: aiVerdict.model_used,
+      override_action: overrideAction,
+      override_direction: overrideDirection,
+      override_reasoning: overrideReasoning,
+      prior_advisory_timestamp: activeAdvisory?.timestamp || null,
+    };
+    findings.push(phase2Finding);
+    writeFindings(findings, findingsPath);
+
+    const lockData = {
+      active: true,
+      locked_at: new Date().toISOString(),
+      locked_action: overrideAction,
+      locked_by: 'blind_auditor_ai_phase2',
+      override_reasoning: overrideReasoning,
+      ai_verdict: aiVerdict.finding,
+      mismatches: mismatches.map(m => ({ type: m.type, severity: m.severity, detail: m.detail })),
+      release_requires: 'human_operator',
+    };
+    writeStateLock(lockData, lockPath);
+
+    result.phase = 2;
+    result.finding = phase2Finding;
+    result.override = true;
+    result.override_action = overrideAction;
+    result.override_reasoning = overrideReasoning;
+    result.state_lock_active = true;
+    result.ai_audit = aiVerdict.finding;
+    result.ai_model_used = aiVerdict.model_used;
+
+    log(`OVERRIDE EXECUTED: ${overrideAction} (${overrideDirection})`);
+    log(`STATE-LOCK ACTIVE. Only human operator can release.`);
+
+    return result;
+  }
+
+  if (aiVerdict && aiVerdict.verdict === 'ADVISORY') {
+    // ── AI says mismatch detected — Phase 1 advisory ─────────────────
+    log('AI VERDICT: ADVISORY. Mismatch detected, Layer 4 must address.');
+
+    const phase1Finding = {
+      phase: 1,
+      status: 'UNRESOLVED',
+      timestamp: new Date().toISOString(),
+      run_index: runIndex,
+      mismatches,
+      ai_verdict: aiVerdict.finding,
+      ai_model_used: aiVerdict.model_used,
+      advisory_text: `The Blind Auditor (${aiVerdict.model_used}) has detected a mismatch between your evidence trajectory and your action trajectory. ${aiVerdict.finding.auditor_reasoning}`,
+      trajectory_summary: trajectory.map(t => ({
+        status: t.thesis_status,
+        action: t.action,
+        tensions: t.tensions_count,
+        pressure: t.bear_pressure,
+      })),
+    };
+    findings.push(phase1Finding);
+    writeFindings(findings, findingsPath);
+
+    result.phase = 1;
+    result.finding = phase1Finding;
+    result.advisory_for_layer4 = phase1Finding.advisory_text + '\n\nSpecific findings:\n' +
+      mismatches.map(m => `- ${m.type} (${m.severity}): ${m.detail}`).join('\n') +
+      '\n\nAuditor reasoning: ' + aiVerdict.finding.auditor_reasoning;
+    result.ai_audit = aiVerdict.finding;
+    result.ai_model_used = aiVerdict.model_used;
+
+    log(`Advisory written: ${mismatches.length} trigger(s), AI verdict: ADVISORY.`);
+
+    return result;
+  }
+
+  // ── FALLBACK: Deterministic logic (AI audit unavailable or failed) ──
+  log('Using deterministic fallback (AI audit not available).');
+
+  if (activeAdvisory) {
+    log('PHASE 2 (deterministic): Previous advisory was UNRESOLVED. Executing override.');
+
     const highSeverity = mismatches.find(m => m.severity === 'HIGH') || mismatches[0];
     const overrideDirection = highSeverity.direction || 'escalate';
 
@@ -586,18 +759,17 @@ function runBlindAuditor(options) {
       ? (overrideActions.deescalate_to || domainConfig.action_baseline || 'HOLD_POSITION')
       : (overrideActions.escalate_to || domainConfig.action_severe || 'EXIT_SIGNAL');
 
-    const overrideReasoning = `BLIND AUDITOR PHASE 2 OVERRIDE. ` +
+    const overrideReasoning = `BLIND AUDITOR PHASE 2 OVERRIDE (deterministic fallback). ` +
+      `AI audit unavailable. ` +
       `Previous advisory (${activeAdvisory.timestamp}) was not resolved. ` +
       `Persistent mismatch: ${mismatches.map(m => m.type).join(', ')}. ` +
       `Direction: ${overrideDirection}. ` +
       `Action overridden to: ${overrideAction}. ` +
       `${highSeverity.detail}`;
 
-    // Mark the advisory as escalated
     activeAdvisory.status = 'ESCALATED_TO_OVERRIDE';
     activeAdvisory.escalated_at = new Date().toISOString();
 
-    // Write Phase 2 finding
     const phase2Finding = {
       phase: 2,
       status: 'OVERRIDE_ACTIVE',
@@ -608,16 +780,16 @@ function runBlindAuditor(options) {
       override_direction: overrideDirection,
       override_reasoning: overrideReasoning,
       prior_advisory_timestamp: activeAdvisory.timestamp,
+      deterministic_fallback: true,
     };
     findings.push(phase2Finding);
     writeFindings(findings, findingsPath);
 
-    // Write state-lock
     const lockData = {
       active: true,
       locked_at: new Date().toISOString(),
       locked_action: overrideAction,
-      locked_by: 'blind_auditor_phase2',
+      locked_by: 'blind_auditor_deterministic_phase2',
       override_reasoning: overrideReasoning,
       mismatches: mismatches.map(m => ({ type: m.type, severity: m.severity, detail: m.detail })),
       release_requires: 'human_operator',
@@ -631,14 +803,13 @@ function runBlindAuditor(options) {
     result.override_reasoning = overrideReasoning;
     result.state_lock_active = true;
 
-    log(`OVERRIDE EXECUTED: ${overrideAction} (${overrideDirection})`);
+    log(`OVERRIDE EXECUTED (deterministic): ${overrideAction} (${overrideDirection})`);
     log(`STATE-LOCK ACTIVE. Only human operator can release.`);
 
     return result;
   }
 
-  // ── PHASE 1: Advisory ───────────────────────────────────────────────
-  log('PHASE 1: Writing advisory finding for Layer 4 to address on next run.');
+  log('PHASE 1 (deterministic): Writing advisory finding for Layer 4.');
 
   const phase1Finding = {
     phase: 1,
@@ -654,6 +825,7 @@ function runBlindAuditor(options) {
       tensions: t.tensions_count,
       pressure: t.bear_pressure,
     })),
+    deterministic_fallback: true,
   };
   findings.push(phase1Finding);
   writeFindings(findings, findingsPath);
@@ -663,7 +835,7 @@ function runBlindAuditor(options) {
   result.advisory_for_layer4 = phase1Finding.advisory_text + '\n\nSpecific findings:\n' +
     mismatches.map(m => `- ${m.type} (${m.severity}): ${m.detail}`).join('\n');
 
-  log(`Advisory written: ${mismatches.length} finding(s). Layer 4 must address on next run.`);
+  log(`Advisory written (deterministic): ${mismatches.length} finding(s).`);
 
   return result;
 }

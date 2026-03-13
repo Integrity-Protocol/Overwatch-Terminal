@@ -838,13 +838,24 @@ async function main() {
         }));
         const auditFindingsPath = path.join(resultsBaseDir, 'audit-findings.json');
         const auditLockPath = path.join(resultsBaseDir, 'auditor-state-lock.json');
-        const auditorResult = runBlindAuditor({
+        // Find most recent cognitive trace in the step's run directory
+        const stepRunDir = path.join(resultsBaseDir, 'results', `run-${String(step.step).padStart(3, '0')}`);
+        let auditTracePath = null;
+        try {
+          const traceFiles = fs.readdirSync(stepRunDir).filter(f => f.startsWith('cognitive-trace-') && f.endsWith('.json'));
+          if (traceFiles.length > 0) {
+            traceFiles.sort().reverse();
+            auditTracePath = path.join(stepRunDir, traceFiles[0]);
+          }
+        } catch (e) { /* trace not available — auditor will use deterministic fallback */ }
+        const auditorResult = await runBlindAuditor({
           history: auditHistory,
           currentOutput: result,
           domainConfig: domainConfig || {},
           runIndex: stepResults.length - 1,
           findingsPath: auditFindingsPath,
           lockPath: auditLockPath,
+          cognitiveTracePath: auditTracePath,
         });
         // Attach auditor metadata to step result
         result.auditor_phase = auditorResult.phase;

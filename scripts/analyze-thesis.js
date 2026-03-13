@@ -1926,11 +1926,23 @@ async function main() {
       if (fs.existsSync(domainConfigPath)) {
         domainConfig = JSON.parse(fs.readFileSync(domainConfigPath, 'utf8'));
       }
-      const auditorResult = runBlindAuditor({
+      // Find most recent cognitive trace for AI audit
+      let productionTracePath = null;
+      try {
+        const traceIndexPath = path.join(__dirname, '..', 'data', 'trace-index.json');
+        if (fs.existsSync(traceIndexPath)) {
+          const traceIndex = JSON.parse(fs.readFileSync(traceIndexPath, 'utf8'));
+          if (Array.isArray(traceIndex) && traceIndex.length > 0) {
+            productionTracePath = path.join(__dirname, '..', 'data', traceIndex[0]);
+          }
+        }
+      } catch (e) { /* trace not available — auditor will use deterministic fallback */ }
+      const auditorResult = await runBlindAuditor({
         history: auditHistory,
         currentOutput: assessment360,
         domainConfig,
         runIndex: auditHistory.length,
+        cognitiveTracePath: productionTracePath,
       });
       applyAuditorToOutput(assessment360, auditorResult);
       if (auditorResult.override) {
