@@ -6677,5 +6677,251 @@
     "violations_count": 9,
     "compliance": "MODERATE_ISSUES",
     "gate_failed": false
+  },
+  {
+    "timestamp": "2026-03-14T13:12:08.973Z",
+    "layer": 1,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "RLUSD market cap contraction resumes - inference that recovery narrative is undermined",
+          "rule_violated": "LZ-RC-002",
+          "violation": "Two data points ($1.583B vs $1.552B) are being used to declare that a recovery has been 'undermined' and a 'renewed contraction' is occurring. This treats two measurements as establishing a directional trend reversal when it could be normal volatility. The finding presents a ~2% decline as confirming a pattern shift without sufficient temporal data points.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "DXY weakening to 100.50 - description as 'unusual' and suggesting structural dollar concerns",
+          "rule_violated": "LZ-RC-004",
+          "violation": "The finding jumps to complex explanations ('fiscal concerns, tariff backlash, or foreign reserve diversification') without testing the simpler hypothesis that DXY at 100.50 during risk-off could be within normal variance or driven by immediate technical factors. The null hypothesis (normal market movement) is not tested before advancing multiple structural explanations.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "XRPL DEX volume anemic - claim that 'nobody is visibly using' PermissionedDEX",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The finding states 'Zero institutional adoption data for PermDEX after 3 weeks live' and concludes 'nobody is visibly using it.' This treats absence of visible evidence as evidence of absence. The lack of publicly reported institutional adoption data does not prove institutional non-adoption; institutions may be using it without public disclosure, or data may not be publicly available yet.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "BTC ETFs attracting strong inflows while XRP ETFs bleed - interpretation as 'flight-to-quality within crypto ETFs bypassing XRP'",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The finding observes correlation (BTC inflows positive, XRP inflows zero on same date) and interprets this as causal mechanism ('flight-to-quality... bypassing XRP'). The correlation is documented but the causal narrative (that capital is actively choosing BTC over XRP specifically due to quality assessment) is assumed rather than demonstrated. Alternative explanations (size differences, liquidity preferences, marketing penetration) are not considered.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Ondo claims 60% RWA market share on competing chains - assessment as 'competitive displacement signal for the PermissionedDEX kill switch'",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "This inference chain requires multiple unproven assumptions: (1) Ondo's 60% market share claim is accurate, (2) RWA market share on other chains directly displaces potential XRPL market share rather than expanding total addressable market, (3) Ondo's success on those chains means PermissionedDEX adoption is being actively prevented rather than delayed or following different adoption curves, (4) the institutional RWA use case Ondo serves is the same use case PermissionedDEX targets. Four compounding assumptions without independent verification.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "Section 122 tariff clock approaching midpoint - statement that markets 'must price both continuation and removal scenarios'",
+          "rule_violated": "LZ-RC-005",
+          "violation": "The finding asserts what markets 'must price' as if this is a measured fact rather than a forward-looking expectation about market behavior. This conflates prediction (what markets will do) with measurement (what markets are doing). No evidence is provided that markets are currently pricing these scenarios or how that pricing would be measured.",
+          "severity": "MINOR"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 15,
+      "clean_findings": 9,
+      "reviewer_notes": "Most macro measurements (Brent, USD/JPY, Fear & Greed) and structural data (ETF flows, market caps) follow evidence rules cleanly. The violations cluster around interpretive layers: turning correlations into causal stories, treating sparse data points as trends, and building multi-assumption inference chains without flagging uncertainty. The Ondo finding (LZ-EPH-003 violation) is the most serious—four compounding assumptions treated as direct evidence. Analyst should either provide independent verification for each assumption or downgrade confidence and add 'speculative' qualifier."
+    },
+    "violations_count": 6,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  },
+  {
+    "timestamp": "2026-03-14T13:16:53.546Z",
+    "layer": 2,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "Signal 20260314-1312-SIG-001: Compound stress matrix CRITICAL status via Hormuz disruption clause",
+          "rule_violated": "LZ-EH-004",
+          "violation": "The reasoning treats 'Brent at $103 confirms Hormuz disruption is operational' as verification that the Hormuz disruption clause is satisfied, but Brent price is not independent verification of a Hormuz disruption event. High oil prices can result from multiple causes (production cuts, demand surges, other supply disruptions, speculation). The analyst uses the oil price itself to confirm the disruption that would explain the oil price—this is circular. The thesis context references 'Iraq Rumaila shutdown and CMA CGM suspension' as ACTIVE DISRUPTION, but these are cited from 'prior thesis context' without verification that they remain current. An anomalous price should trigger verification of the underlying event via independent source before confirming the event occurred.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Signal 20260314-1312-SIG-003: 'Why are only 4 of 7 ETFs reporting?' gap flagged but then severity scored at 8 anyway",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The analyst identifies a critical knowledge gap: whether 3 funds have closed (which would be 'very bearish') or data is incomplete. This gap directly affects the severity assessment—fund closures would represent structural collapse, while incomplete reporting would mean the current data is partial. Despite acknowledging this gap affects severity 'significantly,' the analyst proceeds to score severity at 8 with HIGH confidence. Confidence must be proportional to evidence. When a knowledge gap is identified that 'matters significantly for severity,' confidence should be reduced accordingly. The analyst should have either: (1) scored with MEDIUM confidence due to the data completeness uncertainty, or (2) investigated the gap before scoring.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Signal 20260314-1312-SIG-006: Competitive knowledge gap identified but scored with MEDIUM confidence",
+          "rule_violated": "LZ-EPH-001",
+          "violation": "The analyst identifies that they 'don't know if PermissionedDEX is designed to compete in the same market segment as Ondo' and flags this as a COMPETITIVE_KNOWLEDGE_GAP, noting 'the degree of direct competition with PermissionedDEX depends on whether they're targeting overlapping market segments.' This is a fundamental uncertainty about whether the signal represents direct competitive threat or separate market dynamics. The honest answer is 'I don't know if this is competitive displacement.' Instead of saying 'I don't know' or marking the finding INSUFFICIENT_EVIDENCE, the analyst scores it as severity 6 competitive displacement with the uncertainty buried in a confidence downgrade to MEDIUM. When the core question is 'are these competitors?' and the answer is 'I don't know,' that should pause scoring, not just reduce confidence.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Signal 20260314-1312-SIG-010: 22 days characterized as 'approaching meaningful sustained non-adoption' for institutional infrastructure",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The reasoning chain contains multiple unproven assumptions: (1) that 22 days is 'approaching' a meaningful timeframe for institutional infrastructure, (2) that the absence of visible adoption signals (not just activity) is evidence of non-adoption rather than private/unannounced adoption, (3) that institutional onboarding timelines of 3-6 months are the correct benchmark for this specific infrastructure. The analyst acknowledges 'Enterprise onboarding cycles for regulated infrastructure typically take 3-6 months. 22 days may be too early...' but then scores it anyway as severity 6 based on 'zero adoption signals.' The threshold calibration gap is acknowledged but the inference proceeds through it. Three unproven assumptions (timeframe sufficiency, visibility completeness, benchmark applicability) make this speculative per LZ-EPH-003.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Signal 20260314-1312-SIG-014: Severity elevated from 4 to 5 due to 'compound interaction' with Brent $103",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The analyst elevates severity because 'the interaction between tariffs and $103 Brent is now a live compound effect.' The tariffs and oil prices are co-occurring, but the analyst has not established a causal mechanism for how they interact beyond both being inflationary. Co-occurrence of two inflationary pressures is noted, but treating their simultaneous presence as a 'compound effect' that amplifies severity assumes they interact multiplicatively rather than additively, which is unproven. The reasoning 'Tariffs + oil shock simultaneously active amplifies inflationary pressure' treats correlation (both are present) as evidence of interactive amplification (they compound each other) without demonstrating the mechanism.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Kill Switch Status: RLUSD 'Requires $11.81M/day growth rate' presented as current requirement",
+          "rule_violated": "LZ-RC-005",
+          "violation": "The $11.81M/day growth rate is a forward-looking calculation of what would be required to reach $5B by the target date from the current $1.552B level. This is a prediction/requirement for future performance, not a measurement of current activity. The kill switch status presents it as 'Requires $11.81M/day growth rate' without clearly distinguishing that this is a calculated future requirement, not an observed current metric. Predictions and measurements carry fundamentally different evidentiary weight. The phrasing conflates what is required (future prediction) with what is observed (current measurement).",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Knowledge Audit for Signal 001: 'Hormuz disruption clause independently triggers CRITICAL status' conclusion",
+          "rule_violated": "LZ-RC-004",
+          "violation": "The analyst concludes CRITICAL status via the Hormuz disruption clause without testing the simpler sufficient explanation first: that two of three elevated conditions are met (Brent >$95 YES, USD/JPY >157 YES, JGB >2.3% NO), which per the thesis matrix triggers ELEVATED minimum, not CRITICAL. The analyst jumps to the complex explanation (Hormuz disruption clause) without demonstrating that the simpler two-of-three elevated condition is insufficient to explain the status. The null hypothesis (standard two-of-three threshold) should be tested before invoking the exception clause (Hormuz disruption), especially when the underlying event (active Hormuz disruption) has not been independently verified this cycle.",
+          "severity": "MODERATE"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 45,
+      "clean_findings": 38,
+      "reviewer_notes": "The output shows strong application of graduated lessons (CL-001, CL-002, CL-005, CL-006, CL-011, CL-017, CL-023, CL-033) and generally sound reasoning structure. However, there are recurring patterns of: (1) identifying critical knowledge gaps but scoring anyway with confidence downgrades rather than saying 'I don't know,' (2) using outcomes to verify the events that would cause those outcomes (circular verification), and (3) assumption chains that exceed the three-assumption threshold. The most serious issue is the Hormuz disruption verification in SIG-001, where oil price is used to confirm the disruption that would explain the oil price. The analyst demonstrates strong gap identification but needs to treat identified gaps as stop conditions more consistently rather than as confidence moderators. Overall, the epistemological discipline is present but several findings cross the line from cautious inference to speculation."
+    },
+    "violations_count": 7,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  },
+  {
+    "timestamp": "2026-03-14T13:22:45.545Z",
+    "layer": 3,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "Strategic inference: XRP ETF weekly outflows accelerating with cumulative net flow turning negative - assumption count",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "High confidence (marked 'high') on an inference with one stated assumption, but the inference actually contains an additional unstated assumption: that the March 13 flow pattern is representative of a durable institutional preference rather than a temporary positioning shift. The reasoning acknowledges this could be 'one or two large portfolio rebalances' in the alternative explanation but doesn't count verifying the pattern's durability as a second assumption when classifying the primary explanation.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Hidden move: Ripple active negotiations for PermissionedDEX onboarding",
+          "rule_violated": "LZ-CC-001",
+          "violation": "This is a logically coherent narrative ('Ripple invested resources, therefore rational behavior is active business development') without verifiable real-world anchoring. The 'evidence_hints' cited (Hidden Road DTCC status, registrations, PermDEX live) confirm infrastructure exists, not that negotiations are occurring. The inference treats plausibility as evidence. The classification as 'FLAGGED' with low confidence partially mitigates this, but the inference structure itself violates the rule by presenting coherent logic without physical correspondence.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Hidden move: XRP ETF issuers consolidating non-reporting funds",
+          "rule_violated": "LZ-RC-004",
+          "violation": "The simpler sufficient explanation for 3 of 7 funds not reporting is 'reporting delay or data collection gap' - this should be tested before the more complex explanation of fund closures/mergers. The inference jumps to the closure hypothesis without adequately testing the null. The classification as 'FLAGGED' with low confidence shows appropriate epistemic humility, but the reasoning sequence violates the simplest-first principle.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Scenario probability: thesis_confirmed at 15%",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "Confidence is implicit in assigning a specific probability (15%) to a scenario. The precision of '15%' rather than a range (10-20%) or qualitative assessment (low probability) implies higher confidence in the probability estimate than the evidence supports. The scenario assessment is built on multiple compound conditional statements ('Requires: PermDEX adoption AND RLUSD acceleration AND ETF reversal AND ODL data') where the probability calculation method is not shown. Assigning a precise probability without showing the calculation methodology or uncertainty range is disproportionate confidence.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Scenario probability: thesis_modified at 50%",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "Same violation as thesis_confirmed - assigning a precise 50% probability without showing calculation methodology or acknowledging uncertainty range. The 50% figure implies false precision given the number of unresolved variables (PermDEX onboarding pipeline, competing infrastructure trajectories, central bank actions, market segment definitions).",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Scenario probability: thesis_falsified at 35%",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "Same violation - precise probability without methodology or uncertainty range. Additionally, the three scenarios (15%, 50%, 35%) sum to 100%, which implies these are the only possible outcomes and the probability space is fully captured, but there's no explicit acknowledgment that these are subjective assessments rather than calculated probabilities.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Player analysis: Ripple say-do gap assessment 'MODERATE AND WIDENING'",
+          "rule_violated": "LZ-RC-002",
+          "violation": "The 'WIDENING' characterization requires multiple observations across time. The analysis cites current state evidence (PermDEX at 22 days, RLUSD at $1.552B, ODL data withdrawn) but doesn't provide the prior measurement points needed to establish that the gap is widening rather than static. A widening gap is a trend claim that requires at least two time-separated measurements. The current evidence shows the gap exists but doesn't prove it's widening.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Strategic inference: RLUSD market cap contraction - materialization signal includes pace requirement analysis",
+          "rule_violated": "LZ-MR-002",
+          "violation": "The reasoning conflates relevance and accuracy when it states 'the STRATEGIC concern is not the oscillation itself but the PACE' and then notes that RLUSD has not demonstrated required growth rate 'during ANY period.' This mixes the question of whether the current $31M decline is normal variance (which the null correctly handles) with the separate question of whether the overall trajectory is sufficient (which is a different finding). The pace insufficiency claim would need to be verified against the most recent data in the current run per the corrections ledger, not asserted across 'ANY period' without time-specific evidence.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Compound stress inference: USD/JPY proximity assessment '0.4% away'",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "High implied confidence in the significance of the 67 pip distance to 160 threshold without acknowledging that the 160 level, while historically significant, is a psychological/policy level rather than a physical constraint. The precision of '0.4% away' and 'only 67 pips' implies that breaching 160 has deterministic consequences ('would likely force BOJ intervention') with higher confidence than the evidence supports. The BOJ's actual intervention threshold is not known with certainty and may have changed since historical precedents.",
+          "severity": "MINOR"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 38,
+      "reviewer_notes": "The output demonstrates strong epistemological discipline in most areas - particularly good null hypothesis testing, honest assumption counting in strategic inferences, appropriate use of LZ-RC-003 and LZ-EH-004 for anomalous data, and extensive application of the corrections ledger. The violations cluster in three areas: (1) scenario probability precision without methodology, (2) hidden move inferences approaching the plausibility trap despite being flagged, and (3) minor confidence calibration issues in compound assessments. The most significant structural issue is the scenario probability section assigning precise percentages (15%, 50%, 35%) without showing calculation basis - this creates false precision. Recommend either switching to qualitative assessments (low/medium/high probability) or showing explicit probability calculation methodology with uncertainty ranges. The hidden moves section appropriately flags low confidence but still constructs narratives without anchoring - consider whether these should be removed entirely rather than flagged, per LZ-EPH-001 (I don't know > I assumed). Overall, this is a high-quality output with moderate issues that don't undermine core findings but do create calibration concerns in probability assessment sections."
+    },
+    "violations_count": 9,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  },
+  {
+    "timestamp": "2026-03-14T13:27:12.040Z",
+    "layer": 4,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "ODL/Ripple Payments institutional settlement volumes classified as SUSPICIOUS_ABSENCE with inference that 'the most rational explanation for hiding metrics is that metrics are unfavorable'",
+          "rule_violated": "LZ-RC-004",
+          "violation": "The analysis states it applies LZ-RC-004 (simplest sufficient explanation) but does not actually test simpler explanations first. 'Unfavorable metrics' is presented as the simplest explanation, but multiple simpler alternatives exist: (1) regulatory constraint on disclosure, (2) competitive intelligence protection, (3) changed internal reporting priorities. The reasoning assumes these are 'more complex' without testing them. The null hypothesis—that data withdrawal could have non-performance-related causes—is not genuinely tested before accepting the unfavorable-metrics explanation.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Kill switch review escalates ODL Volume from NEEDS_DATA to WARNING based on data withdrawal being 'an action per LZ-EH-003' and states 'If ODL data remains hidden through Q3 2026, this becomes a de facto failed kill switch regardless of actual volumes'",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The statement 'this becomes a de facto failed kill switch regardless of actual volumes' violates LZ-RC-003 (absence of evidence is not evidence of absence, nor evidence of presence). The reasoning explicitly states that even if actual ODL volumes meet the kill switch threshold, the absence of published data would constitute failure. This converts absence of measurement into evidence of negative performance, which is precisely what LZ-RC-003 prohibits. The data gap is real and concerning, but cannot be treated as equivalent to measured failure.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "XRP ETF fund closures inference receives 'reduced_50' weight with reasoning that 'the underlying observation (4 vs 7 reporting) is factual and the direction of inference is economically rational'",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The confidence/weight is not proportional to evidence. The analysis acknowledges 'no direct evidence of closure' and correctly identifies this as a data gap, but then assigns 50% weight because the inference is 'economically rational.' Economic rationality is a plausibility argument, not evidence. Per LZ-EPH-002, the confidence must be proportional to actual evidence, not the logical appeal of the inference. Zero evidence of closure should yield minimal to zero weight, not 50%.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Thesis status reasoning states 'The thesis is not falsified—the infrastructure exists and Hidden Road is deploying—but the weight of measured evidence points to weakening'",
+          "rule_violated": "LZ-CC-001",
+          "violation": "The phrase 'the infrastructure exists' is used as partial evidence supporting the thesis, but infrastructure existence without demonstrated usage is not evidence of the thesis (institutional adoption of XRPL for settlement). This is the Plausibility Trap—a logically coherent narrative (infrastructure → potential usage) without verifiable real-world anchoring (actual usage). The analysis correctly identifies zero adoption signals elsewhere but then partially credits infrastructure existence as a countervailing factor. Infrastructure capacity is not evidence of infrastructure demand.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Biggest uncertainty identified as 'ODL institutional settlement volumes—the single data point that could shift thesis probability by 15-20 percentage points in either direction'",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The specific quantification '15-20 percentage points' is stated with no evidence or methodology provided for how this range was determined. This is false precision—assigning a specific numerical confidence interval without showing the calculation or evidence basis. The direction (that ODL data would be highly influential) is valid, but the specific percentage range is unsupported speculation presented as if it were a measured or calculated value.",
+          "severity": "MINOR"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 42,
+      "reviewer_notes": "The output demonstrates strong epistemological discipline in most areas—particularly in null hypothesis application, assumption counting, and the handling of the PermissionedDEX timeline question. However, there are two significant structural issues: (1) the ODL data withdrawal analysis violates both LZ-RC-004 (by not genuinely testing simpler alternatives) and LZ-RC-003 (by treating future absence as equivalent to measured failure), and (2) the XRP ETF fund closure inference assigns weight based on economic rationality rather than evidence. The SERIOUS violation on the ODL kill switch language is noteworthy because it explicitly states that absence of data would constitute failure 'regardless of actual volumes'—this is a direct inversion of LZ-RC-003's core principle. The analysis is otherwise highly rigorous, but these violations affect key findings."
+    },
+    "violations_count": 5,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
   }
 ]
