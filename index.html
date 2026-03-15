@@ -1170,6 +1170,30 @@ textarea:focus { border-color:var(--accent-cyan); }
         </div>
       </div>
 
+      <!-- 1b. Thesis Status (AD #13) -->
+      <div class="full-card" style="border-color:rgba(0,229,153,0.3);background:linear-gradient(135deg,rgba(0,229,153,0.04),transparent);">
+        <div class="s360-hdr" onclick="toggle360('status')">
+          <h3 style="margin:0;">◉ THESIS STATUS</h3>
+          <span class="s360-toggle" id="s360-toggle-status">▲</span>
+        </div>
+        <div class="s360-body" id="s360-body-status">
+          <div style="text-align:center;margin:12px 0 8px;">
+            <span id="s360-thesis-status" style="display:inline-block;padding:10px 28px;border-radius:6px;border:2px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:700;letter-spacing:3px;">—</span>
+          </div>
+          <div style="text-align:center;margin:0 0 10px;">
+            <span id="s360-confidence" style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--text-muted);">CONFIDENCE: —</span>
+          </div>
+          <div class="interpret-box" style="border-color:rgba(255,255,255,0.08);">
+            <div class="label">STATUS REASONING</div>
+            <p id="s360-status-reasoning" style="color:var(--text-secondary);font-size:11px;line-height:1.55;">—</p>
+          </div>
+          <div class="interpret-box" style="border-color:rgba(255,255,255,0.08);margin-top:8px;">
+            <div class="label">UNRESOLVED TENSIONS</div>
+            <div id="s360-tensions" style="color:var(--text-secondary);font-size:11px;line-height:1.55;">—</div>
+          </div>
+        </div>
+      </div>
+
       <!-- 2. Bear Pressure Score -->
       <div class="full-card">
         <div class="s360-hdr" onclick="toggle360('score')">
@@ -5010,6 +5034,45 @@ function render360Report(r) {
 
   // 1. Commander Summary
   set('s360-commander', r.commander_summary);
+
+  // 1b. Thesis Status (AD #13)
+  const tsStatus = r.thesis_status || r._layer4_raw?.thesis_status;
+  const tsConf = r.confidence_in_status || r._layer4_raw?.confidence_in_status;
+  const tsReasoning = r.thesis_status_reasoning || r._layer4_raw?.thesis_status_reasoning;
+  const tsAction = r.action_recommendation || r.tactical_recommendation;
+  const statusEl = document.getElementById('s360-thesis-status');
+  if (statusEl && tsStatus) {
+    const statusMap = {
+      STRENGTHENING:         { bg:'rgba(34,197,94,0.12)',  border:'#22c55e', color:'#22c55e' },
+      STABLE:                { bg:'rgba(138,155,186,0.12)', border:'#8a9bba', color:'#8a9bba' },
+      WEAKENING:             { bg:'rgba(249,115,22,0.12)', border:'#f97316', color:'#f97316' },
+      CONTESTED:             { bg:'rgba(168,85,247,0.12)', border:'#a855f7', color:'#a855f7' },
+      INSUFFICIENT_EVIDENCE: { bg:'rgba(234,179,8,0.12)',  border:'#eab308', color:'#eab308' },
+    };
+    const sc = statusMap[tsStatus] || statusMap.STABLE;
+    statusEl.textContent = tsStatus.replace(/_/g, ' ');
+    statusEl.style.cssText = `display:inline-block;padding:10px 28px;border-radius:6px;border:2px solid ${sc.border};background:${sc.bg};color:${sc.color};font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:700;letter-spacing:3px;`;
+  }
+  const confEl2 = document.getElementById('s360-confidence');
+  if (confEl2 && tsConf) confEl2.textContent = 'CONFIDENCE: ' + tsConf.toUpperCase();
+  set('s360-status-reasoning', tsReasoning);
+
+  // Unresolved tensions
+  const tensions = r.unresolved_tensions || r._layer4_raw?.unresolved_tensions || [];
+  const tensionsEl = document.getElementById('s360-tensions');
+  if (tensionsEl) {
+    if (tensions.length === 0) {
+      tensionsEl.innerHTML = '<span style="color:var(--text-muted);font-size:10px;">No unresolved tensions.</span>';
+    } else {
+      tensionsEl.innerHTML = tensions.map(t => {
+        const score = t.impact_score != null ? t.impact_score : '';
+        const scoreColor = score >= 4 ? '#ef4444' : score >= 3 ? '#f97316' : score >= 2 ? '#eab308' : '#8a9bba';
+        const scoreTag = score ? `<span style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;color:${scoreColor};margin-right:6px;">[${score}]</span>` : '';
+        const watchTag = t.watch_for ? `<div style="font-size:10px;color:var(--text-muted);margin-top:2px;">Watch: ${escHtml(t.watch_for)}</div>` : '';
+        return `<div style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);">${scoreTag}<span style="color:var(--text-primary);">${escHtml(t.tension || '')}</span>${watchTag}</div>`;
+      }).join('');
+    }
+  }
 
   // 2. Bear Pressure Score
   const score = r.bear_pressure_score ?? 0;
