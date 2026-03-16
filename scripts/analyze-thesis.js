@@ -35,6 +35,7 @@ const { runTier1Checks } = require('./tier1-validators');
 const { runLayerZeroGate } = require('./layer-zero-gate');
 const { runBlindAuditor, applyAuditorToOutput } = require('./blind-auditor');
 const { assembleTrace } = require('./assemble-trace');
+const { logPaperTrades, applyDispositions } = require('./x402-paper-trade-logger');
 
 const DASHBOARD_PATH      = path.join(__dirname, '..', 'dashboard-data.json');
 const ANALYSIS_PATH       = path.join(__dirname, '..', 'analysis-output.json');
@@ -883,7 +884,11 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary outs
       "signal": "name",
       "reason": "description of why it cannot be scored",
       "knowledge_needed": "what would be needed to score this",
-      "acquisition_type": "KNOWLEDGE | INTELLIGENCE"
+      "acquisition_type": "KNOWLEDGE | INTELLIGENCE",
+      "intended_epistemic_vector": "STRENGTHEN | WEAKEN | INFORM — what direction do you expect this data to push the assessment?",
+      "expected_impact_score": "1-5 integer — how much would filling this gap change the assessment? 1=informational, 3=moderate, 5=could flip the assessment",
+      "urgency": "IMMEDIATE | NEXT_CYCLE — IMMEDIATE only if this gap blocks a kill switch evaluation or circuit breaker assessment. Most gaps are NEXT_CYCLE.",
+      "source_category": "category from domain config (e.g., on_chain_analytics, market_data, regulatory_intelligence)"
     }
   ],
   "kill_switch_status": [
@@ -1158,11 +1163,16 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary outs
   },
   "x402_paper_trades": [
     {
+      "signal_ids": ["from the source signals that exposed this gap"],
       "question": "what would you pay to know?",
       "data_source": "where it would come from",
       "impact_on_analysis": "how it would change the assessment",
       "confidence_data_exists": "high | medium | low",
-      "estimated_value": "how much resolving this uncertainty is worth"
+      "estimated_value": "how much resolving this uncertainty is worth",
+      "intended_epistemic_vector": "STRENGTHEN | WEAKEN | INFORM — what direction do you expect this data to push the assessment?",
+      "expected_impact_score": "1-5 integer — how much would filling this gap change the assessment? 1=informational, 3=moderate, 5=could flip the assessment",
+      "urgency": "IMMEDIATE | NEXT_CYCLE — IMMEDIATE only if this gap blocks a kill switch evaluation or circuit breaker assessment. Most gaps are NEXT_CYCLE.",
+      "source_category": "category from domain config (e.g., on_chain_analytics, market_data, regulatory_intelligence)"
     }
   ],
   "compound_stress_inference": {
@@ -1476,6 +1486,15 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary outs
       "gap_reason": "why this data cannot be observed",
       "promotable_if": "what would make this gap resolvable",
       "classification": "STRUCTURAL_GAP"
+    }
+  ],
+  "acquisition_dispositions": [
+    {
+      "request_id": "ACQ-L2-... or ACQ-L3-... from the pending acquisition requests",
+      "disposition": "APPROVED | DENIED | DEFERRED",
+      "reasoning": "why this acquisition is approved, denied, or deferred",
+      "tension_id": "T-N if this request maps to an active tension, null otherwise",
+      "structural_gap_id": "SG-N if this request maps to a structural gap, null otherwise"
     }
   ],
   "final_bear_pressure": 0,
@@ -1884,6 +1903,21 @@ async function main() {
         }
       }
 
+      // ── x402 Paper Trade Logger (Post-Layer-3) ────────────────────────
+      let paperTradeResult = { requests_logged: 0, request_ids: [] };
+      if (inferenceResult && contextualizeResult) {
+        try {
+          paperTradeResult = logPaperTrades(
+            contextualizeResult,
+            inferenceResult,
+            generatedAt,
+            domainConfigMain
+          );
+        } catch (ptErr) {
+          warn('x402', `Paper trade logging failed (non-fatal): ${ptErr.message}`);
+        }
+      }
+
       if (inferenceResult) {
         // ── Layer 4: RECONCILE ────────────────────────────────────────────
         console.log('\n═══ LAYER 4: RECONCILE ═══');
@@ -1945,6 +1979,16 @@ async function main() {
             }
           } catch (traceErr) {
             warn('trace', `Trace assembly failed (non-fatal): ${traceErr.message}`);
+          }
+
+          // ── x402 Disposition Writeback (Post-Layer-4) ───────────────────
+          try {
+            const dispResult = applyDispositions(reconcileResult, domainConfigMain);
+            if (dispResult.dispositions_applied > 0) {
+              log('x402', `Applied ${dispResult.dispositions_applied} acquisition dispositions`);
+            }
+          } catch (dispErr) {
+            warn('x402', `Disposition writeback failed (non-fatal): ${dispErr.message}`);
           }
         } else {
           // Layer 4 failed — fall back to Layer 2 output via old bridge

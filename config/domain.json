@@ -67,5 +67,32 @@
   "auditor_override_actions": {
     "escalate_to": "EXIT_SIGNAL",
     "deescalate_to": "HOLD_POSITION"
-  }
+  },
+
+  "x402_budget": {
+    "cycle_limit_drops": 5000,
+    "weekly_limit_drops": 25000,
+    "min_impact_score": 2,
+    "min_purchases_for_decay": 3,
+    "crisis_circuit_breaker_pct": 50,
+    "budget_reset_cadence": "cycle"
+  },
+
+  "x402_paper_trade_retention": 200,
+
+  "x402_epistemic_vectors": ["STRENGTHEN", "WEAKEN", "INFORM"],
+
+  "x402_urgency_levels": ["IMMEDIATE", "NEXT_CYCLE", "DENIED"],
+
+  "x402_source_categories_description": "Domain-specific data source categories for acquisition tracking. Replace entirely when deploying on a new domain.",
+
+  "x402_source_categories": [
+    "on_chain_analytics",
+    "market_data",
+    "regulatory_intelligence",
+    "institutional_flow_data",
+    "geopolitical_analysis",
+    "technical_infrastructure",
+    "competitive_intelligence"
+  ]
 }
