@@ -1279,6 +1279,25 @@ async function runReconcile(contextualizeResult, inferenceResult, marketData, th
     warn('analysis', `Blind Auditor advisory load failed (non-fatal): ${e.message}`);
   }
 
+  // x402: Build pending acquisitions section for disposition
+  let pendingAcquisitionsSection = '';
+  const pendingAcqs = (opts && opts.pendingAcquisitions) || [];
+  if (pendingAcqs.length > 0) {
+    try {
+      const ptPath = path.join(__dirname, '..', 'data', 'x402-paper-trades.json');
+      if (fs.existsSync(ptPath)) {
+        const ptLog = JSON.parse(fs.readFileSync(ptPath, 'utf8'));
+        const pending = ptLog.requests.filter(r => pendingAcqs.includes(r.request_id) && r.disposition === null);
+        if (pending.length > 0) {
+          const summary = pending.map(r => ({ request_id: r.request_id, requesting_layer: r.requesting_layer, request_type: r.request_type, description: r.description, intended_epistemic_vector: r.intended_epistemic_vector, expected_impact_score: r.expected_impact_score, urgency: r.urgency, source_category: r.source_category }));
+          pendingAcquisitionsSection = `\n=== PENDING ACQUISITION REQUESTS — DISPOSITION EACH ===\n\nThese data acquisition requests were identified by Layers 2 and 3. For each, declare a disposition:\n- APPROVED: The gap justifies the cost. Link to a tension_id or structural_gap_id if applicable.\n- DENIED: Cost exceeds expected impact, or similar data was previously wasted.\n- DEFERRED: Important but assessment can proceed without it this cycle.\n\n${JSON.stringify(summary, null, 2)}\n`;
+        }
+      }
+    } catch (e) {
+      // Non-fatal — Layer 4 runs without acquisition dispositions
+    }
+  }
+
   // AD #15: Build previous tensions section for lifecycle management
   let previousTensionsSection = '';
   const previousTensions = (opts && opts.previousTensions) || [];
@@ -1305,6 +1324,7 @@ THESIS CONTEXT:
 ${thesisContext}
 ${advisorySection}
 ${previousTensionsSection}
+${pendingAcquisitionsSection}
 === BURDEN OF PROOF — APPLY BEFORE ALL ELSE ===
 
 For every inference Layer 3 produced, apply judicial skepticism:
@@ -1940,7 +1960,7 @@ async function main() {
           warn('analysis', `Previous tensions load failed (non-fatal): ${e.message}`);
         }
 
-        const reconcileResult = await runReconcile(contextualizeResult, inferenceResult, dashboardData, thesisContext, { previousTensions, domainConfig: domainConfigMain });
+        const reconcileResult = await runReconcile(contextualizeResult, inferenceResult, dashboardData, thesisContext, { previousTensions, domainConfig: domainConfigMain, pendingAcquisitions: paperTradeResult.request_ids });
 
         // Tier 1 validators — Layer 4
         let tier1Layer4 = { flags: [], hard_fails: 0, total_flags: 0, layer: 4 };
