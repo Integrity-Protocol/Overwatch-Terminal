@@ -846,5 +846,23 @@
     "times_applied": 0,
     "times_applicable_but_missed": 0,
     "status": "ACTIVE"
+  },
+  {
+    "id": "CL-048",
+    "date_of_error": "2026-03-16",
+    "date_identified": "2026-03-16",
+    "identified_by": "human_operator",
+    "belief": "Layer 4 classified ODL volume as active tension T-1 (score 5, months window) despite the data being unobservable — Ripple ceased voluntary publication and no independent measurement methodology exists. The system treated an observability limitation as its highest-priority open question.",
+    "reality": "ODL volume has no resolution path. There is no expected publication date, no independent data source, and no timeline for when this data might become available. This is a structural data gap (SG-1), not an active tension. A tension requires a resolution path — a question that will be answered by events. An unobservable metric with no resolution path is a declared limitation of the system's observability.",
+    "root_cause": "Layer 4 conflated the importance of a metric with whether it constitutes an active question. ODL volume is the thesis's primary metric, so the system wants to keep it visible. But importance does not make data observable. Carrying it as T-1 inflates the active tension count and misrepresents the system's actual open questions.",
+    "root_cause_type": "ASSUMPTION_FAILURE",
+    "prevention": "A tension classified as ACTIVE must have a resolution path — an identifiable event, data release, or observable outcome that will answer the question within the declared window. If no resolution path exists, it is a STRUCTURAL_GAP regardless of its importance to the thesis. The active tension list tracks what the system is waiting to learn, not what it wishes it could observe.",
+    "lesson": "Importance is not observability. The most critical metric in the thesis can still be a structural data gap if no resolution path exists. Active tensions require resolution paths. Structural gaps declare observability limitations. Do not promote gaps to tensions to keep them visible — that is what the structural_gaps array is for.",
+    "trigger": "Any active tension where the description references data that is not publicly available, has no expected publication date, and has no independent measurement methodology. If the watch_for field describes conditions that depend entirely on a private entity's voluntary disclosure with no timeline, it is a structural gap.",
+    "lesson_type": "EPISTEMOLOGICAL_DISCIPLINE",
+    "confidence_in_lesson": "HIGH",
+    "times_applied": 0,
+    "times_applicable_but_missed": 0,
+    "status": "ACTIVE"
   }
 ]
