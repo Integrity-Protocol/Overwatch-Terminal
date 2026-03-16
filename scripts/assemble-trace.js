@@ -397,6 +397,50 @@ function assembleTrace(options) {
     });
   }
 
+  // ── x402 Blind Tagging (Post-Pipeline) ──────────────────────────────
+  // Match signal_ids against x402 paper trade log. Tag retroactively.
+  // The analytical layers never see this tag — it exists only in the trace.
+  // AD: x402 Cognitive Guardrail — blind tagging prevents survival bias.
+  let x402Tagged = 0;
+  try {
+    const ptPath = opts.paperTradeLogPath || path.join(DATA_DIR, 'x402-paper-trades.json');
+    if (fs.existsSync(ptPath)) {
+      const ptLog = JSON.parse(fs.readFileSync(ptPath, 'utf8'));
+      const ptSignalIds = new Set();
+      for (const req of (ptLog.requests || [])) {
+        if (Array.isArray(req.signal_ids)) {
+          for (const sid of req.signal_ids) ptSignalIds.add(sid);
+        }
+      }
+      if (ptSignalIds.size > 0) {
+        for (const entry of trace) {
+          const entryIds = entry.signal_ids || [];
+          const overlap = entryIds.some(sid => ptSignalIds.has(sid));
+          if (overlap) {
+            entry.acquisition_source = 'x402';
+            if (entry.outcome === 'SURVIVED' || entry.outcome === 'FLAGGED') {
+              entry.acquisition_survival = 'survived';
+            } else if (entry.outcome === 'STRIPPED') {
+              entry.acquisition_survival = 'stripped';
+            } else if (entry.outcome === 'REJECTED') {
+              entry.acquisition_survival = 'rejected';
+            } else if (entry.outcome === 'PRUNED') {
+              entry.acquisition_survival = 'pruned';
+            } else {
+              entry.acquisition_survival = 'unknown';
+            }
+            x402Tagged++;
+          }
+        }
+        if (x402Tagged > 0) {
+          log('x402', `Blind-tagged ${x402Tagged} signal(s) with acquisition_source`);
+        }
+      }
+    }
+  } catch (tagErr) {
+    warn('x402', `Blind tagging failed (non-fatal): ${tagErr.message}`);
+  }
+
   // ── Summary ──
   const outcomes = { SURVIVED: 0, REJECTED: 0, STRIPPED: 0, FLAGGED: 0, PRUNED: 0 };
   for (const entry of trace) {
@@ -416,6 +460,7 @@ function assembleTrace(options) {
     _run_timestamp: generatedAt,
     _signal_count: trace.length,
     _outcomes: outcomes,
+    _x402_tagged: x402Tagged,
     signals: trace
   };
 
