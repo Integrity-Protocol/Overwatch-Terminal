@@ -1302,7 +1302,7 @@ async function runReconcile(contextualizeResult, inferenceResult, marketData, th
   let previousTensionsSection = '';
   const previousTensions = (opts && opts.previousTensions) || [];
   if (previousTensions.length > 0) {
-    previousTensionsSection = `\n=== PREVIOUS RUN'S UNRESOLVED TENSIONS — YOU MUST DISPOSITION EACH ===\n\nThese are YOUR tensions from the previous run. For each one, you MUST assign a disposition:\n- RESOLVE: The question has been answered. Cite what specific evidence resolved it.\n- MAINTAIN: Still open. Provide current impact_score (rescore with justification if changed).\n- ESCALATE: More critical now. Score increases with justification.\n- DISPLACE: Removed for a higher-priority new tension. Justify the priority comparison.\n\nDo NOT silently drop a tension. Every previous tension must appear in your output with a disposition.\n\n${JSON.stringify(previousTensions, null, 2)}\n`;
+    previousTensionsSection = `\n=== PREVIOUS RUN'S UNRESOLVED TENSIONS — YOU MUST DISPOSITION EACH ===\n\nThese are YOUR tensions from the previous run. For each one, you MUST assign a disposition:\n- RESOLVE: The question has been answered. Cite what specific evidence resolved it.\n- MAINTAIN: Still open. Provide current impact_score (rescore with justification if changed).\n- ESCALATE: More critical now. Score increases with justification.\n- DISPLACE: Removed for a higher-priority new tension. Justify the priority comparison.\n\nEXTENSION FRICTION: If you extend a tension's resolution window for the second consecutive run, you MUST increase its impact_score. First extension is free with justification. Second extension costs a score increase — the question is getting harder to answer, acknowledge it.\n\nDo NOT silently drop a tension. Every previous tension must appear in your output with a disposition.\n\n${JSON.stringify(previousTensions, null, 2)}\n`;
   }
 
   const prompt = `${LAYER_ZERO_RULES}
@@ -1966,7 +1966,7 @@ async function main() {
         let tier1Layer4 = { flags: [], hard_fails: 0, total_flags: 0, layer: 4 };
         if (reconcileResult) {
           try {
-            tier1Layer4 = runTier1Checks(4, reconcileResult, dashboardData, domainConfigMain);
+            tier1Layer4 = runTier1Checks(4, reconcileResult, dashboardData, domainConfigMain, previousTensions);
           } catch (e) {
             warn('tier1', `Layer 4 validator failed (non-fatal): ${e.message}`);
             tier1Layer4 = { flags: [{ rule_id: 'VALIDATOR_FAILURE', finding: 'Layer 4 Tier 1 checks', detail: e.message, severity: 'FLAG', timestamp: new Date().toISOString() }], hard_fails: 0, total_flags: 1, layer: 4 };

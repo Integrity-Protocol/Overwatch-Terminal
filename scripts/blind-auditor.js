@@ -463,6 +463,57 @@ function detectWindowGaming(trajectory) {
 }
 
 /**
+ * Detect zombie escalation — tension score creeps upward across consecutive
+ * runs without resolving. The trajectory itself is the signal.
+ * Catches slow-creep gaming below the critical persistence threshold.
+ */
+function detectZombieEscalation(trajectory, domainConfig) {
+  const threshold = (domainConfig && domainConfig.zombie_escalation_threshold) || 4;
+  if (trajectory.length < threshold) return null;
+
+  // Track score sequences per tension_id across trajectory entries
+  const tensionScores = {};
+  for (const entry of trajectory) {
+    const seen = new Set();
+    for (const t of entry.tensions) {
+      if (!t.tension_id) continue;
+      if (!tensionScores[t.tension_id]) tensionScores[t.tension_id] = [];
+      tensionScores[t.tension_id].push(t.impact_score || 3);
+      seen.add(t.tension_id);
+    }
+    // Tensions not present in this entry break their streak
+    for (const id of Object.keys(tensionScores)) {
+      if (!seen.has(id)) tensionScores[id] = [];
+    }
+  }
+
+  const zombies = [];
+  for (const [id, scores] of Object.entries(tensionScores)) {
+    if (scores.length < threshold) continue;
+    const recent = scores.slice(-threshold);
+    // Check: each score >= previous (allows plateaus)
+    let consecutive = true;
+    for (let i = 1; i < recent.length; i++) {
+      if (recent[i] < recent[i - 1]) { consecutive = false; break; }
+    }
+    // Must have net escalation (latest > first), not just flat
+    if (consecutive && recent[recent.length - 1] > recent[0]) {
+      zombies.push({ tension_id: id, scores: recent });
+    }
+  }
+
+  if (zombies.length > 0) {
+    return {
+      type: 'ZOMBIE_ESCALATION',
+      detail: `Tension(s) with creeping score escalation over ${threshold}+ runs: ${zombies.map(z => `${z.tension_id} (${z.scores.join(' → ')})`).join(', ')}. Slow-creep trajectory without resolution.`,
+      severity: zombies.some(z => z.scores[z.scores.length - 1] >= 4) ? 'HIGH' : 'MEDIUM',
+      zombies,
+    };
+  }
+  return null;
+}
+
+/**
  * AD #15: Run all behavioral tension detectors.
  * Returns array of all triggered findings (may be empty).
  */
@@ -475,6 +526,7 @@ function detectTensionBehavior(trajectory, domainConfig) {
     detectAvoidanceDisplacement,
     detectGapParking,
     detectWindowGaming,
+    detectZombieEscalation,
   ];
   for (const detector of detectors) {
     const result = detector(trajectory, domainConfig);
@@ -1115,6 +1167,7 @@ module.exports = {
   detectAvoidanceDisplacement,
   detectGapParking,
   detectWindowGaming,
+  detectZombieEscalation,
   detectTrajectoryTrend,
   checkAnomalyTriggers,
   loadFindings,

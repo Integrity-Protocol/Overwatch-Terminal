@@ -525,7 +525,7 @@ function validateLayer3(output, inputData) {
  * @param {object} inputData — dashboard-data.json (passed through for completeness)
  * @returns {Array} flags
  */
-function validateLayer4(output, inputData, domainConfig) {
+function validateLayer4(output, inputData, domainConfig, previousTensions) {
   const flags = [];
 
   // LZ-EH-005: Check contradiction resolution
@@ -686,6 +686,28 @@ function validateLayer4(output, inputData, domainConfig) {
     }
   }
 
+  // AD #15 + Gemini: Extension friction — second consecutive extension requires score escalation
+  if (Array.isArray(output.active_tensions) && Array.isArray(previousTensions)) {
+    for (const t of output.active_tensions) {
+      if (t.window_status !== 'extended') continue;
+      if (!t.tension_id) continue;
+      const prev = previousTensions.find(p => p.tension_id === t.tension_id);
+      if (!prev) continue;
+      if (prev.window_status === 'extended') {
+        const prevScore = prev.impact_score || 3;
+        const currScore = t.impact_score || 3;
+        if (currScore <= prevScore) {
+          flags.push(createFlag(
+            'AD15-EXTENSION-FRICTION',
+            `Tension ${t.tension_id}`,
+            `Second consecutive window extension without score escalation (${prevScore} → ${currScore}). First extension is free. Second extension requires impact_score increase.`,
+            'HARD_FAIL'
+          ));
+        }
+      }
+    }
+  }
+
   // AD #14: Auditor override consistency check
   if (output.auditor_override === true) {
     if (!output.state_lock_active) {
@@ -720,14 +742,14 @@ function validateLayer4(output, inputData, domainConfig) {
  * @param {object} inputData   — dashboard-data.json (for input quality checks)
  * @returns {object} { flags: Array, hard_fails: number, total_flags: number, layer: number }
  */
-function runTier1Checks(layerNumber, output, inputData, domainConfig) {
+function runTier1Checks(layerNumber, output, inputData, domainConfig, previousTensions) {
   let flags = [];
 
   switch (layerNumber) {
     case 1: flags = validateLayer1(output, inputData); break;
     case 2: flags = validateLayer2(output, inputData); break;
     case 3: flags = validateLayer3(output, inputData); break;
-    case 4: flags = validateLayer4(output, inputData, domainConfig); break;
+    case 4: flags = validateLayer4(output, inputData, domainConfig, previousTensions); break;
     default:
       console.error(`[tier1] Unknown layer number: ${layerNumber}`);
       return { flags: [], hard_fails: 0, total_flags: 0, layer: layerNumber };
