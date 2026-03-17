@@ -4744,41 +4744,6 @@ async function fetchDashboardData() {
       }
     }
 
-    // Hero section population
-    console.log('HERO DEBUG:', JSON.stringify({
-      top_keys: Object.keys(d).slice(0, 20),
-      has_assessment_360: !!d.assessment_360,
-      has_bear_case: !!d.bear_case,
-      thesis_status: d.thesis_status,
-      action: d.action_recommendation || d.tactical_recommendation,
-      commander: d.commander_summary?.substring(0, 50),
-      signal_matrix_len: (d.signal_matrix || []).length
-    }));
-    var hero360 = d.assessment_360 || {};
-    if (document.getElementById('heroThesisStatus')) {
-      var statusColors = {STRENGTHENING:'var(--accent-green)',STABLE:'var(--accent-blue)',WEAKENING:'var(--accent-amber)',CONTESTED:'var(--accent-amber)',INSUFFICIENT_EVIDENCE:'var(--text-muted)',FALSIFIED:'var(--accent-red)'};
-      var ts = hero360.thesis_status || '—';
-      document.getElementById('heroThesisStatus').textContent = ts;
-      document.getElementById('heroThesisStatus').style.color = statusColors[ts] || 'var(--accent-amber)';
-      document.getElementById('heroConfidence').textContent = hero360.confidence_in_status ? 'confidence: ' + hero360.confidence_in_status : '—';
-    }
-    if (document.getElementById('heroAction')) {
-      var act = hero360.action_recommendation || hero360.tactical_recommendation || '—';
-      document.getElementById('heroAction').textContent = act.replace(/_/g, ' ');
-    }
-    if (document.getElementById('heroLastRun')) {
-      document.getElementById('heroLastRun').textContent = hero360._generated_at ? new Date(hero360._generated_at).toLocaleString() : '—';
-    }
-    if (document.getElementById('heroSignals')) {
-      document.getElementById('heroSignals').textContent = (hero360.signal_matrix || []).length || '—';
-    }
-    if (document.getElementById('heroTensions')) {
-      document.getElementById('heroTensions').textContent = (hero360.unresolved_tensions || hero360.active_tensions || []).length || '—';
-    }
-    if (document.getElementById('heroSummary')) {
-      document.getElementById('heroSummary').textContent = hero360.commander_summary || '—';
-    }
-
     // ETF data
     if (d.etf) {
       const e = d.etf;
@@ -5404,6 +5369,31 @@ function render360Report(r) {
 
   // 1. Commander Summary
   set('s360-commander', r.commander_summary);
+
+  // Hero section population
+  if (document.getElementById('heroThesisStatus')) {
+    var statusColors = {STRENGTHENING:'var(--accent-green)',STABLE:'var(--accent-blue)',WEAKENING:'var(--accent-amber)',CONTESTED:'var(--accent-amber)',INSUFFICIENT_EVIDENCE:'var(--text-muted)',FALSIFIED:'var(--accent-red)'};
+    var ts = r.thesis_status || '—';
+    document.getElementById('heroThesisStatus').textContent = ts;
+    document.getElementById('heroThesisStatus').style.color = statusColors[ts] || 'var(--accent-amber)';
+    document.getElementById('heroConfidence').textContent = r.confidence_in_status ? 'confidence: ' + r.confidence_in_status : '—';
+  }
+  if (document.getElementById('heroAction')) {
+    var act = r.action_recommendation || r.tactical_recommendation || '—';
+    document.getElementById('heroAction').textContent = act.replace(/_/g, ' ');
+  }
+  if (document.getElementById('heroLastRun')) {
+    document.getElementById('heroLastRun').textContent = r._generated_at ? new Date(r._generated_at).toLocaleString() : '—';
+  }
+  if (document.getElementById('heroSignals')) {
+    document.getElementById('heroSignals').textContent = (r.signal_matrix || []).length || '—';
+  }
+  if (document.getElementById('heroTensions')) {
+    document.getElementById('heroTensions').textContent = (r.unresolved_tensions || r.active_tensions || []).length || '—';
+  }
+  if (document.getElementById('heroSummary')) {
+    document.getElementById('heroSummary').textContent = r.commander_summary || '—';
+  }
 
   // Cognitive Health Stats
   var cogR = r || {};
