@@ -4746,11 +4746,13 @@ async function fetchDashboardData() {
 
     // Hero section population
     console.log('HERO DEBUG:', JSON.stringify({
-      has_assessment: !!d.assessment_360,
-      thesis_status: d.assessment_360?.thesis_status,
-      action: d.assessment_360?.action_recommendation,
-      signals: (d.assessment_360?.signal_matrix || []).length,
-      keys: Object.keys(d.assessment_360 || {}).slice(0, 10)
+      top_keys: Object.keys(d).slice(0, 20),
+      has_assessment_360: !!d.assessment_360,
+      has_bear_case: !!d.bear_case,
+      thesis_status: d.thesis_status,
+      action: d.action_recommendation || d.tactical_recommendation,
+      commander: d.commander_summary?.substring(0, 50),
+      signal_matrix_len: (d.signal_matrix || []).length
     }));
     var hero360 = d.assessment_360 || {};
     if (document.getElementById('heroThesisStatus')) {
