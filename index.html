@@ -4149,6 +4149,9 @@ function renderEvents() {
   // Sort newest-first
   filtered.sort((a, b) => b.date.localeCompare(a.date));
 
+  // Limit to 20 most recent
+  filtered = filtered.slice(0, 20);
+
   // Update count badge
   const countEl = document.getElementById('eventCount');
   if (countEl) {
