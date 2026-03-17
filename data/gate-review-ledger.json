@@ -9215,5 +9215,305 @@
     "violations_count": 6,
     "compliance": "MODERATE_ISSUES",
     "gate_failed": false
+  },
+  {
+    "timestamp": "2026-03-17T13:44:59.115Z",
+    "layer": 1,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "Compound stress matrix approaching CRITICAL",
+          "rule_violated": "LZ-MR-003",
+          "violation": "Composite analysis treats March 16 USD/JPY, March 9 Brent, and March 13 JGB data as a 'coherent snapshot' despite measurements being staggered across 7 days. The description 'all three legs converging on elevated/critical simultaneously' misrepresents temporal reality—these measurements were not simultaneous and create an illusion of a unified state that never existed at any single moment.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Compound stress matrix approaching CRITICAL",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "Assigns 'high' confidence to a composite assessment where one of three components (Brent crude) is 8 days stale and explicitly acknowledged to be likely outdated. High confidence is not proportional to evidence quality when a critical input is known to be unreliable due to staleness.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Hormuz disruption — Brent data 8 days stale at $94.35",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "Assigns 'medium' confidence to the claim 'real-time price almost certainly at or above $95' when this is pure inference based on event knowledge without actual price measurement. The confidence level should be lower or the statement should be reframed as speculation. The phrase 'almost certainly' paired with 'medium' confidence is internally contradictory.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "RLUSD on-chain vs CoinGecko supply discrepancy",
+          "rule_violated": "LZ-RC-004",
+          "violation": "Jumps to the complex explanation 'majority of RLUSD exists on Ethereum or off-chain' without testing simpler alternatives first: CoinGecko data error, double-counting across chains, or reporting lag. The null hypothesis (measurement/reporting error) is not explicitly tested before concluding the discrepancy reflects actual supply distribution.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Fear & Greed at 28 — sustained fear regime",
+          "rule_violated": "LZ-RC-001",
+          "violation": "States 'sustained fear combined with ETF outflows and stale Brent data suggests risk-off positioning is broad-based' which presents correlation (Fear index + ETF outflows + macro stress occurring together) as evidence of causal relationship or unified mechanism. Co-occurrence does not establish that these are manifestations of the same underlying phenomenon.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Fear & Greed at 28 — sustained fear regime",
+          "rule_violated": "LZ-RC-002",
+          "violation": "Describes 'sustained fear regime' based on a single data point (Fear & Greed at 28 on March 17). One measurement is an event, not evidence of a sustained regime or trend. No historical Fear & Greed readings are provided to establish duration.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "BTC and ETH ETFs attracting positive flows while XRP bleeds",
+          "rule_violated": "LZ-RC-001",
+          "violation": "Concludes 'XRP ETF thesis may face structural demand problem, not just timing' based on correlation between BTC/ETH inflows and XRP outflows. The inference that differential flows indicate a structural demand problem rather than timing, positioning, or other factors is causally unestablished. Correlation in fund flows does not prove structural demand causation.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "XRPL DEX volume remains thin",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The conclusion 'For a ledger positioned as institutional settlement infrastructure, native DEX activity remains negligibly thin relative to thesis ambition' rests on at least three unproven assumptions: (1) institutional settlement would manifest as DEX volume, (2) DEX thinness indicates settlement infrastructure inadequacy, (3) thesis ambition requires proportional DEX activity. These assumptions are not independently verified.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "DXY weakening to 100.5",
+          "rule_violated": "LZ-MR-003",
+          "violation": "Compares DXY at 100.50 (March 14) with USD/JPY at 159.14 (March 16) to identify 'divergence' without acknowledging the 2-day temporal gap. The divergence analysis treats these as simultaneous measurements when they are staggered, potentially distorting the relationship being assessed.",
+          "severity": "MINOR"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 15,
+      "clean_findings": 6,
+      "reviewer_notes": "Multiple findings show good evidence discipline (Mastercard acquisition, PayPal expansion, Brazil integration, ETF AUM data) with proportional confidence and clear anchoring. However, systematic issues appear in composite/temporal analysis (stress matrix, DXY divergence) and in assumption chain management (XRPL DEX interpretation, RLUSD discrepancy). The Brent staleness issue creates cascading confidence problems in dependent findings. The 'sustained fear regime' language is particularly problematic given single-point measurement. Overall: solid primary evidence handling undermined by weaker inference discipline in derivative analysis."
+    },
+    "violations_count": 9,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  },
+  {
+    "timestamp": "2026-03-17T13:49:38.225Z",
+    "layer": 2,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "SIG-001 Mastercard/BVNK severity assessment - reduced from 9/10 to 8/10 due to 'functional overlap needs verification' yet still scored at 8/10 with HIGH confidence",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "Confidence is HIGH but the knowledge audit explicitly identifies that functional overlap (institutional corridors vs consumer/merchant payments) is unverified. The finding states 'functional overlap question moderates severity slightly' but then assigns HIGH confidence despite this gap being the core question determining whether this is a direct competitive threat or adjacent market competition. Confidence should be MEDIUM when the primary competitive mechanism is unverified.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "SIG-002 PayPal PYUSD severity assessment - scored 7/10 with HIGH confidence despite knowledge audit stating 'I don't know whether PYUSD's cross-border transfers use on-chain settlement or internal PayPal ledger netting'",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The settlement mechanism (on-chain vs internal netting) is acknowledged as unknown in the knowledge audit, yet the finding assigns HIGH confidence. The audit correctly notes this distinction matters ('PYUSD competes with RLUSD for stablecoin market share but not necessarily for on-chain settlement volume on XRPL'), but then confidence is not adjusted to reflect this uncertainty. If the settlement mechanism is unknown, the competitive threat's nature is uncertain, warranting MEDIUM confidence.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "SIG-005 Compound stress matrix - confidence rated MEDIUM 'due to Brent data staleness' but the finding also acknowledges JGB trajectory reversal and per-component state verification",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "This is actually correctly calibrated - MEDIUM confidence is appropriate given the Brent staleness and JGB not yet at elevated threshold. However, the reasoning states 'Two of three legs at elevated' when JGB at 2.245% is below the 2.3% elevated threshold. This is not a confidence proportionality violation but rather a factual inconsistency in the leg count. The statement 'Two of three legs at elevated or above' in the knowledge audit is correct, but the scored signal reasoning says 'Two of three legs at elevated' which could be read as claiming JGB has reached elevated when it has not.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "SIG-014 BTC/ETH/XRP flow divergence - states 'Per LZ-RC-002, need multiple data points to establish trend' then immediately says 'but cumulative XRP flows are -$32.5M, suggesting this is not a one-day event' and assigns HIGH confidence to a conclusion about 'structural demand problem'",
+          "rule_violated": "LZ-RC-002",
+          "violation": "The finding acknowledges that a single data point (one day of comparative flows) does not establish a trend per LZ-RC-002, but then uses cumulative flow data to overcome this limitation and concludes there is a 'structural demand problem' with HIGH confidence. The cumulative -$32.5M helps establish directionality but does not establish a trend across multiple timeframes per LZ-MR-001. The assessment correctly notes 'single-timeframe limitation' in audit_impact but then assigns HIGH confidence to a structural/trend conclusion. Confidence should be MEDIUM given acknowledged single-timeframe limitation.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Kill switch status for RLUSD - 'movement_since_last: stable — $1.55B vs prior ~$1.58B, within measurement noise'",
+          "rule_violated": "LZ-MR-002",
+          "violation": "The finding treats the decline from $1.58B to $1.55B as 'within measurement noise' and declares movement 'stable'. This conflates accuracy with relevance. A $30M decline may be within measurement noise for accuracy purposes, but it represents negative movement toward the $5B target regardless of measurement precision. The recency (current reading) is more relevant than the prior reading for tracking progress, but the direction of change is a factual observation, not noise. The status should acknowledge 'declined slightly' rather than 'stable' - the measurement IS accurate enough to show direction even if the magnitude is small.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "SIG-006 RLUSD chain distribution - severity reduced from 6 to 5 and confidence set to MEDIUM because 'per CL-044 I cannot infer strategic intent from chain distribution', yet the knowledge audit states 'its severity depends on whether RLUSD is INTENDED to primarily live on XRPL'",
+          "rule_violated": "LZ-EPH-001",
+          "violation": "The finding correctly avoids inferring strategic intent per CL-044, but then struggles to score the observation because intent is unknown. The audit states severity 'depends on whether RLUSD is INTENDED to primarily live on XRPL or whether multi-chain distribution is the design' - but this is unknowable without Ripple disclosure. Rather than scoring at moderate severity with MEDIUM confidence while acknowledging the interpretive dependency on unknown intent, the finding should more explicitly state: 'I don't know whether this distribution pattern contradicts or aligns with RLUSD's architectural design, therefore the directional interpretation is uncertain.' The score of 5/10 with MEDIUM confidence is reasonable, but the reasoning should more clearly embrace 'I don't know' per LZ-EPH-001 rather than scoring despite the interpretive gap.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "SIG-011 XRPL DEX volume - confidence rated MEDIUM with justification 'DEX volume may not capture all XRPL settlement activity', yet severity is scored at 5/10 as a definitive challenge to settlement layer narrative",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The finding acknowledges uncertainty about whether DEX volume is the right proxy for XRPL settlement activity, flags this as a THESIS_CAPABILITY_GAP, yet assigns a definitive severity score (5/10) to the interpretation that thin DEX volume challenges the settlement narrative. If there's uncertainty about whether the metric measures what matters, the confidence in the severity assessment should reflect that. MEDIUM confidence is appropriate, but the reasoning should more explicitly note that the 5/10 severity assumes DEX volume IS a valid proxy - if it's not, severity could be lower.",
+          "severity": "MINOR"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 40,
+      "reviewer_notes": "The output demonstrates strong application of graduated corrections (CL-002, CL-005, CL-017, CL-030, CL-031, CL-044, CL-046, CL-047, CL-048) and generally good epistemological discipline. The violations are primarily LZ-EPH-002 (confidence-evidence proportionality) failures where knowledge gaps are acknowledged in audits but not fully reflected in confidence ratings. SIG-001 and SIG-002 are the most material - both identify critical competitive unknowns (functional overlap, settlement mechanism) yet assign HIGH confidence to severity assessments that depend on those unknowns. SIG-014 shows tension between single-timeframe limitation acknowledgment and structural conclusion confidence. The LZ-RC-002 and LZ-MR-002 violations are minor calibration issues. Overall: the reasoning process is largely sound, but confidence calibration needs tightening when competitive mechanism or measurement validity gaps are explicitly identified."
+    },
+    "violations_count": 7,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  },
+  {
+    "timestamp": "2026-03-17T13:55:52.901Z",
+    "layer": 3,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "Strategic inference: Mastercard acquires BVNK for $1.8B - assumption count listed as 1, but inference contains at least 2 unproven assumptions: (1) Mastercard's stablecoin infrastructure will be used for cross-border settlement, not just consumer payments, AND (2) BVNK's corridors will overlap with Ripple's institutional cross-border corridors sufficiently to reduce addressable market",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "Assumption count is understated. The finding counts 1 assumption but the rational explanation requires at least 2 unproven links: that BVNK will be used for cross-border settlement (not just consumer/merchant payments) AND that it will overlap Ripple's corridors. The alternative explanation explicitly identifies corridor overlap as uncertain ('requires further data'), yet the primary explanation treats overlap as given.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Strategic inference: PayPal PYUSD expands to 70 countries - classified as VALID with assumption_count: 1, but the rational explanation assumes PYUSD and RLUSD compete for the same aggregate stablecoin adoption pool despite targeting different segments (consumer remittance vs institutional settlement). The alternative explanation directly challenges this assumption by noting they serve different market segments.",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The assumption that consumer remittance stablecoins and institutional settlement stablecoins compete for the same adoption pool is treated as a single assumption, but it contains an embedded causal claim (that consumer adoption reduces institutional adoption) that is unproven. The reasoning jumps from 'PayPal captures consumer cross-border volume' to 'this reduces RLUSD's $5B circulation target' without establishing that these pools are fungible.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Strategic inference: BTC and ETH ETFs attracting positive flows while XRP bleeds - classified as VALID with assumption_count: 1, but the rational explanation contains the unproven causal claim that 'flow divergence reflects deliberate asset-specific preference rather than timing differences in ETF product maturity cycles' - this is the assumption being counted - but then builds additional inference on top: that allocators are 'choosing proven narratives over unproven ones' and that the ODL data gap is influencing this choice. These are additional causal links.",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The inference chain contains: (1) flows reflect asset preference not timing (counted assumption), (2) preference is based on narrative maturity (BTC store-of-value, ETH smart contracts, XRP unproven), (3) ODL data gap is influencing institutional decision-making. The second and third links are unproven causal claims built on the first assumption, creating a 3-link chain that should trigger speculative classification per LZ-EPH-003.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "Hidden move: Mastercard integrating BVNK with existing Mastercard Send - classified as FLAGGED with assumption_count: 1, but the inference contains multiple unproven assumptions: (1) fastest path to ROI is integrating with existing products, (2) keeping settlement in-house maximizes margin, (3) BVNK fills 'missing piece' of stablecoin settlement rails in existing suite",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "Assumption count severely understated. The hidden move inference contains at least 3 distinct unproven assumptions about Mastercard's integration strategy, ROI optimization path, and product architecture. Per LZ-EPH-003, this should be classified as speculative, not just flagged.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Hidden move: Ripple expanding product breadth to lock in institutional relationships - classified as FLAGGED with assumption_count: 1, but contains unproven assumptions: (1) the $100B without ODL breakdown means revenue is not dependent on XRP settlement, (2) product diversification creates stickiness that doesn't require XRP adoption, (3) Brazil multi-product deployment is a deliberate lock-in strategy rather than exploratory market entry",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "Multiple causal assumptions are collapsed into a single count. The inference builds a multi-step causal chain from absence of ODL data → revenue independence from XRP → deliberate multi-product strategy → institutional lock-in. This is at least 3 unproven links.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Compound stress inference - 'pre_load_assessment' states 'The pre-loading means the break point of the structure is LOWER than if legs were at baseline' - this is a causal claim about how compound stress systems behave under multi-leg elevation that is not anchored to verifiable evidence about this specific system",
+          "rule_violated": "LZ-CC-001",
+          "violation": "The claim that multi-leg elevation reduces the break point is internally coherent and mechanically plausible, but it is not anchored to verified measurements of how THIS specific compound stress matrix (USD/JPY + JGB + Brent) actually behaves. The reasoning presents a logical engineering principle (distributed load reduces failure threshold) as if it were verified for this specific macro system. This is the plausibility trap - a coherent mechanical explanation without real-world verification.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Scenario probability: thesis_confirmed at 15% - the confidence appears disproportionately low given the cited evidence includes verifiable institutional deployment (Brazil VASP filing, named partners, $100B operational scale, PermDEX infrastructure existence). The evidence quality cited would typically support higher confidence unless there is offsetting negative evidence of similar weight.",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The 15% probability for thesis confirmation appears misaligned with the evidence strength cited. The finding lists multiple high-weight evidence types (regulatory actions per LZ-EH-003, primary source disclosures, operational infrastructure) but assigns very low probability without citing proportional contradicting evidence. Either the probability should be higher, or the evidence assessment should acknowledge significant offsetting factors that reduce confidence despite the cited positives.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Player analysis: Ripple say-do gap assessment states 'If Ripple believed XRPL was the superior settlement venue, the distribution should skew the other direction' - this is a causal inference about Ripple's beliefs from the RLUSD chain distribution without verifying alternative explanations (market demand, regulatory constraints, partner preferences)",
+          "rule_violated": "LZ-RC-004",
+          "violation": "The null hypothesis (market demand naturally concentrates on Ethereum because it has deeper liquidity and more institutional infrastructure) is identified correctly in the strategic inference section for this same data point, but the player analysis section presents the chain distribution as evidence of Ripple's internal beliefs without testing the simpler explanation first. The reasoning in different sections contradicts itself - one section correctly applies the null, the other section skips it.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Behavioral pattern: 'Incumbents building rather than buying settlement infrastructure' - this pattern is identified from exactly 2 players (Mastercard acquiring BVNK, PayPal expanding PYUSD). Per LZ-RC-002, two data points are minimally sufficient for a pattern but the confidence should reflect this is an emerging pattern, not an established trend. The pattern is marked 'significance: high' without acknowledging the limited sample size.",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The significance assessment (high) appears disproportionate to the evidence base (2 players). While the pattern may indeed be strategically significant, the confidence in the pattern's existence should reflect that it is based on minimal data points. The finding does not acknowledge this limitation - it presents the pattern as established when it is emerging.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Feedback loop: 'Incumbent Stablecoin Deployment → Distribution Lock-in → Reduced Addressable Market for RLUSD' - the loop contains the unproven causal assumption that early distribution advantages in payments are winner-take-most and that network effects will prevent later entrants from capturing market share",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The feedback loop presents 'network effects in payments are winner-take-most' as established fact rather than as a specific claim requiring evidence. While network effects exist in some payment systems, the magnitude and whether they create winner-take-most dynamics in stablecoin cross-border settlement specifically is unproven. The loop treats correlation (early distribution leads to early volume) as if it establishes the causal mechanism (distribution lock-in prevents competition).",
+          "severity": "MODERATE"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 37,
+      "reviewer_notes": "Most violations relate to assumption counting (LZ-EPH-003) - the output systematically undercounts assumptions in multi-step causal inferences. The BTC/ETH vs XRP ETF flow inference is the most serious violation: it builds a 3-link causal chain but counts only 1 assumption and classifies as VALID when it should be speculative. The compound stress 'pre-load' assessment violates LZ-CC-001 by presenting a mechanically plausible but unverified claim about system behavior. Several findings correctly identify null hypotheses in one section but then violate LZ-RC-004 by skipping the null in related sections. The Ripple say-do gap analysis contradicts the strategic inference analysis for the same data (RLUSD chain distribution). Overall, the reasoning is sophisticated and mostly sound, but the assumption counting discipline has degraded - multi-step inferences are being collapsed into single assumptions, allowing complex chains to avoid speculative classification."
+    },
+    "violations_count": 10,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  },
+  {
+    "timestamp": "2026-03-17T14:01:39.327Z",
+    "layer": 4,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "Japanese institutions in defensive mode, SBI silence indicates focus on core business stability",
+          "rule_violated": "LZ-RC-003",
+          "violation": "Inference built on absence of SBI signals. The output correctly rejects this in the rejection_log, but it appears in burden_of_proof_applied with 50% weight and is incorporated into the compound_stress_final assessment ('threatening SBI/BOJ adoption vectors'). The absence of evidence (no SBI signals) is being treated as partial evidence of defensive positioning, even after rejection. The inference should carry zero weight, not 50%.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Mastercard likely integrating BVNK into existing cross-border capabilities (hidden move)",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "Classified as FLAGGED with '1 assumption per Layer 3 but the hidden move nature adds an implicit second assumption about specific integration path.' The output acknowledges this is actually 2+ assumptions (acquisition confirmed + integration path + timeline), which crosses the threshold for speculative classification per LZ-EPH-003. The 50% weight assignment does not resolve the structural issue that this is an assumption chain.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Ripple expanding product breadth to build institutional stickiness independent of XRP settlement (hidden move)",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "Multiple unproven assumptions: (1) Brazil deployment + $100B disclosure + Hidden Road = deliberate pattern, (2) pattern represents strategic intent, (3) intent is product diversification, (4) diversification is prioritized over XRP settlement. Four assumptions in the inference chain. Even at 50% weight, this exceeds the 3-assumption threshold for speculative classification.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "The system may already be in a CRITICAL state it cannot identify due to 8-day Brent data gap",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "High-confidence inference ('may already be in CRITICAL state') based on low evidence (stale data + reasonable extrapolation from Hormuz disruption). The output correctly does not upgrade to CRITICAL in the formal assessment, but the language 'may already be in' and 'this is the most uncomfortable ELEVATED call I have made' expresses higher confidence than the evidence supports. The honest statement is 'I don't know the current Brent price, therefore I cannot assess whether CRITICAL threshold is breached.' Discomfort with uncertainty is not evidence.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "RLUSD 80/20 Ethereum/XRPL distribution reflects market demand patterns (null hypothesis holds)",
+          "rule_violated": "LZ-RC-004",
+          "violation": "The null hypothesis is accepted (Ethereum has deeper DeFi infrastructure), but the output does not test whether this is the simplest sufficient explanation before more complex alternatives. A simpler explanation exists: Ripple deployed RLUSD to Ethereum first or with more initial supply, and the distribution has not yet rebalanced. The 'market demand' framing assumes the current distribution reflects equilibrium demand rather than initial deployment conditions. The null should be 'distribution reflects deployment history' before 'distribution reflects demand.'",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "At $1.55B (31% of target), RLUSD needs $11.94M/day acceleration for 289 remaining days",
+          "rule_violated": "LZ-RC-005",
+          "violation": "This is a forward-looking prediction (daily rate needed to reach future target) being presented with the same certainty as a measurement. The $1.55B current supply is a measurement; the '$11.94M/day needed' is a prediction about future required pace. The output does flag that 'no acceleration visible' but the specific daily rate figure gives false precision to what is inherently uncertain. The reasoning would be cleaner as: 'Current pace is insufficient to reach $5B by deadline; requires sustained acceleration.'",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Competitive Displacement kill switch escalated to WARNING based on Mastercard/PayPal representing 'well-capitalized incumbents building proprietary settlement infrastructure'",
+          "rule_violated": "LZ-RC-001",
+          "violation": "Co-occurrence (Mastercard acquires BVNK + PayPal deploys PYUSD + both are incumbents) does not establish that these actions are causally related to each other or represent a coordinated 'incumbents building not buying' strategy. They are independent corporate actions that may reflect separate strategic logic. The assessment treats temporal correlation (both happening in same market cycle) as evidence of a unified competitive pattern. Each action should be evaluated independently for its impact on XRPL addressable market.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "The thesis is weakening on three independent vectors... First, well-capitalized incumbents (Mastercard $1.8B, PayPal 70 countries) are building proprietary stablecoin settlement infrastructure",
+          "rule_violated": "LZ-RC-002",
+          "violation": "Two data points (Mastercard acquisition + PayPal deployment) are being treated as a trend ('incumbents are building proprietary infrastructure'). Per LZ-RC-002, a trend requires multiple observations across time. Two simultaneous events are not a trend; they are two events. The assessment would be more accurate as: 'Two major incumbents have made stablecoin infrastructure moves this cycle, which if sustained across multiple cycles would represent a trend of internalization.'",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "USD/JPY at 159.14 indicates Japan-specific stress overriding global dollar weakness",
+          "rule_violated": "LZ-RC-001",
+          "violation": "Correlation between DXY weakness (100.5) and USD/JPY strength (159.14) is presented as evidence that Japan stress is 'overriding' dollar weakness. This implies causation: that Japan-specific factors are the cause of the divergence. The divergence could have multiple causes (carry trade dynamics, BOJ policy, capital flows, etc.). The observation that DXY and USD/JPY are diverging is valid; the causal explanation 'Japan stress overriding' requires more evidence than simultaneous measurement.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "The null hypothesis (post-launch cooldown) has not yet expired — Layer 3's 4-8 week window is the right timeframe",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "High confidence ('the right timeframe') on what is actually a judgment call about how long post-launch behavior persists. The 4-8 week window is reasonable but not empirically derived from XRP ETF data or comparable ETF launches. The honest assessment is 'we expect post-launch patterns to stabilize within 4-8 weeks based on general ETF behavior, but this is an assumption about XRP ETF dynamics.' The confidence in the specific timeframe exceeds the evidence for it.",
+          "severity": "MINOR"
+        }
+      ],
+      "compliance": "MINOR_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 87,
+      "clean_findings": 77,
+      "reviewer_notes": "This output demonstrates strong epistemological discipline overall. The majority of findings (77 of 87) follow the rules correctly, including proper application of null hypothesis testing, honest acknowledgment of data gaps, and appropriate use of contradictions_held. The violations are primarily minor overconfidence issues and assumption-counting errors. Notable strengths: (1) The rejection_log correctly identifies and rejects the SBI defensive mode inference per LZ-RC-003, though residual weight from that inference leaked into other sections. (2) The compound_stress assessment correctly refuses to declare CRITICAL without verified data per CL-047, even under significant pressure to do so. (3) The SUSPICIOUS_ABSENCE classification for ODL data is a creative and justified application of LZ-EH-003 (actions outweigh statements — non-disclosure is itself an action). The most significant issue is the 'two events as trend' violation in the competitive displacement assessment, which affects the thesis_status reasoning. Otherwise, this is high-quality epistemological work."
+    },
+    "violations_count": 10,
+    "compliance": "MINOR_ISSUES",
+    "gate_failed": false
   }
 ]
