@@ -200,7 +200,6 @@ function extractTrajectory(history, lookback) {
       : 0,
     tensions:         Array.isArray(entry.unresolved_tensions) ? entry.unresolved_tensions : [],
     dispositions:     Array.isArray(entry.previous_tension_dispositions) ? entry.previous_tension_dispositions : [],
-    bear_pressure:    entry.bear_pressure_score ?? null,
     kill_switches:    entry.kill_switches || [],
     timestamp:        entry.timestamp || entry._generated_at || null,
   }));
@@ -547,43 +546,6 @@ function detectTensionBehavior(trajectory, domainConfig) {
 function detectTrajectoryTrend(trajectory) {
   if (trajectory.length < 3) return null;
 
-  // Check bear_pressure trajectory (if available)
-  const pressures = trajectory.map(t => t.bear_pressure).filter(p => p !== null);
-  if (pressures.length >= 3) {
-    // Check for monotonic increase (deteriorating)
-    let monotoneUp = true;
-    let monotoneDown = true;
-    for (let i = 1; i < pressures.length; i++) {
-      if (pressures[i] <= pressures[i - 1]) monotoneUp = false;
-      if (pressures[i] >= pressures[i - 1]) monotoneDown = false;
-    }
-
-    const latestAction = trajectory[trajectory.length - 1].escalation;
-    const delta = pressures[pressures.length - 1] - pressures[0];
-
-    if (monotoneUp && delta >= 15) {
-      return {
-        type: 'MONOTONIC_DETERIORATION',
-        detail: `Bear pressure has increased monotonically: ${pressures.join(' → ')} (Δ${delta}). Consistent deterioration trajectory across ${pressures.length} entries without reversal.`,
-        severity: delta >= 30 ? 'HIGH' : 'MEDIUM',
-        direction: 'escalate',
-        pressure_trajectory: pressures,
-        total_delta: delta,
-      };
-    }
-
-    if (monotoneDown && Math.abs(delta) >= 15) {
-      return {
-        type: 'MONOTONIC_IMPROVEMENT',
-        detail: `Bear pressure has decreased monotonically: ${pressures.join(' → ')} (Δ${delta}). Consistent improvement trajectory across ${pressures.length} entries without reversal.`,
-        severity: Math.abs(delta) >= 30 ? 'HIGH' : 'MEDIUM',
-        direction: 'deescalate',
-        pressure_trajectory: pressures,
-        total_delta: delta,
-      };
-    }
-  }
-
   // Check escalation trajectory (action level changes)
   const escalations = trajectory.map(t => t.escalation).filter(e => e !== null);
   if (escalations.length >= 3) {
@@ -639,13 +601,13 @@ function checkAnomalyTriggers(currentEntry, previousEntry, anomalyTriggers) {
       }
 
       case 'COMPOUND_STRESS_ESCALATION': {
-        // Compare bear_pressure as proxy for compound stress
-        const currentBP = currentEntry.bear_pressure_score ?? null;
-        const prevBP = previousEntry.bear_pressure_score ?? null;
-        if (currentBP !== null && prevBP !== null && (currentBP - prevBP) >= 20) {
+        const STRESS_TIERS = { MONITORING: 0, ELEVATED: 1, CRITICAL: 2, EMERGENCY: 3 };
+        const currentTier = STRESS_TIERS[currentEntry.compound_stress_level] ?? null;
+        const prevTier = STRESS_TIERS[previousEntry.compound_stress_level] ?? null;
+        if (currentTier !== null && prevTier !== null && (currentTier - prevTier) >= 2) {
           triggered.push({
             trigger_id: trigger.id,
-            detail: `Bear pressure jumped from ${prevBP} to ${currentBP} (Δ${currentBP - prevBP})`,
+            detail: `Compound stress jumped from ${previousEntry.compound_stress_level} to ${currentEntry.compound_stress_level} (${currentTier - prevTier} tier jump)`,
           });
         }
         break;
@@ -989,7 +951,6 @@ async function runBlindAuditor(options) {
         status: t.thesis_status,
         action: t.action,
         tensions: t.tensions_count,
-        pressure: t.bear_pressure,
       })),
     };
     findings.push(phase1Finding);
@@ -1086,7 +1047,6 @@ async function runBlindAuditor(options) {
       status: t.thesis_status,
       action: t.action,
       tensions: t.tensions_count,
-      pressure: t.bear_pressure,
     })),
     deterministic_fallback: true,
   };

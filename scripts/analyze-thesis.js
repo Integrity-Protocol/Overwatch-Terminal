@@ -382,11 +382,6 @@ function formatTelegramMessage(analysis, dashboardData) {
     ? `Bear ${prob.bear}% | Base ${prob.base}% | Mid ${prob.mid}% | Bull ${prob.bull}%`
     : '(no change recommended)';
 
-  // Bear case
-  const bearScore = analysis.bear_case?.counter_thesis_score ?? '--';
-  const bearNarrative = analysis.bear_case?.bear_narrative ?? '';
-  const bearOneLiner = bearNarrative.split(/\.\s+/)[0].replace(/\.$/, '');
-
   const stressScore = analysis.stress_assessment;
 
   // Events draft
@@ -427,8 +422,6 @@ ${scChanges}
 
 🎲 <b>PROBABILITY:</b>
 ${probLine}
-🐻 <b>COUNTER-THESIS:</b> ${bearScore}/100
-${bearOneLiner || '(no bear narrative)'}
 
 📋 <b>THESIS STATUS:</b> ${analysis.assessment_360?.thesis_status ?? '--'} (confidence: ${analysis.assessment_360?.confidence_in_status ?? '--'})
 ${eventsSection}
@@ -534,28 +527,7 @@ Your output must be a JSON object with these fields:
 
   "thesis_pulse_assessment": "3-4 sentences distilling the current thesis state for the dashboard assessment box. Terminal voice. Reference actual numbers. Be honest about risks.",
 
-  "stress_interpretation": "2-3 sentences explaining the current composite stress environment for the dashboard stress card. Reference specific thresholds breached or held.",
-
-  "bear_case": {
-    "counter_thesis_score": 0,
-    "score_reasoning": "1-2 sentence explanation of the score. What is driving the pressure level?",
-    "competing_infrastructure": [
-      {"name": "SWIFT GPI", "status": "LOW_RISK | MONITORING | ELEVATED_RISK", "status_text": "1 sentence current assessment"},
-      {"name": "Visa B2B Connect", "status": "LOW_RISK | MONITORING | ELEVATED_RISK", "status_text": "1 sentence current assessment"},
-      {"name": "JPMorgan Kinexys", "status": "LOW_RISK | MONITORING | ELEVATED_RISK", "status_text": "1 sentence current assessment"},
-      {"name": "BIS Project Nexus", "status": "LOW_RISK | MONITORING | ELEVATED_RISK", "status_text": "1 sentence current assessment"},
-      {"name": "Ethereum Institutional", "status": "LOW_RISK | MONITORING | ELEVATED_RISK", "status_text": "1 sentence current assessment"}
-    ],
-    "odl_stagnation": "1 sentence assessment of ODL volume growth risk",
-    "token_velocity_concern": "1 sentence assessment of token velocity / utility ratio risk",
-    "macro_headwinds": [
-      {"name": "Global Recession Risk", "status": "LOW_RISK | MONITORING | ELEVATED_RISK", "status_text": "1 sentence current assessment"},
-      {"name": "Crypto Winter Signals", "status": "LOW_RISK | MONITORING | ELEVATED_RISK", "status_text": "1 sentence current assessment"},
-      {"name": "Regulatory Reversal Risk", "status": "LOW_RISK | MONITORING | ELEVATED_RISK", "status_text": "1 sentence current assessment"},
-      {"name": "Rate Hike Extension", "status": "LOW_RISK | MONITORING | ELEVATED_RISK", "status_text": "1 sentence current assessment"}
-    ],
-    "bear_narrative": "2-3 sentences stating the strongest honest counter-arguments to the thesis right now. Do not soften findings."
-  }
+  "stress_interpretation": "2-3 sentences explaining the current composite stress environment for the dashboard stress card. Reference specific thresholds breached or held."
 }
 
 Rules:
@@ -568,7 +540,7 @@ Rules:
 - For events_draft: only include headlines that materially affect the thesis framework. Ignore routine price commentary, opinion pieces, and pure speculation. Flag if any headline suggests a kill switch status change.
 - For geopolitical_watchlist: provide current, factual status for each region. Use terminal-style language — terse, specific. Flag active escalation.
 - For energy_interpretation, thesis_pulse_assessment, stress_interpretation: terminal voice — precise, no fluff, signal-focused. These render directly in the dashboard.
-- For bear_case: ACTIVELY SEEK DISCONFIRMING EVIDENCE. Do not soften bear case findings to protect the thesis. The counter_thesis_score should reflect genuine risk (0 = no credible challenge to thesis, 100 = thesis clearly failing). Rate each competing infrastructure item honestly based on actual adoption data. The bear_narrative must represent the strongest honest case against the thesis — not a strawman.`;
+`;
 
 // ─── Determine run type ───────────────────────────────────────────────────────
 
@@ -705,11 +677,10 @@ IMPORTANT: Keep each signal description under 100 words. Return a maximum of 15 
  *
  * @param {Array}  sweepResults  — signal array returned by runSweep()
  * @param {object} marketData    — current dashboard data
- * @param {number} previousScore — previous bear pressure score (0-100)
  * @param {string} thesisContext  — contents of thesis-context.md
  * @returns {Promise<object|null>}
  */
-async function runContextualize(sweepResults, marketData, previousScore, thesisContext, options) {
+async function runContextualize(sweepResults, marketData, thesisContext, options) {
   log('analysis', '=== LAYER 2: CONTEXTUALIZE ===');
   log('analysis', `Processing ${sweepResults.length} signals from Layer 1 SWEEP`);
 
@@ -749,8 +720,6 @@ THESIS CONTEXT:
 ${thesisContext}
 
 RLUSD PACE NEEDED TO HIT $5B TARGET: ${rlusdPaceNeeded} (${daysRemaining} days remaining to EOY 2026)
-
-PREVIOUS BEAR PRESSURE SCORE: ${previousScore}
 
 CORRECTIONS LEDGER (active lessons from past errors):
 ${JSON.stringify(correctionsLedger)}
@@ -909,8 +878,6 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary outs
     "pre_loaded_detail": "which legs are already elevated and why this matters",
     "stress_chain_proximity": "how close current conditions are to the violent unwind scenario"
   },
-  "bear_pressure": 0,
-  "bear_pressure_reasoning": "...",
   "layer2_summary": "2-3 sentences. What does Layer 3 need to know? What was verified, what remains uncertain, what is the compound stress state?"
 }`;
 
@@ -925,7 +892,7 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary outs
       });
       const raw = response.content[0].text;
       result = parseClaudeJSON(raw, 'layer2');
-      log('analysis', `Layer 2 complete: ${result.scored_signals?.length || 0} scored, ${result.unscored_signals?.length || 0} unscored, bear pressure: ${result.bear_pressure}`);
+      log('analysis', `Layer 2 complete: ${result.scored_signals?.length || 0} scored, ${result.unscored_signals?.length || 0} unscored`);
       await enforceCorrectionsReferenced(result, 'layer2', client, correctionsLedger);
       break;
     } catch (e) {
@@ -1519,7 +1486,6 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary outs
       "structural_gap_id": "SG-N if this request maps to a structural gap, null otherwise"
     }
   ],
-  "final_bear_pressure": 0,
   "tactical_recommendation": "HOLD_POSITION | INCREASE_MONITORING | REDUCE_EXPOSURE | EXIT_SIGNAL",
   "monitoring_triggers": [],
   "overall_confidence": "high | medium | low",
@@ -1606,10 +1572,9 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary outs
  * @param {object} reconcileResult    — Layer 4 output
  * @param {object} contextualizeResult — Layer 2 output (for enrichment)
  * @param {object} inferenceResult     — Layer 3 output (for enrichment)
- * @param {number} previousScore       — previous bear pressure score for delta
  * @returns {object} — old-format 360 report object
  */
-function buildDashboardCompatible(reconcileResult, contextualizeResult, inferenceResult, previousScore) {
+function buildDashboardCompatible(reconcileResult, contextualizeResult, inferenceResult) {
   log('bridge', 'Building dashboard-compatible 360 report from Layer 4 output');
 
   // 1. signal_matrix[] — reshape from Layer 4's final_signal_matrix[]
@@ -1725,14 +1690,10 @@ function buildDashboardCompatible(reconcileResult, contextualizeResult, inferenc
   });
 
   // 6. Top-level scalar fields
-  const bearPressure = reconcileResult.final_bear_pressure ?? 0;
-  const scoreDelta = bearPressure - (previousScore || 0);
 
   const dashCompat = {
     // Fields the dashboard reads directly
     commander_summary:          reconcileResult.final_report || '',
-    bear_pressure_score:        bearPressure,
-    score_delta:                scoreDelta,
     score_reasoning:            reconcileResult.action_reasoning || '',
     tactical_recommendation:    reconcileResult.tactical_recommendation || 'INCREASE_MONITORING',
     recommendation_reasoning:   reconcileResult.action_reasoning || '',
@@ -1756,6 +1717,7 @@ function buildDashboardCompatible(reconcileResult, contextualizeResult, inferenc
     confidence_in_status:   reconcileResult.confidence_in_status || null,
     action_recommendation:  reconcileResult.action_recommendation || null,
     action_reasoning:       reconcileResult.action_reasoning || null,
+    compound_stress_level:  (reconcileResult.compound_stress_final?.level) || 'MONITORING',
     // AD #15: Tension lifecycle fields
     active_tensions:                reconcileResult.active_tensions || [],
     structural_gaps:                reconcileResult.structural_gaps || [],
@@ -1817,7 +1779,7 @@ async function main() {
   // ═══════════════════════════════════════════════════════════════════════════
 
   let assessment360 = null;
-  const previousBearScore = dashboardData.bear_case?.counter_thesis_score ?? 50;
+
 
   // ── Layer 1: SWEEP ──────────────────────────────────────────────────────
   console.log('\n═══ LAYER 1: SWEEP ═══');
@@ -1874,7 +1836,7 @@ async function main() {
 
     // ── Layer 2: CONTEXTUALIZE ────────────────────────────────────────────
     console.log('\n═══ LAYER 2: CONTEXTUALIZE ═══');
-    const contextualizeResult = await runContextualize(signalsToAssess, dashboardData, previousBearScore, thesisContext);
+    const contextualizeResult = await runContextualize(signalsToAssess, dashboardData, thesisContext);
 
     // Tier 1 validators — Layer 2
     let tier1Layer2 = { flags: [], hard_fails: 0, total_flags: 0, layer: 2 };
@@ -1988,7 +1950,7 @@ async function main() {
 
         if (reconcileResult) {
           // ── Compatibility Bridge ──────────────────────────────────────
-          assessment360 = buildDashboardCompatible(reconcileResult, contextualizeResult, inferenceResult, previousBearScore);
+          assessment360 = buildDashboardCompatible(reconcileResult, contextualizeResult, inferenceResult);
           log('pipeline', '✓ Full four-layer pipeline complete');
 
           // ── Assemble Cognitive Trace ──────────────────────────────────
@@ -2017,9 +1979,6 @@ async function main() {
           warn('pipeline', 'Layer 4 failed — using Layer 2 output as fallback');
           assessment360 = {
             commander_summary: contextualizeResult.layer2_summary || '',
-            bear_pressure_score: contextualizeResult.bear_pressure ?? 0,
-            score_delta: (contextualizeResult.bear_pressure ?? 0) - previousBearScore,
-            score_reasoning: contextualizeResult.bear_pressure_reasoning || '',
             tactical_recommendation: 'INCREASE_MONITORING',
             recommendation_reasoning: 'Layer 4 RECONCILE failed. Using Layer 2 data only. Increase monitoring until full pipeline is restored.',
             signal_matrix: [],
@@ -2037,9 +1996,6 @@ async function main() {
         warn('pipeline', 'Layer 3 failed — using Layer 2 output as fallback');
         assessment360 = {
           commander_summary: contextualizeResult.layer2_summary || '',
-          bear_pressure_score: contextualizeResult.bear_pressure ?? 0,
-          score_delta: (contextualizeResult.bear_pressure ?? 0) - previousBearScore,
-          score_reasoning: contextualizeResult.bear_pressure_reasoning || '',
           tactical_recommendation: 'INCREASE_MONITORING',
           recommendation_reasoning: 'Layer 3 INFER failed. Using Layer 2 data only. Strategic reasoning unavailable.',
           signal_matrix: [],
@@ -2159,7 +2115,7 @@ async function main() {
   // ═══════════════════════════════════════════════════════════════════════════
   // MAIN ANALYSIS CALL (legacy — produces dashboard primary data)
   // This will be replaced by the four-layer pipeline once verified.
-  // For now, both run. The 360 pipeline feeds bear_case overlay only.
+  // For now, both run. The 360 pipeline feeds assessment_360 overlay.
   // ═══════════════════════════════════════════════════════════════════════════
 
   console.log('\n═══ MAIN ANALYSIS (legacy) ═══');
@@ -2253,11 +2209,8 @@ IMPORTANT: Keep all text fields concise. Ensure your response is valid, complete
 
   // Overlay 360 results if the four-layer pipeline (or fallback) succeeded
   if (assessment360) {
-    analysis.bear_case = analysis.bear_case ?? {};
-    analysis.bear_case.counter_thesis_score = assessment360.bear_pressure_score;
-    analysis.bear_case.bear_narrative       = assessment360.commander_summary;
     analysis.assessment_360                 = assessment360;
-    log('pipeline', 'Overlaid 360 bear pressure score and commander summary onto analysis');
+    log('pipeline', 'Overlaid 360 assessment onto analysis');
   }
 
   // 6. Write analysis-output.json
@@ -2303,7 +2256,7 @@ IMPORTANT: Keep all text fields concise. Ensure your response is valid, complete
       alerts_count:        (analysis.alerts ?? []).length,
       events_drafted_count:(analysis.events_draft ?? []).length,
       thesis_pulse:        (analysis.thesis_pulse ?? '').substring(0, 200),
-      counter_thesis_score: analysis.bear_case?.counter_thesis_score ?? null,
+
     };
 
     let history = [];
@@ -2373,7 +2326,7 @@ IMPORTANT: Keep all text fields concise. Ensure your response is valid, complete
   console.log(`Alerts:          ${(analysis.alerts ?? []).length}`);
   console.log(`Events drafted:  ${(analysis.events_draft ?? []).length}`);
   console.log(`4-Layer:         ${pipelineStatus}`);
-  console.log(`Bear pressure:   ${assessment360?.bear_pressure_score ?? 'N/A'}`);
+  console.log(`Thesis status:   ${assessment360?.thesis_status ?? 'N/A'} (${assessment360?.confidence_in_status ?? 'N/A'})`);
   console.log(`Recommendation:  ${assessment360?.tactical_recommendation ?? 'N/A'}`);
   console.log('───────────────────────────────────────────────\n');
 
