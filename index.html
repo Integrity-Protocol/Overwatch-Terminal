@@ -837,7 +837,7 @@ textarea:focus { border-color:var(--accent-cyan); }
       <div class="data-row"><span class="data-label">Risk Level</span><span class="signal amber">ELEVATED</span></div>
       <div class="interpret-box">
         <div class="label">ASSESSMENT</div>
-        <p id="thesisPulseText">—</p>
+        <p id="thesisPulseText">SEC commodity classification for XRP is a structural inflection point — the regulatory kill switch is now the strongest leg of the thesis. But the market isn't rewarding it: XRP down 3.1%, ETF flows cumulative negative at -</p>9.7M, RLUSD contracting to <p id="thesisPulseText">.525B. The gap between improving fundamentals (commodity status, Hidden Road/DTCC, PermDEX live) and deteriorating flows/price action is the central tension. Compound stress matrix at effective CRITICAL with all three legs pre-loaded — this macro environment can suppress even the best fundamental catalysts for weeks or months.</p>
       </div>
     </div>
   </div>
@@ -878,11 +878,11 @@ textarea:focus { border-color:var(--accent-cyan); }
         <span style="font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--text-muted);letter-spacing:1px;" id="geoUpdated"></span>
       </div>
       <div id="geoWatchlist">
-        <div class="data-row"><span class="data-label">Japan / BOJ</span><span class="signal amber">USD/JPY at 159.14, less than 1 yen from the 160 critical trigger — BOJ intervention risk is elevated. JGB 10Y at 2.245% approaching 2.3% elevated threshold. Dual pressure intensifying.</span></div>
-        <div class="data-row"><span class="data-label">Middle East</span><span class="signal amber">Hormuz disruption remains active — Brent data stale at $94.35 (March 9). Real-time price likely higher. CMA CGM shipping suspension still assumed in effect. Escalation risk persists.</span></div>
-        <div class="data-row"><span class="data-label">US-China</span><span class="signal amber">No new escalation signals this cycle. Section 122 tariffs (10% global) continue with July 20 expiry clock running. Background tension stable.</span></div>
-        <div class="data-row"><span class="data-label">Trade / Tariffs</span><span class="signal amber">Section 122 tariffs active, ~125 days remaining on 150-day clock. DXY at 100.5 — dollar weakness partially offsets tariff drag on trading partners but adds to import cost pressure for Japan.</span></div>
-        <div class="data-row"><span class="data-label">Arctic / Russia</span><span class="signal amber">No new signals. Background monitoring continues.</span></div>
+        <div class="data-row"><span class="data-label">Japan / BOJ</span><span class="signal amber">USD/JPY 158.95 — deep elevated, 105bps from critical 160 trigger. JGB 10Y 2.245% creeping toward 2.3% elevated. BOJ trapped between defending yen and containing yield curve. Intervention risk rising.</span></div>
+        <div class="data-row"><span class="data-label">Middle East</span><span class="signal amber">Hormuz disruption ACTIVE — Rumaila field shut, CMA CGM bookings suspended. Brent data 9 days stale at $94.35 but real-time likely higher. Oil supply chain stress unresolved.</span></div>
+        <div class="data-row"><span class="data-label">US-China</span><span class="signal amber">Section 122 tariffs (10% global) active with ~Jul 20 expiration clock. No new escalation signals but baseline tension elevated.</span></div>
+        <div class="data-row"><span class="data-label">Trade / Tariffs</span><span class="signal amber">SCOTUS struck IEEPA tariffs; Section 122 invoked as replacement. 150-day clock expires ~Jul 20, 2026. Stablecoin legislation advancing (Scott compromise) may intersect with trade policy.</span></div>
+        <div class="data-row"><span class="data-label">Arctic / Russia</span><span class="signal amber">No new signals. Monitoring for energy supply disruption that could compound Hormuz stress.</span></div>
       </div>
     </div>
   </div>
@@ -1009,7 +1009,7 @@ textarea:focus { border-color:var(--accent-cyan); }
       <div class="data-row"><span class="data-label">Hormuz Risk</span><span class="data-value amber">Elevated</span></div>
       <div class="interpret-box">
         <div class="label">ENERGY INTERPRETATION</div>
-        <p id="energyInterpretText">—</p>
+        <p id="energyInterpretText">Brent at $94.35 (March 9 data — 9 days stale) was already approaching the $95 critical threshold BEFORE the Hormuz disruption fully developed. Real-time price is almost certainly above $95 given Rumaila shutdown and CMA CGM booking suspension. This feeds directly into Japan's stress loop: higher oil → larger trade deficit → weaker yen → BOJ intervention pressure → JGB volatility. USD/JPY at 158.95 with JGB at 2.245% shows the feedback loop is actively firing. The energy leg is the catalyst that could push the other two legs through their critical thresholds simultaneously.</p>
       </div>
     </div>
   </div>
@@ -1706,6 +1706,37 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 //         catClass (geo|fin|reg|inst), threat (CRITICAL|ELEVATED|MONITORING),
 //         threatEmoji, desc
 const EVENTS_DATA = [
+
+  {
+    date: '2026-03-18',
+    dateLabel: 'MAR 18',
+    title: 'SEC Crypto Task Force classifies XRP as digital commodity',
+    category: 'REGULATORY',
+    catClass: 'reg',
+    threat: 'CRITICAL',
+    threatEmoji: '🔴',
+    desc: 'Stuart Alderoty confirmed SEC has designated XRP as a digital commodity via Crypto Task Force guidance. Removes the last major securities classification overhang and enables commodity-regulated institutional products. Strongest regulatory milestone since Ripple case resolution.'
+  },
+  {
+    date: '2026-03-17',
+    dateLabel: 'MAR 17',
+    title: 'SEC Chair Atkins: \'Not the securities and everything commission anymore\'',
+    category: 'REGULATORY',
+    catClass: 'reg',
+    threat: 'ELEVATED',
+    threatEmoji: '🟡',
+    desc: 'Eleanor Terrett reports SEC Chair Paul Atkins signaling fundamental jurisdictional restraint. Combined with Sen. Scott stablecoin rewards compromise proposal at Digital Chamber, indicates accelerating regulatory framework construction.'
+  },
+  {
+    date: '2026-03-18',
+    dateLabel: 'MAR 18',
+    title: 'Ondo Finance expanding tokenized securities on competing infrastructure',
+    category: 'INSTITUTIONAL',
+    catClass: 'inst',
+    threat: 'MONITORING',
+    threatEmoji: '🟢',
+    desc: 'Ondo announcing new tokenized stocks, ETFs, and sectors going live on-chain — building RWA infrastructure outside XRPL. Relevant to PermissionedDEX competitive landscape and Kill Switch #9 (Competitive Displacement).'
+  },
 
   {
     date: '2026-03-17',
