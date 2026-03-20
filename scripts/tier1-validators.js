@@ -609,6 +609,31 @@ function validateLayer4(output, inputData, domainConfig, previousTensions) {
     }
   }
 
+  // CL-048: Mutual exclusivity — active_tensions vs structural_gaps
+  if (Array.isArray(output.active_tensions) && Array.isArray(output.structural_gaps)) {
+    for (const tension of output.active_tensions) {
+      const tDesc = (tension.description || '').toLowerCase();
+      if (!tDesc) continue;
+      for (const gap of output.structural_gaps) {
+        const gDesc = (gap.description || '').toLowerCase();
+        if (!gDesc) continue;
+        // Extract significant words (4+ chars) from the gap description
+        const gapWords = gDesc.split(/\s+/).filter(w => w.length >= 4);
+        // Count how many significant gap words appear in the tension description
+        const matchCount = gapWords.filter(w => tDesc.includes(w)).length;
+        const matchRatio = gapWords.length > 0 ? matchCount / gapWords.length : 0;
+        if (matchRatio >= 0.4) {
+          flags.push(createFlag(
+            'CL048-MUTUAL-EXCLUSIVITY',
+            `Tension ${tension.tension_id || 'unknown'} vs Gap ${gap.gap_id || 'unknown'}`,
+            `Active tension "${tDesc.substring(0, 80)}" overlaps with structural gap "${gDesc.substring(0, 80)}" (${Math.round(matchRatio * 100)}% keyword match). A signal cannot be both an active tension and a structural gap. See CL-048.`,
+            'HARD_FAIL'
+          ));
+        }
+      }
+    }
+  }
+
   // Disposition validation for previous tensions
   if (Array.isArray(output.previous_tension_dispositions)) {
     const validDispositions = ['RESOLVE', 'MAINTAIN', 'ESCALATE', 'DISPLACE'];

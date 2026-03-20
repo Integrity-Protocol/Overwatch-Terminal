@@ -1342,6 +1342,8 @@ RANKING: Rank all active tensions T-1 (highest priority) through T-N (lowest). R
 
 ACTIVE TENSION CAP: Maximum ${activeTensionCap} active tensions. If at cap and a new tension arises, it must displace the lowest-ranked tension with explicit priority justification. Structural gaps do not count against the cap.
 
+MUTUAL EXCLUSIVITY: A signal MUST NOT appear in both active_tensions and structural_gaps. These are mutually exclusive classifications. The test: has this signal's status changed in the last 3 pipeline runs based on data the pipeline actually receives? If NO — and the reason is that the data is not available to the pipeline — it is a STRUCTURAL_GAP. Place it in structural_gaps only. Do not also place it in active_tensions. Placing the same signal in both arrays inflates the tension count, inflates the score sum, and wastes a tension slot. If a structural gap's promotable_if condition is met in a future run, THEN it becomes an active tension. Not before.
+
 IMPACT SCORES (1-5):
    1 = Informational: Resolution would not change the action recommendation.
    2 = Minor: Could shift confidence but not the action.
