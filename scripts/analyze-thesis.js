@@ -1110,6 +1110,8 @@ For every inference that passes the null hypothesis test, you MUST declare:
 
 EXTERNAL CONDITIONS ≠ INTERNAL RESPONSE: External conditions acting on a thesis-relevant entity are not evidence of how that entity is responding internally. Do not infer acceleration, strategic shifts, or changed timelines from external pressure without direct evidence of changed plans, resource allocation, or announced actions from the entity itself. Without that evidence, the null hypothesis holds. [Graduated from CL-033]
 
+[Counter-instruction for LZ-EPH-002] When building any strategic inference, distinguish between what entities SAY and what they DO. An entity's public statement, press release, survey result, or media interview is not equivalent to an observable action (regulatory filing, capital deployment, on-chain transaction, product launch). If your inference depends on statement-level evidence, it cannot carry the same weight as action-level evidence. Intermediary reporting about an entity's actions is weaker still — a news article about a filing is not the filing itself. Label the evidence type (primary action, primary statement, intermediary report) and weight accordingly.
+
 D) HIDDEN MOVES — What are players most likely doing that they're NOT talking about? Based on incentive analysis, what non-public actions would be rational?
 
 E) SCENARIO PROBABILITIES — Based on behavioral evidence (not speculation): thesis CONFIRMED, MODIFIED, or FALSIFIED with probability, key evidence, and timeline.
