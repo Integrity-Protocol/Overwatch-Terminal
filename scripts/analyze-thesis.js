@@ -36,7 +36,7 @@ const { runLayerZeroGate } = require('./layer-zero-gate');
 const { runBlindAuditor, applyAuditorToOutput } = require('./blind-auditor');
 const { assembleTrace } = require('./assemble-trace');
 const { logPaperTrades, applyDispositions } = require('./x402-paper-trade-logger');
-const { constrainRequests, recordOutcomes } = require('./x402-constrained-acquisition');
+const { constrainRequests, recordOutcomes, probeStructuralGaps } = require('./x402-constrained-acquisition');
 
 const DASHBOARD_PATH      = path.join(__dirname, '..', 'dashboard-data.json');
 const ANALYSIS_PATH       = path.join(__dirname, '..', 'analysis-output.json');
@@ -2137,6 +2137,16 @@ async function main() {
             }
           } catch (acqErr) {
             warn('acq', `Constrained acquisition failed (non-fatal): ${acqErr.message}`);
+          }
+
+          // ── AD #17 Phase 3: Structural Gap Probing ───────────────────────
+          try {
+            const probeResult = probeStructuralGaps(reconcileResult, domainConfigMain);
+            if (probeResult.probed > 0) {
+              log('acq', `Probed ${probeResult.probed} structural gaps (${probeResult.total_gaps} total, ${JSON.stringify(probeResult.excluded_reasons)})`);
+            }
+          } catch (probeErr) {
+            warn('acq', `Structural gap probing failed (non-fatal): ${probeErr.message}`);
           }
         } else {
           // Layer 4 failed — fall back to Layer 2 output via old bridge

@@ -358,6 +358,119 @@ function recordOutcomes(constrainedRequests, traceOutput, layer4Output, domainCo
   return result;
 }
 
+// ─── probeStructuralGaps ───────────────────────────────────────────────────────
+
+/**
+ * Active probing of structural data gaps. Converts promotable_if conditions
+ * into testable hypotheses at configured cadence.
+ *
+ * Default cadence: sunday_audit (configured in domain.json).
+ * Individual gaps can be escalated to next_cycle when external signals
+ * suggest the promotable_if condition may have been met.
+ *
+ * NOT_OBSERVABLE gaps (data_availability) are excluded from probing.
+ * Gaps without promotable_if are excluded (nothing to test).
+ * Gaps with empty blocks_assessment (when present) receive zero probing
+ * bandwidth — orphaned unobservables.
+ *
+ * @param {object} layer4Output    — Layer 4 reconcile result (has structural_gaps[])
+ * @param {object} domainConfig    — Domain configuration
+ * @param {object} [opts]          — Optional overrides
+ * @param {boolean} [opts.isSundayAudit] — Force Sunday audit cadence check
+ * @param {Array}   [opts.escalatedGapIds] — Gap IDs escalated to next_cycle
+ * @returns {object} { probing_records: [...], total_gaps: N, eligible: N, probed: N, excluded_reasons: {} }
+ */
+function probeStructuralGaps(layer4Output, domainConfig, opts = {}) {
+  const result = {
+    probing_records: [],
+    total_gaps: 0,
+    eligible: 0,
+    probed: 0,
+    excluded_reasons: {},
+    _probed_at: new Date().toISOString()
+  };
+
+  // Get structural gaps from Layer 4 output
+  const gaps = (layer4Output && layer4Output.structural_gaps) || [];
+  result.total_gaps = gaps.length;
+
+  if (gaps.length === 0) {
+    log('probe', 'No structural gaps in Layer 4 output.');
+    return result;
+  }
+
+  // Determine cadence
+  const configCadence = domainConfig.structural_gap_probe_cadence || 'sunday_audit';
+  const isSunday = opts.isSundayAudit !== undefined
+    ? opts.isSundayAudit
+    : new Date().getUTCDay() === 0;
+  const escalatedIds = new Set(opts.escalatedGapIds || []);
+
+  // Track exclusion reasons
+  function exclude(reason) {
+    result.excluded_reasons[reason] = (result.excluded_reasons[reason] || 0) + 1;
+  }
+
+  for (const gap of gaps) {
+    // Exclusion: no promotable_if — nothing to test
+    if (!gap.promotable_if || gap.promotable_if.trim() === '') {
+      exclude('no_promotable_if');
+      continue;
+    }
+
+    // Exclusion: NOT_OBSERVABLE data_availability (if field exists)
+    if (gap.data_availability === 'NOT_OBSERVABLE') {
+      exclude('not_observable');
+      continue;
+    }
+
+    // Exclusion: empty blocks_assessment array (if field exists)
+    // When blocks_assessment is present and empty, the gap is an orphaned
+    // unobservable that blocks no downstream index. Zero probing bandwidth.
+    if (Array.isArray(gap.blocks_assessment) && gap.blocks_assessment.length === 0) {
+      exclude('orphaned_unobservable');
+      continue;
+    }
+
+    // Cadence check: sunday_audit default, or escalated to next_cycle
+    const isEscalated = escalatedIds.has(gap.gap_id);
+    if (configCadence === 'sunday_audit' && !isSunday && !isEscalated) {
+      exclude('cadence_not_met');
+      continue;
+    }
+
+    // Gap is eligible for probing
+    result.eligible++;
+
+    // Build probing record
+    const probingRecord = {
+      gap_id: gap.gap_id,
+      description: gap.description || '',
+      promotable_if: gap.promotable_if,
+      source_channel: 'STRUCTURAL_GAP_PROBE',
+      // Convert promotable_if into a falsifiable question
+      falsifiable_question: `Has the following condition been met: ${gap.promotable_if}`,
+      intended_epistemic_vector: 'INFORM',
+      cadence: isEscalated ? 'next_cycle' : configCadence,
+      escalated: isEscalated,
+      // blocks_assessment pass-through for downstream priority ordering
+      blocks_assessment: gap.blocks_assessment || null,
+      _probed_at: new Date().toISOString()
+    };
+
+    result.probing_records.push(probingRecord);
+    result.probed++;
+  }
+
+  if (result.probed > 0) {
+    log('probe', `Probed ${result.probed} of ${result.total_gaps} structural gaps (${result.eligible} eligible). Exclusions: ${JSON.stringify(result.excluded_reasons)}`);
+  } else {
+    log('probe', `No gaps eligible for probing this cycle. ${result.total_gaps} total gaps. Exclusions: ${JSON.stringify(result.excluded_reasons)}`);
+  }
+
+  return result;
+}
+
 // ─── Exports ──────────────────────────────────────────────────────────────────
 
-module.exports = { constrainRequests, recordOutcomes };
+module.exports = { constrainRequests, recordOutcomes, probeStructuralGaps };
