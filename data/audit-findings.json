@@ -212,5 +212,81 @@
     "override_reasoning": "BLIND AUDITOR PHASE 2 OVERRIDE (deterministic fallback). AI audit unavailable. Previous advisory (2026-03-15T13:28:35.444Z) was not resolved. Persistent mismatch: CRITICAL_TENSION_PERSISTENCE, ZOMBIE_ESCALATION. Direction: escalate. Action overridden to: EXIT_SIGNAL. Critical tension(s) persisting 3+ runs without action escalation: T-1 (5 runs), T-2 (5 runs), T-3 (5 runs), T-5 (5 runs), T-4 (5 runs), T-6 (5 runs).",
     "prior_advisory_timestamp": "2026-03-15T13:28:35.444Z",
     "deterministic_fallback": true
+  },
+  {
+    "phase": 1,
+    "status": "UNRESOLVED",
+    "timestamp": "2026-03-22T22:26:14.739Z",
+    "run_index": 60,
+    "mismatches": [
+      {
+        "type": "CRITICAL_TENSION_PERSISTENCE",
+        "detail": "Critical tension(s) persisting 3+ runs without action escalation: T-3 (5 runs), T-5 (5 runs), T-8 (5 runs), T-4 (5 runs), T-10 (5 runs), T-7 (5 runs), T-6 (5 runs), T-9 (5 runs).",
+        "severity": "HIGH",
+        "persistent_tensions": [
+          {
+            "tension_id": "T-3",
+            "runs": 5
+          },
+          {
+            "tension_id": "T-5",
+            "runs": 5
+          },
+          {
+            "tension_id": "T-8",
+            "runs": 5
+          },
+          {
+            "tension_id": "T-4",
+            "runs": 5
+          },
+          {
+            "tension_id": "T-10",
+            "runs": 5
+          },
+          {
+            "tension_id": "T-7",
+            "runs": 5
+          },
+          {
+            "tension_id": "T-6",
+            "runs": 5
+          },
+          {
+            "tension_id": "T-9",
+            "runs": 5
+          }
+        ]
+      }
+    ],
+    "advisory_text": "The Blind Auditor has flagged a mismatch between your evidence trajectory and your action trajectory. Address this finding: either commit to acting on your assessment or justify the hold with specific, verifiable evidence that warrants continued restraint. A justification must name what specific new information you are waiting for and what observable outcome would resolve the question.",
+    "trajectory_summary": [
+      {
+        "status": "CONTESTED",
+        "action": "EXIT_SIGNAL",
+        "tensions": 8
+      },
+      {
+        "status": "CONTESTED",
+        "action": "EXIT_SIGNAL",
+        "tensions": 8
+      },
+      {
+        "status": "CONTESTED",
+        "action": "EXIT_SIGNAL",
+        "tensions": 8
+      },
+      {
+        "status": "CONTESTED",
+        "action": "EXIT_SIGNAL",
+        "tensions": 8
+      },
+      {
+        "status": "CONTESTED",
+        "action": "EXIT_SIGNAL",
+        "tensions": 8
+      }
+    ],
+    "deterministic_fallback": true
   }
 ]
