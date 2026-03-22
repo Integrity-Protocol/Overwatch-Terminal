@@ -175,7 +175,7 @@ function loadCorrectionsLedger(customPath) {
     if (fs.existsSync(ledgerPath)) {
       const data = JSON.parse(fs.readFileSync(ledgerPath, 'utf8'));
       if (Array.isArray(data)) {
-        const active = data.filter(e => e.status === 'ACTIVE');
+        const active = data.filter(e => e.status === 'ACTIVE' && !(e.lesson === 'NEEDS_ENRICHMENT' && e.trigger === 'NEEDS_ENRICHMENT' && e.prevention === 'NEEDS_ENRICHMENT'));
         log('ledger', `Corrections ledger loaded: ${active.length} active of ${data.length} total entries`);
         return active;
       }
