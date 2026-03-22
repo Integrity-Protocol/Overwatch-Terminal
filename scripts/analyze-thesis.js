@@ -839,6 +839,9 @@ Your JSON output MUST include the "corrections_referenced" array. This is not op
 - If no corrections were relevant, return an empty array: "corrections_referenced": []
 - Omitting this field is a structural compliance failure.
 
+COMPOUND INDEX REQUIREMENT:
+Your JSON output MUST include the "compound_index_evaluation" array. Evaluate every compound index defined in the thesis context. For each index, assess every component's data_availability and direction, calculate the agreement_ratio, and determine convergence_status and convergence_direction. Set inverse to true for any index marked as inverse in the thesis context. Set assessable_components and total_components counts. This field is required — omitting it is a structural compliance failure.
+
 Respond with ONLY valid JSON — no markdown, no code fences, no commentary outside the JSON:
 {
   "corrections_referenced": [
@@ -949,7 +952,7 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary outs
       log('analysis', `Layer 2 API call (attempt ${attempt})...`);
       const response = await client.messages.create({
         model: 'claude-opus-4-6',
-        max_tokens: 12000,
+        max_tokens: 16000,
         messages: [{ role: 'user', content: prompt }]
       });
       const raw = response.content[0].text;
