@@ -2103,11 +2103,15 @@ async function main() {
           assessment360 = buildDashboardCompatible(reconcileResult, contextualizeResult, inferenceResult);
           log('pipeline', '✓ Full four-layer pipeline complete');
 
+            let traceResultForOutcomes = null;
+            let constrainedRequestsForOutcomes = [];
+
           // ── Assemble Cognitive Trace ──────────────────────────────────
           try {
             const traceResult = assembleTrace();
             if (traceResult) {
               log('trace', `Cognitive trace assembled: ${traceResult._signal_count} signals, outcomes: ${JSON.stringify(traceResult._outcomes)}`);
+                traceResultForOutcomes = traceResult;
             } else {
               warn('trace', 'Trace assembly returned null — trace will be missing for this run');
             }
@@ -2134,6 +2138,7 @@ async function main() {
               if (acqResult.total_constrained > 0) {
                 log('acq', `Constrained ${acqResult.total_constrained} of ${acqResult.total_approved} approved requests (${acqResult.rejected_by_materiality} below threshold, ${acqResult.rejected_by_cap} over cap)`);
               }
+                constrainedRequestsForOutcomes = acqResult.constrained_requests || [];
             }
           } catch (acqErr) {
             warn('acq', `Constrained acquisition failed (non-fatal): ${acqErr.message}`);
@@ -2148,6 +2153,18 @@ async function main() {
           } catch (probeErr) {
             warn('acq', `Structural gap probing failed (non-fatal): ${probeErr.message}`);
           }
+
+            // ── AD #17 Phase 4: Record Acquisition Outcomes ────────────────
+            try {
+              if (constrainedRequestsForOutcomes.length > 0 && traceResultForOutcomes) {
+                const outcomeResult = recordOutcomes(constrainedRequestsForOutcomes, traceResultForOutcomes, reconcileResult, domainConfigMain);
+                if (outcomeResult.outcomes_recorded > 0) {
+                  log('acq', `Recorded ${outcomeResult.outcomes_recorded} acquisition outcomes: ${JSON.stringify(outcomeResult.outcome_summary)}`);
+                }
+              }
+            } catch (outcomeErr) {
+              warn('acq', `Outcome recording failed (non-fatal): ${outcomeErr.message}`);
+            }
         } else {
           // Layer 4 failed — fall back to Layer 2 output via old bridge
           warn('pipeline', 'Layer 4 failed — using Layer 2 output as fallback');
