@@ -189,6 +189,55 @@ function loadCorrectionsLedger(customPath) {
   }
 }
 
+/**
+ * Shared helper: load behavioral calibration entries from data/behavioral-calibration.json.
+ * Returns ACTIVE entries filtered to the specified layer, ranked by confidence then frequency.
+ * Respects max active entries cap from domain config.
+ * AD #16: Behavioral Calibration — Dynamic Epistemic Regulation.
+ */
+function loadBehavioralCalibration(targetLayer) {
+  try {
+    const calPath = path.join(__dirname, '..', 'data', 'behavioral-calibration.json');
+    if (!fs.existsSync(calPath)) return [];
+    const data = JSON.parse(fs.readFileSync(calPath, 'utf8'));
+    if (!Array.isArray(data)) return [];
+
+    const active = data.filter(e =>
+      e.status === 'ACTIVE' &&
+      Array.isArray(e.target_layers) &&
+      e.target_layers.includes(targetLayer)
+    );
+
+    if (active.length === 0) return [];
+
+    // Rank: HIGH > MEDIUM > LOW, then by frequency string (descending)
+    const confRank = { HIGH: 0, MEDIUM: 1, LOW: 2 };
+    active.sort((a, b) => {
+      const ca = confRank[a.confidence] ?? 3;
+      const cb = confRank[b.confidence] ?? 3;
+      if (ca !== cb) return ca - cb;
+      return (b.frequency || '').localeCompare(a.frequency || '');
+    });
+
+    // Respect max active entries cap from domain config
+    let maxEntries = 5;
+    try {
+      const configPath = path.join(__dirname, '..', 'config', 'domain.json');
+      if (fs.existsSync(configPath)) {
+        const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+        maxEntries = config.calibration_max_active_entries || 5;
+      }
+    } catch (_) {}
+
+    const capped = active.slice(0, maxEntries);
+    log('calibration', `Behavioral calibration loaded for ${targetLayer}: ${capped.length} active entries (${active.length} total for layer, cap ${maxEntries})`);
+    return capped;
+  } catch (e) {
+    warn('calibration', `Behavioral calibration load failed (non-fatal): ${e.message}`);
+    return [];
+  }
+}
+
 async function enforceCorrectionsReferenced(result, layerLabel, client, ledgerEntries) {
   if (Array.isArray(result.corrections_referenced)) {
     log(layerLabel, `corrections_referenced present: ${result.corrections_referenced.length} entries`);
@@ -697,6 +746,14 @@ async function runContextualize(sweepResults, marketData, thesisContext, options
   const opts = options || {};
   const correctionsLedger = loadCorrectionsLedger(opts.correctionsLedgerPath);
 
+  const calibrationEntriesL2 = loadBehavioralCalibration('L2');
+  const calibrationSectionL2 = calibrationEntriesL2.length > 0
+    ? `BEHAVIORAL CALIBRATION (documented reasoning tendencies — read before analysis):
+${JSON.stringify(calibrationEntriesL2.map(e => ({ id: e.id, source_rule: e.source_rule, documented_tendency: e.documented_tendency, directional_guidance: e.directional_guidance })))}
+
+These are patterns in YOUR reasoning detected across multiple pipeline runs. They are not rules (Layer Zero) and not specific past mistakes (Corrections Ledger). They are tendencies — recurring ways you process information that produce epistemological violations. Read each entry and actively counteract the documented tendency during this analysis.`
+    : '';
+
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
     err('analysis', 'ANTHROPIC_API_KEY not set — Layer 2 cannot run');
@@ -734,6 +791,7 @@ RLUSD PACE NEEDED TO HIT $5B TARGET: ${rlusdPaceNeeded} (${daysRemaining} days r
 CORRECTIONS LEDGER (active lessons from past errors):
 ${JSON.stringify(correctionsLedger)}
 
+${calibrationSectionL2}
 === PHASE 1: KNOWLEDGE AUDIT ===
 
 For each significant signal from Layer 1, perform the following check BEFORE scoring:
@@ -1001,6 +1059,14 @@ async function runInfer(contextualizeResult, marketData, thesisContext, options)
   const opts = options || {};
   const correctionsLedger = loadCorrectionsLedger(opts.correctionsLedgerPath);
 
+  const calibrationEntriesL3 = loadBehavioralCalibration('L3');
+  const calibrationSectionL3 = calibrationEntriesL3.length > 0
+    ? `BEHAVIORAL CALIBRATION (documented reasoning tendencies — read before analysis):
+${JSON.stringify(calibrationEntriesL3.map(e => ({ id: e.id, source_rule: e.source_rule, documented_tendency: e.documented_tendency, directional_guidance: e.directional_guidance })))}
+
+These are patterns in YOUR reasoning detected across multiple pipeline runs. They are not rules (Layer Zero) and not specific past mistakes (Corrections Ledger). They are tendencies — recurring ways you process information that produce epistemological violations. Read each entry and actively counteract the documented tendency during this analysis.`
+    : '';
+
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
     err('analysis', 'ANTHROPIC_API_KEY not set — Layer 3 cannot run');
@@ -1032,6 +1098,7 @@ ${thesisContext}
 CORRECTIONS LEDGER (active lessons):
 ${JSON.stringify(correctionsLedger)}
 
+${calibrationSectionL3}
 === CIRCUIT BREAKERS — READ BEFORE REASONING ===
 
 CRITICAL CONSTRAINT — NULL HYPOTHESIS:
@@ -1300,6 +1367,14 @@ async function runReconcile(contextualizeResult, inferenceResult, marketData, th
   const actionMonitor = (opts.domainConfig && opts.domainConfig.action_monitor) || 'INCREASE_MONITORING';
   const activeTensionCap = (opts.domainConfig && opts.domainConfig.active_tension_cap) || 8;
 
+  const calibrationEntriesL4 = loadBehavioralCalibration('L4');
+  const calibrationSectionL4 = calibrationEntriesL4.length > 0
+    ? `\nBEHAVIORAL CALIBRATION (documented reasoning tendencies — read before judgment):
+${JSON.stringify(calibrationEntriesL4.map(e => ({ id: e.id, source_rule: e.source_rule, documented_tendency: e.documented_tendency, directional_guidance: e.directional_guidance })))}
+
+These are patterns in YOUR reasoning detected across multiple pipeline runs. You have documented tendencies that produce epistemological violations in your final judgments. Read each entry and actively counteract the documented tendency when making your assessment. The goal is better reasoning, not better stats — do not suppress analysis to avoid triggering the calibration.`
+    : '';
+
   // AD #14: Load active Blind Auditor advisory (if any) for Layer 4 to address
   let advisorySection = '';
   try {
@@ -1361,6 +1436,7 @@ ${JSON.stringify(marketData)}
 
 THESIS CONTEXT:
 ${thesisContext}
+${calibrationSectionL4}
 ${advisorySection}
 ${previousTensionsSection}
 ${pendingAcquisitionsSection}
