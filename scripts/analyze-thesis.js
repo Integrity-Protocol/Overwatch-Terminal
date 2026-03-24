@@ -1917,7 +1917,7 @@ function buildDashboardCompatible(reconcileResult, contextualizeResult, inferenc
 
   const dashCompat = {
     // Fields the dashboard reads directly
-    commander_summary:          reconcileResult.final_report || '',
+    commander_summary:          reconcileResult.final_report || reconcileResult.thesis_status_reasoning || '',
     score_reasoning:            reconcileResult.action_reasoning || '',
     tactical_recommendation:    reconcileResult.tactical_recommendation || 'INCREASE_MONITORING',
     recommendation_reasoning:   reconcileResult.action_reasoning || '',

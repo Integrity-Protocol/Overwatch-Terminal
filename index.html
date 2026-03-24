@@ -6463,7 +6463,7 @@ function render360Report(r) {
   const setHtml = (id, val) => { const el = document.getElementById(id); if (el) el.innerHTML = val ?? ''; };
 
   // 1. Commander Summary
-  set('s360-commander', r.commander_summary);
+  set('s360-commander', r.commander_summary || r._layer4_raw?.thesis_status_reasoning || '—');
 
   // Hero section population
   if (document.getElementById('heroThesisStatus')) {
