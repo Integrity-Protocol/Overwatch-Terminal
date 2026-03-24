@@ -1218,19 +1218,6 @@ textarea:focus { border-color:var(--accent-cyan); }
     <!-- 360 report content -->
     <div id="s360-content" style="display:none;">
 
-      <!-- 1. Commander Summary -->
-      <div class="full-card" style="border-color:rgba(245,158,11,0.35);background:linear-gradient(135deg,rgba(245,158,11,0.04),transparent);">
-        <div class="s360-hdr" onclick="toggle360('cmd')">
-          <h3 style="margin:0;">⚡ 360 REPORT</h3>
-          <span class="s360-toggle" id="s360-toggle-cmd">▲</span>
-        </div>
-        <div class="s360-body" id="s360-body-cmd">
-          <div class="interpret-box" style="border-color:rgba(245,158,11,0.25);background:rgba(245,158,11,0.05);margin-top:6px;">
-            <p id="s360-commander" style="color:var(--text-primary);font-size:13px;line-height:1.65;">—</p>
-          </div>
-        </div>
-      </div>
-
       <!-- System Cognitive Health -->
       <div class="full-card" style="border-color:rgba(26,138,110,0.3);">
         <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;padding:8px 4px;text-align:center;">
@@ -6461,9 +6448,6 @@ function render360Report(r) {
   const eh = escHtml;
   const set    = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val ?? '—'; };
   const setHtml = (id, val) => { const el = document.getElementById(id); if (el) el.innerHTML = val ?? ''; };
-
-  // 1. Commander Summary
-  set('s360-commander', r.commander_summary || r._layer4_raw?.thesis_status_reasoning || '—');
 
   // Hero section population
   if (document.getElementById('heroThesisStatus')) {
