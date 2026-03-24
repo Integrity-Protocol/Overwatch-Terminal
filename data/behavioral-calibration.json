@@ -6,8 +6,13 @@
     "calibration_type": "TENDENCY_CORRECTION",
     "status": "CANDIDATE",
     "source_rule": "LZ-EPH-002",
-    "target_layers": ["L3", "L4"],
-    "signal_categories": ["all"],
+    "target_layers": [
+      "L3",
+      "L4"
+    ],
+    "signal_categories": [
+      "all"
+    ],
     "pattern_type": "RECURRING_VIOLATION",
     "frequency": "34/34 runs",
     "magnitude": "122 occurrences across all layers (L3: 41, L4: 31, L2: 28, L1: 22)",
@@ -32,8 +37,12 @@
     "calibration_type": "TENDENCY_CORRECTION",
     "status": "CANDIDATE",
     "source_rule": "LZ-EPH-003",
-    "target_layers": ["L3"],
-    "signal_categories": ["all"],
+    "target_layers": [
+      "L3"
+    ],
+    "signal_categories": [
+      "all"
+    ],
     "pattern_type": "RECURRING_VIOLATION",
     "frequency": "33/34 runs",
     "magnitude": "1032 occurrences in L3",
@@ -46,7 +55,7 @@
     "overcorrection_watch": "If Layer 3 begins stripping all statement-based evidence (zero inferences from announcements), flag for Blind Auditor review. Statements have evidentiary value — they should be discounted, not eliminated.",
     "overcorrection_metric": "SIGNAL_STRIPPED_RATE",
     "overcorrection_metric_layer": "L3",
-    "overcorrection_threshold_override": 0.50,
+    "overcorrection_threshold_override": 0.5,
     "source_corrections": [],
     "falsification_criteria": null,
     "notes": "Second highest violation. 1032 occurrences concentrated in L3. The say-do gap analysis framework exists in L3 but the model still defaults to weighting statements equally."
@@ -58,8 +67,13 @@
     "calibration_type": "TENDENCY_CORRECTION",
     "status": "CANDIDATE",
     "source_rule": "LZ-RC-001",
-    "target_layers": ["L1"],
-    "signal_categories": ["macro", "geopolitical"],
+    "target_layers": [
+      "L1"
+    ],
+    "signal_categories": [
+      "macro",
+      "geopolitical"
+    ],
     "pattern_type": "RECURRING_VIOLATION",
     "frequency": "34/34 runs",
     "magnitude": "832 occurrences in L1",
@@ -72,7 +86,10 @@
     "overcorrection_watch": "If Layer 1 stops reporting macro co-occurrences entirely (zero macro signals with multiple indicators), flag for Blind Auditor review. Co-occurrences are worth reporting — the issue is implying causation, not reporting the data.",
     "overcorrection_metric": "SIGNAL_REJECTION_RATE",
     "overcorrection_metric_layer": "L1",
-    "overcorrection_metric_categories": ["macro", "geopolitical"],
+    "overcorrection_metric_categories": [
+      "macro",
+      "geopolitical"
+    ],
     "overcorrection_threshold_override": null,
     "source_corrections": [],
     "falsification_criteria": null,
@@ -85,8 +102,12 @@
     "calibration_type": "TENDENCY_CORRECTION",
     "status": "CANDIDATE",
     "source_rule": "LZ-RC-002",
-    "target_layers": ["L4"],
-    "signal_categories": ["all"],
+    "target_layers": [
+      "L4"
+    ],
+    "signal_categories": [
+      "all"
+    ],
     "pattern_type": "RECURRING_VIOLATION",
     "frequency": "33/34 runs",
     "magnitude": "55 occurrences, concentrated in L4",
@@ -111,8 +132,13 @@
     "calibration_type": "TENDENCY_CORRECTION",
     "status": "CANDIDATE",
     "source_rule": "LZ-RC-005",
-    "target_layers": ["L3"],
-    "signal_categories": ["macro", "geopolitical"],
+    "target_layers": [
+      "L3"
+    ],
+    "signal_categories": [
+      "macro",
+      "geopolitical"
+    ],
     "pattern_type": "RECURRING_VIOLATION",
     "frequency": "32/34 runs",
     "magnitude": "48 occurrences, concentrated in L3",
@@ -125,10 +151,36 @@
     "overcorrection_watch": "If Layer 3 eliminates all forward-looking analysis (zero scenario projections or conditional inferences), flag for Blind Auditor review. Predictions are a core L3 function — the issue is weighting them as equivalent to measurements, not making them.",
     "overcorrection_metric": "SIGNAL_FLAGGED_RATE",
     "overcorrection_metric_layer": "L3",
-    "overcorrection_metric_categories": ["macro", "geopolitical"],
-    "overcorrection_threshold_override": 0.50,
+    "overcorrection_metric_categories": [
+      "macro",
+      "geopolitical"
+    ],
+    "overcorrection_threshold_override": 0.5,
     "source_corrections": [],
     "falsification_criteria": null,
     "notes": "Fifth highest violation. The Japan compound stress cascade in the most recent trace is a clear example — predicted transmission mechanism weighted as established fact."
+  },
+  {
+    "id": "BC-006",
+    "calibration_type": "TENDENCY_CORRECTION",
+    "status": "CANDIDATE",
+    "target_layers": [
+      2,
+      3
+    ],
+    "documented_tendency": "When the system encounters an entity operating in similar functional space to the thesis asset's infrastructure, it defaults to competitive classification without verifying whether the relationship is actually adversarial. Functional overlap is treated as sufficient evidence for competition. This produces false competitive displacement signals that inflate CI-5 and distort the thesis assessment.",
+    "directional_guidance": "Functional similarity is not competition. Before classifying an entity as a competitor, verify explicit evidence of adversarial action or intent. Check for existing evidence of collaboration or neutrality before defaulting to competition. If the full scope of the relationship is unknown, do not guess — classify as UNVERIFIED_COMPETITIVE and log a structural gap.",
+    "overcorrection_watch": "System becomes overly cautious about competitive classification, adding excessive caveats to every CI-5 assessment or refusing to identify real competitive threats. CI-5 loses signal and trends toward INSUFFICIENT_DATA when assessable components exist.",
+    "overcorrection_metric": "ci5_assessable_ratio",
+    "overcorrection_metric_layer": 2,
+    "overcorrection_threshold_override": null,
+    "created_date": "2026-03-24",
+    "promoted_date": null,
+    "suspended_date": null,
+    "retired_date": null,
+    "frequency": null,
+    "magnitude": null,
+    "last_observed": null,
+    "confidence_decay_rate": null
   }
 ]
