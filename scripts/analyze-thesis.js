@@ -37,6 +37,7 @@ const { runBlindAuditor, applyAuditorToOutput } = require('./blind-auditor');
 const { assembleTrace } = require('./assemble-trace');
 const { logPaperTrades, applyDispositions } = require('./x402-paper-trade-logger');
 const { constrainRequests, recordOutcomes, probeStructuralGaps } = require('./x402-constrained-acquisition');
+const { calculateActionPressure } = require('./action-pressure');
 
 const DASHBOARD_PATH      = path.join(__dirname, '..', 'dashboard-data.json');
 const ANALYSIS_PATH       = path.join(__dirname, '..', 'analysis-output.json');
@@ -1412,6 +1413,18 @@ These are patterns in YOUR reasoning detected across multiple pipeline runs. You
     }
   }
 
+  // AD #18: Build action pressure context (sanitized — Layer 4 sees tier + signals only)
+  let actionPressureSection = '';
+  const pressureCtx = (opts && opts.actionPressureContext && opts.actionPressureContext.action_environment) || null;
+  if (pressureCtx && pressureCtx.pressure_tier && pressureCtx.pressure_tier !== 'LOW_PRESSURE') {
+    const persistLines = (pressureCtx.persistence_signals || []).map(s => `- ${s}`).join('\n');
+    const trajLines = (pressureCtx.trajectory_signals || []).map(s => `- ${s}`).join('\n');
+    actionPressureSection = `\n=== ACTION PRESSURE CONTEXT — FACTOR INTO YOUR ACTION REASONING ===\n\nPressure Tier: ${pressureCtx.pressure_tier}\n\n${persistLines ? 'Persistence signals:\n' + persistLines + '\n\n' : ''}${trajLines ? 'Trajectory signals:\n' + trajLines + '\n\n' : ''}Directive: ${pressureCtx.directive}\n\nIf your action_recommendation does not change despite this pressure context, your action_reasoning MUST address each signal above and explain why it does not warrant a change.\n`;
+    log('analysis', `AD #18: Pressure context injected: ${pressureCtx.pressure_tier}, ${(pressureCtx.persistence_signals || []).length} persistence, ${(pressureCtx.trajectory_signals || []).length} trajectory signals`);
+  } else if (pressureCtx) {
+    log('analysis', 'AD #18: LOW_PRESSURE — no pressure context injected into Layer 4 prompt');
+  }
+
   // AD #15: Build previous tensions section for lifecycle management
   let previousTensionsSection = '';
   const previousTensions = (opts && opts.previousTensions) || [];
@@ -1438,6 +1451,7 @@ THESIS CONTEXT:
 ${thesisContext}
 ${calibrationSectionL4}
 ${advisorySection}
+${actionPressureSection}
 ${previousTensionsSection}
 ${pendingAcquisitionsSection}
 === BURDEN OF PROOF — APPLY BEFORE ALL ELSE ===
@@ -1517,7 +1531,7 @@ RESOLUTION WINDOWS: Each active tension carries expected_resolution_window (hour
 
 FALSIFIED: If thesis_status is FALSIFIED, all active tensions are auto-resolved — the thesis question has been answered.
 
-7. ACTION RECOMMENDATION — Select action_recommendation from: ${actionEnumValues}. Write action_reasoning (2-3 sentences). The action must be consistent with thesis_status: STRENGTHENING cannot produce ${actionSevere}. INSUFFICIENT_EVIDENCE cannot produce ${actionSevere}. If thesis_status is CONTESTED, action must be ${actionMonitor} or an intermediate option — never ${actionSevere} on contested evidence alone.
+7. ACTION RECOMMENDATION — Select action_recommendation from: ${actionEnumValues}. Write action_reasoning (2-3 sentences). The action must be consistent with thesis_status: STRENGTHENING cannot produce ${actionSevere}. INSUFFICIENT_EVIDENCE cannot produce ${actionSevere}. If thesis_status is CONTESTED, action must be ${actionMonitor} or an intermediate option — never ${actionSevere} on contested evidence alone. If an ACTION PRESSURE CONTEXT section was provided above, your action_reasoning must account for it. At MODERATE_PRESSURE, acknowledge the pressure and explain why your recommendation is appropriate. At HIGH_PRESSURE, the burden of proof is inverted: provide specific, verifiable evidence for why your current action is justified despite accumulated pressure. Cite what you expect and when. At CRITICAL_PRESSURE, inaction requires extraordinary justification — if you cannot cite specific imminent evidence, you must change your action recommendation. Do not ignore persistence or trajectory signals.
 
 8. REJECTION LOG — If Layer 4 overruled any Layer 3 inference, document it with root cause and corrections ledger trigger.
 
@@ -2151,7 +2165,28 @@ async function main() {
           warn('analysis', `Previous tensions load failed (non-fatal): ${e.message}`);
         }
 
-        const reconcileResult = await runReconcile(contextualizeResult, inferenceResult, dashboardData, thesisContext, { previousTensions, domainConfig: domainConfigMain, pendingAcquisitions: paperTradeResult.request_ids });
+        // AD #18: Compute action pressure BEFORE Layer 4 (deterministic, no AI)
+        let actionPressureResult = { layer4Context: null, telemetry: null };
+        try {
+          const histPath360 = path.join(__dirname, '..', 'data', '360-history.json');
+          let pressureHistory = [];
+          if (fs.existsSync(histPath360)) {
+            pressureHistory = JSON.parse(fs.readFileSync(histPath360, 'utf8'));
+          }
+          const lastEntry = pressureHistory.length > 0 ? pressureHistory[pressureHistory.length - 1] : {};
+          const currentAction = lastEntry.action_recommendation || lastEntry.tactical_recommendation || 'HOLD_POSITION';
+          actionPressureResult = calculateActionPressure({
+            history: pressureHistory,
+            currentTensions: previousTensions,
+            currentAction,
+            domainConfig: domainConfigMain,
+          });
+          log('analysis', `AD #18: Action pressure computed: ${actionPressureResult.telemetry?.pressure_telemetry?.tier || 'N/A'}`);
+        } catch (apErr) {
+          warn('analysis', `Action pressure calculation failed (non-fatal): ${apErr.message}`);
+        }
+
+        const reconcileResult = await runReconcile(contextualizeResult, inferenceResult, dashboardData, thesisContext, { previousTensions, domainConfig: domainConfigMain, pendingAcquisitions: paperTradeResult.request_ids, actionPressureContext: actionPressureResult.layer4Context, actionPressureTelemetry: actionPressureResult.telemetry });
 
         // Tier 1 validators — Layer 4
         let tier1Layer4 = { flags: [], hard_fails: 0, total_flags: 0, layer: 4 };

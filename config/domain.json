@@ -243,5 +243,26 @@
   "calibration_status_lifecycle": ["CANDIDATE", "ACTIVE", "SUSPENDED", "RETIRED"],
   "calibration_status_lifecycle_description": "CANDIDATE: derived from trace patterns, awaiting human review at Sunday audit. ACTIVE: approved, injected into layer prompts. SUSPENDED: overcorrection detected or guidance caused operational failure — injection paused, human must rewrite guidance before reactivation. RETIRED: tendency corrected or entry no longer applicable.",
   "calibration_update_cadence": "sunday_audit",
-  "calibration_update_cadence_description": "When calibration entries are reviewed, updated, and new candidates are promoted. Aligns with existing Sunday Blind Spot Audit cycle. Entries are NOT updated after every run."
+  "calibration_update_cadence_description": "When calibration entries are reviewed, updated, and new candidates are promoted. Aligns with existing Sunday Blind Spot Audit cycle. Entries are NOT updated after every run.",
+
+  "action_pressure": {
+    "tension_duration_weight": 0.40,
+    "index_trajectory_weight": 0.35,
+    "status_divergence_weight": 0.25,
+    "lookback_window": 5,
+    "max_divergence_runs": 8,
+    "tier_boundaries": [0.25, 0.50, 0.75]
+  },
+
+  "tension_persistence": {
+    "saturated_avg_threshold": 3.5,
+    "resolution_rate_floor": 0.20,
+    "resolution_lookback": 10
+  },
+
+  "trajectory": {
+    "falsification_proximity_runs": 2,
+    "velocity_lookback": 3,
+    "observability_lookback": 5
+  }
 }
