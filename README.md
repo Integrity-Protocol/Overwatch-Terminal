@@ -20,10 +20,10 @@ Most AI agents optimize for output. This one optimizes for *falsification*. It f
 |--------|-------|
 | x402 Mainnet Transactions | **13 autonomous payments — 87% of all XRPL x402 facilitator activity** (on-chain verified) |
 | Pipeline Runs | Twice daily since March 3, 2026 |
-| Corrections Ledger | 48+ experiential learning entries |
-| Architecture Decisions | 15 formal ADs, each validated across 3+ independent AI systems |
+| Corrections Ledger | 56 experiential learning entries |
+| Architecture Decisions | 18 formal ADs, each validated across 3+ independent AI systems |
 | Build Method | **100% AI-directed. Zero manual coding. Zero coding background.** |
-| Builder | Fire lieutenant, 18 years. Structural collapse instructor. First line of code: February 7, 2026. |
+| Builder | Fire lieutenant, 18 years. Structural collapse instructor. First line of code: February 17, 2026. |
 
 ---
 
@@ -46,7 +46,7 @@ The thesis monitoring is the **application**. The method is the **intellectual p
 │      Nothing overrules Layer Zero. Layer Zero never changes.    │
 ├─────────────────────────────────────────────────────────────────┤
 │            GOVERNING MIND — OVERLEDGER (Dynamic)                │
-│       Structured experiential corrections. 48+ entries.         │
+│       Structured experiential corrections. 56 entries.         │
 │         What the system got wrong, why, and what to watch.      │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
@@ -90,6 +90,8 @@ The thesis monitoring is the **application**. The method is the **intellectual p
 - Skeptic Discount — speculative inferences get 75% weight reduction at Layer 4
 
 **Cross-model oversight.** A Gemini-based Blind Auditor reads the Cognitive Trace (the full reasoning chain) without domain context. It doesn't know what XRP is. It only asks: "Does this conclusion follow from this evidence?" If Layer 4's action diverges from its own reasoning for too long, the Auditor overrides with a state-lock that only the human operator can release.
+
+**Action epistemology.** The system separates how it assesses a situation from how it decides to act. Status can hold paradox — "the evidence is contradictory" is a valid finding. Actions cannot contradict themselves. As analytical pressure accumulates over time, the evidentiary standard for inaction rises. At low pressure, holding position is the default. At critical pressure, holding position requires extraordinary justification. This mirrors fireground decision-making: at minute 5 you need strong evidence to pull out. At minute 25 you need strong evidence to stay in. The margin changed. The system tracks this automatically.
 
 **The AI earns trust the same way a firefighter does** — through reps, not assertions. New capabilities run in shadow mode (paper trading) before getting operational authority. The evolution library tests epistemic discipline against historical scenarios with known outcomes. The corrections ledger accumulates lessons from mistakes. Trust is progressive and revocable.
 
@@ -172,7 +174,7 @@ config/
 
 data/
   layer-zero.json       — 17 immutable epistemological rules
-  corrections-ledger.json — Experiential learning (48+ entries)
+  corrections-ledger.json — Experiential learning (56 entries)
   360-report.json       — Latest pipeline output
   360-history.json      — Assessment archive
 
@@ -186,7 +188,7 @@ evolutions/
 
 ## The Builder
 
-**Tim Wrenn** — Fire lieutenant, 18 years. Structural collapse instructor. Co-owner of Craic & the Carriage (mobile Irish pub, Chicagoland). Zero coding background before February 7, 2026.
+**Tim Wrenn** — Fire lieutenant, 18 years. Structural collapse instructor. Co-owner of Craic & the Carriage (mobile Irish pub, Chicagoland). Zero coding background before February 17, 2026.
 
 Every component of this system was derived from lived cognitive experience on the fireground, not from theoretical best practices. The architecture follows the cognition. Not the other way around.
 
