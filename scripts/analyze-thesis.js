@@ -470,7 +470,7 @@ ${alertLines}
 ${ksChanges}
 
 📊 <b>COMPOUND INDICES:</b>
-${(analysis.compound_indices ?? []).map(ci => {
+${(analysis.assessment_360?.compound_indices ?? analysis.compound_indices ?? []).map(ci => {
   const dir = ci.inverse ? (ci.convergence_direction === 'POSITIVE' ? '⚠️ COMPETITIVE PRESSURE' : '✅ NO DISPLACEMENT') : (ci.convergence_direction === 'POSITIVE' ? '✅' : ci.convergence_direction === 'NEGATIVE' ? '⚠️' : '⬜');
   return `• ${ci.name}: ${ci.convergence_status} ${dir} (${ci.assessable}/${ci.total} visible)`;
 }).join('\n') || 'Not yet evaluated'}
