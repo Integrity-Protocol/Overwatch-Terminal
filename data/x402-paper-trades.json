@@ -1,6 +1,6 @@
 {
   "_version": "1.0",
-  "_last_updated": "2026-03-27T20:33:14.909Z",
+  "_last_updated": "2026-03-27T22:39:36.171Z",
   "budget": {
     "cycle_limit_drops": 5000,
     "weekly_limit_drops": 25000,
@@ -449,8 +449,8 @@
       "disposition_reasoning": "The entire compound stress assessment depends on whether Brent is above or below $100. The LZ-EH-005 data contradiction between $103 static feed and reported crash below $100 is the highest-impact unresolved question. This directly affects T-3 and the compound stress level determination. Must be resolved before next assessment.",
       "dispositioned_by": "layer_4",
       "dispositioned_at": "2026-03-23T13:48:30.643Z",
-      "purchase_executed": false,
-      "purchase_result": null
+      "purchase_executed": true,
+      "purchase_result": "NO_CHANGE"
     },
     {
       "request_id": "ACQ-L3-2026-03-23T13-29-14-811Z-003",
@@ -717,8 +717,8 @@
       "disposition_reasoning": "NYSE/Securitize stablecoin selection is the single most impactful competitive displacement data point. If RLUSD is included, CI-5 displacement narrative weakens significantly. If excluded, it confirms at the highest institutional tier. This directly resolves a critical component of T-6 (competitive displacement). Expected impact score of 5 is warranted — this could flip the competitive assessment.",
       "dispositioned_by": "layer_4",
       "dispositioned_at": "2026-03-24T14:02:52.385Z",
-      "purchase_executed": false,
-      "purchase_result": null
+      "purchase_executed": true,
+      "purchase_result": "NO_CHANGE"
     },
     {
       "request_id": "ACQ-L3-2026-03-24T13-44-32-715Z-002",
@@ -1222,8 +1222,8 @@
       "disposition_reasoning": "PermDEX on-chain activity detection directly addresses T-7 (PermDEX zero adoption at 34 days) and SG-2 (architecture visibility). If any permissioned activity is detectable, it would change the assessment from SUSPICIOUS_ABSENCE to active adoption. If no activity is detectable, it could either confirm non-adoption or confirm the structural gap (invisible permissioned layer). Either outcome is analytically valuable. This addresses the Blind Auditor's STRUCTURAL_GAP_NEGLECT flag — SG-2 has a promotable_if condition and this acquisition directly probes it.",
       "dispositioned_by": "layer_4",
       "dispositioned_at": "2026-03-26T02:55:40.770Z",
-      "purchase_executed": false,
-      "purchase_result": null
+      "purchase_executed": true,
+      "purchase_result": "NO_CHANGE"
     },
     {
       "request_id": "ACQ-L3-2026-03-26T02-38-16-237Z-003",
@@ -1610,8 +1610,8 @@
       "disposition_reasoning": "PermDEX measurement gap is the single largest uncertainty for CI-1 and KS-3. Resolving whether PermDEX activity is visible in standard metrics directly determines whether the TRUE_NEGATIVE classification holds or needs revision. This is the highest-impact gap currently identifiable.",
       "dispositioned_by": "layer_4",
       "dispositioned_at": "2026-03-27T03:53:41.145Z",
-      "purchase_executed": false,
-      "purchase_result": null
+      "purchase_executed": true,
+      "purchase_result": "NO_CHANGE"
     },
     {
       "request_id": "ACQ-L2-2026-03-27T03-35-35-040Z-002",
@@ -1685,8 +1685,8 @@
       "disposition_reasoning": "Duplicate of ACQ-L2-003 — same question from different layer confirms importance. Combined approval. Chain distribution trend over 90 days is the key deliverable.",
       "dispositioned_by": "layer_4",
       "dispositioned_at": "2026-03-27T03:53:41.145Z",
-      "purchase_executed": false,
-      "purchase_result": null
+      "purchase_executed": true,
+      "purchase_result": "NO_CHANGE"
     },
     {
       "request_id": "ACQ-L3-2026-03-27T03-35-35-040Z-002",
@@ -2509,6 +2509,123 @@
       "_l3_impact_on_analysis": "Redemptions indicate active institutional withdrawal — a strong negative signal. Price effects on backing assets would be a mechanical decline that reverses automatically. The causal mechanism determines whether the decline is structural or cyclical.",
       "_l3_confidence_data_exists": "medium",
       "_l3_estimated_value": "high — distinguishes between active withdrawal and passive depreciation",
+      "disposition": null,
+      "disposition_reasoning": null,
+      "dispositioned_by": null,
+      "dispositioned_at": null,
+      "purchase_executed": false,
+      "purchase_result": null,
+      "channel_id": null,
+      "settlement_network": null
+    },
+    {
+      "request_id": "ACQ-L3-2026-03-27T22-21-22-784Z-001",
+      "requesting_layer": 3,
+      "request_type": "INTELLIGENCE_GAP",
+      "signal_ids": [
+        "20260327-2221-SIG-004"
+      ],
+      "tension_id": "T-1",
+      "structural_gap_id": "SG-3",
+      "description": "What is the current JGB 10Y yield? The February 1 reading of 2.11% is nearly 2 months stale and the most critical data gap in the compound stress assessment.",
+      "intended_epistemic_vector": "INFORM",
+      "expected_impact_score": 5,
+      "urgency": "IMMEDIATE",
+      "source_category": "market_data",
+      "preferred_vendor": "MOF Japan, BOJ, or financial data aggregator (Bloomberg, FRED when updated)",
+      "estimated_cost_drops": 0,
+      "timestamp": "2026-03-27T22:21:22.784Z",
+      "_l3_impact_on_analysis": "Could change compound stress level from CRITICAL to EMERGENCY if JGB 10Y has risen above 2.3% (elevated) or 2.5% (critical). Given the oil-JPY-trade deficit feedback loop actively firing, JGB yields have almost certainly moved. This single data point could complete the three-leg stress escalation.",
+      "_l3_confidence_data_exists": "high",
+      "_l3_estimated_value": "Highest priority — this is the single largest blind spot in the stress assessment",
+      "disposition": "APPROVED",
+      "disposition_reasoning": "JGB 10Y is the single largest blind spot in the compound stress assessment. A current reading could change the stress level from CRITICAL to EMERGENCY. 55 days stale on a macro indicator that is actively affected by the oil-JPY-trade deficit feedback loop. This is the highest-priority data acquisition. However, I note this maps to SG-3 (structural gap) — the pipeline's FRED feed updates on its own schedule. If x402 or alternative market data source can provide a current JGB reading, approve immediately.",
+      "dispositioned_by": "layer_4",
+      "dispositioned_at": "2026-03-27T22:39:36.171Z",
+      "purchase_executed": false,
+      "purchase_result": null,
+      "channel_id": null,
+      "settlement_network": null
+    },
+    {
+      "request_id": "ACQ-L3-2026-03-27T22-21-22-784Z-002",
+      "requesting_layer": 3,
+      "request_type": "INTELLIGENCE_GAP",
+      "signal_ids": [
+        "20260327-2221-SIG-012",
+        "20260327-2221-SIG-005"
+      ],
+      "tension_id": null,
+      "structural_gap_id": null,
+      "description": "What is the current institutional settlement activity on XRPL — specifically through Ripple Payments, Hidden Road, or any non-public-DEX channel?",
+      "intended_epistemic_vector": "INFORM",
+      "expected_impact_score": 5,
+      "urgency": "IMMEDIATE",
+      "source_category": "on_chain_analytics",
+      "preferred_vendor": "T54/x402 settlement intelligence (last acquired March 7), or institutional flow data from on-chain analytics providers",
+      "estimated_cost_drops": 0,
+      "timestamp": "2026-03-27T22:21:22.784Z",
+      "_l3_impact_on_analysis": "Would resolve the core ambiguity: is thin DEX volume an architecture observation (institutional activity routes differently) or an adoption failure (there is no institutional activity at all)? This directly affects the Settlement Activity Index (CI-1) and the fundamental validity of the thesis.",
+      "_l3_confidence_data_exists": "medium",
+      "_l3_estimated_value": "High — resolves the most important interpretive ambiguity in the thesis",
+      "disposition": null,
+      "disposition_reasoning": null,
+      "dispositioned_by": null,
+      "dispositioned_at": null,
+      "purchase_executed": false,
+      "purchase_result": null,
+      "channel_id": null,
+      "settlement_network": null
+    },
+    {
+      "request_id": "ACQ-L3-2026-03-27T22-21-22-784Z-003",
+      "requesting_layer": 3,
+      "request_type": "INTELLIGENCE_GAP",
+      "signal_ids": [
+        "20260327-2221-SIG-006"
+      ],
+      "tension_id": null,
+      "structural_gap_id": null,
+      "description": "What is the AUM and flow data for the 3 XRP ETFs not reporting in Coinglass (out of 7 total)?",
+      "intended_epistemic_vector": "INFORM",
+      "expected_impact_score": 3,
+      "urgency": "NEXT_CYCLE",
+      "source_category": "market_data",
+      "preferred_vendor": "Individual fund NAV reports, SEC filings, or alternative ETF data aggregator",
+      "estimated_cost_drops": 0,
+      "timestamp": "2026-03-27T22:21:22.784Z",
+      "_l3_impact_on_analysis": "3 of 7 funds are dark. If those 3 have positive flows, total XRP ETF picture improves materially. If negative, the deterioration is worse than reported. Currently assessing on incomplete data per CL-048.",
+      "_l3_confidence_data_exists": "high",
+      "_l3_estimated_value": "Medium — refines an existing kill switch assessment rather than changing it directionally",
+      "disposition": null,
+      "disposition_reasoning": null,
+      "dispositioned_by": null,
+      "dispositioned_at": null,
+      "purchase_executed": false,
+      "purchase_result": null,
+      "channel_id": null,
+      "settlement_network": null
+    },
+    {
+      "request_id": "ACQ-L3-2026-03-27T22-21-22-784Z-004",
+      "requesting_layer": 3,
+      "request_type": "INTELLIGENCE_GAP",
+      "signal_ids": [
+        "20260327-2221-SIG-008"
+      ],
+      "tension_id": null,
+      "structural_gap_id": null,
+      "description": "What is the specific scope of the SEC tokenization exemption — is it chain-agnostic or does it favor specific infrastructure types (permissioned vs. public, compliance features, etc.)?",
+      "intended_epistemic_vector": "INFORM",
+      "expected_impact_score": 4,
+      "urgency": "NEXT_CYCLE",
+      "source_category": "regulatory_intelligence",
+      "preferred_vendor": "SEC Federal Register publication when available, or SEC Crypto Task Force communications",
+      "estimated_cost_drops": 0,
+      "timestamp": "2026-03-27T22:21:22.784Z",
+      "_l3_impact_on_analysis": "If chain-agnostic, benefits entire field equally and XRPL must compete on execution. If it favors permissioned infrastructure with compliance features, XRPL's PermissionedDEX amendment becomes a significant competitive advantage. This determines whether the exemption is a rising tide or a targeted benefit.",
+      "_l3_confidence_data_exists": "medium",
+      "_l3_estimated_value": "Medium-high — determines whether a major catalyst disproportionately benefits the thesis or the entire field",
       "disposition": null,
       "disposition_reasoning": null,
       "dispositioned_by": null,
