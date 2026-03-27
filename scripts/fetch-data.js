@@ -938,14 +938,14 @@ async function main() {
 
   let jpn10y = await fetchFinanceFlowBond('JPN_10Y', ENDPOINTS.financeflow.jpn_10y, null);
   if (jpn10y.value === null) {
-    warn('JPN_10Y', 'FinanceFlow failed, trying Stooq fallback');
-    jpn10y = await fetchStooq('JPN_10Y', ENDPOINTS.stooq.jpn_10y, existing?.macro?.jpn_10y);
+    warn('JPN_10Y', 'FinanceFlow failed, trying FRED fallback');
+    jpn10y = await fetchFRED('JPN_10Y', ENDPOINTS.fred.jpn_10y, existing?.macro?.jpn_10y);
   }
 
   let dxy = await fetchFinanceFlowCurrency('DXY', ENDPOINTS.financeflow.dxy, null);
   if (dxy.value === null) {
-    warn('DXY', 'FinanceFlow failed, trying Twelve Data fallback');
-    dxy = await fetchTwelveData('DXY', ENDPOINTS.twelve_data.dxy, existing?.macro?.dxy);
+    warn('DXY', 'FinanceFlow failed, trying FRED fallback');
+    dxy = await fetchFRED('DXY', ENDPOINTS.fred.dxy, existing?.macro?.dxy);
   }
 
   let sp500 = await fetchStooq('SP500', ENDPOINTS.stooq.sp500, null);

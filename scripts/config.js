@@ -13,6 +13,8 @@ const ENDPOINTS = {
   fred: {
     brent:      `${FRED_BASE}?series_id=DCOILBRENTEU&file_type=json&sort_order=desc&limit=1`,
     us_10y:     `${FRED_BASE}?series_id=DGS10&file_type=json&sort_order=desc&limit=1`,
+    jpn_10y:    `${FRED_BASE}?series_id=IRLTLT01JPM156N&file_type=json&sort_order=desc&limit=1`,
+    dxy:        `${FRED_BASE}?series_id=DTWEXBGS&file_type=json&sort_order=desc&limit=1`,
   },
   stooq: {
     jpn_10y: 'https://stooq.com/q/l/?s=10jpy.b&f=sd2t2ohlcv&h&e=csv',
