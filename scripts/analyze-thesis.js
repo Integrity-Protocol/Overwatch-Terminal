@@ -38,6 +38,7 @@ const { assembleTrace } = require('./assemble-trace');
 const { logPaperTrades, applyDispositions } = require('./x402-paper-trade-logger');
 const { constrainRequests, recordOutcomes, probeStructuralGaps } = require('./x402-constrained-acquisition');
 const { calculateActionPressure } = require('./action-pressure');
+const { executeBaseAcquisition } = require('./x402-base-agent');
 
 const DASHBOARD_PATH      = path.join(__dirname, '..', 'dashboard-data.json');
 const ANALYSIS_PATH       = path.join(__dirname, '..', 'analysis-output.json');
@@ -2254,6 +2255,29 @@ async function main() {
                 log('acq', `Constrained ${acqResult.total_constrained} of ${acqResult.total_approved} approved requests (${acqResult.rejected_by_materiality} below threshold, ${acqResult.rejected_by_cap} over cap)`);
               }
                 constrainedRequestsForOutcomes = acqResult.constrained_requests || [];
+
+              // ── AD #19: Execute routed Base acquisitions ──────────────
+              if (constrainedRequestsForOutcomes.length > 0) {
+                const baseRequests = constrainedRequestsForOutcomes.filter(r => r.settlement_network === 'base' && r.channel_id);
+                if (baseRequests.length > 0) {
+                  const channels = domainConfigMain.acquisition_channels || [];
+                  for (const req of baseRequests) {
+                    try {
+                      const channel = channels.find(c => c.id === req.channel_id);
+                      if (!channel) {
+                        warn('acq', `No channel config found for ${req.channel_id} — skipping`);
+                        continue;
+                      }
+                      const query = req.description || req.target_id || 'unknown query';
+                      const acqExecResult = await executeBaseAcquisition(channel, query);
+                      log('acq', `Base acquisition [${req.channel_id}]: ${acqExecResult.status} — "${query.slice(0, 60)}"`);
+                      req.execution_result = acqExecResult;
+                    } catch (execErr) {
+                      warn('acq', `Base acquisition failed for ${req.request_id}: ${execErr.message}`);
+                    }
+                  }
+                }
+              }
             }
           } catch (acqErr) {
             warn('acq', `Constrained acquisition failed (non-fatal): ${acqErr.message}`);
