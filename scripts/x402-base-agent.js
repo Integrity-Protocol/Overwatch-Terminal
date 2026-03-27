@@ -160,7 +160,10 @@ async function executeBaseAcquisition(channel, query, opts = {}) {
   try {
     const response = await fetchWithPayment(endpoint, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        ...(process.env.FIRECRAWL_API_KEY ? { 'Authorization': `Bearer ${process.env.FIRECRAWL_API_KEY}` } : {})
+      },
       body: JSON.stringify(body),
       signal: AbortSignal.timeout(30000)
     });
