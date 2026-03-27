@@ -186,8 +186,8 @@ function constrainRequests(paperTradeLog, domainConfig, opts = {}) {
   const maxPerCycle = domainConfig.acquisition_max_requests_per_cycle || 5;
   const materialityThreshold = domainConfig.acquisition_materiality_threshold || 3;
 
-  // Step 1: Filter to APPROVED requests only
-  const approved = paperTradeLog.requests.filter(r => r.disposition === 'APPROVED');
+  // Step 1: Filter to APPROVED requests that haven't been fulfilled yet
+  const approved = paperTradeLog.requests.filter(r => r.disposition === 'APPROVED' && r.purchase_executed !== true);
   result.total_approved = approved.length;
 
   if (approved.length === 0) {
@@ -402,6 +402,33 @@ function recordOutcomes(constrainedRequests, traceOutput, layer4Output, domainCo
 
     // Tally summary
     result.outcome_summary[outcomeClass] = (result.outcome_summary[outcomeClass] || 0) + 1;
+  }
+
+  // Mark processed requests as fulfilled in the paper trade log
+  const ptPath = opts.paperTradePath || path.join(DATA_DIR, 'x402-paper-trades.json');
+  try {
+    if (fs.existsSync(ptPath)) {
+      const ptLog = JSON.parse(fs.readFileSync(ptPath, 'utf8'));
+      const outcomeMap = new Map();
+      for (const req of constrainedRequests) {
+        const recorded = data.outcomes.find(o => o.request_id === req.request_id && o._recorded_at);
+        outcomeMap.set(req.request_id, recorded ? recorded.outcome : 'NO_CHANGE');
+      }
+      let fulfilled = 0;
+      for (const req of ptLog.requests) {
+        if (outcomeMap.has(req.request_id) && !req.purchase_executed) {
+          req.purchase_executed = true;
+          req.purchase_result = outcomeMap.get(req.request_id);
+          fulfilled++;
+        }
+      }
+      if (fulfilled > 0) {
+        fs.writeFileSync(ptPath, JSON.stringify(ptLog, null, 2));
+        log('outcomes', `Marked ${fulfilled} request(s) as purchase_executed in paper trade log.`);
+      }
+    }
+  } catch (ptErr) {
+    warn('outcomes', `Paper trade log writeback failed (non-fatal): ${ptErr.message}`);
   }
 
   // Enforce retention cap: keep newest
