@@ -775,6 +775,7 @@ These are patterns in YOUR reasoning detected across multiple pipeline runs. The
 
   // AD #19: Load acquired intelligence from previous runs
   let acquiredIntelSection = '';
+  let injectedIntelligenceMetadata = [];
   const aiPath = path.join(__dirname, '..', 'data', 'acquired-intelligence.json');
   try {
     if (fs.existsSync(aiPath)) {
@@ -789,6 +790,13 @@ These are patterns in YOUR reasoning detected across multiple pipeline runs. The
         // Mark consumed
         for (const e of pending.slice(0, 5)) { e.consumed = true; }
         fs.writeFileSync(aiPath, JSON.stringify(aiData, null, 2));
+        injectedIntelligenceMetadata = pending.slice(0, 5).map(e => ({
+            request_id: e.request_id,
+            originating_trace_id: e.originating_trace_id || null,
+            originating_signal_ids: e.originating_signal_ids || [],
+            tension_id: e.tension_id || null,
+            query: e.query || ''
+          }));
         log('L2', 'Injected ' + pending.slice(0, 5).length + ' acquired intelligence entries into Layer 2 prompt.');
       }
     }
@@ -2252,6 +2260,9 @@ async function main() {
             if (traceResult) {
               log('trace', `Cognitive trace assembled: ${traceResult._signal_count} signals, outcomes: ${JSON.stringify(traceResult._outcomes)}`);
                 traceResultForOutcomes = traceResult;
+                if (injectedIntelligenceMetadata.length > 0) {
+                  traceResult._injected_intelligence = injectedIntelligenceMetadata;
+                }
             } else {
               warn('trace', 'Trace assembly returned null — trace will be missing for this run');
             }
