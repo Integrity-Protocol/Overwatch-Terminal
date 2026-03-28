@@ -2309,6 +2309,8 @@ async function main() {
                   .filter(r => r.execution_result && (r.execution_result.status === 'SUCCESS' || r.execution_result.status === 'VENDOR_FAILOVER') && r.execution_result.data)
                   .map(r => ({
                     request_id: r.request_id,
+                    originating_trace_id: generatedAt,
+                    originating_signal_ids: r.signal_ids || [],
                     tension_id: r.tension_id || r.target_id || null,
                     query: r.description || r.query || '',
                     content: typeof r.execution_result.data === 'string' ? r.execution_result.data : JSON.stringify(r.execution_result.data),
