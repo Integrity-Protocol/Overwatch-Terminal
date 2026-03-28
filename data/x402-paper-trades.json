@@ -1,6 +1,6 @@
 {
   "_version": "1.0",
-  "_last_updated": "2026-03-28T13:32:41.327Z",
+  "_last_updated": "2026-03-28T18:04:47.991Z",
   "budget": {
     "cycle_limit_drops": 5000,
     "weekly_limit_drops": 25000,
@@ -907,8 +907,8 @@
       "disposition_reasoning": "PermDEX on-chain activity data directly addresses T-7 (33 days zero adoption, kill switch at WARNING). This is the second-highest priority acquisition: confirming zero activity would escalate the PermDEX kill switch further; discovering even test transactions would provide the first positive infrastructure signal in the cycle. The Blind Auditor flagged repeated on_chain_analytics purchases — this is justified because the PermDEX activation status is a time-sensitive kill switch question. However, note for Auditor: if this acquisition returns zero activity AGAIN, the next cycle should probe architecture visibility instead (are institutional PermDEX transactions even observable on-chain?).",
       "dispositioned_by": "layer_4",
       "dispositioned_at": "2026-03-25T02:50:40.338Z",
-      "purchase_executed": false,
-      "purchase_result": null
+      "purchase_executed": true,
+      "purchase_result": "NO_CHANGE"
     },
     {
       "request_id": "ACQ-L3-2026-03-25T02-32-20-859Z-004",
@@ -1033,8 +1033,8 @@
       "disposition_reasoning": "Independent Brent crude verification is the single highest-impact acquisition this cycle. The entire compound stress assessment rests on a single-source $27.56 price move. Per LZ-EH-001 and LZ-EH-004, this verification is epistemically required. Maps directly to T-1.",
       "dispositioned_by": "layer_4",
       "dispositioned_at": "2026-03-25T14:02:36.715Z",
-      "purchase_executed": false,
-      "purchase_result": null
+      "purchase_executed": true,
+      "purchase_result": "NO_CHANGE"
     },
     {
       "request_id": "ACQ-L3-2026-03-25T13-44-24-599Z-001",
@@ -1195,8 +1195,8 @@
       "disposition_reasoning": "RLUSD chain-level breakdown (XRPL vs Ethereum) and holder-size distribution directly resolves the most thesis-critical observation this cycle. T-4 explicitly identifies this as a critical discriminator. The on_chain_analytics category has been flagged for repetition by the Blind Auditor (6x), but previous purchases were for different data — this specific question (chain-level redemption breakdown) has not been asked before and has clear analytical value. If Ethereum RLUSD is contracting while XRPL RLUSD holds, it changes the interpretation from settlement thesis failure to DeFi use case failure. This is worth the cost.",
       "dispositioned_by": "layer_4",
       "dispositioned_at": "2026-03-26T02:55:40.770Z",
-      "purchase_executed": false,
-      "purchase_result": null
+      "purchase_executed": true,
+      "purchase_result": "NO_CHANGE"
     },
     {
       "request_id": "ACQ-L3-2026-03-26T02-38-16-237Z-002",
@@ -1766,8 +1766,8 @@
       "disposition_reasoning": "Brent crude staleness (4 days) during active geopolitical escalation is a significant measurement gap. Real-time oil price directly determines whether compound stress is escalating further or partially resolving. The compound stress assessment hangs on this.",
       "dispositioned_by": "layer_4",
       "dispositioned_at": "2026-03-27T03:53:41.145Z",
-      "purchase_executed": false,
-      "purchase_result": null
+      "purchase_executed": true,
+      "purchase_result": "NO_CHANGE"
     },
     {
       "request_id": "ACQ-L3-2026-03-27T03-35-35-040Z-005",
@@ -3067,6 +3067,124 @@
       "disposition_reasoning": "Sacks replacement status is relevant to the Clarity Act kill switch and CI-3, but the next observable data point (White House personnel announcement or Terrett follow-up) will arrive through normal monitoring channels. Active acquisition is unlikely to produce data that passive monitoring would miss for this type of political appointment signal. Assessment can proceed with the vacancy as a risk factor.",
       "dispositioned_by": "layer_4",
       "dispositioned_at": "2026-03-28T13:32:41.327Z",
+      "purchase_executed": false,
+      "purchase_result": null,
+      "channel_id": null,
+      "settlement_network": null
+    },
+    {
+      "request_id": "ACQ-L3-2026-03-28T17-46-59-804Z-001",
+      "requesting_layer": 3,
+      "request_type": "INTELLIGENCE_GAP",
+      "signal_ids": [
+        "20260328-1746-SIG-005",
+        "20260328-1746-SIG-012"
+      ],
+      "tension_id": "T-4",
+      "structural_gap_id": "SG-4",
+      "description": "What is the chain-by-chain distribution of RLUSD? Where does the $1.09B off-XRPL RLUSD actually live — Ethereum, other L1s, custodial accounts?",
+      "intended_epistemic_vector": "INFORM",
+      "expected_impact_score": 4,
+      "urgency": "NEXT_CYCLE",
+      "source_category": "on_chain_analytics",
+      "preferred_vendor": "On-chain analytics (Ethereum, Polygon, other chains with RLUSD deployment) or RLUSD contract address monitoring across all deployed chains",
+      "estimated_cost_drops": 0,
+      "timestamp": "2026-03-28T17:46:59.804Z",
+      "_l3_impact_on_analysis": "Would resolve whether RLUSD's off-XRPL concentration is on competing smart contract platforms (bearish for XRPL thesis) or in institutional custody/staging (neutral to positive). This directly affects interpretation of CI-1 and the settlement venue question.",
+      "_l3_confidence_data_exists": "high",
+      "_l3_estimated_value": "HIGH — this is the most structurally important unknown for the settlement infrastructure thesis",
+      "disposition": "APPROVED",
+      "disposition_reasoning": "RLUSD chain-by-chain distribution directly addresses the most structurally important unknown this cycle: whether the 77.5% off-XRPL RLUSD exists on competing smart contract platforms (bearish) or in institutional custody/staging (neutral). This resolves T-4 and T-6 simultaneously. The Blind Auditor flagged NEGLIGENT_HOARDING — this is a high-impact gap that justifies deployment of acquisition capital. However, per INQUIRY_SCOPE_CREEP warning, the question should be narrowly scoped: which chains hold RLUSD and in what amounts?",
+      "dispositioned_by": "layer_4",
+      "dispositioned_at": "2026-03-28T18:04:47.991Z",
+      "purchase_executed": false,
+      "purchase_result": null,
+      "channel_id": null,
+      "settlement_network": null
+    },
+    {
+      "request_id": "ACQ-L3-2026-03-28T17-46-59-804Z-002",
+      "requesting_layer": 3,
+      "request_type": "INTELLIGENCE_GAP",
+      "signal_ids": [
+        "20260328-1746-SIG-014"
+      ],
+      "tension_id": null,
+      "structural_gap_id": "SG-5",
+      "description": "What is the current state of XRPL payment volume beyond the DEX? Total payment transactions, average size, institutional-sized payment frequency (>$100K equivalent)?",
+      "intended_epistemic_vector": "INFORM",
+      "expected_impact_score": 4,
+      "urgency": "IMMEDIATE",
+      "source_category": "on_chain_analytics",
+      "preferred_vendor": "XRPL payment transaction data (not DEX orders) — available from XRPL explorer APIs or analytics providers",
+      "estimated_cost_drops": 0,
+      "timestamp": "2026-03-28T17:46:59.804Z",
+      "_l3_impact_on_analysis": "Would fill the gap left by x402 dormancy and provide a more complete picture of CI-1 settlement activity. DEX volume ($4.19M) may dramatically undercount actual XRPL economic activity if most settlement occurs via direct payments.",
+      "_l3_confidence_data_exists": "high",
+      "_l3_estimated_value": "HIGH — directly addresses CI-1 observability limitation",
+      "disposition": "APPROVED",
+      "disposition_reasoning": "XRPL payment volume beyond DEX directly addresses CI-1 observability gap left by x402 dormancy. If institutional settlement occurs via XRPL payments rather than DEX orders, the current $4.2M DEX metric dramatically undercounts activity. This is the most direct way to test whether settlement is actually happening on XRPL. Addresses the Blind Auditor's STRUCTURAL_GAP_NEGLECT finding by probing SG-5.",
+      "dispositioned_by": "layer_4",
+      "dispositioned_at": "2026-03-28T18:04:47.991Z",
+      "purchase_executed": true,
+      "purchase_result": "NO_CHANGE",
+      "channel_id": null,
+      "settlement_network": null
+    },
+    {
+      "request_id": "ACQ-L3-2026-03-28T17-46-59-804Z-003",
+      "requesting_layer": 3,
+      "request_type": "INTELLIGENCE_GAP",
+      "signal_ids": [
+        "20260328-1746-SIG-008"
+      ],
+      "tension_id": "T-4",
+      "structural_gap_id": null,
+      "description": "What are the specific stablecoin yield provisions in the Tillis legislative text, and do they distinguish between bank-issued and non-bank-issued stablecoins?",
+      "intended_epistemic_vector": "INFORM",
+      "expected_impact_score": 4,
+      "urgency": "NEXT_CYCLE",
+      "source_category": "regulatory_intelligence",
+      "preferred_vendor": "Legislative text when published next week (primary source)",
+      "estimated_cost_drops": 0,
+      "timestamp": "2026-03-28T17:46:59.804Z",
+      "_l3_impact_on_analysis": "Would resolve the directional uncertainty on CI-3 and CI-5. Favorable provisions = positive catalyst for RLUSD. Restrictive provisions = competitive displacement acceleration. This is the highest-impact near-term regulatory catalyst.",
+      "_l3_confidence_data_exists": "high",
+      "_l3_estimated_value": "HIGH — resolves the most time-sensitive uncertainty in the assessment",
+      "disposition": "DEFERRED",
+      "disposition_reasoning": "The Tillis legislative text is expected to be published next week. Once published, the text itself will be the primary source — no acquisition needed. The question resolves itself through natural publication. Acquiring intelligence about unreleased text through intermediary interpretation would be secondary source data (LZ-EH-002) inferior to waiting for the primary source.",
+      "dispositioned_by": "layer_4",
+      "dispositioned_at": "2026-03-28T18:04:47.991Z",
+      "purchase_executed": false,
+      "purchase_result": null,
+      "channel_id": null,
+      "settlement_network": null
+    },
+    {
+      "request_id": "ACQ-L3-2026-03-28T17-46-59-804Z-004",
+      "requesting_layer": 3,
+      "request_type": "INTELLIGENCE_GAP",
+      "signal_ids": [
+        "20260328-1746-SIG-001",
+        "20260328-1746-SIG-003"
+      ],
+      "tension_id": "T-1",
+      "structural_gap_id": null,
+      "description": "What is the current real-time Brent crude price (FRED data is 5 days stale at March 23)?",
+      "intended_epistemic_vector": "INFORM",
+      "expected_impact_score": 3,
+      "urgency": "IMMEDIATE",
+      "source_category": "market_data",
+      "preferred_vendor": "Real-time commodity data feeds (Bloomberg, Reuters, ICE)",
+      "estimated_cost_drops": 0,
+      "timestamp": "2026-03-28T17:46:59.804Z",
+      "_l3_impact_on_analysis": "Would resolve whether the $103.79 reading from March 23 is still representative or whether Brent has moved significantly in the intervening 5 days. Given the velocity of recent moves ($71.90 → $103.79), 5 days of staleness introduces meaningful uncertainty about the current compound stress state.",
+      "_l3_confidence_data_exists": "high",
+      "_l3_estimated_value": "MEDIUM — important for compound stress calibration but does not change the structural analysis",
+      "disposition": "APPROVED",
+      "disposition_reasoning": "Brent data is 5 days stale during a period of extreme volatility ($71.90 → $103.79 in one month). Per LZ-MR-003, staggered measurement introduces temporal distortion. The compound stress assessment depends on accurate energy data. A 5-day gap during +44% monthly volatility could mean the current reading is significantly wrong in either direction. Real-time Brent directly affects T-1 compound stress scoring.",
+      "dispositioned_by": "layer_4",
+      "dispositioned_at": "2026-03-28T18:04:47.991Z",
       "purchase_executed": false,
       "purchase_result": null,
       "channel_id": null,
