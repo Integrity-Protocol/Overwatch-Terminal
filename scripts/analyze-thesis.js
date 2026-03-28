@@ -2253,6 +2253,7 @@ async function main() {
 
             let traceResultForOutcomes = null;
             let constrainedRequestsForOutcomes = [];
+            let acquisitionOutcomeSummary = null;
 
           // ── Assemble Cognitive Trace ──────────────────────────────────
           try {
@@ -2361,6 +2362,7 @@ async function main() {
             try {
               if (constrainedRequestsForOutcomes.length > 0 && traceResultForOutcomes) {
                 const outcomeResult = recordOutcomes(constrainedRequestsForOutcomes, traceResultForOutcomes, reconcileResult, domainConfigMain, { runTimestamp: generatedAt });
+                  acquisitionOutcomeSummary = outcomeResult;
                 if (outcomeResult.outcomes_recorded > 0) {
                   log('acq', `Recorded ${outcomeResult.outcomes_recorded} acquisition outcomes: ${JSON.stringify(outcomeResult.outcome_summary)}`);
                 }
@@ -2468,6 +2470,55 @@ async function main() {
       }
     } catch (auditorErr) {
       warn('auditor', `Blind Auditor failed (non-fatal): ${auditorErr.message}`);
+    }
+
+    // ── Acquisition Summary for Dashboard ───────────────────────────────
+    try {
+      const outcomesData = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'acquisition-outcomes.json'), 'utf8'));
+      const allOutcomes = outcomesData.outcomes || [];
+      const recentOutcomes = allOutcomes.slice(-50);
+      const outcomeCounts = {};
+      for (const o of recentOutcomes) {
+        outcomeCounts[o.outcome] = (outcomeCounts[o.outcome] || 0) + 1;
+      }
+      const channelStats = {};
+      for (const o of recentOutcomes) {
+        const ch = o.channel_id || 'unknown';
+        if (!channelStats[ch]) channelStats[ch] = { requests: 0, outcomes: {}, total_cost_usd: 0 };
+        channelStats[ch].requests++;
+        channelStats[ch].outcomes[o.outcome] = (channelStats[ch].outcomes[o.outcome] || 0) + 1;
+        channelStats[ch].total_cost_usd += o.economic_cost_approved || 0;
+      }
+      const aiData = fs.existsSync(path.join(__dirname, '..', 'data', 'acquired-intelligence.json'))
+        ? JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'acquired-intelligence.json'), 'utf8'))
+        : { pending: [] };
+      const pending = (aiData.pending || []).filter(e => !e.consumed);
+      const consumed = (aiData.pending || []).filter(e => e.consumed);
+
+      assessment360.acquisition_summary = {
+        outcome_distribution: outcomeCounts,
+        total_outcomes_tracked: recentOutcomes.length,
+        channel_stats: channelStats,
+        feedback_loop: {
+          entries_pending_injection: pending.length,
+          entries_consumed: consumed.length,
+          total_entries: (aiData.pending || []).length
+        },
+        recent_acquisitions: recentOutcomes.slice(-10).reverse().map(o => ({
+          request_id: o.request_id,
+          target_id: o.target_id,
+          channel_id: o.channel_id,
+          outcome: o.outcome,
+          outcome_evidence: o.outcome_evidence,
+          run_trace_id: o.run_trace_id || null,
+          recorded_at: o._recorded_at
+        })),
+        this_cycle: acquisitionOutcomeSummary || { outcomes_recorded: 0, outcome_summary: {} },
+        _generated_at: new Date().toISOString()
+      };
+      log('dashboard', 'Acquisition summary attached to 360-report.');
+    } catch (acqSumErr) {
+      warn('dashboard', 'Failed to build acquisition summary (non-fatal): ' + acqSumErr.message);
     }
 
     try {
