@@ -1,6 +1,6 @@
 {
   "_version": "1.0",
-  "_last_updated": "2026-03-28T05:13:27.830Z",
+  "_last_updated": "2026-03-28T13:32:41.327Z",
   "budget": {
     "cycle_limit_drops": 5000,
     "weekly_limit_drops": 25000,
@@ -582,8 +582,8 @@
       "disposition_reasoning": "RLUSD chain distribution is critical to interpreting the RLUSD kill switch. The Blind Auditor flags on_chain_analytics category as repeated — acknowledged, but previous acquisitions in this category targeted different data (DEX volume, wallet analysis). This specific question (where is the 79% off-XRPL RLUSD?) has not been asked before and directly resolves SG-4 and informs T-4. Cost justified.",
       "dispositioned_by": "layer_4",
       "dispositioned_at": "2026-03-24T02:45:54.116Z",
-      "purchase_executed": false,
-      "purchase_result": null
+      "purchase_executed": true,
+      "purchase_result": "NO_CHANGE"
     },
     {
       "request_id": "ACQ-L3-2026-03-24T02-26-45-536Z-002",
@@ -609,8 +609,8 @@
       "disposition_reasoning": "ETF fund reporting status directly affects T-5 assessment. If 3 funds closed, actual AUM decline is confirmed and the ETF product viability concern escalates. If reporting lag, the picture may be less dire than it appears. Low cost, high disambiguation value.",
       "dispositioned_by": "layer_4",
       "dispositioned_at": "2026-03-24T02:45:54.116Z",
-      "purchase_executed": false,
-      "purchase_result": null
+      "purchase_executed": true,
+      "purchase_result": "NO_CHANGE"
     },
     {
       "request_id": "ACQ-L3-2026-03-24T02-26-45-536Z-003",
@@ -798,8 +798,8 @@
       "disposition_reasoning": "Stablecoin compromise text treatment of non-bank issuers is the critical unknown for T-4 (RLUSD trajectory) and T-3 (regulatory-to-deployment conversion). The separate banking stakeholder meeting raises the specific question of whether bank-issued stablecoins receive preferential treatment. This is immediately actionable with the hearing 2 days away.",
       "dispositioned_by": "layer_4",
       "dispositioned_at": "2026-03-24T14:02:52.385Z",
-      "purchase_executed": false,
-      "purchase_result": null
+      "purchase_executed": true,
+      "purchase_result": "NO_CHANGE"
     },
     {
       "request_id": "ACQ-L3-2026-03-24T13-44-32-715Z-005",
@@ -852,8 +852,8 @@
       "disposition_reasoning": "This is the single most important unanswered question in the current cycle. USDT/USDC market cap comparison over the same period would definitively discriminate between macro-driven compression (temporary, recoverable) and RLUSD-specific structural demand failure (permanent, requiring thesis modification). Expected impact is maximum — this answer could change the RLUSD kill switch assessment from WARNING to either 'macro headwind' or 'approaching TRIGGERED.' The Blind Auditor correctly identifies this as a critical unresolved tension with an observable resolution path. Deploy x402 budget against this immediately.",
       "dispositioned_by": "layer_4",
       "dispositioned_at": "2026-03-25T02:50:40.338Z",
-      "purchase_executed": false,
-      "purchase_result": null
+      "purchase_executed": true,
+      "purchase_result": "NO_CHANGE"
     },
     {
       "request_id": "ACQ-L3-2026-03-25T02-32-20-859Z-002",
@@ -2922,6 +2922,151 @@
       "disposition_reasoning": "Tillis stablecoin text is expected next week per Terrett. This will emerge through Tier 1 intelligence channel without acquisition cost. The text does not exist yet — cannot acquire what has not been released. Deferred to next cycle when text should be available through normal channels.",
       "dispositioned_by": "layer_4",
       "dispositioned_at": "2026-03-28T05:13:27.830Z",
+      "purchase_executed": false,
+      "purchase_result": null,
+      "channel_id": null,
+      "settlement_network": null
+    },
+    {
+      "request_id": "ACQ-L3-2026-03-28T13-15-01-869Z-001",
+      "requesting_layer": 3,
+      "request_type": "INTELLIGENCE_GAP",
+      "signal_ids": [
+        "20260328-1315-SIG-004"
+      ],
+      "tension_id": "T-4",
+      "structural_gap_id": "SG-4",
+      "description": "Where is the 78% ($1.09B) of RLUSD that exists off-XRPL? Specifically: what is the Ethereum RLUSD contract balance, what custodial arrangements hold RLUSD, and what is the velocity/turnover of off-XRPL RLUSD?",
+      "intended_epistemic_vector": "INFORM",
+      "expected_impact_score": 5,
+      "urgency": "IMMEDIATE",
+      "source_category": "on_chain_analytics",
+      "preferred_vendor": "Ethereum blockchain analytics (Etherscan, Dune Analytics) for RLUSD ERC-20 contract. Nansen or Arkham for wallet attribution.",
+      "estimated_cost_drops": 0,
+      "timestamp": "2026-03-28T13:15:01.869Z",
+      "_l3_impact_on_analysis": "Would resolve whether off-XRPL RLUSD is actively used in institutional settlement (high velocity, institutional wallets) or parked in custody (low velocity, treasury wallets). This directly addresses CI-1 — if off-XRPL RLUSD shows institutional settlement patterns, the thesis adapts but survives. If it shows static custody, the settlement thesis weakens further.",
+      "_l3_confidence_data_exists": "high",
+      "_l3_estimated_value": "HIGH — this single data point could change the CI-1 assessment from NEGATIVE_CONVERGENCE to MIXED if institutional settlement is happening on Ethereum rather than XRPL.",
+      "disposition": "APPROVED",
+      "disposition_reasoning": "This is the single highest-value data acquisition available. The 78% off-XRPL RLUSD concentration is central to T-4 and directly affects CI-1 assessment. If off-XRPL RLUSD shows institutional settlement patterns on Ethereum, the thesis adapts but survives. If it shows static custody, CI-1 negative convergence deepens. This data exists on Ethereum and is technically accessible. The Blind Auditor correctly flagged repeated on_chain_analytics purchases — this one is different because it targets the specific gap that could change the CI-1 assessment. Expected impact: 5.",
+      "dispositioned_by": "layer_4",
+      "dispositioned_at": "2026-03-28T13:32:41.327Z",
+      "purchase_executed": true,
+      "purchase_result": "NO_CHANGE",
+      "channel_id": null,
+      "settlement_network": null
+    },
+    {
+      "request_id": "ACQ-L3-2026-03-28T13-15-01-869Z-002",
+      "requesting_layer": 3,
+      "request_type": "INTELLIGENCE_GAP",
+      "signal_ids": [
+        "20260328-1315-SIG-005"
+      ],
+      "tension_id": "T-5",
+      "structural_gap_id": null,
+      "description": "What happened to the 3 XRP ETF funds that dropped from reporting (7 to 4)? Were they delisted, merged, or simply stopped reporting to Coinglass?",
+      "intended_epistemic_vector": "INFORM",
+      "expected_impact_score": 3,
+      "urgency": "NEXT_CYCLE",
+      "source_category": "regulatory_intelligence",
+      "preferred_vendor": "SEC EDGAR filings for XRP ETF products. Direct fund issuer websites. Coinglass support/documentation.",
+      "estimated_cost_drops": 0,
+      "timestamp": "2026-03-28T13:15:01.869Z",
+      "_l3_impact_on_analysis": "Fund count reduction from 7 to 4 is ambiguous — if 3 funds were delisted, that's a bearish structural signal. If they merged or simply aren't reporting to Coinglass, the impact is different. This affects the XRP ETF AUM kill switch interpretation.",
+      "_l3_confidence_data_exists": "high",
+      "_l3_estimated_value": "MODERATE — clarifies ETF structural health assessment.",
+      "disposition": "DEFERRED",
+      "disposition_reasoning": "ETF fund count drop (7 to 4) is operationally relevant but does not change the kill switch assessment materially. Whether 3 funds were delisted, merged, or stopped reporting, the AUM trajectory remains below pace. Assessment can proceed without this data. Expected impact: 3 is lower than other immediate needs.",
+      "dispositioned_by": "layer_4",
+      "dispositioned_at": "2026-03-28T13:32:41.327Z",
+      "purchase_executed": false,
+      "purchase_result": null,
+      "channel_id": null,
+      "settlement_network": null
+    },
+    {
+      "request_id": "ACQ-L3-2026-03-28T13-15-01-869Z-003",
+      "requesting_layer": 3,
+      "request_type": "INTELLIGENCE_GAP",
+      "signal_ids": [
+        "20260328-1315-SIG-002"
+      ],
+      "tension_id": "T-1",
+      "structural_gap_id": null,
+      "description": "Real-time USD/JPY from a primary exchange data feed (CME, EBS) to resolve the Frankfurter vs Yahoo Finance contradiction per LZ-EH-005.",
+      "intended_epistemic_vector": "INFORM",
+      "expected_impact_score": 2,
+      "urgency": "NEXT_CYCLE",
+      "source_category": "market_data",
+      "preferred_vendor": "CME Group FX futures, EBS/ICAP spot FX feed, or Bloomberg terminal-grade data.",
+      "estimated_cost_drops": 0,
+      "timestamp": "2026-03-28T13:15:01.869Z",
+      "_l3_impact_on_analysis": "Would formally resolve whether USD/JPY has breached the 160 critical threshold. Operationally the difference is immaterial for compound stress assessment but the formal threshold status matters for kill switch and cascade evaluation.",
+      "_l3_confidence_data_exists": "high",
+      "_l3_estimated_value": "LOW — operationally immaterial but formally important.",
+      "disposition": "DENIED",
+      "disposition_reasoning": "The USD/JPY data conflict (159.90 vs 160.286) is formally UNRESOLVED per LZ-EH-005 but operationally immaterial — both readings place USD/JPY at critical boundary. The compound stress assessment does not change whether the precise level is 159.90 or 160.29. Next trading session will naturally resolve this through fresh data. The Blind Auditor correctly flagged repeated market_data purchases — this one would not change the assessment.",
+      "dispositioned_by": "layer_4",
+      "dispositioned_at": "2026-03-28T13:32:41.327Z",
+      "purchase_executed": false,
+      "purchase_result": null,
+      "channel_id": null,
+      "settlement_network": null
+    },
+    {
+      "request_id": "ACQ-L3-2026-03-28T13-15-01-869Z-004",
+      "requesting_layer": 3,
+      "request_type": "INTELLIGENCE_GAP",
+      "signal_ids": [
+        "20260328-1315-SIG-001"
+      ],
+      "tension_id": "T-1",
+      "structural_gap_id": null,
+      "description": "Current Brent crude spot price from a primary exchange source (ICE) to resolve 5-day FRED staleness and verify/disconfirm the WatcherGuru $110 report.",
+      "intended_epistemic_vector": "INFORM",
+      "expected_impact_score": 3,
+      "urgency": "IMMEDIATE",
+      "source_category": "market_data",
+      "preferred_vendor": "ICE Futures Europe Brent crude contract, or equivalent primary exchange data.",
+      "estimated_cost_drops": 0,
+      "timestamp": "2026-03-28T13:15:01.869Z",
+      "_l3_impact_on_analysis": "Would confirm whether Brent is at $110 (emergency+) or closer to FRED's $103.79. The $6.21 gap matters for the velocity assessment of the compound stress chain. If $110 is confirmed, the acceleration is faster than FRED data suggests.",
+      "_l3_confidence_data_exists": "high",
+      "_l3_estimated_value": "MODERATE — confirms stress chain velocity.",
+      "disposition": "APPROVED",
+      "disposition_reasoning": "Brent crude primary data is 5 days stale (FRED $103.79, March 23). The $110 WatcherGuru figure is Tier 2. The difference between $103.79 and $110 matters for stress chain velocity assessment and cascade proximity estimation. ICE Brent data would resolve the staleness with primary source authority. Directly relevant to T-1.",
+      "dispositioned_by": "layer_4",
+      "dispositioned_at": "2026-03-28T13:32:41.327Z",
+      "purchase_executed": false,
+      "purchase_result": null,
+      "channel_id": null,
+      "settlement_network": null
+    },
+    {
+      "request_id": "ACQ-L3-2026-03-28T13-15-01-869Z-005",
+      "requesting_layer": 3,
+      "request_type": "INTELLIGENCE_GAP",
+      "signal_ids": [
+        "20260328-1315-SIG-007"
+      ],
+      "tension_id": null,
+      "structural_gap_id": null,
+      "description": "Is there a named replacement for Sacks as crypto czar, or is Sacks continuing in any capacity (advisory, informal, private sector coordination)?",
+      "intended_epistemic_vector": "INFORM",
+      "expected_impact_score": 3,
+      "urgency": "NEXT_CYCLE",
+      "source_category": "regulatory_intelligence",
+      "preferred_vendor": "White House personnel announcements, Eleanor Terrett follow-up reporting, official government directories.",
+      "estimated_cost_drops": 0,
+      "timestamp": "2026-03-28T13:15:01.869Z",
+      "_l3_impact_on_analysis": "Would resolve whether the regulatory coordination vacuum is real (no replacement) or cosmetic (Sacks continuing informally). Directly affects Clarity Act kill switch assessment and CI-3 Regulatory Progress Index.",
+      "_l3_confidence_data_exists": "medium",
+      "_l3_estimated_value": "MODERATE — clarifies regulatory momentum assessment.",
+      "disposition": "DEFERRED",
+      "disposition_reasoning": "Sacks replacement status is relevant to the Clarity Act kill switch and CI-3, but the next observable data point (White House personnel announcement or Terrett follow-up) will arrive through normal monitoring channels. Active acquisition is unlikely to produce data that passive monitoring would miss for this type of political appointment signal. Assessment can proceed with the vacancy as a risk factor.",
+      "dispositioned_by": "layer_4",
+      "dispositioned_at": "2026-03-28T13:32:41.327Z",
       "purchase_executed": false,
       "purchase_result": null,
       "channel_id": null,
