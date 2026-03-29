@@ -983,15 +983,15 @@
     "belief": "F-35 combat vulnerability as geopolitical escalation indicator",
     "reality": "Single Tier 2 source from non-domain commentator (crypto/legal). No independent military/defense corroboration. Per LZ-EH-004, anomalous data from non-domain source treated as potential source failure. Stripped from scoring entirely.",
     "root_cause": "Single Tier 2 source from non-domain commentator (crypto/legal). No independent military/defense corroboration. Per LZ-EH-004, anomalous data from non-domain source treated as potential source failure. Stripped from scoring entirely.",
-    "root_cause_type": "SOURCE_CREDIBILITY_ERROR",
-    "prevention": "NEEDS_ENRICHMENT",
-    "lesson": "NEEDS_ENRICHMENT",
-    "trigger": "NEEDS_ENRICHMENT",
-    "lesson_type": "NEEDS_ENRICHMENT",
+    "root_cause_type": "SINGLE_SOURCE",
+    "prevention": "Before scoring any signal, verify that the source's domain of expertise matches the claim being made. If the source is credible in domain A but making claims about domain B, treat the claim as unverified for domain B and require independent corroboration from a domain B-qualified source.",
+    "lesson": "When a source produces analysis outside their verified domain of expertise, their claims carry no independent evidentiary weight regardless of the source's credibility within their own domain. A credible legal analyst making military assessments is functionally equivalent to an unverified source for military claims.",
+    "trigger": "When a signal cites a source whose verified expertise domain does not match the claim domain — particularly cross-domain assertions from commentators, analysts, or executives opining outside their professional scope",
+    "lesson_type": "DOMAIN_BOUNDARY",
     "confidence_in_lesson": "HIGH",
     "times_applied": 0,
     "times_applicable_but_missed": 0,
-    "status": "NEEDS_ENRICHMENT"
+    "status": "ACTIVE"
   },
   {
     "id": "CL-055",
@@ -1031,14 +1031,14 @@
     "reality": "Layer 2 scored macro stress on Japan (USD/JPY, JGB) as a DECLINING component of the Japan/Asia Adoption Index (CI-4-C). Per CL-050, macro stress on Japan is environmental pressure, not evidence of declining adoption of XRPL by Japanese institutions. The macro data is about what is happening TO Japan, not about what Japanese institutions are DOING regarding XRPL adoption. These are fundamentally different evidentiary categories.",
     "root_cause": "Layer 2 scored macro stress on Japan (USD/JPY, JGB) as a DECLINING component of the Japan/Asia Adoption Index (CI-4-C). Per CL-050, macro stress on Japan is environmental pressure, not evidence of declining adoption of XRPL by Japanese institutions. The macro data is about what is happening TO Japan, not about what Japanese institutions are DOING regarding XRPL adoption. These are fundamentally different evidentiary categories.",
     "root_cause_type": "APOPHENIA",
-    "prevention": "NEEDS_ENRICHMENT",
-    "lesson": "NEEDS_ENRICHMENT",
-    "trigger": "NEEDS_ENRICHMENT",
-    "lesson_type": "NEEDS_ENRICHMENT",
+    "prevention": "Before scoring any macro data point as a component of a behavioral or adoption index, verify that the data measures institutional action (deployments, partnerships, filings, integrations) rather than environmental pressure (currency movements, rate changes, trade disruptions). Environmental data belongs in macro stress indices, not adoption indices.",
+    "lesson": "Environmental conditions acting on a population are not evidence of that population's behavior. Macro stress indicators measure what is happening TO an economy or sector, not what institutions WITHIN that economy are choosing to do. These are distinct evidentiary categories that must not be conflated when scoring adoption or behavioral indices.",
+    "trigger": "When macro or environmental data (currency stress, interest rates, trade conditions) is scored as evidence of institutional adoption, integration, or behavioral decisions within a compound index component",
+    "lesson_type": "CATEGORY_CONFUSION",
     "confidence_in_lesson": "HIGH",
     "times_applied": 0,
     "times_applicable_but_missed": 0,
-    "status": "NEEDS_ENRICHMENT"
+    "status": "ACTIVE"
   },
   {
     "id": "CL-058",
@@ -1094,7 +1094,8 @@
     "confidence_in_lesson": "HIGH",
     "times_applied": 0,
     "times_applicable_but_missed": 0,
-    "status": "NEEDS_ENRICHMENT"
+    "status": "SUPERSEDED",
+    "superseded_by": "BC-004"
   },
   {
     "id": "CL-061",
