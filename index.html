@@ -1568,6 +1568,40 @@ textarea:focus { border-color:var(--accent-cyan); }
       </div>
     </div>
 
+    <!-- Multi-Chain Acquisition (AD #19) -->
+    <div class="full-card" style="border-color:rgba(99,102,241,0.35);background:linear-gradient(135deg,rgba(99,102,241,0.03),transparent);">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <h3 style="margin-bottom:0;">🔗 MULTI-CHAIN ACQUISITION</h3>
+        <span class="signal" style="color:#818cf8;border-color:#818cf8;" id="acqStatus">AD #19 LIVE</span>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
+        <div class="metric-card">
+          <div class="metric-label">OUTCOMES TRACKED</div>
+          <div class="metric-value cyan" id="acqTotalOutcomes">—</div>
+          <div class="metric-sub">Last 50 acquisitions</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">FEEDBACK LOOP</div>
+          <div class="metric-value green" id="acqFeedbackStatus">—</div>
+          <div class="metric-sub" id="acqFeedbackDetail">Pending injection</div>
+        </div>
+      </div>
+
+      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--text-muted);margin-bottom:8px;">OUTCOME DISTRIBUTION</div>
+      <div id="acqOutcomeDistribution" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;">
+        <span style="color:var(--text-muted);font-size:11px;">Awaiting pipeline data…</span>
+      </div>
+
+      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--text-muted);margin-bottom:8px;">CHANNEL PERFORMANCE</div>
+      <div id="acqChannelStats" style="margin-bottom:12px;">
+        <span style="color:var(--text-muted);font-size:11px;">Awaiting pipeline data…</span>
+      </div>
+
+      <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--text-muted);margin-bottom:8px;">RECENT ACQUISITIONS</div>
+      <div id="acqRecentTable" style="font-size:11px;color:var(--text-secondary);">Awaiting pipeline data…</div>
+    </div>
+
     <!-- Merchant Info -->
     <div class="full-card" style="border-color:rgba(0,229,153,0.2);background:linear-gradient(135deg,rgba(0,229,153,0.02),transparent);">
       <h3 style="margin-bottom:12px;">🏪 MERCHANT INFO</h3>
@@ -7694,6 +7728,79 @@ function render360Report(r) {
       <div style="font-size:10px;color:var(--text-secondary);line-height:1.5;">${eh(k.reasoning ?? '')}</div>
     </div>`
   ).join(''));
+
+  // ── Multi-Chain Acquisition Summary (AD #19) ──────────────────────────
+  if (r.acquisition_summary) {
+    const acq = r.acquisition_summary;
+
+    // Outcomes tracked
+    set('acqTotalOutcomes', acq.total_outcomes_tracked ?? '—');
+
+    // Feedback loop status
+    const fb = acq.feedback_loop || {};
+    if (fb.entries_pending_injection > 0) {
+      set('acqFeedbackStatus', fb.entries_pending_injection + ' PENDING');
+      const el = document.getElementById('acqFeedbackStatus');
+      if (el) el.className = 'metric-value amber';
+      set('acqFeedbackDetail', fb.entries_consumed + ' consumed, ' + fb.entries_pending_injection + ' awaiting injection');
+    } else {
+      set('acqFeedbackStatus', 'ACTIVE');
+      set('acqFeedbackDetail', fb.entries_consumed + ' entries consumed this cycle');
+    }
+
+    // Outcome distribution badges
+    const dist = acq.outcome_distribution || {};
+    const distEl = document.getElementById('acqOutcomeDistribution');
+    if (distEl && Object.keys(dist).length > 0) {
+      const colorMap = {
+        'SURVIVED': '#22c55e', 'CONFIRMED': '#818cf8', 'GENERATED': '#06b6d4',
+        'TENSION_RESOLVED': '#22c55e', 'NO_CHANGE': '#6b7280', 'STRIPPED': '#ef4444'
+      };
+      distEl.innerHTML = Object.entries(dist).map(([k, v]) => {
+        const color = colorMap[k] || '#9ca3af';
+        return `<span style="display:inline-block;padding:2px 8px;border:1px solid ${color};border-radius:4px;font-size:10px;font-family:'JetBrains Mono',monospace;color:${color};">${k}: ${v}</span>`;
+      }).join('');
+    }
+
+    // Channel performance
+    const chStats = acq.channel_stats || {};
+    const chEl = document.getElementById('acqChannelStats');
+    if (chEl && Object.keys(chStats).length > 0) {
+      chEl.innerHTML = Object.entries(chStats).map(([chId, st]) => {
+        const outcomes = Object.entries(st.outcomes || {}).map(([k,v]) => k + ':' + v).join(' ');
+        return `<div class="data-row" style="padding:4px 0;">
+          <span class="data-label" style="font-size:10px;">${eh(chId)}</span>
+          <span class="data-value" style="font-size:10px;">${st.requests} req · ${(st.total_cost_usd || 0).toFixed(2)} · ${outcomes}</span>
+        </div>`;
+      }).join('');
+    }
+
+    // Recent acquisitions table
+    const recent = acq.recent_acquisitions || [];
+    const tblEl = document.getElementById('acqRecentTable');
+    if (tblEl && recent.length > 0) {
+      const outcomeColor = (o) => {
+        if (o === 'SURVIVED' || o === 'TENSION_RESOLVED') return '#22c55e';
+        if (o === 'CONFIRMED') return '#818cf8';
+        if (o === 'GENERATED') return '#06b6d4';
+        if (o === 'STRIPPED') return '#ef4444';
+        return '#6b7280';
+      };
+      tblEl.innerHTML = `<div style="display:grid;grid-template-columns:auto 1fr auto auto;gap:4px 12px;font-family:'JetBrains Mono',monospace;font-size:10px;">
+        <span style="color:var(--text-muted);">TARGET</span>
+        <span style="color:var(--text-muted);">CHANNEL</span>
+        <span style="color:var(--text-muted);">OUTCOME</span>
+        <span style="color:var(--text-muted);">TIME</span>
+        ${recent.map(a => {
+          const time = a.recorded_at ? new Date(a.recorded_at).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) : '—';
+          return `<span style="color:var(--text-secondary);">${eh(a.target_id || '—')}</span>
+            <span style="color:var(--text-secondary);">${eh(a.channel_id || 'unknown')}</span>
+            <span style="color:${outcomeColor(a.outcome)};">${a.outcome || '—'}</span>
+            <span style="color:var(--text-muted);">${time}</span>`;
+        }).join('')}
+      </div>`;
+    }
+  }
 }
 
 // ===== REFRESH ALL =====
