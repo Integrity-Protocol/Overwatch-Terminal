@@ -1067,6 +1067,7 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary outs
     }
   }
 
+  result._injected_intelligence_metadata = injectedIntelligenceMetadata;
   return result;
 }
 
@@ -2261,8 +2262,9 @@ async function main() {
             if (traceResult) {
               log('trace', `Cognitive trace assembled: ${traceResult._signal_count} signals, outcomes: ${JSON.stringify(traceResult._outcomes)}`);
                 traceResultForOutcomes = traceResult;
-                if (injectedIntelligenceMetadata.length > 0) {
-                  traceResult._injected_intelligence = injectedIntelligenceMetadata;
+                const iiMeta = contextualizeResult?._injected_intelligence_metadata || [];
+                if (iiMeta.length > 0) {
+                  traceResult._injected_intelligence = iiMeta;
                 }
             } else {
               warn('trace', 'Trace assembly returned null — trace will be missing for this run');
