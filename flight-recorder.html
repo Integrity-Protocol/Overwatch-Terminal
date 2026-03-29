@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cognitive Flight Recorder — The Integrity Protocol</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-primary: #060a11;
+  --bg-secondary: #0c1220;
+  --bg-card: #101826;
+  --bg-inspector: #0a0f1a;
+  --border: #1a2740;
+  --border-active: #2a3f60;
+  --text-primary: #dfe6f0;
+  --text-secondary: #8a9bba;
+  --text-muted: #44556e;
+  --accent-cyan: #00c8c8;
+  --accent-cyan-dim: rgba(0,200,200,0.08);
+  --accent-green: #00e599;
+  --accent-green-dim: rgba(0,229,153,0.08);
+  --accent-red: #ff4757;
+  --accent-red-dim: rgba(255,71,87,0.08);
+  --accent-amber: #ffb347;
+  --accent-amber-dim: rgba(255,179,71,0.08);
+  --accent-blue: #4d9fff;
+  --accent-blue-dim: rgba(77,159,255,0.08);
+  --accent-purple: #a78bfa;
+  --accent-purple-dim: rgba(167,139,250,0.08);
+  --radius: 10px;
+  --radius-sm: 6px;
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'DM Sans', system-ui, sans-serif;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: var(--sans);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ── Header ── */
+.header {
+  height: 56px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(0,200,200,0.03) 0%, transparent 100%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+}
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.header-brand {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--accent-cyan);
+  text-transform: uppercase;
+}
+.header-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.header-meta {
+  display: flex;
+  gap: 16px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.header-meta span { color: var(--text-secondary); }
+.header-nav {
+  display: flex;
+  gap: 4px;
+}
+.header-nav a {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  transition: all 0.15s;
+}
+.header-nav a:hover { color: var(--text-secondary); background: rgba(255,255,255,0.04); }
+.header-nav a.active { color: var(--accent-cyan); background: var(--accent-cyan-dim); }
+
+/* ── Main Layout ── */
+.main {
+  display: flex;
+  height: calc(100vh - 56px);
+}
+
+/* ── Left: Lineage Timeline ── */
+.lineage-pane {
+  width: 420px;
+  min-width: 420px;
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  background: var(--bg-secondary);
+  background-image:
+    linear-gradient(rgba(0,200,200,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,200,200,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.lineage-header {
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.lineage-title {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.lineage-summary {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.lineage-chain-selector {
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: 0;
+  flex-wrap: wrap;
+  background: var(--bg-secondary);
+}
+.segment-group {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  position: relative;
+}
+.chain-btn {
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 7px 14px;
+  border-radius: 0;
+  border: none;
+  border-right: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  z-index: 1;
+}
+.chain-btn:last-child { border-right: none; }
+.chain-btn:hover { color: var(--text-secondary); background: rgba(255,255,255,0.03); }
+.chain-btn.active { color: var(--accent-cyan); background: var(--accent-cyan-dim); }
+.chain-btn.calibration.active { color: var(--accent-purple); background: var(--accent-purple-dim); }
+
+/* ── Timeline ── */
+.timeline {
+  padding: 24px 24px 40px;
+  position: relative;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 42px;
+  top: 24px;
+  bottom: 40px;
+  width: 2px;
+  background: var(--border);
+}
+
+.timeline-node {
+  position: relative;
+  padding-left: 56px;
+  margin-bottom: 0;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.timeline-node:last-child { margin-bottom: 0; }
+
+/* Connector line between nodes */
+.timeline-connector {
+  position: relative;
+  padding-left: 56px;
+  height: 32px;
+}
+.timeline-connector::before {
+  content: '';
+  position: absolute;
+  left: 38px;
+  top: 0;
+  bottom: 0;
+  width: 10px;
+  border-left: 2px dashed var(--border);
+  margin-left: 3px;
+}
+
+.node-dot {
+  position: absolute;
+  left: 30px;
+  top: 16px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: var(--bg-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: all 0.2s;
+}
+.node-dot svg { width: 12px; height: 12px; }
+
+.timeline-node:hover .node-dot { border-color: var(--border-active); }
+.timeline-node.selected .node-dot { border-color: var(--accent-cyan); box-shadow: 0 0 12px rgba(0,200,200,0.25); }
+
+.node-dot.catalyst { border-color: var(--accent-amber); }
+.node-dot.catalyst svg { fill: var(--accent-amber); }
+.timeline-node.selected .node-dot.catalyst { box-shadow: 0 0 12px rgba(255,179,71,0.25); }
+
+.node-dot.acquisition { border-color: var(--accent-blue); }
+.node-dot.acquisition svg { fill: var(--accent-blue); }
+.timeline-node.selected .node-dot.acquisition { box-shadow: 0 0 12px rgba(77,159,255,0.25); }
+
+.node-dot.outcome-confirmed { border-color: var(--accent-green); }
+.node-dot.outcome-confirmed svg { fill: var(--accent-green); }
+.timeline-node.selected .node-dot.outcome-confirmed { box-shadow: 0 0 12px rgba(0,229,153,0.25); }
+
+.node-dot.outcome-inefficient { border-color: var(--accent-red); }
+.node-dot.outcome-inefficient svg { fill: var(--accent-red); }
+.timeline-node.selected .node-dot.outcome-inefficient { box-shadow: 0 0 12px rgba(255,71,87,0.25); }
+
+.node-dot.outcome-generated { border-color: var(--accent-cyan); }
+.node-dot.outcome-generated svg { fill: var(--accent-cyan); }
+
+.node-dot.calibration-detect { border-color: var(--accent-purple); }
+.node-dot.calibration-detect svg { fill: var(--accent-purple); }
+.timeline-node.selected .node-dot.calibration-detect { box-shadow: 0 0 12px rgba(167,139,250,0.25); }
+
+.node-dot.calibration-inject { border-color: var(--accent-purple); }
+.node-dot.calibration-inject svg { fill: var(--accent-purple); }
+
+.node-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  transition: all 0.15s;
+}
+.timeline-node:hover .node-card { border-color: var(--border-active); }
+.timeline-node.selected .node-card { border-color: var(--accent-cyan); background: rgba(0,200,200,0.04); }
+
+.node-type {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.node-type .type-label { color: var(--text-muted); }
+.node-type .type-tag {
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 9px;
+  font-weight: 600;
+  font-family: var(--mono);
+  letter-spacing: 0.05em;
+}
+.type-tag.catalyst { background: var(--accent-amber-dim); color: var(--accent-amber); border: 1px solid rgba(255,179,71,0.25); }
+.type-tag.acquisition { background: var(--accent-blue-dim); color: var(--accent-blue); border: 1px solid rgba(77,159,255,0.25); }
+.type-tag.confirmed { background: var(--accent-green-dim); color: var(--accent-green); border: 1px solid rgba(0,229,153,0.25); }
+.type-tag.inefficient { background: var(--accent-red-dim); color: var(--accent-red); border: 1px solid rgba(255,71,87,0.25); }
+.type-tag.generated { background: var(--accent-cyan-dim); color: var(--accent-cyan); border: 1px solid rgba(0,200,200,0.25); }
+.type-tag.survived { background: var(--accent-green-dim); color: var(--accent-green); border: 1px solid rgba(0,229,153,0.25); }
+.type-tag.detection { background: var(--accent-purple-dim); color: var(--accent-purple); border: 1px solid rgba(167,139,250,0.25); }
+.type-tag.injection { background: var(--accent-purple-dim); color: var(--accent-purple); border: 1px solid rgba(167,139,250,0.25); }
+
+.node-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+.node-meta {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.node-meta .cost { color: var(--accent-amber); }
+.node-meta .channel { color: var(--accent-blue); }
+.node-meta .outcome-good { color: var(--accent-green); }
+.node-meta .outcome-bad { color: var(--accent-red); }
+
+/* ── Right: Inspector ── */
+.inspector-pane {
+  flex: 1;
+  overflow-y: auto;
+  background: var(--bg-inspector);
+}
+.inspector-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  flex-direction: column;
+  gap: 12px;
+}
+.inspector-empty-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px dashed var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.inspector-empty-icon svg { width: 20px; height: 20px; fill: var(--text-muted); }
+.inspector-empty-text {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.inspector-content { padding: 24px; }
+.inspector-header {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.inspector-type {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.inspector-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+.inspector-subtitle {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.inspector-section {
+  margin-bottom: 24px;
+}
+.inspector-section-title {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.kv-grid {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 8px 16px;
+}
+.kv-key {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.kv-val {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+  word-break: break-all;
+}
+.kv-val.highlight-amber { color: var(--accent-amber); }
+.kv-val.highlight-blue { color: var(--accent-blue); }
+.kv-val.highlight-green { color: var(--accent-green); }
+.kv-val.highlight-red { color: var(--accent-red); }
+.kv-val.highlight-cyan { color: var(--accent-cyan); }
+.kv-val.highlight-purple { color: var(--accent-purple); }
+
+.json-block {
+  background: rgba(0,0,0,0.3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.json-block .jk { color: var(--accent-cyan); }
+.json-block .js { color: var(--accent-amber); }
+.json-block .jn { color: var(--accent-blue); }
+.json-block .jb { color: var(--accent-purple); }
+
+.trace-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--accent-cyan);
+  text-decoration: none;
+  padding: 6px 12px;
+  border: 1px solid rgba(0,200,200,0.2);
+  border-radius: var(--radius-sm);
+  background: var(--accent-cyan-dim);
+  transition: all 0.15s;
+  cursor: pointer;
+}
+.trace-link:hover { border-color: var(--accent-cyan); background: rgba(0,200,200,0.12); }
+
+.tension-card {
+  background: rgba(0,0,0,0.2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin-bottom: 8px;
+}
+.tension-card-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+.tension-card-meta {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+/* ── Animated Timeline Flow ── */
+@keyframes flowDown {
+  0% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -20; }
+}
+.timeline-connector::before {
+  border-left: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--border) 0px,
+    var(--border) 6px,
+    transparent 6px,
+    transparent 12px
+  );
+  background-size: 2px 12px;
+  width: 2px;
+  animation: flowPulse 2s linear infinite;
+}
+@keyframes flowPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+/* ── Selected Node Pulse ── */
+@keyframes nodePulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(0,200,200,0.2); }
+  50% { box-shadow: 0 0 16px rgba(0,200,200,0.35); }
+}
+.timeline-node.selected .node-dot {
+  animation: nodePulse 2.5s ease-in-out infinite;
+}
+.timeline-node.selected .node-dot.catalyst {
+  animation-name: nodePulseAmber;
+}
+@keyframes nodePulseAmber {
+  0%, 100% { box-shadow: 0 0 8px rgba(255,179,71,0.2); }
+  50% { box-shadow: 0 0 16px rgba(255,179,71,0.35); }
+}
+.timeline-node.selected .node-dot.acquisition {
+  animation-name: nodePulseBlue;
+}
+@keyframes nodePulseBlue {
+  0%, 100% { box-shadow: 0 0 8px rgba(77,159,255,0.2); }
+  50% { box-shadow: 0 0 16px rgba(77,159,255,0.35); }
+}
+.timeline-node.selected .node-dot.calibration-detect,
+.timeline-node.selected .node-dot.calibration-inject {
+  animation-name: nodePulsePurple;
+}
+@keyframes nodePulsePurple {
+  0%, 100% { box-shadow: 0 0 8px rgba(167,139,250,0.2); }
+  50% { box-shadow: 0 0 16px rgba(167,139,250,0.35); }
+}
+
+/* ── Inspector Transitions ── */
+@keyframes inspectorFadeIn {
+  0% { opacity: 0; transform: translateY(6px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.inspector-content.animate {
+  animation: inspectorFadeIn 0.18s ease-out;
+}
+
+/* ── Sticky Inspector Header ── */
+.inspector-sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--bg-inspector);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 24px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  display: none;
+}
+.inspector-sticky-header .sticky-label { color: var(--text-muted); }
+.inspector-sticky-header .sticky-title { color: var(--text-secondary); margin-left: 8px; }
+
+/* ── Copy Button ── */
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 2px 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.copy-btn:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); }
+.copy-btn.copied { border-color: var(--accent-green); color: var(--accent-green); }
+.json-block-wrapper {
+  position: relative;
+}
+.json-copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-muted);
+  background: rgba(0,0,0,0.5);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 3px 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.json-copy-btn:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); }
+.json-copy-btn.copied { border-color: var(--accent-green); color: var(--accent-green); }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--border-active); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div class="header-brand">The Integrity Protocol</div>
+    <div class="header-title">Cognitive Flight Recorder</div>
+    <div class="header-meta">
+      <span id="chainCount">3</span> lineage chains &nbsp;·&nbsp;
+      <span id="totalAcquisitions">4</span> acquisitions tracked &nbsp;·&nbsp;
+      <span id="totalSpend">$0.34</span> total spend
+    </div>
+  </div>
+  <div class="header-nav">
+    <a href="index.html">DASHBOARD</a>
+    <a href="trace.html">TRACE</a>
+    <a href="flight-recorder.html" class="active">FLIGHT RECORDER</a>
+  </div>
+</div>
+
+<div class="main">
+  <!-- Left: Lineage Timeline -->
+  <div class="lineage-pane">
+    <div class="lineage-header">
+      <div class="lineage-title">Intelligence Lineage</div>
+      <div class="lineage-summary">
+        Cross-run acquisition lifecycle. Click any node to inspect its metadata, trace IDs, and deterministic provenance.
+      </div>
+    </div>
+    <div class="lineage-chain-selector" id="chainSelector">
+      <!-- Populated by JS -->
+    </div>
+    <div class="timeline" id="timeline">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+
+  <!-- Right: Inspector -->
+  <div class="inspector-pane" id="inspectorPane">
+    <div class="inspector-sticky-header" id="inspectorStickyHeader">
+      <span class="sticky-label">INSPECTOR //</span>
+      <span class="sticky-title" id="stickyTitle"></span>
+    </div>
+    <div class="inspector-empty" id="inspectorEmpty">
+      <div class="inspector-empty-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+      </div>
+      <div class="inspector-empty-text">Select a node to inspect</div>
+    </div>
+    <div class="inspector-content" id="inspectorContent" style="display:none;">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── Data: Modeled on production structures ────────────────────────────────
+// In production, this loads from acquisition-outcomes.json, cognitive trace files,
+// and behavioral-calibration.json via GitHub Pages fetch.
+
+const CHAINS = [
+  {
+    id: "acq-chain-1",
+    label: "Messari Brent Crude",
+    type: "acquisition",
+    nodes: [
+      {
+        id: "c1-catalyst",
+        type: "catalyst",
+        dotClass: "catalyst",
+        tagClass: "catalyst",
+        tagLabel: "CATALYST",
+        title: "Stale Brent crude data identified on T-1",
+        meta: { trace: "2026-03-29T00:19:54Z", tension: "T-1", layer: "Layer 3" },
+        inspector: {
+          typeColor: "var(--accent-amber)",
+          typeLabel: "CATALYST — GAP IDENTIFICATION",
+          title: "Stale Brent crude data on T-1 compound stress",
+          subtitle: "Layer 3 identified that Brent crude data was stale (T-1) during compound stress evaluation. The oil-yen feedback loop inference required current Brent pricing to assess whether the $85 elevated threshold was breached.",
+          sections: [
+            {
+              title: "Trace Context",
+              type: "kv",
+              data: [
+                ["originating_trace", "2026-03-29T00:19:54.698Z"],
+                ["run_id", "pipeline-run-2026-03-29-0019"],
+                ["tension_id", "T-1"],
+                ["tension_name", "Will Brent breach $85 sustained?"],
+                ["impact_score", "4 / 5"],
+                ["source_channel", "TENSION_WATCH_FOR"],
+                ["urgency", "NEXT_CYCLE"],
+                ["window_status", "APPROACHING — 6 days remaining"]
+              ]
+            },
+            {
+              title: "Acquisition Request",
+              type: "json",
+              data: {
+                request_id: "ACQ-L3-20260329-001",
+                question: "What is the current Brent crude spot price and has it breached $85 in the last 48 hours?",
+                intended_epistemic_vector: "INFORM",
+                expected_impact_score: 4,
+                token_budget: 500,
+                data_type: "market_data"
+              }
+            },
+            {
+              title: "Layer 3 Reasoning",
+              type: "text",
+              data: "The compound stress matrix requires current Brent pricing. With Hormuz closure active and Saudi pipeline at capacity, the $85 threshold determines whether compound stress reaches CRITICAL. Last available data is T-1. The gap blocks a deterministic assessment of escalation proximity."
+            }
+          ]
+        }
+      },
+      {
+        id: "c1-acquisition",
+        type: "acquisition",
+        dotClass: "acquisition",
+        tagClass: "acquisition",
+        tagLabel: "ACQUISITION",
+        title: "x402 payment to Messari on Base — $0.25 USDC",
+        meta: { channel: "messari-base", cost: "$0.25", network: "Base" },
+        inspector: {
+          typeColor: "var(--accent-blue)",
+          typeLabel: "ACQUISITION — x402 PAYMENT",
+          title: "Autonomous USDC payment on Base mainnet",
+          subtitle: "The constrained acquisition engine selected Messari via cascading tiebreaker (specialization > cost). x402 payment negotiated automatically. Messari returned an honest \"data unavailable\" response for commodity pricing.",
+          sections: [
+            {
+              title: "Transaction",
+              type: "kv",
+              data: [
+                ["tx_hash", "0xc36bc690...4cf550"],
+                ["block", "43977677"],
+                ["network", "Base mainnet"],
+                ["from", "0xe8c486B3...0d35BB"],
+                ["to", "0x75Ddd3c4...1c70D2A5"],
+                ["amount", "0.25 USDC"],
+                ["cost_usd", "$0.24"],
+                ["timestamp", "2026-03-29 00:38:21 UTC"]
+              ]
+            },
+            {
+              title: "Routing Decision",
+              type: "kv",
+              data: [
+                ["channel_id", "messari-base"],
+                ["vendor_type", "messari"],
+                ["query_type", "market_data"],
+                ["match_score", "2 capabilities matched"],
+                ["tiebreaker", "specialization (fewer capabilities)"],
+                ["alternatives", "firecrawl-base ($0.03, broader)"],
+                ["paper_trade", "false — LIVE"]
+              ]
+            },
+            {
+              title: "Response",
+              type: "json",
+              data: {
+                status: "data_unavailable",
+                vendor_response: "Messari does not provide commodity pricing data. Brent crude is outside our coverage universe.",
+                intelligence_persisted: true,
+                consumed: false,
+                originating_trace_id: "2026-03-29T00:19:54.698Z",
+                originating_signal_ids: ["20260329-0019-SIG-001", "20260329-0019-SIG-010"]
+              }
+            }
+          ]
+        }
+      },
+      {
+        id: "c1-outcome",
+        type: "outcome",
+        dotClass: "outcome-confirmed",
+        tagClass: "confirmed",
+        tagLabel: "CONFIRMED",
+        title: "Data injected into Layer 2 — baseline confirmed",
+        meta: { trace: "2026-03-29T02:44:12Z", outcome: "CONFIRMED", run: "next cycle" },
+        inspector: {
+          typeColor: "var(--accent-green)",
+          typeLabel: "OUTCOME — CONFIRMED",
+          title: "Acquired intelligence confirmed existing assessment",
+          subtitle: "The Messari \"data unavailable\" response was injected into Layer 2 as supplementary intelligence. The system correctly identified that Messari is not the right channel for commodity pricing — the data confirmed the existing routing limitation rather than providing new analytical value.",
+          sections: [
+            {
+              title: "Outcome Classification",
+              type: "kv",
+              data: [
+                ["outcome", "CONFIRMED"],
+                ["run_trace_id", "2026-03-29T02:44:12.664Z"],
+                ["originating_trace_id", "2026-03-29T00:19:54.698Z"],
+                ["outcome_evidence", "Tension T-1 maintained at score 4, no delta from acquisition"],
+                ["injection_confirmed", "true — [L2] Injected 1 entry"],
+                ["cost_usd", "$0.25"],
+                ["channel_id", "messari-base"]
+              ]
+            },
+            {
+              title: "Learning Signal",
+              type: "text",
+              data: "This acquisition outcome is a routing correction signal. Messari's coverage universe does not include commodity pricing. The STALE_PURCHASE_REPETITION detector should flag if the system routes commodity queries to Messari again. Expected correction: router learns to exclude Messari for market_data queries on non-crypto assets."
+            },
+            {
+              title: "Spending Detector Status",
+              type: "json",
+              data: {
+                STALE_PURCHASE_REPETITION: "FIRING — on_chain_analytics 6x, market_data 4x",
+                BUDGET_EXHAUSTION: "NOT_FIRING — $0.34 of $0.50 per-cycle",
+                CONFIRMATION_ACQUISITION: "NOT_FIRING — vector was INFORM"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    id: "acq-chain-2",
+    label: "Firecrawl SWIFT",
+    type: "acquisition",
+    nodes: [
+      {
+        id: "c2-catalyst",
+        type: "catalyst",
+        dotClass: "catalyst",
+        tagClass: "catalyst",
+        tagLabel: "CATALYST",
+        title: "Structural gap: SWIFT modernization timeline unknown",
+        meta: { trace: "2026-03-28T14:22:00Z", gap: "SG-003", layer: "Layer 2" },
+        inspector: {
+          typeColor: "var(--accent-amber)",
+          typeLabel: "CATALYST — STRUCTURAL GAP PROBE",
+          title: "SWIFT modernization timeline — promotable gap",
+          subtitle: "Layer 2 knowledge audit flagged that SWIFT ISO 20022 migration status has not been updated in 14 days. The structural gap's promotable_if field specifies: \"SWIFT publishes updated migration timeline or announces acceleration.\"",
+          sections: [
+            {
+              title: "Gap Context",
+              type: "kv",
+              data: [
+                ["originating_trace", "2026-03-28T14:22:00.000Z"],
+                ["structural_gap_id", "SG-003"],
+                ["gap_name", "SWIFT ISO 20022 migration status"],
+                ["last_updated", "2026-03-14"],
+                ["days_stale", "14"],
+                ["source_channel", "STRUCTURAL_GAP_PROBE"],
+                ["probe_cadence", "WEEKLY (Sunday default)"]
+              ]
+            },
+            {
+              title: "Probe Question",
+              type: "json",
+              data: {
+                request_id: "ACQ-L2-20260328-003",
+                question: "Has SWIFT published any updated ISO 20022 migration timeline or acceleration announcement in the last 14 days?",
+                intended_epistemic_vector: "INFORM",
+                expected_impact_score: 3,
+                token_budget: 400,
+                data_type: "regulatory_intelligence"
+              }
+            }
+          ]
+        }
+      },
+      {
+        id: "c2-acquisition",
+        type: "acquisition",
+        dotClass: "acquisition",
+        tagClass: "acquisition",
+        tagLabel: "ACQUISITION",
+        title: "Firecrawl web search — $0.03 via fiat fallback",
+        meta: { channel: "firecrawl-base", cost: "$0.03", network: "fiat fallback" },
+        inspector: {
+          typeColor: "var(--accent-blue)",
+          typeLabel: "ACQUISITION — VENDOR FAILOVER",
+          title: "Firecrawl fiat API fallback — x402 endpoint broken",
+          subtitle: "x402 endpoint timed out (known issue: GitHub Issue #2212). Governed failover to fiat API executed automatically. VENDOR_INFRASTRUCTURE_FAILURE / VENDOR_FAILOVER audit trail preserved.",
+          sections: [
+            {
+              title: "Transaction",
+              type: "kv",
+              data: [
+                ["channel_id", "firecrawl-base"],
+                ["vendor_type", "firecrawl"],
+                ["payment_method", "FIAT_FALLBACK"],
+                ["x402_attempted", "true — timed out after 15s"],
+                ["fallback_reason", "VENDOR_INFRASTRUCTURE_FAILURE"],
+                ["cost_usd", "$0.03 (fiat API credit)"],
+                ["response_time", "2.1s"]
+              ]
+            },
+            {
+              title: "Response Summary",
+              type: "text",
+              data: "Firecrawl returned 3 relevant results on SWIFT ISO 20022 migration. Primary finding: SWIFT published a March 2026 update confirming the November 2025 migration deadline was met for 87% of participating banks. Remaining 13% given extension to June 2026. No acceleration announcement."
+            }
+          ]
+        }
+      },
+      {
+        id: "c2-outcome",
+        type: "outcome",
+        dotClass: "outcome-confirmed",
+        tagClass: "survived",
+        tagLabel: "SURVIVED",
+        title: "SWIFT data survived pipeline — gap partially resolved",
+        meta: { trace: "2026-03-29T02:44:12Z", outcome: "SURVIVED", run: "next cycle" },
+        inspector: {
+          typeColor: "var(--accent-green)",
+          typeLabel: "OUTCOME — SURVIVED",
+          title: "Acquired SWIFT intelligence survived all four layers",
+          subtitle: "The SWIFT migration data was injected into Layer 2, passed the knowledge audit, survived Layer 3 inference processing, and reached Layer 4's final assessment. Structural gap SG-003 partially resolved — the 87% completion figure provides a concrete data point where previously the system had only estimates.",
+          sections: [
+            {
+              title: "Outcome Classification",
+              type: "kv",
+              data: [
+                ["outcome", "SURVIVED"],
+                ["run_trace_id", "2026-03-29T02:44:12.664Z"],
+                ["pipeline_survival", "L1 → L2 → L3 → L4 (full chain)"],
+                ["gap_status", "PARTIALLY_RESOLVED"],
+                ["remaining_gap", "June 2026 extension cohort status unknown"],
+                ["cost_usd", "$0.03"],
+                ["ROI", "HIGH — resolved 14-day stale gap for $0.03"]
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    id: "cal-chain-1",
+    label: "BC-003 Correlation≠Causation",
+    type: "calibration",
+    nodes: [
+      {
+        id: "bc3-detect",
+        type: "calibration-detection",
+        dotClass: "calibration-detect",
+        tagClass: "detection",
+        tagLabel: "PATTERN DETECTED",
+        title: "LZ-RC-001 fires in 34/34 runs — macro correlation bias",
+        meta: { rule: "LZ-RC-001", frequency: "34/34", layer: "L1" },
+        inspector: {
+          typeColor: "var(--accent-purple)",
+          typeLabel: "CALIBRATION — PATTERN DETECTION",
+          title: "Correlation-as-causation bias detected across all runs",
+          subtitle: "The behavioral calibration report identified LZ-RC-001 (correlation treated as causation) firing in 100% of analyzed runs with 832 occurrences concentrated in Layer 1. When processing co-occurring macro events, the system implies causal relationships without establishing mechanisms.",
+          sections: [
+            {
+              title: "Detection Context",
+              type: "kv",
+              data: [
+                ["calibration_id", "BC-003"],
+                ["source_rule", "LZ-RC-001"],
+                ["pattern_type", "RECURRING_VIOLATION"],
+                ["frequency", "34/34 runs (100%)"],
+                ["magnitude", "832 occurrences in L1"],
+                ["measurement_window", "2026-03-06 to 2026-03-22"],
+                ["target_layers", "L1"],
+                ["signal_categories", "macro, geopolitical"],
+                ["detection_method", "gate-review-ledger aggregation"]
+              ]
+            },
+            {
+              title: "Originating Traces",
+              type: "text",
+              data: "Pattern detected across traces from 2026-03-06T02:22:00Z through 2026-03-22T22:26:14Z. The oil-JPY co-occurrence pattern (SIG-001 + SIG-009 treated as causal chain) appears in 29/34 runs. The DXY-crypto correlation appears in 22/34 runs. Both are valid observations but presented with causal language."
+            }
+          ]
+        }
+      },
+      {
+        id: "bc3-candidate",
+        type: "calibration-candidate",
+        dotClass: "calibration-detect",
+        tagClass: "detection",
+        tagLabel: "CANDIDATE",
+        title: "BC-003 created — Sunday audit March 23",
+        meta: { status: "CANDIDATE", audit: "2026-03-23" },
+        inspector: {
+          typeColor: "var(--accent-purple)",
+          typeLabel: "CALIBRATION — CANDIDATE CREATED",
+          title: "BC-003: Correlation-causation tendency correction",
+          subtitle: "Created during the March 23 Sunday audit. Tim wrote directional guidance: when reporting co-occurring macro events, explicitly state whether a causal mechanism has been identified. If no mechanism is established, label as CORRELATED_NOT_CAUSAL.",
+          sections: [
+            {
+              title: "Calibration Entry",
+              type: "json",
+              data: {
+                id: "BC-003",
+                status: "CANDIDATE",
+                calibration_type: "TENDENCY_CORRECTION",
+                directional_guidance: "When reporting co-occurring macro events in Layer 1, explicitly state whether a causal mechanism has been identified. If no mechanism is established, label the co-occurrence as CORRELATED_NOT_CAUSAL.",
+                overcorrection_watch: "If Layer 1 stops reporting macro co-occurrences entirely, flag for review.",
+                overcorrection_metric: "SIGNAL_REJECTION_RATE",
+                overcorrection_metric_layer: "L1"
+              }
+            },
+            {
+              title: "Promotion Requirements",
+              type: "kv",
+              data: [
+                ["directional_guidance", "✓ Written by Tim"],
+                ["overcorrection_metric", "✓ SIGNAL_REJECTION_RATE"],
+                ["overcorrection_layer", "✓ L1"],
+                ["status", "AWAITING PROMOTION — Sunday audit review"]
+              ]
+            }
+          ]
+        }
+      },
+      {
+        id: "bc3-injection",
+        type: "calibration-injection",
+        dotClass: "calibration-inject",
+        tagClass: "injection",
+        tagLabel: "PENDING INJECTION",
+        title: "Awaiting promotion to ACTIVE — not yet injected",
+        meta: { status: "CANDIDATE", injections: "0" },
+        inspector: {
+          typeColor: "var(--accent-purple)",
+          typeLabel: "CALIBRATION — INJECTION STATUS",
+          title: "BC-003 has not been injected into any pipeline run",
+          subtitle: "This entry remains a CANDIDATE. When promoted to ACTIVE, it will be injected into Layer 1 prompts. The Blind Auditor will establish a suppression baseline on the first post-promotion run. Monitor 3-5 runs before promoting additional entries.",
+          sections: [
+            {
+              title: "Injection Tracking",
+              type: "kv",
+              data: [
+                ["current_status", "CANDIDATE"],
+                ["runs_since_creation", "12"],
+                ["injected_into", "0 runs (not yet ACTIVE)"],
+                ["suppression_baseline", "Not established"],
+                ["pre_promotion_frequency", "34/34 runs"],
+                ["expected_post_promotion", "Frequency should decrease; watch for zero (suppression)"]
+              ]
+            },
+            {
+              title: "Audit Decision Required",
+              type: "text",
+              data: "Today's Sunday audit should evaluate BC-003 for promotion. The directional guidance has been written. The overcorrection metric is set. The pattern fires in 100% of runs — it is a genuine model tendency, not noise. Promote 1-2 candidates at a time and monitor 3-5 runs."
+            }
+          ]
+        }
+      }
+    ]
+  }
+];
+
+// ─── Render ────────────────────────────────────────────────────────────────
+
+const SVG_ICONS = {
+  catalyst: '<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="3" fill="currentColor"/><path d="M8 2v2M8 12v2M2 8h2M12 8h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+  acquisition: '<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M8 2L14 8L8 14L2 8Z" fill="currentColor"/></svg>',
+  outcome: '<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M4 8l3 3 5-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  calibration: '<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="8" r="2" fill="currentColor"/></svg>'
+};
+
+function getNodeIcon(node) {
+  if (node.type === 'catalyst') return SVG_ICONS.catalyst;
+  if (node.type === 'acquisition') return SVG_ICONS.acquisition;
+  if (node.type.startsWith('calibration')) return SVG_ICONS.calibration;
+  return SVG_ICONS.outcome;
+}
+
+let selectedNode = null;
+
+function renderChainSelector() {
+  const el = document.getElementById('chainSelector');
+  const buttons = CHAINS.map(chain => {
+    const cls = chain.type === 'calibration' ? 'chain-btn calibration' : 'chain-btn';
+    return `<button class="${cls}" data-chain="${chain.id}" onclick="selectChain('${chain.id}')">${chain.label}</button>`;
+  }).join('');
+  el.innerHTML = `<div class="segment-group">${buttons}</div>`;
+}
+
+function selectChain(chainId) {
+  document.querySelectorAll('.chain-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`[data-chain="${chainId}"]`).classList.add('active');
+  renderTimeline(chainId);
+  clearInspector();
+}
+
+function renderTimeline(chainId) {
+  const chain = CHAINS.find(c => c.id === chainId);
+  if (!chain) return;
+  const el = document.getElementById('timeline');
+  let html = '';
+  chain.nodes.forEach((node, i) => {
+    html += `<div class="timeline-node" data-node="${node.id}" onclick="selectNode('${chainId}','${node.id}')">
+      <div class="node-dot ${node.dotClass}">${getNodeIcon(node)}</div>
+      <div class="node-card">
+        <div class="node-type">
+          <span class="type-label">${chain.type === 'calibration' ? 'CALIBRATION' : 'ACQUISITION'}</span>
+          <span class="type-tag ${node.tagClass}">${node.tagLabel}</span>
+        </div>
+        <div class="node-title">${node.title}</div>
+        <div class="node-meta">
+          ${Object.entries(node.meta).map(([k, v]) => {
+            let cls = '';
+            if (k === 'cost') cls = 'cost';
+            if (k === 'channel') cls = 'channel';
+            if (k === 'outcome' && (v === 'CONFIRMED' || v === 'SURVIVED')) cls = 'outcome-good';
+            if (k === 'outcome' && v === 'INEFFICIENT') cls = 'outcome-bad';
+            return `<span class="${cls}">${k}: ${v}</span>`;
+          }).join('')}
+        </div>
+      </div>
+    </div>`;
+    if (i < chain.nodes.length - 1) {
+      html += '<div class="timeline-connector"></div>';
+    }
+  });
+  el.innerHTML = html;
+}
+
+function selectNode(chainId, nodeId) {
+  const chain = CHAINS.find(c => c.id === chainId);
+  const node = chain.nodes.find(n => n.id === nodeId);
+  if (!node) return;
+
+  selectedNode = nodeId;
+  document.querySelectorAll('.timeline-node').forEach(n => n.classList.remove('selected'));
+  document.querySelector(`[data-node="${nodeId}"]`).classList.add('selected');
+
+  renderInspector(node.inspector);
+}
+
+function clearInspector() {
+  document.getElementById('inspectorEmpty').style.display = 'flex';
+  document.getElementById('inspectorContent').style.display = 'none';
+  document.getElementById('inspectorStickyHeader').style.display = 'none';
+  selectedNode = null;
+  document.querySelectorAll('.timeline-node').forEach(n => n.classList.remove('selected'));
+}
+
+function renderInspector(data) {
+  document.getElementById('inspectorEmpty').style.display = 'none';
+  const content = document.getElementById('inspectorContent');
+  content.style.display = 'block';
+
+  // Sticky header
+  const sticky = document.getElementById('inspectorStickyHeader');
+  sticky.style.display = 'block';
+  document.getElementById('stickyTitle').textContent = data.title;
+
+  // Fade animation
+  content.classList.remove('animate');
+  void content.offsetWidth; // force reflow
+  content.classList.add('animate');
+
+  let html = `<div class="inspector-header">
+    <div class="inspector-type" style="color:${data.typeColor}">${data.typeLabel}</div>
+    <div class="inspector-title">${data.title}</div>
+    <div class="inspector-subtitle">${data.subtitle}</div>
+  </div>`;
+
+  let jsonBlockId = 0;
+
+  for (const section of data.sections) {
+    html += `<div class="inspector-section">
+      <div class="inspector-section-title">${section.title}</div>`;
+
+    if (section.type === 'kv') {
+      html += '<div class="kv-grid">';
+      for (const [k, v] of section.data) {
+        let valClass = 'kv-val';
+        const isCopyable = k.includes('trace') || k.includes('tx_hash') || k.includes('request_id') || k.includes('block') || k.includes('from') || k.includes('to') || k.includes('calibration_id') || k.includes('signal_id');
+        if (k.includes('trace') || k.includes('run_trace') || k.includes('originating')) valClass += ' highlight-cyan';
+        if (k.includes('cost') || k.includes('amount')) valClass += ' highlight-amber';
+        if (k.includes('outcome') && (v.includes('CONFIRMED') || v.includes('SURVIVED'))) valClass += ' highlight-green';
+        if (k.includes('outcome') && v.includes('INEFFICIENT')) valClass += ' highlight-red';
+        if (k.includes('frequency') || k.includes('magnitude')) valClass += ' highlight-purple';
+        const copyBtn = isCopyable ? `<button class="copy-btn" onclick="copyValue(this, '${v.replace(/'/g, "\\'")}')">CP</button>` : '';
+        html += `<div class="kv-key">${k}</div><div class="${valClass}">${v}${copyBtn}</div>`;
+      }
+      html += '</div>';
+    }
+
+    if (section.type === 'json') {
+      const blockId = `json-block-${jsonBlockId++}`;
+      const rawJson = JSON.stringify(section.data, null, 2);
+      html += `<div class="json-block-wrapper">
+        <button class="json-copy-btn" onclick="copyJson(this, '${blockId}')">COPY</button>
+        <div class="json-block" id="${blockId}" data-raw="${encodeURIComponent(rawJson)}">${syntaxHighlight(rawJson)}</div>
+      </div>`;
+    }
+
+    if (section.type === 'text') {
+      html += `<div style="font-size:13px;color:var(--text-secondary);line-height:1.6;">${section.data}</div>`;
+    }
+
+    html += '</div>';
+  }
+
+  content.innerHTML = html;
+  // Scroll inspector pane to top
+  document.getElementById('inspectorPane').scrollTop = 0;
+}
+
+function copyValue(btn, value) {
+  navigator.clipboard.writeText(value).then(() => {
+    btn.textContent = '✓';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'CP'; btn.classList.remove('copied'); }, 1500);
+  });
+}
+
+function copyJson(btn, blockId) {
+  const block = document.getElementById(blockId);
+  const raw = decodeURIComponent(block.getAttribute('data-raw'));
+  navigator.clipboard.writeText(raw).then(() => {
+    btn.textContent = 'COPIED';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'COPY'; btn.classList.remove('copied'); }, 1500);
+  });
+}
+
+function syntaxHighlight(json) {
+  return json
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"([^"]+)":/g, '<span class="jk">"$1"</span>:')
+    .replace(/: "([^"]*)"(?=[,\n\r}])/g, ': <span class="js">"$1"</span>')
+    .replace(/: (\d+\.?\d*)/g, ': <span class="jn">$1</span>')
+    .replace(/: (true|false|null)/g, ': <span class="jb">$1</span>');
+}
+
+// ─── Init ──────────────────────────────────────────────────────────────────
+
+renderChainSelector();
+selectChain(CHAINS[0].id);
+</script>
+</body>
+</html>
