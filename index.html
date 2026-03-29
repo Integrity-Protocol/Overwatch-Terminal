@@ -1576,15 +1576,15 @@ textarea:focus { border-color:var(--accent-cyan); }
       </div>
 
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
-        <div class="metric-card">
-          <div class="metric-label">OUTCOMES TRACKED</div>
-          <div class="metric-value cyan" id="acqTotalOutcomes">—</div>
-          <div class="metric-sub">Last 50 acquisitions</div>
+        <div class="summary-card">
+          <div class="card-label">OUTCOMES TRACKED</div>
+          <div class="card-value cyan" id="acqTotalOutcomes">—</div>
+          <div class="card-sub">Last 50 acquisitions</div>
         </div>
-        <div class="metric-card">
-          <div class="metric-label">FEEDBACK LOOP</div>
-          <div class="metric-value green" id="acqFeedbackStatus">—</div>
-          <div class="metric-sub" id="acqFeedbackDetail">Pending injection</div>
+        <div class="summary-card">
+          <div class="card-label">FEEDBACK LOOP</div>
+          <div class="card-value green" id="acqFeedbackStatus">—</div>
+          <div class="card-sub" id="acqFeedbackDetail">Pending injection</div>
         </div>
       </div>
 
@@ -7741,7 +7741,7 @@ function render360Report(r) {
     if (fb.entries_pending_injection > 0) {
       set('acqFeedbackStatus', fb.entries_pending_injection + ' PENDING');
       const el = document.getElementById('acqFeedbackStatus');
-      if (el) el.className = 'metric-value amber';
+      if (el) el.className = 'card-value amber';
       set('acqFeedbackDetail', fb.entries_consumed + ' consumed, ' + fb.entries_pending_injection + ' awaiting injection');
     } else {
       set('acqFeedbackStatus', 'ACTIVE');
