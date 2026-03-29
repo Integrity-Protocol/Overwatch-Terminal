@@ -18223,5 +18223,308 @@
     "violations_count": 11,
     "compliance": "SERIOUS_ISSUES",
     "gate_failed": false
+  },
+  {
+    "timestamp": "2026-03-29T00:19:54.349Z",
+    "layer": 1,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "Saudi East-West pipeline at full 7M bpd capacity",
+          "rule_violated": "LZ-EH-002",
+          "violation": "High confidence assigned to operational status claim based solely on a WatcherGuru social media post (intermediary source) with no verification from primary sources (Saudi Aramco, official government channels, or direct infrastructure telemetry). Social media engagement metrics (likes, impressions) do not constitute evidentiary weight for factual claims about physical infrastructure status.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "Saudi East-West pipeline at full 7M bpd capacity",
+          "rule_violated": "LZ-EH-004",
+          "violation": "The claim 'confirms operational Hormuz disruption severe enough to necessitate maximum alternative routing' treats anomalous operational data (full capacity usage) as confirmation of a geopolitical event without independent verification of the disruption itself. The pipeline status should be treated as potential data/reporting issue before being treated as confirmation of Hormuz disruption.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "RLUSD contraction deepening — below $1.41B",
+          "rule_violated": "LZ-EH-005",
+          "violation": "The analysis notes a persistent gap between CoinGecko market cap ($1.41B) and XRPL on-chain supply ($318M = 22.5% of total) but resolves this contradiction by treating CoinGecko as authoritative without independent tie-breaking evidence. This is a 4.4x discrepancy between equal-weight primary sources that should be flagged as a data integrity problem rather than arbitrarily resolved.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "David Sacks SGE tenure expired — no crypto czar replacement confirmed",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The finding treats absence of a replacement announcement as evidence of a 'governance gap' creating policy advancement risk. Absence of evidence (no replacement announced) is treated as evidence of absence (no replacement exists or planned), violating the neutrality principle. The finding should acknowledge uncertainty rather than inferring negative conditions from non-information.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "SEC tokenization innovation exemption timeline disclosed",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "Confidence labeled 'medium' but the evidence is weak: Atkins 'indicated' the exemption 'could arrive' (no timeline, no commitment) and retweeted a report. The finding interprets a retweet and vague statement as 'active institutional engagement' without direct evidence of actual policy development. Confidence should be lower given the speculative nature of the evidence.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "SEC interpretive guidance leaves token status subjective",
+          "rule_violated": "LZ-EH-002",
+          "violation": "The claim that guidance 'leaves it largely subjective when a token's investment contract status ends' is attributed to 'securities lawyers report' via Eleanor Terrett social media post. This is twice-removed from the primary source (the actual SEC guidance document). High confidence assessment requires direct review of the guidance itself, not intermediary interpretation.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "XRPL on-chain activity shows modest but flat metrics",
+          "rule_violated": "LZ-RC-002",
+          "violation": "The finding describes metrics as 'flat' but cites only a single observation point (ledger 103,186,245, one 24h DEX volume figure). A single data point cannot establish flatness (a trend of no change). The assessment requires multiple observations across time to claim trend status.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "ODL transparency kill switch remains completely dark",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The finding states 'The absence of ODL data is itself a signal' but earlier correctly notes 'Absence of evidence is not evidence of absence, nor is it evidence of presence.' The analysis violates its own epistemological framework by treating absence as informative ('a signal') when it should be informationally neutral. The finding should acknowledge this creates uncertainty about kill switch assessment rather than treating absence as deterioration evidence.",
+          "severity": "SERIOUS"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 15,
+      "clean_findings": 7,
+      "reviewer_notes": "Two SERIOUS violations merit escalation: (1) Social media post treated as high-confidence verification of critical infrastructure status without primary source verification (LZ-EH-002), and (2) Direct contradiction of LZ-RC-003 principle within the same output that correctly cites the rule elsewhere. The RLUSD market cap discrepancy (4.4x gap between sources) represents an unresolved LZ-EH-005 issue that undermines confidence in that entire finding thread. Multiple findings rely on social media intermediaries (Terrett, WatcherGuru) as if they were primary sources, suggesting systematic over-reliance on secondary reporting."
+    },
+    "violations_count": 8,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  },
+  {
+    "timestamp": "2026-03-29T00:25:23.342Z",
+    "layer": 2,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "Compound Stress Matrix assessment claims 'two of three legs confirmed critical/emergency' when only Brent (emergency) and USD/JPY (elevated) are stressed, with JGB still below elevated threshold",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The confidence level assigned to 'CRITICAL' compound stress status is not fully proportional to the evidence. The assessment correctly identifies Brent at emergency and USD/JPY at elevated, but characterizes this as 'two legs at or above elevated' when technically one is emergency and one is elevated. The JGB is 'approaching elevated' but not yet there. The CRITICAL classification may be justified by the matrix rules mentioned, but the framing 'two of three legs confirmed critical/emergency' is imprecise—only one leg is at emergency, one at elevated, and one pre-threshold. The reasoning acknowledges the correct thresholds in the knowledge audit but the summary language overstates the threshold breaches.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "DXY anomaly interpretation: 'weak dollar + weak yen = broader systemic stress' and 'yen weakness is not dollar-driven, meaning BOJ intervention would not be helped by dollar weakness'",
+          "rule_violated": "LZ-RC-004",
+          "violation": "The simplest explanation for simultaneous weak DXY and weak JPY was not explicitly tested before adopting the 'broader systemic stress' interpretation. The null hypothesis—that both currencies could be weakening against a third benchmark (e.g., EUR strength, commodity-linked currency strength, or gold)—is not explicitly considered or ruled out. The inference jumps to 'Japan-specific capital flight or structural stress' without testing simpler currency dynamics explanations first. The conclusion may be correct, but the reasoning process skipped the null hypothesis step.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "RLUSD contraction assessment: 'trajectory is declining, making the kill switch increasingly unlikely on current path'",
+          "rule_violated": "LZ-RC-002",
+          "violation": "The assessment uses two data points ($1.583B recovery reading and $1.41B current) to establish a 'declining trajectory' and extrapolate that trajectory forward to conclude the kill switch is 'increasingly unlikely.' While the direction of change between two points is observable, characterizing this as a 'trajectory' and projecting it forward violates the principle that a trend requires multiple observations across time. Two points establish a direction of change, not a trajectory with predictive power.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "XRP resilience interpretation: 'XRP shows notable resilience — positive ETF weekly flows and +0.54% price action during extreme fear (F&G at 9) while BTC/ETH ETFs hemorrhage'",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The assessment correlates XRP's positive weekly flows and modest price gain with 'resilience' during extreme fear without establishing that the correlation is causal or that the XRP performance is causally linked to structural factors rather than coincidental timing, low liquidity, or other variables. The term 'resilience' implies a structural resistance to stress, but the evidence presented is correlation during a single timeframe. The reasoning suggests investigating whether this is 'structural or transient,' which is appropriate, but the initial characterization as 'resilience' assumes a causal property from correlated observations.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Layer 2 summary question to Layer 3: 'whether RLUSD contraction is correlated with macro stress or reflects structural adoption problems'",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The framing presents a binary choice between 'correlated with macro stress' and 'structural adoption problems' as if these are the only two explanations and one must be selected. This violates the principle that absence of evidence for one explanation is not evidence for the other. Both could be true, neither could be true, or other explanations could exist. The question structure creates a false binary that could bias Layer 3's investigation toward arbitrarily resolving between two options without independent evidence distinguishing them.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Saudi pipeline capacity assessment: 'exact capacity figure (7M bpd) is unverified from primary sources but the directional signal (full capacity = maximum bypass) is robust'",
+          "rule_violated": "LZ-EH-004",
+          "violation": "The 7M bpd figure is acknowledged as coming from a single Tier 2 source (WatcherGuru) without primary source verification, yet the analysis proceeds to build the 'full capacity' inference on this unverified number. While the reasoning correctly notes the directional signal is what matters, it does not explicitly treat the anomalous capacity figure as a potential measurement or source failure before treating it as real. The assessment should have flagged that if the 7M bpd figure is incorrect (potentially inflated), the 'full capacity' claim's significance changes. The analysis assumes the Tier 2 source is accurate enough for the directional conclusion without considering source failure as the first hypothesis for the data point.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Compound stress pre-loaded assessment: 'with one leg at emergency and a second at elevated, the force needed from JGB to push the system to full cascade is significantly reduced'",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "This inference chain contains at least three unproven assumptions: (1) that the compound stress matrix legs interact multiplicatively rather than independently, (2) that the 'force needed' from one component is actually reduced by stress in other components (rather than each threshold being independent), (3) that the system operates as a 'cascade' mechanism where crossing one more threshold triggers qualitatively different outcomes. These assumptions may be built into the thesis framework's stress matrix rules, but they are not verified against current-cycle evidence—they are structural assumptions about how the system behaves. The chain from 'two legs stressed' to 'reduced force needed for cascade' to 'system pre-loaded' involves multiple unproven links.",
+          "severity": "MODERATE"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 40,
+      "reviewer_notes": "The output demonstrates strong correction application and knowledge gap flagging. Most violations are MINOR severity involving language precision or correlation/causation boundaries. Two MODERATE violations warrant attention: (1) the DXY anomaly interpretation skipped null hypothesis testing (LZ-RC-004), and (2) the RLUSD trajectory projection extrapolated from two data points (LZ-RC-002). The compound stress cascade reasoning (LZ-EPH-003) is MODERATE because it involves assumption chains about system behavior that may be thesis-framework assumptions but are not independently verified in this cycle. The output correctly applies most corrections and demonstrates appropriate 'I don't know' declarations in knowledge gaps. The violations do not appear to systematically bias the assessment in favor of or against the thesis—they are process errors rather than directional motivated reasoning."
+    },
+    "violations_count": 7,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  },
+  {
+    "timestamp": "2026-03-29T00:31:56.850Z",
+    "layer": 3,
+    "model_used": "claude-sonnet-4-5-20250929",
+    "tier1_flags_count": 0,
+    "tier1_hard_fails": 0,
+    "tier1_flags": [],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "Strategic inference: 'RLUSD contraction deepening — below $1.41B' — Alternative explanation mentions 'RLUSD is genuinely growing in certain corridors (institutional treasury management, specific remittance flows) but the market cap metric is dominated by speculative/trading-driven supply that contracts with market stress.' This alternative is then dismissed.",
+          "rule_violated": "LZ-EPH-001",
+          "violation": "The alternative explanation identifies a potentially verifiable hypothesis (RLUSD institutional usage in specific corridors) but no attempt is made to verify or falsify it. Instead of declaring 'insufficient evidence to distinguish between these explanations,' the reasoning arbitrarily selects the primary explanation. When two explanations are both plausible and the data cited does not definitively distinguish between them, the honest output is 'I don't know which explanation is correct.' The finding instead forces a selection.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Strategic inference: 'XRP ETF flow divergence from BTC/ETH during extreme fear' — Null hypothesis correctly holds, but then classification is 'NULL_HYPOTHESIS_HOLDS' with confidence 'medium' and materialization signal defined as '3+ consecutive weeks of BTC/ETH outflows.'",
+          "rule_violated": "LZ-RC-002",
+          "violation": "The reasoning correctly identifies that one data point does not establish a trend, correctly accepts the null hypothesis, but then defines the materialization signal as requiring '3+ consecutive weeks' to make the divergence 'statistically meaningful.' This is internally contradictory: if the null holds and a trend requires multiple observations, the current finding should have confidence 'low' or declare insufficient evidence, not 'medium.' The 'medium' confidence on a null-hypothesis-holds finding with acknowledged single-data-point limitation overstates the evidentiary weight.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Strategic inference: 'Brent crude breaches $100 emergency threshold + Saudi pipeline at full capacity' — Alternative explanation: 'Saudi Arabia is running the pipeline at full capacity as a revenue-maximizing strategy during high oil prices, not necessarily as a Hormuz bypass.' Assumption count is 1, but the reasoning actually makes two unproven assumptions.",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The finding assumes: (1) Saudi pipeline full-capacity operation is operationally driven by Hormuz disruption rather than revenue optimization, AND (2) full-capacity pipeline operation is not routine. These are separate, unproven assumptions. The assumption count states 1, but the reasoning relies on both. The assumption chain is undercounted.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Strategic inference: 'USD/JPY at 159.90 with DXY at 99.74 — simultaneous yen and dollar weakness' — States 'Simultaneous weakness in both USD and JPY means capital is flowing away from both' and 'suggests capital is moving to non-traditional safe havens (gold, CHF, real assets).'",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The reasoning observes correlation (USD weak, JPY weak, timing coincident) and infers causation (capital is flowing away from both toward alternative assets). This is presented as rational explanation without verifying the capital flow hypothesis. The x402 paper trade (#5) correctly identifies that gold/CHF price movement would test this hypothesis, acknowledging the inference is not yet verified. But the strategic inference itself presents the capital flow explanation as if it were established rather than hypothesized. The correlation (simultaneous weakness) is treated as evidence of the causal mechanism (capital flight) without independent verification.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Strategic inference: 'Morgan Stanley spot BTC ETF at 0.14% fee' — States 'Morgan Stanley does not enter markets to lose money — this pricing signals they expect sufficient AUM to make the product profitable at thin margins.' Assumption count is 1.",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The reasoning chain makes multiple unproven assumptions: (1) Morgan Stanley's pricing reflects demand expectations rather than competitive necessity, (2) 0.14% pricing is only profitable at significant scale, (3) Morgan Stanley's internal modeling is accurate, (4) the filing during extreme fear is a deliberate strategic signal rather than a pre-planned launch that happened to coincide with market stress. The reasoning presents assumption (1) as the counted assumption, but the inference actually rests on a longer chain. While each individual assumption may be plausible, the compound chain should be flagged per the rule's threshold.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Hidden move: BOJ likely preparing intervention tools but waiting for 160 — 'Central banks historically intervene at round numbers that provide political cover and market clarity. 160 is 10bp away. Intervening at 159.90 wastes ammunition; intervening at 160 sends a clear signal.'",
+          "rule_violated": "LZ-CC-001",
+          "violation": "This inference constructs a logically coherent narrative about central bank intervention timing psychology ('round numbers provide political cover') without anchoring it to verifiable current-cycle evidence of BOJ's actual internal deliberations, communications, or preparatory actions. The narrative is internally consistent and historically plausible, but it is speculation about unobservable internal decision-making presented as 'likely action.' The classification 'FLAGGED' with confidence 'low' partially mitigates this, but the reasoning itself falls into the plausibility trap: the story makes sense, therefore it is treated as evidence. Per the rule, 'every logical step must map to a verifiable anchor.' The 159.90 price and the 160 threshold are verifiable, but BOJ's decision-making process about when to intervene is not, and no current-cycle BOJ communications are cited to anchor the inference.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Hidden move: Institutional asset managers preparing crypto ETF products in next 3-6 months — 'If one wirehouse sees this opportunity, others with similar client bases (UBS, Goldman, JPMorgan) likely see similar demand signals.'",
+          "rule_violated": "LZ-CC-001",
+          "violation": "This inference extends from one observed action (Morgan Stanley filing) to a speculative narrative about multiple other institutions' unobserved internal product development processes. The logic is coherent (if MS sees demand, similar institutions likely see it too), but there is no verifiable current-cycle evidence cited of UBS/Goldman/JPMorgan actually preparing products. The 'only 4 of 7 XRP ETFs reporting' hint is weak anchoring — it could mean products in preparation or simply reporting delays. The classification 'FLAGGED' with confidence 'low' acknowledges uncertainty, but the reasoning still constructs a multi-player coordination narrative from a single player's action without independent verification. This is the plausibility trap: the inference sounds reasonable, but it lacks real-world anchoring for the specific claim about other institutions.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Compound stress inference: 'The DXY anomaly (weak dollar with weak yen) makes the pre-load more dangerous because it eliminates the dollar-strength explanation for yen weakness, meaning Japan-specific factors are driving the stress.'",
+          "rule_violated": "LZ-RC-001",
+          "violation": "The reasoning observes that the usual correlation (strong USD causes weak JPY) is absent, and infers causation in the opposite direction (therefore Japan-specific factors must be driving yen weakness). This is correlation reasoning: the absence of the expected correlation is treated as evidence of a specific alternative causal mechanism. The inference may be correct, but the reasoning conflates 'correlation is absent' with 'therefore this other cause is present.' The x402 paper trade (#5) correctly identifies that gold/CHF data would test whether capital is genuinely fleeing both currencies, but the compound stress inference presents the Japan-specific capital flight as established rather than hypothesized.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Scenario probabilities: thesis_confirmed at 18%, thesis_modified at 52%, thesis_falsified at 30% — These probabilities are presented as point estimates without uncertainty ranges or explanation of the quantification methodology.",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "Expressing scenario probabilities as precise percentages (18%, 52%, 30%) implies a level of quantitative rigor that is not supported by the evidence cited. The underlying analysis is qualitative — it weighs multiple factors, identifies contradictions, and assesses directions, but it does not perform probabilistic modeling that would justify single-digit precision in probability estimates. The confidence should be proportional to the evidence and methodology. A more epistemologically honest representation would be probability ranges (15-25%, 45-60%, 25-35%) or qualitative bands (low/medium/high). The point estimates create false precision that overstates confidence in the quantification.",
+          "severity": "MODERATE"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-sonnet-4-5-20250929",
+      "gate_failed": false,
+      "findings_reviewed": 47,
+      "clean_findings": 38,
+      "reviewer_notes": "The output demonstrates strong epistemological discipline in most areas — particularly in the corrections_referenced section, player say-do gap analysis, null hypothesis testing, and transparent assumption counting in most strategic inferences. However, there is a pattern of moderate violations around the boundary between 'plausible hypothesis' and 'verified inference.' The reasoning occasionally constructs coherent narratives (BOJ intervention timing, multi-institution ETF development, capital flight mechanisms) that lack sufficient current-cycle anchoring, falling into the LZ-CC-001 plausibility trap. The scenario probability point estimates (18%/52%/30%) create false precision inconsistent with the qualitative evidence base. The USD/JPY capital flow inference and the RLUSD alternative explanation dismissal both show moments where 'I don't know which explanation is correct' would have been more honest than forcing a selection. These are not fundamental failures — the analysis remains structurally sound and most inferences are properly qualified — but the pattern suggests the system is at the edge of its discipline when dealing with ambiguous evidence that supports multiple explanations. Recommend Layer 4 focus on the flagged issues, particularly the false precision in scenario probabilities and the capital flow causation claim."
+    },
+    "violations_count": 9,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
+  },
+  {
+    "timestamp": "2026-03-29T00:38:12.921Z",
+    "layer": 4,
+    "model_used": "claude-opus-4-6",
+    "tier1_flags_count": 2,
+    "tier1_hard_fails": 2,
+    "tier1_flags": [
+      {
+        "rule_id": "AD15-EXTENSION-FRICTION",
+        "finding": "Tension T-4",
+        "detail": "Second consecutive window extension without score escalation (5 → 5). First extension is free. Second extension requires impact_score increase.",
+        "severity": "HARD_FAIL",
+        "timestamp": "2026-03-29T00:37:14.513Z"
+      },
+      {
+        "rule_id": "CI-L4-INVALID-DIRECTION",
+        "finding": "Index CI-5",
+        "detail": "final_convergence_direction \"NEGATIVE_LEANING\" is invalid. Must be: POSITIVE, NEGATIVE, CONTESTED, UNDETERMINED.",
+        "severity": "HARD_FAIL",
+        "timestamp": "2026-03-29T00:37:14.513Z"
+      }
+    ],
+    "gate_result": {
+      "violations": [
+        {
+          "finding": "CI-5 Competitive Displacement Index override: final_convergence_direction set to NEGATIVE_LEANING",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The output acknowledges 3 of 4 components are unassessable and formal convergence cannot be declared, yet overrides to a directional lean (NEGATIVE_LEANING) based on cumulative behavioral observations. The override reasoning cites 'zero competitive wins in entire monitoring history' — but per LZ-RC-003, absence of evidence (no competitive wins observed) is informationally neutral, not directionally informative. The confidence implied by asserting a directional lean is disproportionate to the evidence base when 75% of the index is unassessable. Additionally, NEGATIVE_LEANING is flagged by code-level checks as an invalid enumeration value, meaning the system produced a direction that does not exist in its own taxonomy.",
+          "severity": "SERIOUS"
+        },
+        {
+          "finding": "Tension T-4 second consecutive window extension without score escalation (5 → 5)",
+          "rule_violated": "LZ-EPH-002",
+          "violation": "The output explicitly acknowledges this is a second consecutive extension and that rules require a score increase, then states 'maintained at 5 because it is already at maximum.' If the scoring system has a hard ceiling of 5 and the extension friction rule demands escalation, the system has a structural conflict it chose to resolve by violating the extension friction rule rather than flagging the conflict. The reasoning acknowledges the rule, acknowledges the violation, and proceeds anyway — this is not an oversight but a conscious rule departure without proper escalation. The confidence in the T-4 assessment proceeds as if this structural conflict does not affect the finding.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "RLUSD contraction driven by structural demand deficit, not macro correlation",
+          "rule_violated": "LZ-RC-004",
+          "violation": "The reasoning argues that counter-cyclical stablecoin contraction 'suggests structural demand deficit' as the primary interpretation, while acknowledging that USDT/USDC comparative data is not yet available (ACQ-L3-004). The simpler sufficient explanation — that RLUSD is contracting for the same macro reasons affecting all risk-adjacent assets, or that RLUSD is too small/new to exhibit counter-cyclical stablecoin behavior — has not been tested before the more complex 'structural demand deficit' explanation was adopted. The output itself notes 'the causal attribution is plausible but awaits comparative confirmation,' yet the final signal matrix elevates the composite score from 7 to 8 partly on this unconfirmed causal attribution.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "ODL Transparency kill switch classification as SUSPICIOUS_ABSENCE with directional inference",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The reasoning states: 'Companies with good metrics publish them. The absence is classified as SUSPICIOUS because the entity that controls the data has chosen not to disclose, and that choice has informational content per LZ-EH-003.' While the cessation of disclosure is indeed an observable action (valid under LZ-EH-003), the specific inference that the silence is 'directionally informative' — implying volumes are not thesis-supportive — treats absence of evidence as evidence of a particular direction. The action of ceasing publication is observable; the reason for it is not verified. Companies cease publishing for many reasons (legal, strategic restructuring, data infrastructure changes). The directional inference requires at least one additional assumption beyond the observable action.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Competitive Displacement kill switch escalation to WARNING",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The reasoning states: 'the absence of competitive wins is itself directionally informative over this many cycles.' This treats cumulative absence of evidence as evidence of absence (no competitive wins exist). Per LZ-RC-003, absence of evidence is informationally neutral. The pipeline's structural gaps (SG-2, SG-3) mean competitive wins could be occurring in channels not monitored (BIS publications, Japanese-language sources, private institutional communications). The escalation from MONITORING to WARNING is based on cumulative absence across a pipeline with acknowledged structural blind spots.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "DXY anomaly — simultaneous USD and JPY weakness indicates systemic stress",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The inference is classified as having '1 assumption' but actually contains multiple unproven assumptions: (1) that simultaneous USD and JPY weakness indicates systemic rather than coincident independent factors, (2) that this constrains BOJ intervention effectiveness, (3) that the 'systemic interpretation is more parsimonious given simultaneous energy stress' — this last point assumes the energy stress is causally linked to the currency dynamics rather than merely co-occurring (LZ-RC-001). The assumption count appears understated. However, the output does acknowledge the alternative explanation and requests gold/CHF data to resolve, partially mitigating the severity.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Thesis paradox in compound stress assessment: 'The thesis becomes MORE correct at the moment the position becomes LESS profitable'",
+          "rule_violated": "LZ-CC-001",
+          "violation": "This paradox formulation is internally coherent and narratively compelling but lacks verifiable real-world anchoring for the specific claim that systemic stress 'validates institutional demand for settlement infrastructure resilient to sovereign currency stress.' No evidence is cited that institutions are actually seeking XRPL-based settlement due to sovereign currency stress. The narrative maps from macro stress to institutional demand to XRPL adoption through a logical chain, but the middle links (institutions responding to stress by seeking XRPL specifically) have no verifiable anchors in the current evidence base. The paradox may be true but it is presented as an analytical finding rather than a speculative narrative.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Ripple prioritizing Ethereum-based RLUSD distribution over XRPL-native settlement — assumption count of 2",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The finding lists 2 assumptions but the actual inference chain contains at least 3: (1) the 77.5% off-XRPL figure reflects deliberate distribution rather than organic market dynamics, (2) Ripple's internal decision-making prioritizes Ethereum, (3) the $1.09B gap between total and XRPL supply is entirely or predominantly on Ethereum rather than being treasury holdings or reporting artifacts. The output itself identifies this third possibility ('treasury holdings, or reporting artifact') but still counts only 2 assumptions. At 3+ assumptions, the inference should be classified as speculative per LZ-EPH-003.",
+          "severity": "MODERATE"
+        },
+        {
+          "finding": "Major wirehouses beyond Morgan Stanley likely preparing crypto ETF products — assumption count of 2",
+          "rule_violated": "LZ-EPH-003",
+          "violation": "The assumption count of 2 is accurate on its face ('other wirehouses see same demand signals + will act similarly'), but the inference also implicitly assumes (3) that Morgan Stanley's action is demand-driven rather than competitively or regulatorily driven. The output's own Morgan Stanley finding notes '1 assumption (pricing reflects demand expectations rather than purely competitive necessity)' — this same unresolved assumption carries forward into the wirehouse extrapolation but is not counted. The finding correctly applies LZ-RC-002 and assigns 50% weight, partially mitigating the impact.",
+          "severity": "MINOR"
+        },
+        {
+          "finding": "Kill switch review — ODL Volume escalation from NEEDS_DATA to WARNING based on behavioral inference",
+          "rule_violated": "LZ-RC-003",
+          "violation": "The escalation reasoning includes: 'entity behavior suggesting volumes are not thesis-supportive.' This is an inference from absence. The observable action (cessation of publication) is valid evidence per LZ-EH-003, but the specific directional conclusion (volumes are not thesis-supportive) goes beyond what the action alone demonstrates. The escalation to WARNING could be justified purely on 'no data + no resolution path + 9 months to deadline' without the directional behavioral claim. Including the directional claim as part of the escalation reasoning embeds an LZ-RC-003 violation into a status decision.",
+          "severity": "MINOR"
+        }
+      ],
+      "compliance": "MODERATE_ISSUES",
+      "model_used": "claude-opus-4-6",
+      "gate_failed": false,
+      "findings_reviewed": 52,
+      "clean_findings": 42,
+      "reviewer_notes": "Two code-level flags confirmed as valid issues. The CI-5 NEGATIVE_LEANING override is the most structurally serious violation — it introduces a direction value outside the system's own taxonomy while simultaneously building a directional conclusion from insufficient data. The T-4 extension friction issue reveals a system design conflict (score ceiling vs escalation requirement) that the output acknowledges but resolves by ignoring the rule rather than flagging it as unresolvable within current constraints. Several findings show a pattern of understating assumption counts by 1, which individually are minor but cumulatively suggest the system may be systematically undercounting assumptions to avoid LZ-EPH-003 speculative classification thresholds. The output otherwise demonstrates strong epistemological discipline — null hypotheses are correctly applied in multiple cases, contradictions are held rather than arbitrarily resolved, and confidence levels are generally well-calibrated to evidence. The RLUSD structural deficit inference is the most analytically consequential moderate violation because it drives the elevation of a key signal score and contributes to the REDUCE_EXPOSURE recommendation before the discriminating comparative data has been acquired."
+    },
+    "violations_count": 10,
+    "compliance": "MODERATE_ISSUES",
+    "gate_failed": false
   }
 ]
