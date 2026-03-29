@@ -232,25 +232,33 @@
   },
   {
     "id": "BC-006",
+    "created": "2026-03-24",
+    "last_updated": "2026-03-29",
     "calibration_type": "TENDENCY_CORRECTION",
     "status": "CANDIDATE",
+    "source_rule": "LZ-RC-003",
     "target_layers": [
-      2,
-      3
+      "L2",
+      "L3"
     ],
-    "documented_tendency": "When the system encounters an entity operating in similar functional space to the thesis asset's infrastructure, it defaults to competitive classification without verifying whether the relationship is actually adversarial. Functional overlap is treated as sufficient evidence for competition. This produces false competitive displacement signals that inflate CI-5 and distort the thesis assessment.",
-    "directional_guidance": "Functional similarity is not competition. Before classifying an entity as a competitor, verify explicit evidence of adversarial action or intent. Check for existing evidence of collaboration or neutrality before defaulting to competition. If the full scope of the relationship is unknown, do not guess — classify as UNVERIFIED_COMPETITIVE and log a structural gap.",
-    "overcorrection_watch": "System becomes overly cautious about competitive classification, adding excessive caveats to every CI-5 assessment or refusing to identify real competitive threats. CI-5 loses signal and trends toward INSUFFICIENT_DATA when assessable components exist.",
-    "overcorrection_metric": "ci5_assessable_ratio",
-    "overcorrection_metric_layer": 2,
-    "overcorrection_threshold_override": null,
-    "created_date": "2026-03-24",
-    "promoted_date": null,
-    "suspended_date": null,
-    "retired_date": null,
+    "signal_categories": [
+      "competitive"
+    ],
+    "pattern_type": "RECURRING_VIOLATION",
     "frequency": null,
     "magnitude": null,
-    "last_observed": null,
-    "confidence_decay_rate": null
+    "last_measured": null,
+    "measurement_window": null,
+    "documented_tendency": "When the system encounters an entity operating in similar functional space to the thesis asset's infrastructure, it defaults to competitive classification without verifying whether the relationship is actually adversarial. Functional overlap is treated as sufficient evidence for competition. This produces false competitive displacement signals that inflate CI-5 and distort the thesis assessment.",
+    "directional_guidance": "Functional similarity is not competition. Before classifying an entity as a competitor, verify explicit evidence of adversarial action or intent. Check for existing evidence of collaboration or neutrality before defaulting to competition. If the full scope of the relationship is unknown, do not guess — classify as UNVERIFIED_COMPETITIVE and log a structural gap.",
+    "confidence": null,
+    "decay_trigger": null,
+    "overcorrection_watch": "System becomes overly cautious about competitive classification, adding excessive caveats to every CI-5 assessment or refusing to identify real competitive threats. CI-5 loses signal and trends toward INSUFFICIENT_DATA when assessable components exist.",
+    "overcorrection_metric": "ci5_assessable_ratio",
+    "overcorrection_metric_layer": "L2",
+    "overcorrection_threshold_override": null,
+    "source_corrections": [],
+    "falsification_criteria": null,
+    "notes": "Tim's wording. Derived from CI-5 competitive displacement interpretation issue. Schema normalized 2026-03-29 Sunday audit. Frequency/magnitude need measurement before promotion."
   }
 ]
