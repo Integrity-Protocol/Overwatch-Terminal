@@ -1165,5 +1165,16 @@
     "times_applied": 0,
     "times_applicable_but_missed": 0,
     "status": "NEEDS_ENRICHMENT"
+  },
+  {
+    "id": "CL-065",
+    "belief": "Acquisition outcome records from all routed channels represent actual data acquisition events with real analytical impact",
+    "reality": "Channels with paper_trade_only=true generate phantom outcome records — the router assigns channel_id and the outcome engine records classifications, but no data was actually purchased or injected. 38 t54ai-xrpl outcomes recorded with no actual XRPL payment or data retrieval. Outcome classifications (SURVIVED, CONFIRMED, GENERATED) reflect tension disposition changes from free data, not from acquired intelligence.",
+    "root_cause": "SCOPE_ERROR",
+    "lesson": "When measuring the analytical impact of acquired intelligence, distinguish between channels that executed live purchases and channels that were selected by the router but remained in paper trade mode. Outcome records without actual data acquisition are routing simulations, not intelligence outcomes.",
+    "trigger": "When outcome records are generated for channels where paper_trade_only is true, or when acquisition ROI is calculated across channels with mixed live/paper status",
+    "prevention": "Add a paper_trade boolean to outcome records derived from channel config at recording time. Acquisition summaries must separate paper trade outcomes from live outcomes. ROI calculations must exclude paper trade channels.",
+    "status": "ACTIVE",
+    "created_date": "2026-03-29"
   }
 ]
