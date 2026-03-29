@@ -421,6 +421,7 @@ function recordOutcomes(constrainedRequests, traceOutput, layer4Output, domainCo
       token_budget_allocated: req.token_budget_allocated,
       priority_rank: req.priority_rank,
       economic_cost_approved: req.economic_cost_approved,
+      cost_usd: req.cost_usd || 0,
       channel_id: req.channel_id || null,
       settlement_network: req.settlement_network || null,
       outcome: outcomeClass,

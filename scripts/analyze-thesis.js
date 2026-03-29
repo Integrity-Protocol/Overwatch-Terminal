@@ -2487,7 +2487,7 @@ async function main() {
         if (!channelStats[ch]) channelStats[ch] = { requests: 0, outcomes: {}, total_cost_usd: 0 };
         channelStats[ch].requests++;
         channelStats[ch].outcomes[o.outcome] = (channelStats[ch].outcomes[o.outcome] || 0) + 1;
-        channelStats[ch].total_cost_usd += o.economic_cost_approved || 0;
+        channelStats[ch].total_cost_usd += o.cost_usd || o.economic_cost_approved || 0;
       }
       const aiData = fs.existsSync(path.join(__dirname, '..', 'data', 'acquired-intelligence.json'))
         ? JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'acquired-intelligence.json'), 'utf8'))
