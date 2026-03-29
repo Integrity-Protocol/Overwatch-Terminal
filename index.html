@@ -7811,7 +7811,7 @@ function render360Report(r) {
         const outcomes = Object.entries(st.outcomes || {}).map(([k,v]) => k + ':' + v).join(' ');
         return `<div class="data-row" style="padding:4px 0;">
           <span class="data-label" style="font-size:10px;">${eh(chId)}</span>
-          <span class="data-value" style="font-size:10px;">${st.requests} req · ${(st.total_cost_usd || 0).toFixed(2)} · ${outcomes}</span>
+          <span class="data-value" style="font-size:10px;">${st.requests} req · ${'$'}${(st.total_cost_usd || 0).toFixed(2)} · ${outcomes}</span>
         </div>`;
       }).join('');
     }
