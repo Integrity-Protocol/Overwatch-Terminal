@@ -635,6 +635,7 @@ ${JSON.stringify(calibrationEntriesL1.map(e => ({ id: e.id, source_rule: e.sourc
 
 These are patterns in YOUR reasoning detected across multiple pipeline runs. They are not rules (Layer Zero) and not specific past mistakes (Corrections Ledger). They are tendencies — recurring ways you process information that produce epistemological violations. Read each entry and actively counteract the documented tendency during this analysis.`
     : '';
+  if (calibrationEntriesL1.length > 0) log('L1', 'Behavioral calibration injected: ' + calibrationEntriesL1.map(e => e.id).join(', '));
 
   const sweepPrompt = `You are a senior analyst performing the SWEEP step of a four-layer analytical monitoring system. Your job is perception — surface every material signal in the environment the thesis operates in.
 
@@ -765,6 +766,7 @@ ${JSON.stringify(calibrationEntriesL2.map(e => ({ id: e.id, source_rule: e.sourc
 
 These are patterns in YOUR reasoning detected across multiple pipeline runs. They are not rules (Layer Zero) and not specific past mistakes (Corrections Ledger). They are tendencies — recurring ways you process information that produce epistemological violations. Read each entry and actively counteract the documented tendency during this analysis.`
     : '';
+  if (calibrationEntriesL2.length > 0) log('L2', 'Behavioral calibration injected: ' + calibrationEntriesL2.map(e => e.id).join(', '));
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
@@ -1114,6 +1116,7 @@ ${JSON.stringify(calibrationEntriesL3.map(e => ({ id: e.id, source_rule: e.sourc
 
 These are patterns in YOUR reasoning detected across multiple pipeline runs. They are not rules (Layer Zero) and not specific past mistakes (Corrections Ledger). They are tendencies — recurring ways you process information that produce epistemological violations. Read each entry and actively counteract the documented tendency during this analysis.`
     : '';
+  if (calibrationEntriesL3.length > 0) log('L3', 'Behavioral calibration injected: ' + calibrationEntriesL3.map(e => e.id).join(', '));
 
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
@@ -1422,6 +1425,7 @@ ${JSON.stringify(calibrationEntriesL4.map(e => ({ id: e.id, source_rule: e.sourc
 
 These are patterns in YOUR reasoning detected across multiple pipeline runs. You have documented tendencies that produce epistemological violations in your final judgments. Read each entry and actively counteract the documented tendency when making your assessment. The goal is better reasoning, not better stats — do not suppress analysis to avoid triggering the calibration.`
     : '';
+  if (calibrationEntriesL4.length > 0) log('L4', 'Behavioral calibration injected: ' + calibrationEntriesL4.map(e => e.id).join(', '));
 
   // AD #14: Load active Blind Auditor advisory (if any) for Layer 4 to address
   let advisorySection = '';
@@ -2272,6 +2276,12 @@ async function main() {
             if (traceResult) {
               log('trace', `Cognitive trace assembled: ${traceResult._signal_count} signals, outcomes: ${JSON.stringify(traceResult._outcomes)}`);
                 traceResultForOutcomes = traceResult;
+                traceResult._injected_calibration = {
+                  L1: loadBehavioralCalibration('L1').map(e => e.id),
+                  L2: loadBehavioralCalibration('L2').map(e => e.id),
+                  L3: loadBehavioralCalibration('L3').map(e => e.id),
+                  L4: loadBehavioralCalibration('L4').map(e => e.id)
+                };
                 const iiMeta = contextualizeResult?._injected_intelligence_metadata || [];
                 if (iiMeta.length > 0) {
                   traceResult._injected_intelligence = iiMeta;
