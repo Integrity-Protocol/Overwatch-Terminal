@@ -244,12 +244,12 @@ body { font-family: var(--sans); background: var(--bg-primary); color: var(--tex
 /* ── Mobile toggle button ── */
 .timeline-toggle {
   display: none; font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em;
-  color: var(--accent); background: var(--accent-dim); border: 1px solid var(--accent);
-  border-radius: var(--radius-sm); padding: 5px 12px; cursor: pointer;
+  color: var(--accent); background: var(--bg-secondary); border: 1px solid var(--accent);
+  border-radius: var(--radius-sm); padding: 5px 12px; cursor: pointer; z-index: 20;
 }
 
 /* ── Mobile: collapsible timeline ── */
-@media (max-width: 767px) {
+@media (max-width: 1024px) {
   .timeline-toggle { display: inline-block; }
   .timeline-pane {
     position: absolute; top: 52px; left: 0; bottom: 0; z-index: 20;
@@ -631,7 +631,7 @@ function selectRun(idx) {
   document.getElementById('inspectorPane').scrollTop = 0;
 
   // Auto-collapse timeline on mobile after selecting a run
-  if (window.innerWidth < 768) {
+  if (window.innerWidth <= 1024) {
     const pane = document.querySelector('.timeline-pane');
     const btn = document.querySelector('.timeline-toggle');
     pane.classList.add('collapsed');
