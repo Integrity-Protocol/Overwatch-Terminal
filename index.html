@@ -16,8 +16,8 @@
   --text-primary: #dfe6f0;
   --text-secondary: #8a9bba;
   --text-muted: #44556e;
-  --accent-cyan: #00c8c8;
-  --accent-cyan-dim: rgba(0,200,200,0.08);
+  --accent-cyan: #0077b6;
+  --accent-cyan-dim: rgba(0,119,182,0.08);
   --accent-green: #00e599;
   --accent-green-dim: rgba(0,229,153,0.08);
   --accent-red: #ff4757;
@@ -40,7 +40,7 @@ body {
 .header {
   padding:16px 16px 12px;
   border-bottom:1px solid var(--border);
-  background:linear-gradient(180deg,rgba(0,200,200,0.03) 0%,transparent 100%);
+  background:linear-gradient(180deg,rgba(0,119,182,0.03) 0%,transparent 100%);
 }
 .header-row { display:flex; justify-content:space-between; align-items:center; }
 .brand {
@@ -59,7 +59,7 @@ body {
 }
 .refresh-btn {
   background:var(--accent-cyan-dim);
-  border:1px solid rgba(0,200,200,0.2);
+  border:1px solid rgba(0,119,182,0.2);
   color:var(--accent-cyan);
   font-family:'JetBrains Mono',monospace;
   font-size:10px;
@@ -269,8 +269,8 @@ body {
 .interpret-box {
   margin-top:10px;
   padding:10px;
-  background:rgba(0,200,200,0.04);
-  border:1px solid rgba(0,200,200,0.1);
+  background:rgba(0,119,182,0.04);
+  border:1px solid rgba(0,119,182,0.1);
   border-radius:var(--radius-sm);
 }
 .interpret-box .label {
@@ -290,10 +290,10 @@ body {
   text-align:center;
   padding:20px 16px;
   margin-bottom:12px;
-  background:linear-gradient(135deg,rgba(0,200,200,0.04),rgba(0,0,0,0));
-  border:1px solid rgba(0,200,200,0.2);
+  background:linear-gradient(135deg,rgba(0,119,182,0.04),rgba(0,0,0,0));
+  border:1px solid rgba(0,119,182,0.2);
   border-radius:var(--radius);
-  box-shadow:0 0 24px rgba(0,200,200,0.04);
+  box-shadow:0 0 24px rgba(0,119,182,0.04);
 }
 .hero-title {
   font-family:'JetBrains Mono',monospace;
@@ -336,7 +336,7 @@ body {
 .signal.amber { background:var(--accent-amber-dim); color:var(--accent-amber); border:1px solid rgba(255,179,71,0.2); }
 .signal.red   { background:var(--accent-red-dim);   color:var(--accent-red);   border:1px solid rgba(255,71,87,0.2); }
 .signal.blue  { background:var(--accent-blue-dim);  color:var(--accent-blue);  border:1px solid rgba(77,159,255,0.2); }
-.signal.cyan  { background:var(--accent-cyan-dim);  color:var(--accent-cyan);  border:1px solid rgba(0,200,200,0.2); }
+.signal.cyan  { background:var(--accent-cyan-dim);  color:var(--accent-cyan);  border:1px solid rgba(0,119,182,0.2); }
 
 /* Journal */
 .journal-entry {
@@ -375,7 +375,7 @@ textarea:focus { border-color:var(--accent-cyan); }
 .btn-sm {
   padding:8px 16px;
   background:var(--accent-cyan-dim);
-  border:1px solid rgba(0,200,200,0.3);
+  border:1px solid rgba(0,119,182,0.3);
   color:var(--accent-cyan);
   font-family:'JetBrains Mono',monospace;
   font-size:10px;
@@ -428,7 +428,7 @@ textarea:focus { border-color:var(--accent-cyan); }
 }
 .event-cat.geo  { background:var(--accent-amber-dim);color:var(--accent-amber);border:1px solid rgba(255,179,71,0.2); }
 .event-cat.fin  { background:var(--accent-blue-dim);color:var(--accent-blue);border:1px solid rgba(77,159,255,0.2); }
-.event-cat.reg  { background:var(--accent-cyan-dim);color:var(--accent-cyan);border:1px solid rgba(0,200,200,0.2); }
+.event-cat.reg  { background:var(--accent-cyan-dim);color:var(--accent-cyan);border:1px solid rgba(0,119,182,0.2); }
 .event-cat.inst { background:var(--accent-green-dim);color:var(--accent-green);border:1px solid rgba(0,229,153,0.2); }
 .event-threat-badge {
   display:flex;
@@ -492,7 +492,7 @@ textarea:focus { border-color:var(--accent-cyan); }
   transition:border-color 0.15s,color 0.15s,background 0.15s;
 }
 .filter-pill:hover { border-color:var(--accent-cyan);color:var(--accent-cyan); }
-.filter-pill.active { background:rgba(0,200,200,0.08);border-color:rgba(0,200,200,0.35);color:var(--accent-cyan); }
+.filter-pill.active { background:rgba(0,119,182,0.08);border-color:rgba(0,119,182,0.35);color:var(--accent-cyan); }
 .filter-pill.fp-red.active { background:rgba(255,71,87,0.08);border-color:rgba(255,71,87,0.35);color:var(--accent-red); }
 .filter-pill.fp-amber.active { background:rgba(255,179,71,0.08);border-color:rgba(255,179,71,0.35);color:var(--accent-amber); }
 .filter-pill.fp-green.active { background:rgba(0,229,153,0.08);border-color:rgba(0,229,153,0.35);color:var(--accent-green); }
@@ -565,7 +565,7 @@ textarea:focus { border-color:var(--accent-cyan); }
   letter-spacing:1px;
   background:var(--accent-cyan-dim);
   color:var(--accent-cyan);
-  border:1px solid rgba(0,200,200,0.2);
+  border:1px solid rgba(0,119,182,0.2);
 }
 .news-tag.amber { background:var(--accent-amber-dim); color:var(--accent-amber); border-color:rgba(255,179,71,0.2); }
 .news-tag.green { background:var(--accent-green-dim); color:var(--accent-green); border-color:rgba(0,229,153,0.2); }
@@ -1092,7 +1092,7 @@ textarea:focus { border-color:var(--accent-cyan); }
       </div>
     </div>
 
-    <div class="full-card" style="border-color:rgba(0,200,200,0.2);">
+    <div class="full-card" style="border-color:rgba(0,119,182,0.2);">
       <h3>🔧 XRPL AMENDMENT STATUS</h3>
       <div class="data-row"><span class="data-label">Credentials</span><span class="signal green">LIVE</span></div>
       <div class="data-row"><span class="data-label">Permissioned Domains</span><span class="signal green">LIVE</span></div>
@@ -1135,7 +1135,7 @@ textarea:focus { border-color:var(--accent-cyan); }
 
   <!-- ==================== THESIS SCORECARD ==================== -->
   <div class="tab-panel" id="panel-thesis">
-    <div class="full-card" style="border-color:rgba(0,200,200,0.2);">
+    <div class="full-card" style="border-color:rgba(0,119,182,0.2);">
       <h3>📋 THESIS SCORECARD</h3>
       <div class="data-row"><span class="data-label">Regulatory Clarity</span><span class="signal green" id="thesis-regulatory">CONFIRMED</span></div>
       <div class="data-row"><span class="data-label">Institutional Custody</span><span class="signal green" id="thesis-custody">STRONG</span></div>
@@ -1636,9 +1636,9 @@ textarea:focus { border-color:var(--accent-cyan); }
     </div>
 
     <!-- Thesis Connection -->
-    <div class="full-card" style="border-color:rgba(0,200,200,0.2);">
+    <div class="full-card" style="border-color:rgba(0,119,182,0.2);">
       <h3>📡 THESIS CONNECTION</h3>
-      <div style="border-left:3px solid var(--accent-cyan);padding:12px 14px;margin:10px 0 12px;background:rgba(0,200,200,0.04);border-radius:0 var(--radius-sm) var(--radius-sm) 0;">
+      <div style="border-left:3px solid var(--accent-cyan);padding:12px 14px;margin:10px 0 12px;background:rgba(0,119,182,0.04);border-radius:0 var(--radius-sm) var(--radius-sm) 0;">
         <p style="font-size:13px;color:var(--text-primary);line-height:1.7;font-style:italic;">"XRPL is now a dual-layer settlement network: institutional payments (Deutsche Bank, SWIFT, Ripple Payments) + machine economy (x402 agent micropayments). Same ledger, same asset, two growth vectors."</p>
       </div>
       <div class="interpret-box">
