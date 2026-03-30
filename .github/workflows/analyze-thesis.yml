@@ -50,6 +50,9 @@ jobs:
       - name: Apply analysis to dashboard
         run: node scripts/apply-analysis.js
 
+      - name: Assemble signal dossiers
+        run: node scripts/assemble-signal-dossiers.js
+
       - name: Commit all updates
         run: |
           git config user.name "overwatch-bot"
