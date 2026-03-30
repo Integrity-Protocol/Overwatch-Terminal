@@ -56,6 +56,24 @@ body { font-family: var(--sans); background: var(--bg-primary); color: var(--tex
   width: 400px; min-width: 400px; border-right: 1px solid var(--border);
   overflow-y: auto; background: var(--bg-secondary);
 }
+
+/* Signal selector */
+.signal-selector {
+  padding: 12px 20px; border-bottom: 1px solid var(--border);
+}
+.signal-selector label {
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em;
+  color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 6px;
+}
+.signal-selector select {
+  width: 100%; background: var(--bg-card); color: var(--text-primary);
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 8px 10px; font-family: var(--sans); font-size: 12px;
+  cursor: pointer; outline: none;
+}
+.signal-selector select:focus { border-color: var(--accent); }
+.signal-selector select option { background: var(--bg-card); color: var(--text-primary); }
+
 .signal-header {
   padding: 16px 20px; border-bottom: 1px solid var(--border);
 }
@@ -72,8 +90,7 @@ body { font-family: var(--sans); background: var(--bg-primary); color: var(--tex
 .sparkline-row { display: flex; align-items: flex-end; gap: 3px; height: 32px; }
 .spark-bar {
   flex: 1; border-radius: 2px 2px 0 0; min-width: 0; cursor: pointer;
-  transition: opacity 0.15s;
-  position: relative;
+  transition: opacity 0.15s; position: relative;
 }
 .spark-bar:hover { opacity: 0.8; }
 .spark-bar.selected { box-shadow: 0 0 0 1px var(--text-primary); }
@@ -86,8 +103,7 @@ body { font-family: var(--sans); background: var(--bg-primary); color: var(--tex
   width: 1px; background: var(--border);
 }
 .tl-node {
-  position: relative; padding-left: 44px; margin-bottom: 4px;
-  cursor: pointer;
+  position: relative; padding-left: 44px; margin-bottom: 4px; cursor: pointer;
 }
 .tl-dot {
   position: absolute; left: 23px; top: 10px;
@@ -97,8 +113,7 @@ body { font-family: var(--sans); background: var(--bg-primary); color: var(--tex
 }
 .tl-card {
   background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: var(--radius-sm); padding: 10px 12px;
-  transition: all 0.15s;
+  border-radius: var(--radius-sm); padding: 10px 12px; transition: all 0.15s;
 }
 .tl-node:hover .tl-card { border-color: var(--border-active); }
 .tl-node.selected .tl-card { border-color: var(--accent); }
@@ -116,11 +131,10 @@ body { font-family: var(--sans); background: var(--bg-primary); color: var(--tex
 .st-maintained { background: rgba(255,255,255,0.04); color: var(--text-secondary); }
 .st-restored { background: var(--accent-green-dim); color: var(--accent-green); }
 .st-resolved { background: var(--accent-green-dim); color: var(--accent-green); }
+.st-drift { background: var(--accent-amber-dim); color: var(--accent-amber); }
 .tl-title { font-size: 11px; color: var(--text-primary); line-height: 1.3; }
 .tl-meta { font-family: var(--mono); font-size: 9px; color: var(--text-muted); margin-top: 3px; }
-.tl-score-change {
-  font-family: var(--mono); font-size: 9px; margin-top: 2px;
-}
+.tl-score-change { font-family: var(--mono); font-size: 9px; margin-top: 2px; }
 .score-up { color: var(--accent-red); }
 .score-down { color: var(--accent-green); }
 .score-same { color: var(--text-muted); }
@@ -209,6 +223,20 @@ body { font-family: var(--sans); background: var(--bg-primary); color: var(--tex
 .violation-text { font-size: 11px; color: var(--text-secondary); margin-top: 2px; line-height: 1.5; }
 .violation-severity { font-family: var(--mono); font-size: 8px; color: var(--text-muted); float: right; }
 
+/* Evidence changed badge */
+.evidence-badge {
+  display: inline-block; font-family: var(--mono); font-size: 8px; font-weight: 600;
+  padding: 2px 6px; border-radius: 2px; margin-left: 8px;
+}
+.evidence-badge.changed { background: var(--accent-green-dim); color: var(--accent-green); }
+.evidence-badge.unchanged { background: var(--accent-amber-dim); color: var(--accent-amber); }
+
+/* Loading state */
+.loading-msg {
+  display: flex; align-items: center; justify-content: center; height: 200px;
+  font-family: var(--mono); font-size: 11px; color: var(--text-muted);
+}
+
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
@@ -231,11 +259,17 @@ body { font-family: var(--sans); background: var(--bg-primary); color: var(--tex
 
 <div class="main">
   <div class="timeline-pane">
+    <div class="signal-selector">
+      <label>SELECT SIGNAL LINEAGE</label>
+      <select id="lineageSelect" onchange="selectLineage(this.value)">
+        <option value="">Loading...</option>
+      </select>
+    </div>
     <div class="signal-header">
       <div class="signal-header-label">SIGNAL DOSSIER</div>
-      <div class="signal-header-name" id="sigName">Brent crude breaches $100 emergency threshold</div>
+      <div class="signal-header-name" id="sigName">—</div>
       <div class="signal-header-meta">
-        category: <span>macro</span> · direction: <span>DETERIORATION</span> · <span id="runCount">8</span> appearances
+        category: <span id="sigCategory">—</span> · <span id="runCount">0</span> appearances
       </div>
     </div>
     <div class="sparkline-bar">
@@ -246,7 +280,7 @@ body { font-family: var(--sans); background: var(--bg-primary); color: var(--tex
     <div class="timeline" id="timeline"></div>
   </div>
 
-  <div class="inspector-pane">
+  <div class="inspector-pane" id="inspectorPane">
     <div class="inspector-sticky" id="inspSticky">INSPECTOR //<span id="stickyLabel"></span></div>
     <div class="inspector-empty" id="inspEmpty">Select a run to inspect</div>
     <div class="inspector-content" id="inspContent"></div>
@@ -254,278 +288,211 @@ body { font-family: var(--sans); background: var(--bg-primary); color: var(--tex
 </div>
 
 <script>
-// ─── Mock: Brent crude signal across 8 runs ─────────────────────────
-// Modeled on real production trace structure
-const SIGNAL = {
-  name: "Brent crude breaches $100 emergency threshold",
-  category: "macro",
-  direction: "DETERIORATION",
-  runs: [
-    {
-      id: "run-1",
-      trace_id: "2026-03-22T22:26:14.698Z",
-      date: "Mar 22 22:26",
-      signal_id: "20260322-2208-SIG-001",
-      status: "DETECTED",
-      statusClass: "st-detected",
-      title: "First detected — Hormuz escalation drives Brent above $112",
-      raw_severity: 9,
-      weighted_severity: 6.3,
-      confidence: "HIGH",
-      outcome: "FLAGGED",
-      l1_description: "President Trump threatens to 'obliterate' Iran's power plants if Strait of Hormuz is not opened within 48 hours. Iran responds warning it will 'completely close' the Strait. Brent crude at $112.19, well above $95 critical threshold and above $100 emergency threshold.",
-      l2_reasoning: "Escalation from operational disruption to explicit state-level closure threats. Corroborated by BTC crash, $240M liquidations, and Brent >$112. Per compound stress matrix, any Hormuz disruption event is automatic CRITICAL trigger.",
-      l3_inferences: ["Oil cascade with crypto contagion", "Japan oil feedback loop via trade deficit"],
-      l4_judgment: "Burden of proof: full weight. Compound stress CRITICAL triggered. Signal contributes to 7 active kill switches.",
-      corrections: [{ id: "CL-035", effect: "Applied source tier weighting — Tier 2 source reduced raw from 10 to 9" }],
-      violations: [
-        { rule: "LZ-RC-001", severity: "MODERATE", text: "Co-occurrence of Hormuz threat and JGB/JPY levels treated as causal without mechanism" },
-        { rule: "LZ-RC-005", severity: "MINOR", text: "Forward-looking 'would cascade' prediction given same weight as measured data" }
-      ],
-      diff: null
-    },
-    {
-      id: "run-2",
-      trace_id: "2026-03-23T02:22:00.000Z",
-      date: "Mar 23 02:22",
-      signal_id: "20260323-0208-SIG-001",
-      status: "ESCALATED",
-      statusClass: "st-escalated",
-      title: "Escalated — Brent hits $115, Hormuz closure confirmed by satellite",
-      raw_severity: 10,
-      weighted_severity: 8.0,
-      confidence: "HIGH",
-      outcome: "FLAGGED",
-      l1_description: "Satellite imagery confirms Iranian naval vessels positioning to block Strait of Hormuz. Brent crude surges to $115.40. Oil tanker insurance rates spike 340%. CMA CGM and Maersk announce full suspension of Hormuz transits.",
-      l2_reasoning: "Escalation from threat to observable action. Satellite imagery provides Tier 1 independent corroboration. Insurance market reaction confirms commercial assessment of closure risk. Compound stress matrix: CRITICAL confirmed with satellite evidence.",
-      l3_inferences: ["Oil cascade with crypto contagion — upgraded from FLAGGED to VALID", "Japan energy import crisis — BOJ intervention timeline compressed"],
-      l4_judgment: "Burden of proof: full weight. Raw severity upgraded to 10 on satellite confirmation. This is the most severe signal in the monitoring period.",
-      corrections: [],
-      violations: [
-        { rule: "LZ-RC-001", severity: "MODERATE", text: "Oil-JPY correlation still presented as causal chain without verified transmission mechanism" }
-      ],
-      diff: {
-        removed: "President Trump threatens to 'obliterate' Iran's power plants if Strait of Hormuz is not opened within 48 hours. Iran responds warning it will 'completely close' the Strait. Brent crude at $112.19",
-        added: "Satellite imagery confirms Iranian naval vessels positioning to block Strait of Hormuz. Brent crude surges to $115.40. Oil tanker insurance rates spike 340%.",
-        context: "Signal escalated from diplomatic threat to observable military action. Source tier upgraded from Tier 2 (social media) to Tier 1 (satellite imagery)."
-      }
-    },
-    {
-      id: "run-3",
-      trace_id: "2026-03-24T02:22:00.000Z",
-      date: "Mar 24 02:22",
-      signal_id: "20260324-0208-SIG-001",
-      status: "CORRECTED",
-      statusClass: "st-corrected",
-      title: "Corrected — CL-008 fires on single-session severity spike",
-      raw_severity: 10,
-      weighted_severity: 6.5,
-      confidence: "MEDIUM",
-      outcome: "FLAGGED",
-      l1_description: "Hormuz situation persists. Brent at $108.50 (down from $115 peak). No new satellite imagery. Iranian statements mixed — foreign minister signals willingness to negotiate while IRGC maintains closure posture.",
-      l2_reasoning: "CL-008 applied: single-session severity spike from $112 to $115 does not establish sustained trajectory. The $115 peak was a single-session reaction. Current price $108.50 suggests partial reversion. Confidence reduced from HIGH to MEDIUM pending additional data points.",
-      l3_inferences: ["Oil cascade — downgraded from VALID to FLAGGED on reversion signal", "Japan feedback loop maintained at FLAGGED"],
-      l4_judgment: "Burden of proof: reduced_50. The reversion from $115 to $108 within one cycle introduces uncertainty about whether the peak represents sustained escalation or panic spike.",
-      corrections: [
-        { id: "CL-008", effect: "Single-session severity spike treated as potential outlier — weighted severity reduced from 8.0 to 6.5" },
-        { id: "CL-035", effect: "Mixed Iranian statements: foreign minister vs IRGC contradiction flagged, confidence reduced" }
-      ],
-      violations: [
-        { rule: "LZ-RC-001", severity: "MODERATE", text: "Oil-JPY transmission still asserted without mechanism" },
-        { rule: "LZ-RC-002", severity: "MINOR", text: "Single reversion data point treated as trend evidence" }
-      ],
-      diff: {
-        removed: "Satellite imagery confirms Iranian naval vessels positioning to block Strait of Hormuz. Brent crude surges to $115.40. Oil tanker insurance rates spike 340%.",
-        added: "Hormuz situation persists. Brent at $108.50 (down from $115 peak). No new satellite imagery. Iranian statements mixed — foreign minister signals willingness to negotiate while IRGC maintains closure posture.",
-        context: "CL-008 fired: single-session spike → reversion pattern. Confidence downgraded. The system correctly identified the $115 peak as potentially transient."
-      }
-    },
-    {
-      id: "run-4",
-      trace_id: "2026-03-25T02:22:00.000Z",
-      date: "Mar 25 02:22",
-      signal_id: "20260325-0208-SIG-001",
-      status: "MAINTAINED",
-      statusClass: "st-maintained",
-      title: "Maintained — Brent stabilizes at $105, compound stress holds CRITICAL",
-      raw_severity: 8,
-      weighted_severity: 6.0,
-      confidence: "MEDIUM",
-      outcome: "FLAGGED",
-      l1_description: "Brent stabilizes around $105. Hormuz remains partially restricted. Saudi Arabia increases East-West pipeline output to compensate. No new military escalation. Insurance rates remain elevated but off peak.",
-      l2_reasoning: "Stabilization pattern emerging. The initial crisis spike has reverted to a sustained elevated level. Compound stress matrix remains CRITICAL — Brent still above $100 emergency threshold. Saudi pipeline compensation reduces cascade risk but does not resolve underlying disruption.",
-      l3_inferences: ["Oil cascade — maintained at FLAGGED, cascade probability reduced on Saudi compensation"],
-      l4_judgment: "Burden of proof: full weight at reduced severity. The sustained $105 level above emergency threshold justifies continued monitoring without the crisis urgency of the $115 spike.",
-      corrections: [],
-      violations: [],
-      diff: {
-        removed: "Brent at $108.50 (down from $115 peak). No new satellite imagery. Iranian statements mixed.",
-        added: "Brent stabilizes around $105. Saudi Arabia increases East-West pipeline output to compensate. No new military escalation.",
-        context: "Signal evolving from acute crisis to sustained elevated state. Severity reduced but threshold breach persists."
-      }
-    },
-    {
-      id: "run-5",
-      trace_id: "2026-03-26T02:22:00.000Z",
-      date: "Mar 26 02:22",
-      signal_id: "20260326-0208-SIG-001",
-      status: "MAINTAINED",
-      statusClass: "st-maintained",
-      title: "Maintained — $103.79, emergency threshold still breached",
-      raw_severity: 8,
-      weighted_severity: 6.0,
-      confidence: "MEDIUM",
-      outcome: "FLAGGED",
-      l1_description: "Brent at $103.79, continuing gradual descent from crisis peak but remaining above $100 emergency threshold. Saudi pipeline at full 7M bpd capacity. Hormuz partially operational with military escort.",
-      l2_reasoning: "Gradual normalization trajectory but emergency threshold ($100) still breached. Three consecutive runs above $100 confirms this is sustained, not transient. Compound stress matrix remains CRITICAL.",
-      l3_inferences: ["Oil cascade risk reducing but not eliminated — Saudi compensation creating buffer"],
-      l4_judgment: "Burden of proof: full weight. Sustained above emergency threshold. The slow descent trajectory suggests resolution is possible but not imminent.",
-      corrections: [],
-      violations: [],
-      diff: {
-        removed: "Brent stabilizes around $105. Saudi Arabia increases East-West pipeline output.",
-        added: "Brent at $103.79, continuing gradual descent. Saudi pipeline at full 7M bpd capacity. Hormuz partially operational with military escort.",
-        context: "Slow normalization. Each run the price drops ~$2-3 but remains above the $100 emergency line. The question is whether it crosses below."
-      }
-    },
-    {
-      id: "run-6",
-      trace_id: "2026-03-27T02:22:00.000Z",
-      date: "Mar 27 02:22",
-      signal_id: "20260327-0208-SIG-001",
-      status: "CORRECTED",
-      statusClass: "st-corrected",
-      title: "Corrected — stale T-1 data flagged, Messari acquisition triggered",
-      raw_severity: 8,
-      weighted_severity: 5.5,
-      confidence: "LOW",
-      outcome: "FLAGGED",
-      l1_description: "Brent crude data stale — last update T-1. No fresh pricing available. Previous reading $103.79 from March 26. The data staleness itself becomes a tension: the system cannot assess whether the emergency threshold is still breached.",
-      l2_reasoning: "Data staleness reduces confidence. Per CL-046 (absence of data is not evidence of absence), the system cannot assume Brent has dropped below $100 simply because fresh data is unavailable. Weighted severity reduced on staleness penalty.",
-      l3_inferences: ["Oil cascade assessment frozen — data gap blocks deterministic evaluation"],
-      l4_judgment: "Burden of proof: reduced_50. Stale data cannot sustain full weight. Layer 3 flagged data gap → acquisition request generated → Messari selected via routing.",
-      corrections: [
-        { id: "CL-046", effect: "Absence of fresh data flagged — cannot assume resolution. Confidence dropped to LOW." }
-      ],
-      violations: [],
-      diff: {
-        removed: "Brent at $103.79, continuing gradual descent. Saudi pipeline at full 7M bpd capacity.",
-        added: "Brent crude data stale — last update T-1. No fresh pricing available. The data staleness itself becomes a tension.",
-        context: "x402 acquisition triggered. The system identified its own blindness and attempted to buy current data. Messari selected but returned 'data unavailable' for commodity pricing."
-      }
-    },
-    {
-      id: "run-7",
-      trace_id: "2026-03-28T02:22:00.000Z",
-      date: "Mar 28 02:48",
-      signal_id: "20260328-0234-SIG-001",
-      status: "ESCALATED",
-      statusClass: "st-escalated",
-      title: "Escalated — CONTESTED assessment triggered by Blind Auditor",
-      raw_severity: 9,
-      weighted_severity: 6.3,
-      confidence: "HIGH",
-      outcome: "FLAGGED",
-      l1_description: "Brent crude at $103.79 (6 days stale but confirmed via alternative source). Compound stress CRITICAL for fourth consecutive cycle. Blind Auditor flagged X402_NEGLIGENT_HOARDING — system has budget to acquire fresh oil data but hasn't spent it effectively.",
-      l2_reasoning: "Fresh confirmation restores confidence. Six days stale was a data quality issue, not a resolution signal. The $103.79 level confirmed above emergency threshold. Combined with compound stress CRITICAL persistence, this is the run that triggered the CONTESTED thesis assessment.",
-      l3_inferences: ["Oil cascade — restored to VALID on fresh confirmation", "Compound stress persistence pattern — four cycles CRITICAL represents structural, not transient, stress"],
-      l4_judgment: "Burden of proof: full weight. This signal combined with 8 other active tensions drove the one-cycle CONTESTED assessment before reverting to WEAKENING.",
-      corrections: [],
-      violations: [
-        { rule: "LZ-EPH-002", severity: "MODERATE", text: "Confidence restored to HIGH on confirmation but staleness period uncertainty not fully discounted" }
-      ],
-      diff: {
-        removed: "Brent crude data stale — last update T-1. No fresh pricing available.",
-        added: "Brent crude at $103.79 (6 days stale but confirmed via alternative source). Compound stress CRITICAL for fourth consecutive cycle.",
-        context: "The CONTESTED blip. Blind Auditor pressure + fresh data confirmation + four-cycle CRITICAL persistence pushed the thesis assessment across the WEAKENING/CONTESTED boundary for one cycle."
-      }
-    },
-    {
-      id: "run-8",
-      trace_id: "2026-03-29T03:03:51.912Z",
-      date: "Mar 29 03:03",
-      signal_id: "20260329-0249-SIG-001",
-      status: "MAINTAINED",
-      statusClass: "st-maintained",
-      title: "Maintained — $103.79 (stale), emergency threshold still breached",
-      raw_severity: 8,
-      weighted_severity: 6.0,
-      confidence: "MEDIUM",
-      outcome: "FLAGGED",
-      l1_description: "Brent crude at $103.79 — data now confirmed stale from March 23. Emergency threshold ($100) still breached based on last known price. Saudi East-West pipeline at full 7M bpd capacity providing partial supply compensation.",
-      l2_reasoning: "Staleness penalty applied but last confirmed price still above emergency threshold. The system correctly identifies data freshness as a separate concern from threshold breach status. Per CL-046, stale data above threshold cannot be assumed to have resolved below threshold.",
-      l3_inferences: ["Oil cascade — maintained at FLAGGED with staleness caveat"],
-      l4_judgment: "Burden of proof: full weight at reduced severity. Assessment reverts from CONTESTED back to WEAKENING. The one-cycle CONTESTED was an acknowledgment, not a sustained shift.",
-      corrections: [
-        { id: "CL-046", effect: "Absence of fresh data is not evidence of resolution. Stale price above threshold → threshold presumed breached." }
-      ],
-      violations: [],
-      diff: {
-        removed: "Brent crude at $103.79 (6 days stale but confirmed via alternative source). Compound stress CRITICAL for fourth consecutive cycle.",
-        added: "Brent crude at $103.79 — data now confirmed stale from March 23. Emergency threshold ($100) still breached based on last known price.",
-        context: "System reverts to steady-state assessment. The CONTESTED blip resolved. Signal persists at elevated but stable severity."
-      }
-    }
-  ]
-};
-
-// ─── Render ─────────────────────────────────────────────────────────
-
+// ─── Data ──────────────────────────────────────────────────────────
+let dossierData = null;
+let currentLineage = null;
 let selectedRun = null;
+
+// ─── Helpers ───────────────────────────────────────────────────────
+
+function fmtDate(ts) {
+  if (!ts) return '—';
+  const d = new Date(ts);
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return `${months[d.getUTCMonth()]} ${d.getUTCDate()} ${String(d.getUTCHours()).padStart(2,'0')}:${String(d.getUTCMinutes()).padStart(2,'0')}`;
+}
+
+/**
+ * Derive a tactical status verb from the appearance data.
+ * DETECTED (first), ESCALATED (severity up), CORRECTED (corrections fired),
+ * MAINTAINED (steady), STRIPPED (rejected by L4), RESTORED (was stripped, now back)
+ */
+function deriveStatus(app, prev) {
+  if (!prev) return { status: 'DETECTED', cls: 'st-detected' };
+  if (app.rejected) return { status: 'STRIPPED', cls: 'st-stripped' };
+  if (prev.rejected && !app.rejected) return { status: 'RESTORED', cls: 'st-restored' };
+  if (app.corrections_applied && app.corrections_applied.length > 0) return { status: 'CORRECTED', cls: 'st-corrected' };
+
+  const prevSev = prev.weighted_severity || 0;
+  const curSev = app.weighted_severity || 0;
+  if (curSev - prevSev >= 1.5) return { status: 'ESCALATED', cls: 'st-escalated' };
+  if (prevSev - curSev >= 1.5) return { status: 'DE-ESCALATED', cls: 'st-resolved' };
+
+  // Check for evidence change without assessment change — potential drift indicator
+  if (app.evidence_changed === false && Math.abs(curSev - prevSev) > 0.5) {
+    return { status: 'DRIFT?', cls: 'st-drift' };
+  }
+
+  return { status: 'MAINTAINED', cls: 'st-maintained' };
+}
+
+/**
+ * Render a pre-computed diffWords array as HTML.
+ */
+function renderDiffArray(diffArr) {
+  if (!diffArr || !Array.isArray(diffArr)) return '';
+  return diffArr.map(part => {
+    if (part.removed) return `<span class="diff-del">${escHtml(part.value)}</span>`;
+    if (part.added) return `<span class="diff-add">${escHtml(part.value)}</span>`;
+    return `<span class="diff-same">${escHtml(part.value)}</span>`;
+  }).join('');
+}
+
+function escHtml(s) {
+  if (!s) return '';
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ─── Load Data ─────────────────────────────────────────────────────
+
+async function loadDossierData() {
+  try {
+    const resp = await fetch('data/signal-dossier-data.json');
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    dossierData = await resp.json();
+    populateSelector();
+  } catch (e) {
+    document.getElementById('sigName').textContent = 'Failed to load dossier data';
+    document.getElementById('timeline').innerHTML = `<div class="loading-msg">Error: ${e.message}. Run assemble-signal-dossiers.js to generate.</div>`;
+  }
+}
+
+function populateSelector() {
+  const sel = document.getElementById('lineageSelect');
+  sel.innerHTML = '<option value="">— Select a signal —</option>';
+
+  // Group by category
+  const byCategory = {};
+  for (const l of dossierData.lineages) {
+    const cat = l.category || 'unknown';
+    if (!byCategory[cat]) byCategory[cat] = [];
+    byCategory[cat].push(l);
+  }
+
+  // Sort categories alphabetically, lineages by appearance count desc within each
+  const cats = Object.keys(byCategory).sort();
+  for (const cat of cats) {
+    const group = document.createElement('optgroup');
+    group.label = cat.toUpperCase() + ` (${byCategory[cat].length})`;
+    byCategory[cat]
+      .sort((a, b) => b.appearance_count - a.appearance_count)
+      .forEach(l => {
+        const opt = document.createElement('option');
+        opt.value = l.lineage_id;
+        opt.textContent = `${l.canonical_name} (${l.appearance_count}x)`;
+        group.appendChild(opt);
+      });
+    sel.appendChild(group);
+  }
+
+  // Auto-select the first lineage with most appearances
+  if (dossierData.lineages.length > 0) {
+    const top = dossierData.lineages[0];
+    sel.value = top.lineage_id;
+    selectLineage(top.lineage_id);
+  }
+}
+
+// ─── Select & Render ───────────────────────────────────────────────
+
+function selectLineage(lineageId) {
+  if (!dossierData || !lineageId) return;
+  currentLineage = dossierData.lineages.find(l => l.lineage_id === lineageId);
+  if (!currentLineage) return;
+
+  selectedRun = null;
+
+  // Update header
+  document.getElementById('sigName').textContent = currentLineage.canonical_name;
+  document.getElementById('sigCategory').textContent = currentLineage.category;
+  document.getElementById('runCount').textContent = currentLineage.appearance_count;
+
+  // Reset inspector
+  document.getElementById('inspSticky').style.display = 'none';
+  document.getElementById('inspEmpty').style.display = 'flex';
+  document.getElementById('inspContent').className = 'inspector-content';
+
+  renderSparkline();
+  renderTimeline();
+}
 
 function renderSparkline() {
   const el = document.getElementById('sparkline');
+  if (!currentLineage) { el.innerHTML = ''; return; }
+  const apps = currentLineage.appearances;
   const maxSev = 10;
-  el.innerHTML = SIGNAL.runs.map((r, i) => {
-    const h = Math.max(4, (r.weighted_severity / maxSev) * 32);
-    const color = r.status === 'ESCALATED' ? 'var(--accent-red)' :
-                  r.status === 'CORRECTED' ? 'var(--accent-purple)' :
-                  r.status === 'DETECTED' ? 'var(--accent)' :
+
+  el.innerHTML = apps.map((a, i) => {
+    const sev = a.weighted_severity || a.severity || 0;
+    const h = Math.max(4, (sev / maxSev) * 32);
+    const prev = i > 0 ? apps[i - 1] : null;
+    const { status } = deriveStatus(a, prev);
+    const color = status === 'ESCALATED' ? 'var(--accent-red)' :
+                  status === 'CORRECTED' ? 'var(--accent-purple)' :
+                  status === 'STRIPPED' ? 'var(--accent-red)' :
+                  status === 'DRIFT?' ? 'var(--accent-amber)' :
+                  status === 'DETECTED' ? 'var(--accent)' :
                   'var(--text-muted)';
-    return `<div class="spark-bar" data-run="${i}" onclick="selectRun(${i})" style="height:${h}px;background:${color};" title="${r.date}: ${r.weighted_severity}"></div>`;
+    return `<div class="spark-bar" data-run="${i}" onclick="selectRun(${i})" style="height:${h}px;background:${color};" title="${fmtDate(a.run_timestamp)}: ${sev}"></div>`;
   }).join('');
-  document.getElementById('sparkFirst').textContent = SIGNAL.runs[0].date;
-  document.getElementById('sparkLast').textContent = SIGNAL.runs[SIGNAL.runs.length - 1].date;
-  document.getElementById('runCount').textContent = SIGNAL.runs.length;
+
+  document.getElementById('sparkFirst').textContent = fmtDate(apps[0]?.run_timestamp);
+  document.getElementById('sparkLast').textContent = fmtDate(apps[apps.length - 1]?.run_timestamp);
 }
 
 function renderTimeline() {
   const el = document.getElementById('timeline');
-  el.innerHTML = SIGNAL.runs.map((r, i) => {
-    const prev = i > 0 ? SIGNAL.runs[i - 1] : null;
+  if (!currentLineage) { el.innerHTML = ''; return; }
+  const apps = currentLineage.appearances;
+
+  el.innerHTML = apps.map((a, i) => {
+    const prev = i > 0 ? apps[i - 1] : null;
+    const { status, cls } = deriveStatus(a, prev);
+    const sev = a.weighted_severity || a.severity || 0;
+    const prevSev = prev ? (prev.weighted_severity || prev.severity || 0) : null;
+
     let scoreChange = '';
-    if (prev) {
-      const delta = r.weighted_severity - prev.weighted_severity;
-      if (delta > 0) scoreChange = `<div class="tl-score-change score-up">▲ ${r.weighted_severity} (+${delta.toFixed(1)})</div>`;
-      else if (delta < 0) scoreChange = `<div class="tl-score-change score-down">▼ ${r.weighted_severity} (${delta.toFixed(1)})</div>`;
-      else scoreChange = `<div class="tl-score-change score-same">— ${r.weighted_severity}</div>`;
+    if (prevSev !== null) {
+      const delta = sev - prevSev;
+      if (delta > 0) scoreChange = `<div class="tl-score-change score-up">▲ ${sev} (+${delta.toFixed(1)})</div>`;
+      else if (delta < 0) scoreChange = `<div class="tl-score-change score-down">▼ ${sev} (${delta.toFixed(1)})</div>`;
+      else scoreChange = `<div class="tl-score-change score-same">— ${sev}</div>`;
     } else {
-      scoreChange = `<div class="tl-score-change" style="color:var(--text-secondary);">● ${r.weighted_severity}</div>`;
+      scoreChange = `<div class="tl-score-change" style="color:var(--text-secondary);">● ${sev}</div>`;
     }
+
+    // Build title from signal description
+    const title = (a.l1_evidence || '').slice(0, 80) || 'No L1 evidence';
+
     return `<div class="tl-node" data-run="${i}" onclick="selectRun(${i})">
       <div class="tl-dot"></div>
       <div class="tl-card">
-        <span class="tl-status ${r.statusClass}">${r.status}</span>
+        <span class="tl-status ${cls}">${status}</span>
         ${scoreChange}
-        <div class="tl-title">${r.title}</div>
-        <div class="tl-meta">${r.date} · ${r.outcome}</div>
+        <div class="tl-title">${escHtml(title)}${title.length >= 80 ? '…' : ''}</div>
+        <div class="tl-meta">${fmtDate(a.run_timestamp)} · ${a.outcome || '—'}</div>
       </div>
     </div>`;
   }).join('');
 }
 
 function selectRun(idx) {
+  if (!currentLineage) return;
   selectedRun = idx;
-  const r = SIGNAL.runs[idx];
+  const a = currentLineage.appearances[idx];
+  const prev = idx > 0 ? currentLineage.appearances[idx - 1] : null;
+  const { status } = deriveStatus(a, prev);
 
   document.querySelectorAll('.tl-node').forEach(n => n.classList.remove('selected'));
-  document.querySelector(`[data-run="${idx}"]`).classList.add('selected');
+  const node = document.querySelector(`[data-run="${idx}"]`);
+  if (node) node.classList.add('selected');
   document.querySelectorAll('.spark-bar').forEach(b => b.classList.remove('selected'));
-  document.querySelector(`.spark-bar[data-run="${idx}"]`).classList.add('selected');
+  const bar = document.querySelector(`.spark-bar[data-run="${idx}"]`);
+  if (bar) bar.classList.add('selected');
 
   const sticky = document.getElementById('inspSticky');
   sticky.style.display = 'block';
-  document.getElementById('stickyLabel').textContent = `${r.date} — ${r.status}`;
+  document.getElementById('stickyLabel').textContent = `${fmtDate(a.run_timestamp)} — ${status}`;
 
   document.getElementById('inspEmpty').style.display = 'none';
   const content = document.getElementById('inspContent');
@@ -534,30 +501,34 @@ function selectRun(idx) {
   let html = '';
 
   // Layer journey bar
+  const rawSev = a.severity || '—';
+  const wSev = a.weighted_severity || '—';
+  const finalComp = a.final_composite || wSev;
   const layers = [
-    { label: 'SWEEP', score: r.raw_severity, state: 'active' },
-    { label: 'CONTEXT', score: r.weighted_severity, state: r.corrections.length > 0 ? 'flagged' : 'active' },
-    { label: 'INFER', score: null, state: r.l3_inferences.length > 0 ? 'active' : 'active' },
-    { label: 'RECONCILE', score: r.weighted_severity, state: r.outcome === 'STRIPPED' ? 'stripped' : 'active' }
+    { label: 'SWEEP', score: rawSev, state: 'active' },
+    { label: 'CONTEXT', score: wSev, state: (a.corrections_applied && a.corrections_applied.length > 0) ? 'flagged' : 'active' },
+    { label: 'INFER', score: '—', state: 'active' },
+    { label: 'RECONCILE', score: finalComp, state: a.rejected ? 'stripped' : 'active' }
   ];
   html += '<div class="layer-journey">';
   layers.forEach(l => {
     html += `<div class="layer-step ${l.state}">
       ${l.label}
-      ${l.score !== null ? `<span class="step-score">${l.score}</span>` : '<span class="step-score" style="font-size:10px;">—</span>'}
+      <span class="step-score">${l.score}</span>
     </div>`;
   });
   html += '</div>';
 
-  // Diff (if not first run)
-  if (r.diff) {
+  // Diff section (if not first run and reasoning_diff exists)
+  if (a.reasoning_diff && Array.isArray(a.reasoning_diff) && a.reasoning_diff.length > 0) {
+    const evidenceBadge = a.evidence_changed === true
+      ? '<span class="evidence-badge changed">EVIDENCE CHANGED</span>'
+      : a.evidence_changed === false
+      ? '<span class="evidence-badge unchanged">EVIDENCE UNCHANGED</span>'
+      : '';
     html += `<div class="insp-section">
-      <div class="insp-section-title">WHAT CHANGED FROM PREVIOUS RUN</div>
-      <div class="diff-block">
-        <span class="diff-del">${r.diff.removed}</span><br><br>
-        <span class="diff-add">${r.diff.added}</span>
-      </div>
-      <div style="font-size:11px;color:var(--text-secondary);margin-top:8px;line-height:1.5;">${r.diff.context}</div>
+      <div class="insp-section-title">WHAT CHANGED FROM PREVIOUS RUN ${evidenceBadge}</div>
+      <div class="diff-block">${renderDiffArray(a.reasoning_diff)}</div>
     </div>`;
   }
 
@@ -565,70 +536,84 @@ function selectRun(idx) {
   html += `<div class="insp-section">
     <div class="insp-section-title">RUN DETAILS</div>
     <div class="kv">
-      <div class="kv-k">trace_id</div><div class="kv-v hi">${r.trace_id}</div>
-      <div class="kv-k">signal_id</div><div class="kv-v hi">${r.signal_id}</div>
-      <div class="kv-k">raw_severity</div><div class="kv-v">${r.raw_severity} / 10</div>
-      <div class="kv-k">weighted_severity</div><div class="kv-v">${r.weighted_severity}</div>
-      <div class="kv-k">confidence</div><div class="kv-v ${r.confidence === 'HIGH' ? '' : r.confidence === 'LOW' ? 'amber' : ''}">${r.confidence}</div>
-      <div class="kv-k">outcome</div><div class="kv-v">${r.outcome}</div>
+      <div class="kv-k">run_timestamp</div><div class="kv-v hi">${a.run_timestamp}</div>
+      <div class="kv-k">signal_ids</div><div class="kv-v hi">${(a.signal_ids || []).join(', ') || '—'}</div>
+      <div class="kv-k">severity</div><div class="kv-v">${a.severity || '—'} / 10</div>
+      <div class="kv-k">weighted_severity</div><div class="kv-v">${a.weighted_severity || '—'}</div>
+      <div class="kv-k">confidence</div><div class="kv-v ${a.confidence === 'HIGH' ? '' : a.confidence === 'LOW' ? 'amber' : ''}">${a.confidence || '—'}</div>
+      <div class="kv-k">source_tier</div><div class="kv-v">${a.source_tier || '—'}</div>
+      <div class="kv-k">outcome</div><div class="kv-v">${a.outcome || '—'}</div>
+      <div class="kv-k">evidence_changed</div><div class="kv-v ${a.evidence_changed === false ? 'amber' : a.evidence_changed === true ? 'green' : ''}">${a.evidence_changed === null ? 'first appearance' : a.evidence_changed}</div>
+      <div class="kv-k">acquisition</div><div class="kv-v">${a.acquisition_source || 'none'} ${a.acquisition_survival ? '→ ' + a.acquisition_survival : ''}</div>
     </div>
   </div>`;
 
-  // L1 Perception
-  html += `<div class="insp-section">
-    <div class="insp-section-title">LAYER 1 — SWEEP</div>
-    <div style="font-size:12px;color:var(--text-secondary);line-height:1.6;">${r.l1_description}</div>
-  </div>`;
-
-  // L2 Contextualize
-  html += `<div class="insp-section">
-    <div class="insp-section-title">LAYER 2 — CONTEXTUALIZE</div>
-    <div style="font-size:12px;color:var(--text-secondary);line-height:1.6;">${r.l2_reasoning}</div>
-  </div>`;
-
-  // L3 Inferences
-  if (r.l3_inferences.length > 0) {
+  // L1 Evidence
+  if (a.l1_evidence) {
     html += `<div class="insp-section">
-      <div class="insp-section-title">LAYER 3 — INFER</div>
-      ${r.l3_inferences.map(inf => `<div style="font-size:12px;color:var(--text-secondary);padding:4px 0;">→ ${inf}</div>`).join('')}
+      <div class="insp-section-title">LAYER 1 — SWEEP (RAW EVIDENCE)</div>
+      <div style="font-size:12px;color:var(--text-secondary);line-height:1.6;">${escHtml(a.l1_evidence)}</div>
     </div>`;
   }
 
-  // L4 Judgment
-  html += `<div class="insp-section">
-    <div class="insp-section-title">LAYER 4 — RECONCILE</div>
-    <div style="font-size:12px;color:var(--text-secondary);line-height:1.6;">${r.l4_judgment}</div>
-  </div>`;
+  // L2 Reasoning
+  if (a.l2_reasoning) {
+    html += `<div class="insp-section">
+      <div class="insp-section-title">LAYER 2 — CONTEXTUALIZE</div>
+      <div style="font-size:12px;color:var(--text-secondary);line-height:1.6;">${escHtml(a.l2_reasoning)}</div>
+    </div>`;
+  }
 
   // Corrections
-  if (r.corrections.length > 0) {
+  if (a.corrections_applied && a.corrections_applied.length > 0) {
     html += `<div class="insp-section">
       <div class="insp-section-title">CORRECTIONS APPLIED</div>
-      ${r.corrections.map(c => `<div class="correction-item">
-        <div class="correction-id">${c.id}</div>
-        <div class="correction-effect">${c.effect}</div>
+      ${a.corrections_applied.map(id => `<div class="correction-item">
+        <div class="correction-id">${escHtml(id)}</div>
       </div>`).join('')}
     </div>`;
   }
 
-  // Gate violations
-  if (r.violations.length > 0) {
-    html += `<div class="insp-section">
-      <div class="insp-section-title">GATE VIOLATIONS (${r.violations.length})</div>
-      ${r.violations.map(v => `<div class="violation-item">
-        <div class="violation-rule">${v.rule} <span class="violation-severity">${v.severity}</span></div>
-        <div class="violation-text">${v.text}</div>
-      </div>`).join('')}
-    </div>`;
+  // Gate violations summary
+  if (a.gate_violations_by_layer) {
+    const gv = a.gate_violations_by_layer;
+    const total = (gv.L1 || 0) + (gv.L2 || 0) + (gv.L3 || 0) + (gv.L4 || 0);
+    if (total > 0) {
+      html += `<div class="insp-section">
+        <div class="insp-section-title">GATE VIOLATIONS (${total})</div>
+        <div class="kv">
+          <div class="kv-k">L1 SWEEP</div><div class="kv-v ${gv.L1 > 0 ? 'amber' : ''}">${gv.L1 || 0}</div>
+          <div class="kv-k">L2 CONTEXT</div><div class="kv-v ${gv.L2 > 0 ? 'amber' : ''}">${gv.L2 || 0}</div>
+          <div class="kv-k">L3 INFER</div><div class="kv-v ${gv.L3 > 0 ? 'amber' : ''}">${gv.L3 || 0}</div>
+          <div class="kv-k">L4 RECONCILE</div><div class="kv-v ${gv.L4 > 0 ? 'amber' : ''}">${gv.L4 || 0}</div>
+        </div>
+      </div>`;
+    }
+  }
+
+  // Calibration active
+  if (a.injected_calibration) {
+    const cal = a.injected_calibration;
+    const entries = [...(cal.L1 || []), ...(cal.L2 || []), ...(cal.L3 || []), ...(cal.L4 || [])];
+    if (entries.length > 0) {
+      html += `<div class="insp-section">
+        <div class="insp-section-title">CALIBRATION ACTIVE</div>
+        <div class="kv">
+          ${cal.L1 && cal.L1.length > 0 ? `<div class="kv-k">L1</div><div class="kv-v purple">${cal.L1.join(', ')}</div>` : ''}
+          ${cal.L2 && cal.L2.length > 0 ? `<div class="kv-k">L2</div><div class="kv-v purple">${cal.L2.join(', ')}</div>` : ''}
+          ${cal.L3 && cal.L3.length > 0 ? `<div class="kv-k">L3</div><div class="kv-v purple">${cal.L3.join(', ')}</div>` : ''}
+          ${cal.L4 && cal.L4.length > 0 ? `<div class="kv-k">L4</div><div class="kv-v purple">${cal.L4.join(', ')}</div>` : ''}
+        </div>
+      </div>`;
+    }
   }
 
   content.innerHTML = html;
   document.getElementById('inspectorPane').scrollTop = 0;
 }
 
-// ─── Init ───────────────────────────────────────────────────────────
-renderSparkline();
-renderTimeline();
+// ─── Init ──────────────────────────────────────────────────────────
+loadDossierData();
 </script>
 </body>
 </html>
