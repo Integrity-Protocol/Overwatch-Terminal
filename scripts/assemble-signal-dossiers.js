@@ -42,6 +42,17 @@ function log(area, msg)  { console.log(`[dossier:${area}] ${msg}`); }
 function warn(area, msg) { console.warn(`[dossier:${area}] ⚠ ${msg}`); }
 function err(area, msg)  { console.error(`[dossier:${area}] ✖ ${msg}`); }
 
+/**
+ * Compute standard deviation of a numeric array.
+ * Used for severity range compression detection (AD #21 overcorrection test).
+ */
+function computeStdDev(values) {
+  if (values.length < 2) return 0;
+  const mean = values.reduce((a, b) => a + b, 0) / values.length;
+  const variance = values.reduce((sum, v) => sum + Math.pow(v - mean, 2), 0) / values.length;
+  return Math.round(Math.sqrt(variance) * 100) / 100;
+}
+
 // ─── Alias Dictionary ───────────────────────────────────────────────────────
 
 /**
@@ -322,7 +333,98 @@ function assembleSignalDossiers(options) {
     }
   }
 
-  // Phase 3: Sort lineages by appearance count descending (most persistent first)
+  // Phase 3: AD #21 — Compute per-lineage track records (earned signal confidence)
+  // Pure deterministic math on historical data. No AI judgment.
+  // Four metrics per lineage: survival_rate, average_drift, correction_frequency, confidence_accuracy
+  for (const lineage of lineages) {
+    const apps = lineage.appearances;
+    if (apps.length < 2) {
+      lineage.track_record = null; // Not enough history to compute
+      continue;
+    }
+
+    // survival_rate: % of appearances that were NOT rejected by Layer 4
+    const withJudgment = apps.filter(a => a.rejected != null);
+    const survived = withJudgment.filter(a => a.rejected === false);
+    const survivalRate = withJudgment.length > 0
+      ? Math.round((survived.length / withJudgment.length) * 100) / 100
+      : null;
+
+    // average_drift: mean of (weighted_severity - final_composite) across appearances
+    // Positive = L2 overscores relative to L4. Negative = L2 underscores.
+    const driftPairs = apps.filter(a => a.weighted_severity != null && a.final_composite != null);
+    let averageDrift = null;
+    if (driftPairs.length > 0) {
+      const totalDrift = driftPairs.reduce((sum, a) => sum + (a.weighted_severity - a.final_composite), 0);
+      averageDrift = Math.round((totalDrift / driftPairs.length) * 100) / 100;
+    }
+
+    // correction_frequency: % of appearances where at least one correction fired
+    const withCorrections = apps.filter(a => (a.corrections_applied || []).length > 0);
+    const correctionFrequency = Math.round((withCorrections.length / apps.length) * 100) / 100;
+
+    // Most common corrections (for telemetry)
+    // Count appearances where each correction fired (not total firings)
+    const correctionAppearances = {};
+    for (const a of apps) {
+      const uniqueInApp = new Set(a.corrections_applied || []);
+      for (const cid of uniqueInApp) {
+        correctionAppearances[cid] = (correctionAppearances[cid] || 0) + 1;
+      }
+    }
+    const topCorrections = Object.entries(correctionAppearances)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5)
+      .map(([id, count]) => ({ id, count, frequency: Math.round((count / apps.length) * 100) / 100 }));
+
+    // confidence_accuracy: how often stated confidence aligned with actual outcome
+    // HIGH confidence + survived = ACCURATE
+    // HIGH confidence + rejected = OVERCONFIDENT
+    // LOW confidence + survived = UNDERCONFIDENT
+    // LOW confidence + rejected = ACCURATE (correctly uncertain)
+    // MEDIUM is neutral — not counted as mismatch either way
+    let confAccurate = 0;
+    let confTotal = 0;
+    let overconfidentCount = 0;
+    let underconfidentCount = 0;
+    for (const a of apps) {
+      if (!a.confidence || a.rejected == null) continue;
+      const conf = (a.confidence || '').toUpperCase();
+      if (conf === 'HIGH') {
+        confTotal++;
+        if (a.rejected === false) confAccurate++;
+        else overconfidentCount++;
+      } else if (conf === 'LOW') {
+        confTotal++;
+        if (a.rejected === true) confAccurate++;
+        else underconfidentCount++;
+      }
+      // MEDIUM is not counted — it's the neutral zone
+    }
+    const confidenceAccuracy = confTotal > 0
+      ? Math.round((confAccurate / confTotal) * 100) / 100
+      : null;
+
+    // Severity range (for overcorrection monitoring — AD #21 bias test)
+    const severities = apps.map(a => a.weighted_severity).filter(s => s != null);
+    const severityRange = severities.length > 1
+      ? { min: Math.min(...severities), max: Math.max(...severities), std: computeStdDev(severities) }
+      : null;
+
+    lineage.track_record = {
+      appearance_count: apps.length,
+      survival_rate: survivalRate,
+      average_drift: averageDrift,
+      correction_frequency: correctionFrequency,
+      confidence_accuracy: confidenceAccuracy,
+      overconfident_count: overconfidentCount,
+      underconfident_count: underconfidentCount,
+      top_corrections: topCorrections,
+      severity_range: severityRange
+    };
+  }
+
+  // Phase 4: Sort lineages by appearance count descending (most persistent first)
   lineages.sort((a, b) => b.appearance_count - a.appearance_count);
 
   // Build output
@@ -350,7 +452,7 @@ function assembleSignalDossiers(options) {
 // ─── CLI ────────────────────────────────────────────────────────────────────
 
 if (require.main === module) {
-  log('cli', 'Signal Dossier Aggregator — AD #20 Phase 1');
+  log('cli', 'Signal Dossier Aggregator — AD #20 Phase 1 + AD #21 Phase 1');
   log('cli', 'Pure deterministic. No AI judgment.');
 
   const result = assembleSignalDossiers();
@@ -362,6 +464,29 @@ if (require.main === module) {
   console.log(`Alias matches: ${result._alias_matches} (${(result._alias_matches / result._total_signals * 100).toFixed(1)}%)`);
   console.log(`Orphans: ${result._orphan_signals}`);
   console.log(`Lineages: ${result._lineage_count}`);
+
+  // Track record summary (AD #21)
+  const withTrackRecord = (result.lineages || []).filter(l => l.track_record);
+  console.log(`\n=== AD #21 TRACK RECORDS (${withTrackRecord.length} lineages) ===`);
+  if (withTrackRecord.length > 0) {
+    // Show lineages with lowest survival rates (most overscored)
+    const bySurvival = withTrackRecord
+      .filter(l => l.track_record.survival_rate != null)
+      .sort((a, b) => a.track_record.survival_rate - b.track_record.survival_rate);
+    if (bySurvival.length > 0) {
+      console.log('Lowest survival rates (L2 overscoring):');
+      bySurvival.slice(0, 5).forEach(l => {
+        const tr = l.track_record;
+        console.log(`  ${l.canonical_name}: ${(tr.survival_rate * 100).toFixed(0)}% survival, drift=${tr.average_drift}, corr=${(tr.correction_frequency * 100).toFixed(0)}%`);
+      });
+    }
+    // Show lineages with confidence accuracy issues
+    const overconfident = withTrackRecord.filter(l => l.track_record.overconfident_count > 0);
+    const underconfident = withTrackRecord.filter(l => l.track_record.underconfident_count > 0);
+    if (overconfident.length > 0 || underconfident.length > 0) {
+      console.log(`Confidence mismatches: ${overconfident.length} overconfident, ${underconfident.length} underconfident`);
+    }
+  }
 
   // Top 10 lineages by appearance count
   console.log('\n=== TOP 10 LINEAGES ===');
