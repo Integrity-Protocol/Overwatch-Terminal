@@ -407,6 +407,35 @@ async function main() {
     changes++;
   }
 
+  // 4c. Promote four-layer pipeline assessment to dashboard top level (AD #18 compliance)
+  // The four-layer pipeline's action_recommendation is Layer 4's actual cognitive judgment.
+  // It must take precedence over any legacy tactical_recommendation.
+  const a360 = analysis.assessment_360;
+  if (a360) {
+    if (a360.action_recommendation) {
+      const prevAction = dashboard.action_recommendation || dashboard.tactical_recommendation || 'none';
+      dashboard.action_recommendation = a360.action_recommendation;
+      dashboard.action_reasoning = a360.action_reasoning || null;
+      if (prevAction !== a360.action_recommendation) {
+        log('action', `Action recommendation: ${prevAction} → ${a360.action_recommendation}`);
+        changelogEntries.push(`ACTION: ${prevAction} → ${a360.action_recommendation}`);
+        changes++;
+      }
+    }
+    if (a360.thesis_status) {
+      dashboard.thesis_status = a360.thesis_status;
+      dashboard.confidence_in_status = a360.confidence_in_status || null;
+      dashboard.thesis_status_reasoning = a360.thesis_status_reasoning || null;
+    }
+    if (a360.commander_summary) {
+      dashboard.commander_summary = a360.commander_summary;
+    }
+    // Promote signal matrix and tensions for overview card
+    if (a360.signal_matrix) dashboard.signal_matrix = a360.signal_matrix;
+    if (a360.active_tensions) dashboard.active_tensions = a360.active_tensions;
+    if (a360.unresolved_tensions) dashboard.unresolved_tensions = a360.unresolved_tensions;
+  }
+
   // 5. Stamp the applied analysis metadata
   dashboard.last_analysis = {
     timestamp:   analysis.timestamp,
