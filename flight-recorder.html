@@ -66,7 +66,7 @@ body {
   text-transform: uppercase;
 }
 .header-title {
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--text-primary);
 }
@@ -138,7 +138,8 @@ body {
   background: var(--bg-secondary);
 }
 .segment-group {
-  display: inline-flex;
+  display: flex;
+  flex-wrap: wrap;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
@@ -146,8 +147,8 @@ body {
 }
 .chain-btn {
   font-family: var(--mono);
-  font-size: 10px;
-  padding: 7px 14px;
+  font-size: 9px;
+  padding: 7px 10px;
   border-radius: 0;
   border: none;
   border-right: 1px solid var(--border);
@@ -587,8 +588,8 @@ body {
     <div class="header-brand">The Integrity Protocol</div>
     <div class="header-title">Cognitive Flight Recorder</div>
     <div class="header-meta">
-      <span id="chainCount">—</span> learning chains &nbsp;·&nbsp;
-      <span id="driftCount">—</span> drift findings &nbsp;·&nbsp;
+      <span id="chainCount">—</span> chains &nbsp;·&nbsp;
+      <span id="driftCount">—</span> drift &nbsp;·&nbsp;
       <span id="typeBreakdown">loading…</span>
     </div>
   </div>
@@ -679,7 +680,7 @@ function mapChain(chain) {
   const typeMeta = CHAIN_TYPE_META[chain.chain_type] || CHAIN_TYPE_META.CORRECTION;
   return {
     id: chain.chain_id,
-    label: chain.subject.length > 50 ? chain.subject.slice(0, 50) + '…' : chain.subject,
+    label: formatChainLabel(chain),
     type: chain.chain_type.toLowerCase(),
     chain_type: chain.chain_type,
     status: chain.status,
@@ -687,6 +688,23 @@ function mapChain(chain) {
     source_data_file: chain.source_data_file || '',
     nodes: chain.nodes.map(node => mapNode(node, chain))
   };
+}
+
+function formatChainLabel(chain) {
+  let subj = chain.subject || chain.chain_id;
+  // Strip long request IDs (ACQ-L3-2026-...) — show what's after the colon
+  if (subj.includes(': ') && subj.indexOf('ACQ-') === 0) {
+    subj = subj.split(': ').slice(1).join(': ');
+  }
+  // Strip CL-/BC- prefixes if followed by colon — keep the lesson text
+  if (/^(CL|BC)-\d+: /.test(subj)) {
+    const id = subj.split(': ')[0];
+    const rest = subj.split(': ').slice(1).join(': ');
+    subj = id + ': ' + (rest.length > 60 ? rest.slice(0, 60) + '…' : rest);
+  } else if (subj.length > 70) {
+    subj = subj.slice(0, 70) + '…';
+  }
+  return subj;
 }
 
 function mapNode(node, chain) {
