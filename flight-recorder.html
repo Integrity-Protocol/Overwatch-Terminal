@@ -587,14 +587,15 @@ body {
     <div class="header-brand">The Integrity Protocol</div>
     <div class="header-title">Cognitive Flight Recorder</div>
     <div class="header-meta">
-      <span id="chainCount">3</span> lineage chains &nbsp;·&nbsp;
-      <span id="totalAcquisitions">4</span> acquisitions tracked &nbsp;·&nbsp;
-      <span id="totalSpend">$0.34</span> total spend
+      <span id="chainCount">—</span> learning chains &nbsp;·&nbsp;
+      <span id="driftCount">—</span> drift findings &nbsp;·&nbsp;
+      <span id="typeBreakdown">loading…</span>
     </div>
   </div>
   <div class="header-nav">
     <a href="index.html">DASHBOARD</a>
     <a href="trace.html">TRACE</a>
+    <a href="signal-dossier.html">DOSSIER</a>
     <a href="flight-recorder.html" class="active">FLIGHT RECORDER</a>
   </div>
 </div>
@@ -603,9 +604,9 @@ body {
   <!-- Left: Lineage Timeline -->
   <div class="lineage-pane">
     <div class="lineage-header">
-      <div class="lineage-title">Intelligence Lineage</div>
+      <div class="lineage-title">Learning Event Chains</div>
       <div class="lineage-summary">
-        Cross-run acquisition lifecycle. Click any node to inspect its metadata, trace IDs, and deterministic provenance.
+        Unified observability across all four learning loops. Filter by chain type, then click any node to inspect its telemetry and deterministic provenance.
       </div>
     </div>
     <div class="lineage-chain-selector" id="chainSelector">
@@ -635,401 +636,291 @@ body {
 </div>
 
 <script>
-// ─── Data: Modeled on production structures ────────────────────────────────
-// In production, this loads from acquisition-outcomes.json, cognitive trace files,
-// and behavioral-calibration.json via GitHub Pages fetch.
+// ─── Data: Production fetch from flight-recorder-data.json ─────────────────
 
-const CHAINS = [
-  {
-    id: "acq-chain-1",
-    label: "Messari Brent Crude",
-    type: "acquisition",
-    nodes: [
-      {
-        id: "c1-catalyst",
-        type: "catalyst",
-        dotClass: "catalyst",
-        tagClass: "catalyst",
-        tagLabel: "CATALYST",
-        title: "Stale Brent crude data identified on T-1",
-        meta: { trace: "2026-03-29T00:19:54Z", tension: "T-1", layer: "Layer 3" },
-        inspector: {
-          typeColor: "var(--accent-amber)",
-          typeLabel: "CATALYST — GAP IDENTIFICATION",
-          title: "Stale Brent crude data on T-1 compound stress",
-          subtitle: "Layer 3 identified that Brent crude data was stale (T-1) during compound stress evaluation. The oil-yen feedback loop inference required current Brent pricing to assess whether the $85 elevated threshold was breached.",
-          sections: [
-            {
-              title: "Trace Context",
-              type: "kv",
-              data: [
-                ["originating_trace", "2026-03-29T00:19:54.698Z"],
-                ["run_id", "pipeline-run-2026-03-29-0019"],
-                ["tension_id", "T-1"],
-                ["tension_name", "Will Brent breach $85 sustained?"],
-                ["impact_score", "4 / 5"],
-                ["source_channel", "TENSION_WATCH_FOR"],
-                ["urgency", "NEXT_CYCLE"],
-                ["window_status", "APPROACHING — 6 days remaining"]
-              ]
-            },
-            {
-              title: "Acquisition Request",
-              type: "json",
-              data: {
-                request_id: "ACQ-L3-20260329-001",
-                question: "What is the current Brent crude spot price and has it breached $85 in the last 48 hours?",
-                intended_epistemic_vector: "INFORM",
-                expected_impact_score: 4,
-                token_budget: 500,
-                data_type: "market_data"
-              }
-            },
-            {
-              title: "Layer 3 Reasoning",
-              type: "text",
-              data: "The compound stress matrix requires current Brent pricing. With Hormuz closure active and Saudi pipeline at capacity, the $85 threshold determines whether compound stress reaches CRITICAL. Last available data is T-1. The gap blocks a deterministic assessment of escalation proximity."
-            }
-          ]
-        }
-      },
-      {
-        id: "c1-acquisition",
-        type: "acquisition",
-        dotClass: "acquisition",
-        tagClass: "acquisition",
-        tagLabel: "ACQUISITION",
-        title: "x402 payment to Messari on Base — $0.25 USDC",
-        meta: { channel: "messari-base", cost: "$0.25", network: "Base" },
-        inspector: {
-          typeColor: "var(--accent-blue)",
-          typeLabel: "ACQUISITION — x402 PAYMENT",
-          title: "Autonomous USDC payment on Base mainnet",
-          subtitle: "The constrained acquisition engine selected Messari via cascading tiebreaker (specialization > cost). x402 payment negotiated automatically. Messari returned an honest \"data unavailable\" response for commodity pricing.",
-          sections: [
-            {
-              title: "Transaction",
-              type: "kv",
-              data: [
-                ["tx_hash", "0xc36bc690...4cf550"],
-                ["block", "43977677"],
-                ["network", "Base mainnet"],
-                ["from", "0xe8c486B3...0d35BB"],
-                ["to", "0x75Ddd3c4...1c70D2A5"],
-                ["amount", "0.25 USDC"],
-                ["cost_usd", "$0.24"],
-                ["timestamp", "2026-03-29 00:38:21 UTC"]
-              ]
-            },
-            {
-              title: "Routing Decision",
-              type: "kv",
-              data: [
-                ["channel_id", "messari-base"],
-                ["vendor_type", "messari"],
-                ["query_type", "market_data"],
-                ["match_score", "2 capabilities matched"],
-                ["tiebreaker", "specialization (fewer capabilities)"],
-                ["alternatives", "firecrawl-base ($0.03, broader)"],
-                ["paper_trade", "false — LIVE"]
-              ]
-            },
-            {
-              title: "Response",
-              type: "json",
-              data: {
-                status: "data_unavailable",
-                vendor_response: "Messari does not provide commodity pricing data. Brent crude is outside our coverage universe.",
-                intelligence_persisted: true,
-                consumed: false,
-                originating_trace_id: "2026-03-29T00:19:54.698Z",
-                originating_signal_ids: ["20260329-0019-SIG-001", "20260329-0019-SIG-010"]
-              }
-            }
-          ]
-        }
-      },
-      {
-        id: "c1-outcome",
-        type: "outcome",
-        dotClass: "outcome-confirmed",
-        tagClass: "confirmed",
-        tagLabel: "CONFIRMED",
-        title: "Data injected into Layer 2 — baseline confirmed",
-        meta: { trace: "2026-03-29T02:44:12Z", outcome: "CONFIRMED", run: "next cycle" },
-        inspector: {
-          typeColor: "var(--accent-green)",
-          typeLabel: "OUTCOME — CONFIRMED",
-          title: "Acquired intelligence confirmed existing assessment",
-          subtitle: "The Messari \"data unavailable\" response was injected into Layer 2 as supplementary intelligence. The system correctly identified that Messari is not the right channel for commodity pricing — the data confirmed the existing routing limitation rather than providing new analytical value.",
-          sections: [
-            {
-              title: "Outcome Classification",
-              type: "kv",
-              data: [
-                ["outcome", "CONFIRMED"],
-                ["run_trace_id", "2026-03-29T02:44:12.664Z"],
-                ["originating_trace_id", "2026-03-29T00:19:54.698Z"],
-                ["outcome_evidence", "Tension T-1 maintained at score 4, no delta from acquisition"],
-                ["injection_confirmed", "true — [L2] Injected 1 entry"],
-                ["cost_usd", "$0.25"],
-                ["channel_id", "messari-base"]
-              ]
-            },
-            {
-              title: "Learning Signal",
-              type: "text",
-              data: "This acquisition outcome is a routing correction signal. Messari's coverage universe does not include commodity pricing. The STALE_PURCHASE_REPETITION detector should flag if the system routes commodity queries to Messari again. Expected correction: router learns to exclude Messari for market_data queries on non-crypto assets."
-            },
-            {
-              title: "Spending Detector Status",
-              type: "json",
-              data: {
-                STALE_PURCHASE_REPETITION: "FIRING — on_chain_analytics 6x, market_data 4x",
-                BUDGET_EXHAUSTION: "NOT_FIRING — $0.34 of $0.50 per-cycle",
-                CONFIRMATION_ACQUISITION: "NOT_FIRING — vector was INFORM"
-              }
-            }
-          ]
-        }
-      }
-    ]
-  },
-  {
-    id: "acq-chain-2",
-    label: "Firecrawl SWIFT",
-    type: "acquisition",
-    nodes: [
-      {
-        id: "c2-catalyst",
-        type: "catalyst",
-        dotClass: "catalyst",
-        tagClass: "catalyst",
-        tagLabel: "CATALYST",
-        title: "Structural gap: SWIFT modernization timeline unknown",
-        meta: { trace: "2026-03-28T14:22:00Z", gap: "SG-003", layer: "Layer 2" },
-        inspector: {
-          typeColor: "var(--accent-amber)",
-          typeLabel: "CATALYST — STRUCTURAL GAP PROBE",
-          title: "SWIFT modernization timeline — promotable gap",
-          subtitle: "Layer 2 knowledge audit flagged that SWIFT ISO 20022 migration status has not been updated in 14 days. The structural gap's promotable_if field specifies: \"SWIFT publishes updated migration timeline or announces acceleration.\"",
-          sections: [
-            {
-              title: "Gap Context",
-              type: "kv",
-              data: [
-                ["originating_trace", "2026-03-28T14:22:00.000Z"],
-                ["structural_gap_id", "SG-003"],
-                ["gap_name", "SWIFT ISO 20022 migration status"],
-                ["last_updated", "2026-03-14"],
-                ["days_stale", "14"],
-                ["source_channel", "STRUCTURAL_GAP_PROBE"],
-                ["probe_cadence", "WEEKLY (Sunday default)"]
-              ]
-            },
-            {
-              title: "Probe Question",
-              type: "json",
-              data: {
-                request_id: "ACQ-L2-20260328-003",
-                question: "Has SWIFT published any updated ISO 20022 migration timeline or acceleration announcement in the last 14 days?",
-                intended_epistemic_vector: "INFORM",
-                expected_impact_score: 3,
-                token_budget: 400,
-                data_type: "regulatory_intelligence"
-              }
-            }
-          ]
-        }
-      },
-      {
-        id: "c2-acquisition",
-        type: "acquisition",
-        dotClass: "acquisition",
-        tagClass: "acquisition",
-        tagLabel: "ACQUISITION",
-        title: "Firecrawl web search — $0.03 via fiat fallback",
-        meta: { channel: "firecrawl-base", cost: "$0.03", network: "fiat fallback" },
-        inspector: {
-          typeColor: "var(--accent-blue)",
-          typeLabel: "ACQUISITION — VENDOR FAILOVER",
-          title: "Firecrawl fiat API fallback — x402 endpoint broken",
-          subtitle: "x402 endpoint timed out (known issue: GitHub Issue #2212). Governed failover to fiat API executed automatically. VENDOR_INFRASTRUCTURE_FAILURE / VENDOR_FAILOVER audit trail preserved.",
-          sections: [
-            {
-              title: "Transaction",
-              type: "kv",
-              data: [
-                ["channel_id", "firecrawl-base"],
-                ["vendor_type", "firecrawl"],
-                ["payment_method", "FIAT_FALLBACK"],
-                ["x402_attempted", "true — timed out after 15s"],
-                ["fallback_reason", "VENDOR_INFRASTRUCTURE_FAILURE"],
-                ["cost_usd", "$0.03 (fiat API credit)"],
-                ["response_time", "2.1s"]
-              ]
-            },
-            {
-              title: "Response Summary",
-              type: "text",
-              data: "Firecrawl returned 3 relevant results on SWIFT ISO 20022 migration. Primary finding: SWIFT published a March 2026 update confirming the November 2025 migration deadline was met for 87% of participating banks. Remaining 13% given extension to June 2026. No acceleration announcement."
-            }
-          ]
-        }
-      },
-      {
-        id: "c2-outcome",
-        type: "outcome",
-        dotClass: "outcome-confirmed",
-        tagClass: "survived",
-        tagLabel: "SURVIVED",
-        title: "SWIFT data survived pipeline — gap partially resolved",
-        meta: { trace: "2026-03-29T02:44:12Z", outcome: "SURVIVED", run: "next cycle" },
-        inspector: {
-          typeColor: "var(--accent-green)",
-          typeLabel: "OUTCOME — SURVIVED",
-          title: "Acquired SWIFT intelligence survived all four layers",
-          subtitle: "The SWIFT migration data was injected into Layer 2, passed the knowledge audit, survived Layer 3 inference processing, and reached Layer 4's final assessment. Structural gap SG-003 partially resolved — the 87% completion figure provides a concrete data point where previously the system had only estimates.",
-          sections: [
-            {
-              title: "Outcome Classification",
-              type: "kv",
-              data: [
-                ["outcome", "SURVIVED"],
-                ["run_trace_id", "2026-03-29T02:44:12.664Z"],
-                ["pipeline_survival", "L1 → L2 → L3 → L4 (full chain)"],
-                ["gap_status", "PARTIALLY_RESOLVED"],
-                ["remaining_gap", "June 2026 extension cohort status unknown"],
-                ["cost_usd", "$0.03"],
-                ["ROI", "HIGH — resolved 14-day stale gap for $0.03"]
-              ]
-            }
-          ]
-        }
-      }
-    ]
-  },
-  {
-    id: "cal-chain-1",
-    label: "BC-003 Correlation≠Causation",
-    type: "calibration",
-    nodes: [
-      {
-        id: "bc3-detect",
-        type: "calibration-detection",
-        dotClass: "calibration-detect",
-        tagClass: "detection",
-        tagLabel: "PATTERN DETECTED",
-        title: "LZ-RC-001 fires in 34/34 runs — macro correlation bias",
-        meta: { rule: "LZ-RC-001", frequency: "34/34", layer: "L1" },
-        inspector: {
-          typeColor: "var(--accent-purple)",
-          typeLabel: "CALIBRATION — PATTERN DETECTION",
-          title: "Correlation-as-causation bias detected across all runs",
-          subtitle: "The behavioral calibration report identified LZ-RC-001 (correlation treated as causation) firing in 100% of analyzed runs with 832 occurrences concentrated in Layer 1. When processing co-occurring macro events, the system implies causal relationships without establishing mechanisms.",
-          sections: [
-            {
-              title: "Detection Context",
-              type: "kv",
-              data: [
-                ["calibration_id", "BC-003"],
-                ["source_rule", "LZ-RC-001"],
-                ["pattern_type", "RECURRING_VIOLATION"],
-                ["frequency", "34/34 runs (100%)"],
-                ["magnitude", "832 occurrences in L1"],
-                ["measurement_window", "2026-03-06 to 2026-03-22"],
-                ["target_layers", "L1"],
-                ["signal_categories", "macro, geopolitical"],
-                ["detection_method", "gate-review-ledger aggregation"]
-              ]
-            },
-            {
-              title: "Originating Traces",
-              type: "text",
-              data: "Pattern detected across traces from 2026-03-06T02:22:00Z through 2026-03-22T22:26:14Z. The oil-JPY co-occurrence pattern (SIG-001 + SIG-009 treated as causal chain) appears in 29/34 runs. The DXY-crypto correlation appears in 22/34 runs. Both are valid observations but presented with causal language."
-            }
-          ]
-        }
-      },
-      {
-        id: "bc3-candidate",
-        type: "calibration-candidate",
-        dotClass: "calibration-detect",
-        tagClass: "detection",
-        tagLabel: "CANDIDATE",
-        title: "BC-003 created — Sunday audit March 23",
-        meta: { status: "CANDIDATE", audit: "2026-03-23" },
-        inspector: {
-          typeColor: "var(--accent-purple)",
-          typeLabel: "CALIBRATION — CANDIDATE CREATED",
-          title: "BC-003: Correlation-causation tendency correction",
-          subtitle: "Created during the March 23 Sunday audit. Tim wrote directional guidance: when reporting co-occurring macro events, explicitly state whether a causal mechanism has been identified. If no mechanism is established, label as CORRELATED_NOT_CAUSAL.",
-          sections: [
-            {
-              title: "Calibration Entry",
-              type: "json",
-              data: {
-                id: "BC-003",
-                status: "CANDIDATE",
-                calibration_type: "TENDENCY_CORRECTION",
-                directional_guidance: "When reporting co-occurring macro events in Layer 1, explicitly state whether a causal mechanism has been identified. If no mechanism is established, label the co-occurrence as CORRELATED_NOT_CAUSAL.",
-                overcorrection_watch: "If Layer 1 stops reporting macro co-occurrences entirely, flag for review.",
-                overcorrection_metric: "SIGNAL_REJECTION_RATE",
-                overcorrection_metric_layer: "L1"
-              }
-            },
-            {
-              title: "Promotion Requirements",
-              type: "kv",
-              data: [
-                ["directional_guidance", "✓ Written by Tim"],
-                ["overcorrection_metric", "✓ SIGNAL_REJECTION_RATE"],
-                ["overcorrection_layer", "✓ L1"],
-                ["status", "AWAITING PROMOTION — Sunday audit review"]
-              ]
-            }
-          ]
-        }
-      },
-      {
-        id: "bc3-injection",
-        type: "calibration-injection",
-        dotClass: "calibration-inject",
-        tagClass: "injection",
-        tagLabel: "PENDING INJECTION",
-        title: "Awaiting promotion to ACTIVE — not yet injected",
-        meta: { status: "CANDIDATE", injections: "0" },
-        inspector: {
-          typeColor: "var(--accent-purple)",
-          typeLabel: "CALIBRATION — INJECTION STATUS",
-          title: "BC-003 has not been injected into any pipeline run",
-          subtitle: "This entry remains a CANDIDATE. When promoted to ACTIVE, it will be injected into Layer 1 prompts. The Blind Auditor will establish a suppression baseline on the first post-promotion run. Monitor 3-5 runs before promoting additional entries.",
-          sections: [
-            {
-              title: "Injection Tracking",
-              type: "kv",
-              data: [
-                ["current_status", "CANDIDATE"],
-                ["runs_since_creation", "12"],
-                ["injected_into", "0 runs (not yet ACTIVE)"],
-                ["suppression_baseline", "Not established"],
-                ["pre_promotion_frequency", "34/34 runs"],
-                ["expected_post_promotion", "Frequency should decrease; watch for zero (suppression)"]
-              ]
-            },
-            {
-              title: "Audit Decision Required",
-              type: "text",
-              data: "Today's Sunday audit should evaluate BC-003 for promotion. The directional guidance has been written. The overcorrection metric is set. The pattern fires in 100% of runs — it is a genuine model tendency, not noise. Promote 1-2 candidates at a time and monitor 3-5 runs."
-            }
-          ]
-        }
-      }
-    ]
+let CHAINS = [];
+let RAW_DATA = null;
+let activeFilter = 'ALL';
+
+async function loadData() {
+  try {
+    const resp = await fetch('data/flight-recorder-data.json');
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    RAW_DATA = await resp.json();
+    CHAINS = RAW_DATA.chains.map(mapChain);
+    updateHeader();
+    renderFilterBar();
+    renderChainList();
+    if (CHAINS.length > 0) selectChain(CHAINS[0].id);
+  } catch (e) {
+    console.error('Failed to load flight recorder data:', e);
+    document.getElementById('timeline').innerHTML =
+      '<div style="padding:24px;color:var(--text-muted);font-family:var(--mono);font-size:12px;">Failed to load data. Run assemble-flight-records.js first.</div>';
   }
-];
+}
 
-// ─── Render ────────────────────────────────────────────────────────────────
+// ─── Map production chain → render format ──────────────────────────────────
+
+const CHAIN_TYPE_META = {
+  CORRECTION:   { color: 'var(--accent-red)',    label: 'CORRECTION',   icon: 'outcome' },
+  CALIBRATION:  { color: 'var(--accent-purple)', label: 'CALIBRATION',  icon: 'calibration' },
+  ACQUISITION:  { color: 'var(--accent-blue)',   label: 'ACQUISITION',  icon: 'acquisition' },
+  GATE_PATTERN: { color: 'var(--accent-amber)',  label: 'GATE PATTERN', icon: 'catalyst' }
+};
+
+const NODE_TYPE_META = {
+  CATALYST:    { dotClass: 'catalyst',           tagClass: 'catalyst',    tagLabel: 'CATALYST' },
+  SYNTHESIS:   { dotClass: 'acquisition',        tagClass: 'generated',   tagLabel: 'SYNTHESIS' },
+  RESOLUTION:  { dotClass: 'outcome-confirmed',  tagClass: 'confirmed',   tagLabel: 'RESOLUTION' },
+  OBSERVATION: { dotClass: 'outcome-generated',  tagClass: 'survived',    tagLabel: 'OBSERVATION' }
+};
+
+function mapChain(chain) {
+  const typeMeta = CHAIN_TYPE_META[chain.chain_type] || CHAIN_TYPE_META.CORRECTION;
+  return {
+    id: chain.chain_id,
+    label: chain.subject.length > 50 ? chain.subject.slice(0, 50) + '…' : chain.subject,
+    type: chain.chain_type.toLowerCase(),
+    chain_type: chain.chain_type,
+    status: chain.status,
+    linked_chains: chain.linked_chains || [],
+    source_data_file: chain.source_data_file || '',
+    nodes: chain.nodes.map(node => mapNode(node, chain))
+  };
+}
+
+function mapNode(node, chain) {
+  const nMeta = NODE_TYPE_META[node.node_type] || NODE_TYPE_META.OBSERVATION;
+  const typeMeta = CHAIN_TYPE_META[chain.chain_type] || CHAIN_TYPE_META.CORRECTION;
+
+  // Build meta key-values for the card
+  const meta = {};
+  if (node.timestamp) meta.time = formatTimestamp(node.timestamp);
+  if (node.trace_id) meta.trace = node.trace_id.slice(0, 19);
+
+  // Add chain-type-specific meta from telemetry
+  const t = node.telemetry || {};
+  if (t.cost_usd && t.cost_usd > 0) meta.cost = '$' + t.cost_usd;
+  if (t.channel_id) meta.channel = t.channel_id;
+  if (t.outcome) meta.outcome = t.outcome;
+  if (t.times_applied) meta.applied = t.times_applied + 'x';
+  if (t.total_violations) meta.violations = t.total_violations;
+  if (t.frequency) meta.frequency = t.frequency;
+  if (t.status) meta.status = t.status;
+
+  return {
+    id: node.node_id,
+    type: node.node_type.toLowerCase(),
+    dotClass: nMeta.dotClass,
+    tagClass: nMeta.tagClass,
+    tagLabel: nMeta.tagLabel,
+    title: node.summary,
+    meta: meta,
+    inspector: buildInspector(node, chain, typeMeta)
+  };
+}
+
+function buildInspector(node, chain, typeMeta) {
+  const sections = [];
+
+  // Telemetry as KV section
+  const t = node.telemetry || {};
+  const kvPairs = Object.entries(t)
+    .filter(([k, v]) => v != null && v !== '' && typeof v !== 'object')
+    .map(([k, v]) => [k, String(v)]);
+
+  if (kvPairs.length > 0) {
+    sections.push({ title: 'Telemetry', type: 'kv', data: kvPairs });
+  }
+
+  // Object telemetry fields as JSON
+  const objFields = Object.entries(t)
+    .filter(([k, v]) => v != null && typeof v === 'object');
+
+  for (const [k, v] of objFields) {
+    sections.push({ title: k, type: 'json', data: v });
+  }
+
+  // Linked chains
+  if (chain.linked_chains && chain.linked_chains.length > 0) {
+    sections.push({
+      title: 'Linked Chains',
+      type: 'kv',
+      data: chain.linked_chains.map((lc, i) => [`link_${i + 1}`, lc])
+    });
+  }
+
+  // Source file
+  if (chain.source_data_file) {
+    sections.push({
+      title: 'Provenance',
+      type: 'kv',
+      data: [
+        ['source_file', chain.source_data_file],
+        ['chain_status', chain.status || '—']
+      ]
+    });
+  }
+
+  // Detail as text section if present
+  if (node.detail) {
+    sections.push({ title: 'Detail', type: 'text', data: node.detail });
+  }
+
+  return {
+    typeColor: typeMeta.color,
+    typeLabel: `${typeMeta.label} — ${node.node_type}`,
+    title: node.summary,
+    subtitle: node.detail || '',
+    sections: sections
+  };
+}
+
+function formatTimestamp(ts) {
+  if (!ts) return '—';
+  if (ts.length === 10) return ts; // date-only
+  try {
+    const d = new Date(ts);
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) +
+      ' ' + d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+  } catch { return ts.slice(0, 16); }
+}
+
+// ─── Header Stats ──────────────────────────────────────────────────────────
+
+function updateHeader() {
+  if (!RAW_DATA) return;
+  const counts = RAW_DATA._chain_counts || {};
+  document.getElementById('chainCount').textContent = counts.total || CHAINS.length;
+
+  // Try to load drift findings count
+  fetch('data/drift-findings.json')
+    .then(r => r.ok ? r.json() : null)
+    .then(d => {
+      if (d && d._scan_stats) {
+        document.getElementById('driftCount').textContent = d._scan_stats.findings_count || 0;
+      } else {
+        document.getElementById('driftCount').textContent = '0';
+      }
+    })
+    .catch(() => { document.getElementById('driftCount').textContent = '—'; });
+
+  const parts = [];
+  if (counts.correction) parts.push(counts.correction + ' corr');
+  if (counts.calibration) parts.push(counts.calibration + ' cal');
+  if (counts.acquisition) parts.push(counts.acquisition + ' acq');
+  if (counts.gate_pattern) parts.push(counts.gate_pattern + ' gate');
+  document.getElementById('typeBreakdown').textContent = parts.join(' · ') || '—';
+}
+
+// ─── Filter Bar ────────────────────────────────────────────────────────────
+
+const FILTER_TYPES = ['ALL', 'CORRECTION', 'CALIBRATION', 'ACQUISITION', 'GATE_PATTERN'];
+
+function renderFilterBar() {
+  const el = document.getElementById('chainSelector');
+  const buttons = FILTER_TYPES.map(ft => {
+    const count = ft === 'ALL' ? CHAINS.length : CHAINS.filter(c => c.chain_type === ft).length;
+    const label = ft === 'ALL' ? `ALL (${count})` : `${ft.replace('_', ' ')} (${count})`;
+    const cls = ft === 'GATE_PATTERN' ? 'chain-btn' : ft === 'CALIBRATION' ? 'chain-btn calibration' : 'chain-btn';
+    return `<button class="${cls}${ft === activeFilter ? ' active' : ''}" data-filter="${ft}" onclick="setFilter('${ft}')">${label}</button>`;
+  }).join('');
+  el.innerHTML = `<div class="segment-group">${buttons}</div>`;
+}
+
+function setFilter(filterType) {
+  activeFilter = filterType;
+  document.querySelectorAll('[data-filter]').forEach(b => b.classList.remove('active'));
+  document.querySelector(`[data-filter="${filterType}"]`).classList.add('active');
+  renderChainList();
+  clearInspector();
+}
+
+function getFilteredChains() {
+  if (activeFilter === 'ALL') return CHAINS;
+  return CHAINS.filter(c => c.chain_type === activeFilter);
+}
+
+// ─── Chain List (replaces old per-chain button selector) ───────────────────
+
+function renderChainList() {
+  const filtered = getFilteredChains();
+  const el = document.getElementById('timeline');
+  if (filtered.length === 0) {
+    el.innerHTML = '<div style="padding:24px;color:var(--text-muted);font-family:var(--mono);font-size:12px;">No chains of this type.</div>';
+    return;
+  }
+
+  let html = '';
+  filtered.forEach((chain, ci) => {
+    // Chain header
+    const typeMeta = CHAIN_TYPE_META[chain.chain_type] || CHAIN_TYPE_META.CORRECTION;
+    html += `<div style="padding:12px 0 4px;margin-top:${ci > 0 ? '16px' : '0'};">
+      <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.1em;color:${typeMeta.color};text-transform:uppercase;">${typeMeta.label}</div>
+      <div style="font-size:12px;color:var(--text-secondary);margin-top:2px;line-height:1.4;cursor:pointer;" onclick="toggleChainNodes('${chain.id}')" title="Click to expand/collapse">${chain.label}</div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--text-muted);margin-top:2px;">status: ${chain.status}</div>
+    </div>`;
+
+    // Nodes (collapsed by default for large datasets, expanded for small)
+    const expanded = filtered.length <= 15;
+    html += `<div class="chain-nodes" id="nodes-${chain.id}" style="display:${expanded ? 'block' : 'none'};">`;
+    chain.nodes.forEach((node, i) => {
+      html += `<div class="timeline-node" data-node="${node.id}" onclick="selectNodeDirect('${chain.id}','${node.id}')">
+        <div class="node-dot ${node.dotClass}">${getNodeIcon(node)}</div>
+        <div class="node-card">
+          <div class="node-type">
+            <span class="type-label">${typeMeta.label}</span>
+            <span class="type-tag ${node.tagClass}">${node.tagLabel}</span>
+          </div>
+          <div class="node-title">${node.title}</div>
+          <div class="node-meta">
+            ${Object.entries(node.meta).map(([k, v]) => {
+              let cls = '';
+              if (k === 'cost') cls = 'cost';
+              if (k === 'channel') cls = 'channel';
+              if (k === 'outcome' && (v === 'SURVIVED' || v === 'CONFIRMED')) cls = 'outcome-good';
+              if (k === 'outcome' && (v === 'STRIPPED' || v === 'NO_CHANGE')) cls = 'outcome-bad';
+              if (k === 'violations') cls = 'cost';
+              return `<span class="${cls}">${k}: ${v}</span>`;
+            }).join('')}
+          </div>
+        </div>
+      </div>`;
+      if (i < chain.nodes.length - 1) {
+        html += '<div class="timeline-connector"></div>';
+      }
+    });
+    html += '</div>';
+  });
+
+  el.innerHTML = html;
+}
+
+function toggleChainNodes(chainId) {
+  const el = document.getElementById('nodes-' + chainId);
+  if (!el) return;
+  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+
+function selectNodeDirect(chainId, nodeId) {
+  const chain = CHAINS.find(c => c.id === chainId);
+  const node = chain && chain.nodes.find(n => n.id === nodeId);
+  if (!node) return;
+
+  selectedNode = nodeId;
+  document.querySelectorAll('.timeline-node').forEach(n => n.classList.remove('selected'));
+  document.querySelector(`[data-node="${nodeId}"]`).classList.add('selected');
+  renderInspector(node.inspector);
+}
+
+// ─── Render (kept from original) ──────────────────────────────────────────
+// NOTE: renderChainSelector and selectChain are replaced by filter bar + chain list above.
+// renderTimeline is replaced by renderChainList.
+// selectNode is replaced by selectNodeDirect.
+// getNodeIcon, clearInspector, renderInspector, copyValue, copyJson, syntaxHighlight are unchanged.
+
+
+// ─── Render (kept from original) ──────────────────────────────────────────
 
 const SVG_ICONS = {
   catalyst: '<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="3" fill="currentColor"/><path d="M8 2v2M8 12v2M2 8h2M12 8h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
@@ -1040,73 +931,14 @@ const SVG_ICONS = {
 
 function getNodeIcon(node) {
   if (node.type === 'catalyst') return SVG_ICONS.catalyst;
+  if (node.type === 'synthesis') return SVG_ICONS.acquisition;
+  if (node.type === 'resolution') return SVG_ICONS.outcome;
   if (node.type === 'acquisition') return SVG_ICONS.acquisition;
   if (node.type.startsWith('calibration')) return SVG_ICONS.calibration;
   return SVG_ICONS.outcome;
 }
 
 let selectedNode = null;
-
-function renderChainSelector() {
-  const el = document.getElementById('chainSelector');
-  const buttons = CHAINS.map(chain => {
-    const cls = chain.type === 'calibration' ? 'chain-btn calibration' : 'chain-btn';
-    return `<button class="${cls}" data-chain="${chain.id}" onclick="selectChain('${chain.id}')">${chain.label}</button>`;
-  }).join('');
-  el.innerHTML = `<div class="segment-group">${buttons}</div>`;
-}
-
-function selectChain(chainId) {
-  document.querySelectorAll('.chain-btn').forEach(b => b.classList.remove('active'));
-  document.querySelector(`[data-chain="${chainId}"]`).classList.add('active');
-  renderTimeline(chainId);
-  clearInspector();
-}
-
-function renderTimeline(chainId) {
-  const chain = CHAINS.find(c => c.id === chainId);
-  if (!chain) return;
-  const el = document.getElementById('timeline');
-  let html = '';
-  chain.nodes.forEach((node, i) => {
-    html += `<div class="timeline-node" data-node="${node.id}" onclick="selectNode('${chainId}','${node.id}')">
-      <div class="node-dot ${node.dotClass}">${getNodeIcon(node)}</div>
-      <div class="node-card">
-        <div class="node-type">
-          <span class="type-label">${chain.type === 'calibration' ? 'CALIBRATION' : 'ACQUISITION'}</span>
-          <span class="type-tag ${node.tagClass}">${node.tagLabel}</span>
-        </div>
-        <div class="node-title">${node.title}</div>
-        <div class="node-meta">
-          ${Object.entries(node.meta).map(([k, v]) => {
-            let cls = '';
-            if (k === 'cost') cls = 'cost';
-            if (k === 'channel') cls = 'channel';
-            if (k === 'outcome' && (v === 'CONFIRMED' || v === 'SURVIVED')) cls = 'outcome-good';
-            if (k === 'outcome' && v === 'INEFFICIENT') cls = 'outcome-bad';
-            return `<span class="${cls}">${k}: ${v}</span>`;
-          }).join('')}
-        </div>
-      </div>
-    </div>`;
-    if (i < chain.nodes.length - 1) {
-      html += '<div class="timeline-connector"></div>';
-    }
-  });
-  el.innerHTML = html;
-}
-
-function selectNode(chainId, nodeId) {
-  const chain = CHAINS.find(c => c.id === chainId);
-  const node = chain.nodes.find(n => n.id === nodeId);
-  if (!node) return;
-
-  selectedNode = nodeId;
-  document.querySelectorAll('.timeline-node').forEach(n => n.classList.remove('selected'));
-  document.querySelector(`[data-node="${nodeId}"]`).classList.add('selected');
-
-  renderInspector(node.inspector);
-}
 
 function clearInspector() {
   document.getElementById('inspectorEmpty').style.display = 'flex';
@@ -1120,15 +952,11 @@ function renderInspector(data) {
   document.getElementById('inspectorEmpty').style.display = 'none';
   const content = document.getElementById('inspectorContent');
   content.style.display = 'block';
-
-  // Sticky header
   const sticky = document.getElementById('inspectorStickyHeader');
   sticky.style.display = 'block';
   document.getElementById('stickyTitle').textContent = data.title;
-
-  // Fade animation
   content.classList.remove('animate');
-  void content.offsetWidth; // force reflow
+  void content.offsetWidth;
   content.classList.add('animate');
 
   let html = `<div class="inspector-header">
@@ -1138,7 +966,6 @@ function renderInspector(data) {
   </div>`;
 
   let jsonBlockId = 0;
-
   for (const section of data.sections) {
     html += `<div class="inspector-section">
       <div class="inspector-section-title">${section.title}</div>`;
@@ -1147,18 +974,18 @@ function renderInspector(data) {
       html += '<div class="kv-grid">';
       for (const [k, v] of section.data) {
         let valClass = 'kv-val';
-        const isCopyable = k.includes('trace') || k.includes('tx_hash') || k.includes('request_id') || k.includes('block') || k.includes('from') || k.includes('to') || k.includes('calibration_id') || k.includes('signal_id');
-        if (k.includes('trace') || k.includes('run_trace') || k.includes('originating')) valClass += ' highlight-cyan';
-        if (k.includes('cost') || k.includes('amount')) valClass += ' highlight-amber';
-        if (k.includes('outcome') && (v.includes('CONFIRMED') || v.includes('SURVIVED'))) valClass += ' highlight-green';
-        if (k.includes('outcome') && v.includes('INEFFICIENT')) valClass += ' highlight-red';
-        if (k.includes('frequency') || k.includes('magnitude')) valClass += ' highlight-purple';
+        const isCopyable = k.includes('trace') || k.includes('tx_hash') || k.includes('request_id') || k.includes('block') || k.includes('from') || k.includes('to') || k.includes('calibration_id') || k.includes('signal_id') || k.includes('chain');
+        if (k.includes('trace') || k.includes('run_trace') || k.includes('originating') || k.includes('first_fired')) valClass += ' highlight-cyan';
+        if (k.includes('cost') || k.includes('amount') || k.includes('violations')) valClass += ' highlight-amber';
+        if (k.includes('outcome') && (v.includes('CONFIRMED') || v.includes('SURVIVED') || v.includes('ACTIVE'))) valClass += ' highlight-green';
+        if (k.includes('outcome') && (v.includes('STRIPPED') || v.includes('NO_CHANGE'))) valClass += ' highlight-red';
+        if (k.includes('frequency') || k.includes('magnitude') || k.includes('status')) valClass += ' highlight-purple';
+        if (k.includes('link')) valClass += ' highlight-cyan';
         const copyBtn = isCopyable ? `<button class="copy-btn" onclick="copyValue(this, '${v.replace(/'/g, "\\'")}')">CP</button>` : '';
         html += `<div class="kv-key">${k}</div><div class="${valClass}">${v}${copyBtn}</div>`;
       }
       html += '</div>';
     }
-
     if (section.type === 'json') {
       const blockId = `json-block-${jsonBlockId++}`;
       const rawJson = JSON.stringify(section.data, null, 2);
@@ -1167,16 +994,12 @@ function renderInspector(data) {
         <div class="json-block" id="${blockId}" data-raw="${encodeURIComponent(rawJson)}">${syntaxHighlight(rawJson)}</div>
       </div>`;
     }
-
     if (section.type === 'text') {
       html += `<div style="font-size:13px;color:var(--text-secondary);line-height:1.6;">${section.data}</div>`;
     }
-
     html += '</div>';
   }
-
   content.innerHTML = html;
-  // Scroll inspector pane to top
   document.getElementById('inspectorPane').scrollTop = 0;
 }
 
@@ -1209,8 +1032,7 @@ function syntaxHighlight(json) {
 
 // ─── Init ──────────────────────────────────────────────────────────────────
 
-renderChainSelector();
-selectChain(CHAINS[0].id);
+loadData();
 </script>
 </body>
 </html>
