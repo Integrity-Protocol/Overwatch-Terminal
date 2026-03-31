@@ -1,0 +1,157 @@
+{
+  "_version": "1.0",
+  "_description": "AD #20 Phase 2 — Reasoning Drift Findings",
+  "_detected_at": "2026-03-31T00:21:52.591Z",
+  "_dossier_assembled_at": "2026-03-30T23:09:53.120Z",
+  "_trace_count": 59,
+  "_scan_stats": {
+    "lineages_scanned": 63,
+    "pairs_compared": 741,
+    "findings_count": 7,
+    "by_type": {
+      "severity_drift": 0,
+      "confidence_drift": 7,
+      "language_drift": 0
+    }
+  },
+  "_thresholds": {
+    "severity": 1.5,
+    "language": 0.4,
+    "min_appearances": 2
+  },
+  "findings": [
+    {
+      "finding_id": "DRIFT-CONF-MACRO-OIL-BRENT-20260324024554",
+      "drift_type": "CONFIDENCE_DRIFT",
+      "lineage_id": "MACRO-OIL-BRENT",
+      "canonical_name": "Brent Crude Price Threshold",
+      "category": "macro",
+      "run_pair": {
+        "previous": "2026-03-24T02:45:54.096Z",
+        "current": "2026-03-24T02:45:54.096Z"
+      },
+      "magnitude": null,
+      "direction": null,
+      "previous_value": "HIGH",
+      "current_value": "MEDIUM",
+      "evidence_changed": true,
+      "corrections_fired": false,
+      "gate_profile_changed": false,
+      "threshold_used": null
+    },
+    {
+      "finding_id": "DRIFT-CONF-REGULATORY-STABLECOIN-LEGISLATION-20260323025341",
+      "drift_type": "CONFIDENCE_DRIFT",
+      "lineage_id": "REGULATORY-STABLECOIN-LEGISLATION",
+      "canonical_name": "Stablecoin Legislation (Clarity Act)",
+      "category": "regulatory",
+      "run_pair": {
+        "previous": "2026-03-23T02:53:41.461Z",
+        "current": "2026-03-23T02:53:41.461Z"
+      },
+      "magnitude": null,
+      "direction": null,
+      "previous_value": "MEDIUM",
+      "current_value": "LOW",
+      "evidence_changed": true,
+      "corrections_fired": false,
+      "gate_profile_changed": false,
+      "threshold_used": null
+    },
+    {
+      "finding_id": "DRIFT-CONF-REGULATORY-STABLECOIN-LEGISLATION-20260323012807",
+      "drift_type": "CONFIDENCE_DRIFT",
+      "lineage_id": "REGULATORY-STABLECOIN-LEGISLATION",
+      "canonical_name": "Stablecoin Legislation (Clarity Act)",
+      "category": "regulatory",
+      "run_pair": {
+        "previous": "2026-03-23T01:28:07.987Z",
+        "current": "2026-03-23T01:28:07.987Z"
+      },
+      "magnitude": null,
+      "direction": null,
+      "previous_value": "LOW",
+      "current_value": "MEDIUM",
+      "evidence_changed": true,
+      "corrections_fired": false,
+      "gate_profile_changed": false,
+      "threshold_used": null
+    },
+    {
+      "finding_id": "DRIFT-CONF-REGULATORY-STABLECOIN-LEGISLATION-20260322164801",
+      "drift_type": "CONFIDENCE_DRIFT",
+      "lineage_id": "REGULATORY-STABLECOIN-LEGISLATION",
+      "canonical_name": "Stablecoin Legislation (Clarity Act)",
+      "category": "regulatory",
+      "run_pair": {
+        "previous": "2026-03-22T16:48:01.808Z",
+        "current": "2026-03-22T16:48:01.808Z"
+      },
+      "magnitude": null,
+      "direction": null,
+      "previous_value": "MEDIUM",
+      "current_value": "LOW",
+      "evidence_changed": true,
+      "corrections_fired": false,
+      "gate_profile_changed": false,
+      "threshold_used": null
+    },
+    {
+      "finding_id": "DRIFT-CONF-COMPETITIVE-ONDO-RWA-20260322164801",
+      "drift_type": "CONFIDENCE_DRIFT",
+      "lineage_id": "COMPETITIVE-ONDO-RWA",
+      "canonical_name": "Ondo Finance / RWA Tokenization Competition",
+      "category": "competitive",
+      "run_pair": {
+        "previous": "2026-03-22T16:48:01.808Z",
+        "current": "2026-03-22T16:48:01.808Z"
+      },
+      "magnitude": null,
+      "direction": null,
+      "previous_value": "MEDIUM",
+      "current_value": "HIGH",
+      "evidence_changed": true,
+      "corrections_fired": false,
+      "gate_profile_changed": false,
+      "threshold_used": null
+    },
+    {
+      "finding_id": "DRIFT-CONF-COMPETITIVE-BTC-ETH-ETF-20260320024241",
+      "drift_type": "CONFIDENCE_DRIFT",
+      "lineage_id": "COMPETITIVE-BTC-ETH-ETF",
+      "canonical_name": "BTC/ETH ETF Institutional Flows",
+      "category": "structure",
+      "run_pair": {
+        "previous": "2026-03-20T02:42:41.867Z",
+        "current": "2026-03-20T02:42:41.867Z"
+      },
+      "magnitude": null,
+      "direction": null,
+      "previous_value": "MEDIUM",
+      "current_value": "HIGH",
+      "evidence_changed": true,
+      "corrections_fired": false,
+      "gate_profile_changed": false,
+      "threshold_used": null
+    },
+    {
+      "finding_id": "DRIFT-CONF-STRUCTURE-XRP-ETF-20260316025825",
+      "drift_type": "CONFIDENCE_DRIFT",
+      "lineage_id": "STRUCTURE-XRP-ETF",
+      "canonical_name": "XRP ETF AUM & Flows",
+      "category": "structure",
+      "run_pair": {
+        "previous": "2026-03-16T02:58:25.995Z",
+        "current": "2026-03-16T02:58:25.995Z"
+      },
+      "magnitude": null,
+      "direction": null,
+      "previous_value": "HIGH",
+      "current_value": "LOW",
+      "evidence_changed": true,
+      "corrections_fired": false,
+      "gate_profile_changed": false,
+      "threshold_used": null
+    }
+  ]
+}
