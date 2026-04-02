@@ -1584,11 +1584,13 @@ FALSIFIED: If thesis_status is FALSIFIED, all active tensions are auto-resolved 
 
 7. ACTION RECOMMENDATION — Select action_recommendation from: ${actionEnumValues}. Write action_reasoning (2-3 sentences). The action must be consistent with thesis_status: STRENGTHENING cannot produce ${actionSevere}. INSUFFICIENT_EVIDENCE cannot produce ${actionSevere}. If thesis_status is CONTESTED, action must be ${actionMonitor} or an intermediate option — never ${actionSevere} on contested evidence alone. If an ACTION PRESSURE CONTEXT section was provided above, your action_reasoning must account for it. At MODERATE_PRESSURE, acknowledge the pressure and explain why your recommendation is appropriate. At HIGH_PRESSURE, the burden of proof is inverted: provide specific, verifiable evidence for why your current action is justified despite accumulated pressure. Cite what you expect and when. At CRITICAL_PRESSURE, inaction requires extraordinary justification — if you cannot cite specific imminent evidence, you must change your action recommendation. Do not ignore persistence or trajectory signals.
 
-8. REJECTION LOG — If Layer 4 overruled any Layer 3 inference, document it with root cause and corrections ledger trigger.
+8. PROBABILITY ADJUSTMENT — Update scenario probabilities (bear/base/mid/bull, must sum to 100). These must be consistent with your thesis_status and action_recommendation. If thesis_status is WEAKENING and action is REDUCE_EXPOSURE, a bear probability of 18% would be inconsistent. Base your probabilities on the reconciled evidence in THIS run, not on previous values. If you cannot justify a change from a neutral 25/25/25/25 baseline using current evidence, say so in the reasoning.
 
-9. FINAL REPORT — 3-4 sentences. The 6 AM briefing. Lead with what matters most. State the call. Name the paradox if it exists. Honest about what you don't know.
+9. REJECTION LOG — If Layer 4 overruled any Layer 3 inference, document it with root cause and corrections ledger trigger.
 
-10. ACQUISITION DISPOSITIONS — For each pending acquisition request shown above, declare a disposition in the acquisition_dispositions array. APPROVED: the gap justifies acquisition cost, link to tension_id or structural_gap_id if applicable. DENIED: cost exceeds expected impact or similar data was previously wasted. DEFERRED: important but the assessment can proceed without it this cycle. If no pending requests were provided, return an empty array.
+10. FINAL REPORT — 3-4 sentences. The 6 AM briefing. Lead with what matters most. State the call. Name the paradox if it exists. Honest about what you don't know.
+
+11. ACQUISITION DISPOSITIONS — For each pending acquisition request shown above, declare a disposition in the acquisition_dispositions array. APPROVED: the gap justifies acquisition cost, link to tension_id or structural_gap_id if applicable. DENIED: cost exceeds expected impact or similar data was previously wasted. DEFERRED: important but the assessment can proceed without it this cycle. If no pending requests were provided, return an empty array.
 
 Respond with ONLY valid JSON — no markdown, no code fences, no commentary outside the JSON:
 {
@@ -1699,6 +1701,13 @@ Respond with ONLY valid JSON — no markdown, no code fences, no commentary outs
   "thesis_status_reasoning": "2-3 sentences explaining why this status based on reconciled evidence",
   "action_recommendation": "HOLD_POSITION | INCREASE_MONITORING | REDUCE_EXPOSURE | EXIT_SIGNAL",
   "action_reasoning": "2-3 sentences explaining the action and its consistency with thesis_status",
+  "recommended_probability_adjustment": {
+    "bear": 0,
+    "base": 0,
+    "mid": 0,
+    "bull": 0,
+    "reasoning": "2-3 sentences. Must be consistent with thesis_status and action_recommendation."
+  },
   "previous_tension_dispositions": [
     {
       "tension_id": "T-N from previous run",
@@ -1984,7 +1993,7 @@ function buildDashboardCompatible(reconcileResult, contextualizeResult, inferenc
     // Fields the dashboard reads directly
     commander_summary:          reconcileResult.final_report || reconcileResult.thesis_status_reasoning || '',
     score_reasoning:            reconcileResult.action_reasoning || '',
-    tactical_recommendation:    reconcileResult.tactical_recommendation || 'INCREASE_MONITORING',
+    tactical_recommendation:    reconcileResult.action_recommendation || reconcileResult.tactical_recommendation || 'INCREASE_MONITORING',
     recommendation_reasoning:   reconcileResult.action_reasoning || '',
     signal_matrix:              signalMatrix,
     compounding_risks:          compoundingRisks,
@@ -2009,6 +2018,7 @@ function buildDashboardCompatible(reconcileResult, contextualizeResult, inferenc
     action_recommendation:  reconcileResult.action_recommendation || null,
     action_reasoning:       reconcileResult.action_reasoning || null,
     compound_stress_level:  (reconcileResult.compound_stress_final?.level) || 'MONITORING',
+    recommended_probability_adjustment: reconcileResult.recommended_probability_adjustment || null,
     // AD #15: Tension lifecycle fields
     active_tensions:                reconcileResult.active_tensions || [],
     structural_gaps:                reconcileResult.structural_gaps || [],
