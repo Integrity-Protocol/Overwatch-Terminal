@@ -1,16 +1,16 @@
 {
   "_version": "1.0",
   "_description": "AD #20 Phase 2 — Reasoning Drift Findings",
-  "_detected_at": "2026-04-04T13:36:03.061Z",
-  "_dossier_assembled_at": "2026-04-04T13:36:02.846Z",
-  "_trace_count": 69,
+  "_detected_at": "2026-04-05T03:06:07.154Z",
+  "_dossier_assembled_at": "2026-04-05T03:06:06.937Z",
+  "_trace_count": 70,
   "_scan_stats": {
-    "lineages_scanned": 68,
-    "pairs_compared": 842,
-    "findings_count": 7,
+    "lineages_scanned": 69,
+    "pairs_compared": 856,
+    "findings_count": 9,
     "by_type": {
       "severity_drift": 0,
-      "confidence_drift": 7,
+      "confidence_drift": 9,
       "language_drift": 0
     }
   },
@@ -20,6 +20,44 @@
     "min_appearances": 2
   },
   "findings": [
+    {
+      "finding_id": "DRIFT-CONF-STRUCTURE-XRP-ETF-20260404133429",
+      "drift_type": "CONFIDENCE_DRIFT",
+      "lineage_id": "STRUCTURE-XRP-ETF",
+      "canonical_name": "XRP ETF AUM & Flows",
+      "category": "structure",
+      "run_pair": {
+        "previous": "2026-04-04T13:34:29.424Z",
+        "current": "2026-04-04T13:34:29.424Z"
+      },
+      "magnitude": null,
+      "direction": null,
+      "previous_value": "MEDIUM",
+      "current_value": "HIGH",
+      "evidence_changed": true,
+      "corrections_fired": false,
+      "gate_profile_changed": false,
+      "threshold_used": null
+    },
+    {
+      "finding_id": "DRIFT-CONF-MACRO-USDJPY-20260404133429",
+      "drift_type": "CONFIDENCE_DRIFT",
+      "lineage_id": "MACRO-USDJPY",
+      "canonical_name": "USD/JPY Exchange Rate",
+      "category": "macro",
+      "run_pair": {
+        "previous": "2026-04-04T13:34:29.424Z",
+        "current": "2026-04-04T13:34:29.424Z"
+      },
+      "magnitude": null,
+      "direction": null,
+      "previous_value": "HIGH",
+      "current_value": "MEDIUM",
+      "evidence_changed": true,
+      "corrections_fired": false,
+      "gate_profile_changed": false,
+      "threshold_used": null
+    },
     {
       "finding_id": "DRIFT-CONF-MACRO-OIL-BRENT-20260324024554",
       "drift_type": "CONFIDENCE_DRIFT",
